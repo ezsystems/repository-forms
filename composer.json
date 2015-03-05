@@ -1,0 +1,19 @@
+{
+    "name": "ezsystems/repository-forms-bundle",
+    "description": "Use forms with eZ Platform repository objects",
+    "license": "GPL-2.0",
+    "authors": [
+        {
+            "name": "Jerome Vieilledent",
+            "email": "jerome.vieilledent@ez.no"
+        }
+    ],
+    "require": {
+        "ezsystems/ezpublish-kernel": "dev-master"
+    },
+    "autoload": {
+        "psr-4": {
+            "EzSystems\\RepositoryFormsBundle\\": ""
+        }
+    }
+}
