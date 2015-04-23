@@ -1,0 +1,7 @@
+contenttype/create:
+    path: /contenttype/create/{contentTypeGroupId}/{languageCode}
+    defaults: { _controller: EzSystemsRepositoryFormsBundle:Test:createContentType, languageCode: ~ }
+
+contenttype/update:
+    path: /contenttype/update/{contentTypeId}/{languageCode}
+    defaults: { _controller: EzSystemsRepositoryFormsBundle:Test:updateContentType, languageCode: ~ }
