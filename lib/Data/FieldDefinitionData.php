@@ -7,7 +7,7 @@
  * @version //autogentag//
  */
 
-namespace EzSystems\RepositoryFormsBundle\Data;
+namespace EzSystems\RepositoryForms\Data;
 
 use eZ\Publish\API\Repository\Values\ContentType\FieldDefinitionUpdateStruct;
 

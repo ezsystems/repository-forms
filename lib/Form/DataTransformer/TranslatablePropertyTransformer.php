@@ -7,7 +7,7 @@
  * @version //autogentag//
  */
 
-namespace EzSystems\RepositoryFormsBundle\Form\DataTransformer;
+namespace EzSystems\RepositoryForms\Form\DataTransformer;
 
 use Symfony\Component\Form\DataTransformerInterface;
 

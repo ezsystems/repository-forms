@@ -7,11 +7,11 @@
  * @version //autogentag//
  */
 
-namespace EzSystems\RepositoryFormsBundle\Form\Type;
+namespace EzSystems\RepositoryForms\Form\Type;
 
 use eZ\Publish\API\Repository\Values\Content\Location;
-use EzSystems\RepositoryFormsBundle\Form\DataTransformer\TranslatablePropertyTransformer;
-use EzSystems\RepositoryFormsBundle\Form\Type\FieldDefinition\FieldDefinitionType;
+use EzSystems\RepositoryForms\Form\DataTransformer\TranslatablePropertyTransformer;
+use EzSystems\RepositoryForms\Form\Type\FieldDefinition\FieldDefinitionType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
@@ -32,7 +32,7 @@ class ContentTypeUpdateType extends AbstractType
     {
         $resolver
             ->setDefaults([
-                'data_class' => 'EzSystems\RepositoryFormsBundle\Data\ContentTypeData'
+                'data_class' => 'EzSystems\RepositoryForms\Data\ContentTypeData'
             ])
             ->setRequired(['languageCode']);
     }

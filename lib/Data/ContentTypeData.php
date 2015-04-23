@@ -7,7 +7,7 @@
  * @version //autogentag//
  */
 
-namespace EzSystems\RepositoryFormsBundle\Data;
+namespace EzSystems\RepositoryForms\Data;
 
 use eZ\Publish\API\Repository\Values\ContentType\ContentTypeUpdateStruct;
 
@@ -16,7 +16,7 @@ use eZ\Publish\API\Repository\Values\ContentType\ContentTypeUpdateStruct;
  *
  * @author Jérôme Vieilledent <jerome.vieilledent@ez.no>
  *
- * @property-read \EzSystems\RepositoryFormsBundle\Data\FieldDefinitionData[] $fieldDefinitionsData
+ * @property-read \EzSystems\RepositoryForms\Data\FieldDefinitionData[] $fieldDefinitionsData
  */
 class ContentTypeData extends ContentTypeUpdateStruct
 {
@@ -26,7 +26,7 @@ class ContentTypeData extends ContentTypeUpdateStruct
     protected $contentTypeDraft;
 
     /**
-     * @var \EzSystems\RepositoryFormsBundle\Data\FieldDefinitionData[]
+     * @var \EzSystems\RepositoryForms\Data\FieldDefinitionData[]
      */
     protected $fieldDefinitionsData = [];
 

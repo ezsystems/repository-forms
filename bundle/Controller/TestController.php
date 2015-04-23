@@ -12,8 +12,8 @@ namespace EzSystems\RepositoryFormsBundle\Controller;
 use eZ\Bundle\EzPublishCoreBundle\Controller;
 use eZ\Publish\API\Repository\Values\ContentType\FieldDefinitionCreateStruct;
 use eZ\Publish\Core\Repository\Values\ContentType\ContentTypeCreateStruct;
-use EzSystems\RepositoryFormsBundle\Data\ContentTypeData;
-use EzSystems\RepositoryFormsBundle\Data\FieldDefinitionData;
+use EzSystems\RepositoryForms\Data\ContentTypeData;
+use EzSystems\RepositoryForms\Data\FieldDefinitionData;
 use Symfony\Component\HttpFoundation\Request;
 
 class TestController extends Controller

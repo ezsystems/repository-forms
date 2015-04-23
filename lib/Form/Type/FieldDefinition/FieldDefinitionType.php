@@ -7,9 +7,9 @@
  * @version //autogentag//
  */
 
-namespace EzSystems\RepositoryFormsBundle\Form\Type\FieldDefinition;
+namespace EzSystems\RepositoryForms\Form\Type\FieldDefinition;
 
-use EzSystems\RepositoryFormsBundle\Form\DataTransformer\TranslatablePropertyTransformer;
+use EzSystems\RepositoryForms\Form\DataTransformer\TranslatablePropertyTransformer;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
@@ -27,7 +27,7 @@ class FieldDefinitionType extends AbstractType
     {
         $resolver
             ->setDefaults([
-                'data_class' => 'EzSystems\RepositoryFormsBundle\Data\FieldDefinitionData'
+                'data_class' => 'EzSystems\RepositoryForms\Data\FieldDefinitionData'
             ])
             ->setRequired(['languageCode']);
     }
@@ -55,7 +55,7 @@ class FieldDefinitionType extends AbstractType
         // Hook on form generation for specific FieldType needs
         $builder->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) {
             $form = $event->getForm();
-            /** @var \EzSystems\RepositoryFormsBundle\Data\FieldDefinitionData $data */
+            /** @var \EzSystems\RepositoryForms\Data\FieldDefinitionData $data */
             $data = $event->getData();
             // TODO: To be refactored cleanly with a registry and an interface.
             // FieldTypes may define a service that would alter the form for their own needs.

@@ -1,5 +1,5 @@
 parameters:
-    ezrepoforms.content_type.update.form_type.class: EzSystems\RepositoryFormsBundle\Form\Type\ContentTypeUpdateType
+    ezrepoforms.content_type.update.form_type.class: EzSystems\RepositoryForms\Form\Type\ContentTypeUpdateType
 
 services:
     ezrepoforms.content_type.update.form_type:
