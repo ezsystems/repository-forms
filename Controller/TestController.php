@@ -92,7 +92,8 @@ class TestController extends Controller
                     $fieldTypeIdentifier = $form->get('fieldTypeSelection')->getData();
                     $fieldDefCreateStruct = new FieldDefinitionCreateStruct([
                         'fieldTypeIdentifier' => $fieldTypeIdentifier,
-                        'identifier' => sprintf('new_%s_%d', $fieldTypeIdentifier, count($contentTypeDraft->fieldDefinitions) + 1)
+                        'identifier' => sprintf('new_%s_%d', $fieldTypeIdentifier, count($contentTypeDraft->fieldDefinitions) + 1),
+                        'names' => [$languageCode => 'New FieldDefinition'],
                     ]);
                     $contentTypeService->addFieldDefinition($contentTypeDraft, $fieldDefCreateStruct);
                     break;
