@@ -105,6 +105,8 @@ class TestController extends Controller
                     $contentTypeService->updateContentTypeDraft($contentTypeDraft, $formData);
                     break;
             }
+
+            return $this->redirectToRoute('contenttype/update', ['contentTypeId' => $contentTypeId, 'languageCode' => $languageCode]);
         }
 
         return $this->render('EzSystemsRepositoryFormsBundle::update_content_type.html.twig', [
