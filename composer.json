@@ -1,10 +1,10 @@
 {
-    "name": "ezsystems/repository-forms-bundle",
-    "description": "Use forms with eZ Platform repository objects",
+    "name": "ezsystems/repository-forms",
+    "description": "Use Symfony forms with eZ Platform repository objects",
     "license": "GPL-2.0",
     "authors": [
         {
-            "name": "Jerome Vieilledent",
+            "name": "Jérôme Vieilledent",
             "email": "jerome.vieilledent@ez.no"
         }
     ],
