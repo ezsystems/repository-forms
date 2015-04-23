@@ -1,3 +1,8 @@
 parameters:
+    ezrepoforms.content_type.update.form_type.class: EzSystems\RepositoryFormsBundle\Form\Type\ContentTypeUpdateType
 
 services:
+    ezrepoforms.content_type.update.form_type:
+        class: %ezrepoforms.content_type.update.form_type.class%
+        tags:
+            - {name: form.type, alias: ezrepoforms_contenttype_update}
