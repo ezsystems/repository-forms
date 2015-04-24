@@ -9,6 +9,7 @@
 
 namespace EzSystems\RepositoryForms\Form\Type\FieldDefinition;
 
+use eZ\Publish\API\Repository\FieldTypeService;
 use EzSystems\RepositoryForms\FieldType\FieldTypeFormMapperInterface;
 use EzSystems\RepositoryForms\Form\DataTransformer\TranslatablePropertyTransformer;
 use Symfony\Component\Form\AbstractType;
@@ -29,9 +30,15 @@ class FieldDefinitionType extends AbstractType
      */
     private $fieldTypeMapperRegistry;
 
-    public function __construct(FieldTypeFormMapperInterface $fieldTypeMapperRegistry)
+    /**
+     * @var FieldTypeService
+     */
+    private $fieldTypeService;
+
+    public function __construct(FieldTypeFormMapperInterface $fieldTypeMapperRegistry, FieldTypeService $fieldTypeService)
     {
         $this->fieldTypeMapperRegistry = $fieldTypeMapperRegistry;
+        $this->fieldTypeService = $fieldTypeService;
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)
@@ -58,17 +65,18 @@ class FieldDefinitionType extends AbstractType
                     ->addModelTransformer($translatablePropertyTransformer)
             )
             ->add('isRequired', 'checkbox', ['required' => false])
-            ->add('isSearchable', 'checkbox', ['required' => false])
             ->add('isTranslatable', 'checkbox', ['required' => false])
             ->add('fieldGroup', 'choice', ['choices' => []], ['required' => false])
             ->add('position', 'integer');
 
         // Hook on form generation for specific FieldType needs
         $builder->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) {
-            $form = $event->getForm();
             /** @var \EzSystems\RepositoryForms\Data\FieldDefinitionData $data */
             $data = $event->getData();
             $form = $event->getForm();
+            $fieldType = $this->fieldTypeService->getFieldType($data->getFieldTypeIdentifier());
+            // isSearchable field should be present only if the FieldType allows it.
+            $form->add('isSearchable', 'checkbox', ['required' => false, 'disabled' => !$fieldType->isSearchable()]);
             // Let fieldType mappers do their jobs to complete the form.
             $this->fieldTypeMapperRegistry->mapFieldDefinitionForm($form, $data);
         });

@@ -14,6 +14,6 @@ services:
 
     ezrepoforms.field_definition.form_type:
         class: %ezrepoforms.field_definition.form_type.class%
-        arguments: [@ezrepoforms.field_type_form_mapper.registry]
+        arguments: [@ezrepoforms.field_type_form_mapper.registry, @ezpublish.api.service.field_type]
         tags:
             - { name: form.type, alias: ezrepoforms_fielddefinition_update }
