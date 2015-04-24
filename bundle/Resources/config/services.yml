@@ -3,6 +3,8 @@ parameters:
     ezrepoforms.content_type.update.form_type.class: EzSystems\RepositoryForms\Form\Type\ContentTypeUpdateType
     ezrepoforms.field_definition.form_type.class: EzSystems\RepositoryForms\Form\Type\FieldDefinition\FieldDefinitionType
 
+    ezrepoforms.field_type.form_mapper.ezstring.class: EzSystems\RepositoryForms\FieldType\Mapper\TextLineFormMapper
+
 services:
     ezrepoforms.field_type_form_mapper.registry:
         class: %ezrepoforms.field_type_form_mapper.registry.class%
@@ -17,3 +19,9 @@ services:
         arguments: [@ezrepoforms.field_type_form_mapper.registry, @ezpublish.api.service.field_type]
         tags:
             - { name: form.type, alias: ezrepoforms_fielddefinition_update }
+
+    # FieldType form mappers
+    ezrepoforms.field_type.form_mapper.ezstring:
+        class: %ezrepoforms.field_type.form_mapper.ezstring.class%
+        tags:
+            - { name: ez.fieldType.formMapper, fieldType: ezstring }
