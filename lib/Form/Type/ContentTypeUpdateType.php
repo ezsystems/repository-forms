@@ -18,8 +18,6 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 /**
  * Form type for ContentType update.
- *
- * @author Jérôme Vieilledent <jerome.vieilledent@ez.no>
  */
 class ContentTypeUpdateType extends AbstractType
 {

@@ -14,8 +14,6 @@ use Symfony\Component\Form\FormInterface;
 
 /**
  * Registry for FieldType form mappers.
- *
- * @author Jérôme Vieilledent <jerome.vieilledent@ez.no>
  */
 class FieldTypeFormMapperRegistry implements FieldTypeFormMapperInterface
 {

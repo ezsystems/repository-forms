@@ -20,8 +20,6 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 /**
  * Form type for FieldDefinition update.
- *
- * @author Jérôme Vieilledent <jerome.vieilledent@ez.no>
  */
 class FieldDefinitionType extends AbstractType
 {

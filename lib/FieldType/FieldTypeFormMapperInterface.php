@@ -16,8 +16,6 @@ use Symfony\Component\Form\FormInterface;
  * Interface for FieldType form mappers.
  *
  * FieldType form mappers makes it possible to "map" and adapt forms related to FieldTypes (e.g. FieldDefinition forms).
- *
- * @author Jérôme Vieilledent <jerome.vieilledent@ez.no>
  */
 interface FieldTypeFormMapperInterface
 {

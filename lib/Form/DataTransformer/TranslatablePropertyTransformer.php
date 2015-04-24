@@ -13,8 +13,6 @@ use Symfony\Component\Form\DataTransformerInterface;
 
 /**
  * Data transformer to deal with translatable properties, where values are indexed by language code.
- *
- * @author Jérôme Vieilledent <jerome.vieilledent@ez.no>
  */
 class TranslatablePropertyTransformer implements DataTransformerInterface
 {

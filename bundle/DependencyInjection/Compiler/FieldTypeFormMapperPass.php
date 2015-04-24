@@ -16,8 +16,6 @@ use Symfony\Component\DependencyInjection\Reference;
 
 /**
  * Compiler pass to register FieldType form mappers.
- *
- * @author Jérôme Vieilledent <jerome.vieilledent@ez.no>
  */
 class FieldTypeFormMapperPass implements CompilerPassInterface
 {
