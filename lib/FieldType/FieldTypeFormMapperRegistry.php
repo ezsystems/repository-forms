@@ -11,11 +11,12 @@ namespace EzSystems\RepositoryForms\FieldType;
 
 use EzSystems\RepositoryForms\Data\FieldDefinitionData;
 use Symfony\Component\Form\FormInterface;
+use InvalidArgumentException;
 
 /**
  * Registry for FieldType form mappers.
  */
-class FieldTypeFormMapperRegistry implements FieldTypeFormMapperInterface
+class FieldTypeFormMapperRegistry implements FieldTypeFormMapperRegistryInterface
 {
     /**
      * FieldType form mappers, indexed by FieldType identifier.
@@ -24,19 +25,12 @@ class FieldTypeFormMapperRegistry implements FieldTypeFormMapperInterface
      */
     private $fieldTypeFormMappers = [];
 
-    /**
-     * @return FieldTypeFormMapperInterface[]
-     */
-    public function getFieldTypeFormMappers()
+    public function getMappers()
     {
         return $this->fieldTypeFormMappers;
     }
 
-    /**
-     * @param FieldTypeFormMapperInterface $mapper
-     * @param string $fieldTypeIdentifier FieldType identifier the mapper is meant for.
-     */
-    public function addFieldDefFormMapper(FieldTypeFormMapperInterface $mapper, $fieldTypeIdentifier)
+    public function addMapper(FieldTypeFormMapperInterface $mapper, $fieldTypeIdentifier)
     {
         $this->fieldTypeFormMappers[$fieldTypeIdentifier] = $mapper;
     }
@@ -49,5 +43,33 @@ class FieldTypeFormMapperRegistry implements FieldTypeFormMapperInterface
         }
 
         $this->fieldTypeFormMappers[$fieldTypeIdentifier]->mapFieldDefinitionForm($fieldDefinitionForm, $data);
+    }
+
+    /**
+     * Returns mapper corresponding to given FieldType identifier.
+     *
+     * @throws \InvalidArgumentException If no mapper exists for $fieldTypeIdentifier.
+     *
+     * @return FieldTypeFormMapperInterface
+     */
+    public function getMapper($fieldTypeIdentifier)
+    {
+        if (!$this->hasMapper($fieldTypeIdentifier)) {
+            throw new InvalidArgumentException("No FieldTypeFormMapper found for '$fieldTypeIdentifier'");
+        }
+
+        return $this->fieldTypeFormMappers[$fieldTypeIdentifier];
+    }
+
+    /**
+     * Checks if a mapper exists for given FieldType identifier.
+     *
+     * @param string $fieldTypeIdentifier
+     *
+     * @return bool
+     */
+    public function hasMapper($fieldTypeIdentifier)
+    {
+        return isset($this->fieldTypeFormMappers[$fieldTypeIdentifier]);
     }
 }

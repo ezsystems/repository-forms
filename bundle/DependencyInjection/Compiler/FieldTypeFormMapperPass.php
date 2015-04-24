@@ -35,7 +35,7 @@ class FieldTypeFormMapperPass implements CompilerPassInterface
                     );
                 }
 
-                $registry->addMethodCall('addFieldDefFormMapper', [new Reference($id), $attribute['fieldType']]);
+                $registry->addMethodCall('addMapper', [new Reference($id), $attribute['fieldType']]);
             }
         }
     }

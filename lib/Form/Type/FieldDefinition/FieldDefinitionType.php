@@ -10,7 +10,7 @@
 namespace EzSystems\RepositoryForms\Form\Type\FieldDefinition;
 
 use eZ\Publish\API\Repository\FieldTypeService;
-use EzSystems\RepositoryForms\FieldType\FieldTypeFormMapperInterface;
+use EzSystems\RepositoryForms\FieldType\FieldTypeFormMapperRegistryInterface;
 use EzSystems\RepositoryForms\Form\DataTransformer\TranslatablePropertyTransformer;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -24,7 +24,7 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 class FieldDefinitionType extends AbstractType
 {
     /**
-     * @var FieldTypeFormMapperInterface
+     * @var FieldTypeFormMapperRegistryInterface
      */
     private $fieldTypeMapperRegistry;
 
@@ -33,7 +33,7 @@ class FieldDefinitionType extends AbstractType
      */
     private $fieldTypeService;
 
-    public function __construct(FieldTypeFormMapperInterface $fieldTypeMapperRegistry, FieldTypeService $fieldTypeService)
+    public function __construct(FieldTypeFormMapperRegistryInterface $fieldTypeMapperRegistry, FieldTypeService $fieldTypeService)
     {
         $this->fieldTypeMapperRegistry = $fieldTypeMapperRegistry;
         $this->fieldTypeService = $fieldTypeService;
@@ -72,11 +72,16 @@ class FieldDefinitionType extends AbstractType
             /** @var \EzSystems\RepositoryForms\Data\FieldDefinitionData $data */
             $data = $event->getData();
             $form = $event->getForm();
-            $fieldType = $this->fieldTypeService->getFieldType($data->getFieldTypeIdentifier());
+            $fieldTypeIdentifier = $data->getFieldTypeIdentifier();
+            $fieldType = $this->fieldTypeService->getFieldType($fieldTypeIdentifier);
             // isSearchable field should be present only if the FieldType allows it.
             $form->add('isSearchable', 'checkbox', ['required' => false, 'disabled' => !$fieldType->isSearchable()]);
+
             // Let fieldType mappers do their jobs to complete the form.
-            $this->fieldTypeMapperRegistry->mapFieldDefinitionForm($form, $data);
+            if ($this->fieldTypeMapperRegistry->hasMapper($fieldTypeIdentifier)) {
+                $mapper = $this->fieldTypeMapperRegistry->getMapper($fieldTypeIdentifier);
+                $mapper->mapFieldDefinitionForm($form, $data);
+            }
         });
     }
 
