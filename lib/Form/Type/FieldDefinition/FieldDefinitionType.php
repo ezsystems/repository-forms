@@ -9,6 +9,7 @@
 
 namespace EzSystems\RepositoryForms\Form\Type\FieldDefinition;
 
+use EzSystems\RepositoryForms\FieldType\FieldTypeFormMapperInterface;
 use EzSystems\RepositoryForms\Form\DataTransformer\TranslatablePropertyTransformer;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -23,6 +24,16 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
  */
 class FieldDefinitionType extends AbstractType
 {
+    /**
+     * @var FieldTypeFormMapperInterface
+     */
+    private $fieldTypeMapperRegistry;
+
+    public function __construct(FieldTypeFormMapperInterface $fieldTypeMapperRegistry)
+    {
+        $this->fieldTypeMapperRegistry = $fieldTypeMapperRegistry;
+    }
+
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver
@@ -57,21 +68,9 @@ class FieldDefinitionType extends AbstractType
             $form = $event->getForm();
             /** @var \EzSystems\RepositoryForms\Data\FieldDefinitionData $data */
             $data = $event->getData();
-            // TODO: To be refactored cleanly with a registry and an interface.
-            // FieldTypes may define a service that would alter the form for their own needs.
-            switch ($data->getFieldTypeIdentifier()) {
-                case 'ezstring':
-                    $form
-                        ->add('minLength', 'integer', [
-                            'required' => false,
-                            'property_path' => 'validatorConfiguration[StringLengthValidator][minStringLength]',
-                        ])
-                        ->add('maxLength', 'integer', [
-                            'required' => false,
-                            'property_path' => 'validatorConfiguration[StringLengthValidator][maxStringLength]',
-                        ]);
-                    break;
-            }
+            $form = $event->getForm();
+            // Let fieldType mappers do their jobs to complete the form.
+            $this->fieldTypeMapperRegistry->mapFieldDefinitionForm($form, $data);
         });
     }
 

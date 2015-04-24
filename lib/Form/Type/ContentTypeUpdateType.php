@@ -76,7 +76,7 @@ class ContentTypeUpdateType extends AbstractType
             ])
             ->add('defaultAlwaysAvailable', 'checkbox', ['required' => false])
             ->add('fieldDefinitionsData', 'collection', [
-                'type' => new FieldDefinitionType(),
+                'type' => 'ezrepoforms_fielddefinition_update',
                 'options' => ['languageCode' => $options['languageCode']]
             ])
             ->add('fieldTypeSelection', 'choice', [
