@@ -1,7 +1,11 @@
 parameters:
+    ezrepoforms.field_type_form_mapper.registry.class: EzSystems\RepositoryForms\FieldType\FieldTypeFormMapperRegistry
     ezrepoforms.content_type.update.form_type.class: EzSystems\RepositoryForms\Form\Type\ContentTypeUpdateType
 
 services:
+    ezrepoforms.field_type_form_mapper.registry:
+        class: %ezrepoforms.field_type_form_mapper.registry.class%
+
     ezrepoforms.content_type.update.form_type:
         class: %ezrepoforms.content_type.update.form_type.class%
         tags:

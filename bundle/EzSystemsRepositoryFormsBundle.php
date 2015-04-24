@@ -8,8 +8,15 @@
  */
 namespace EzSystems\RepositoryFormsBundle;
 
+use EzSystems\RepositoryFormsBundle\DependencyInjection\Compiler\FieldTypeFormMapperPass;
+use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
 class EzSystemsRepositoryFormsBundle extends Bundle
 {
+    public function build(ContainerBuilder $container)
+    {
+        parent::build($container);
+        $container->addCompilerPass(new FieldTypeFormMapperPass());
+    }
 }
