@@ -14,6 +14,7 @@ use eZ\Publish\API\Repository\Values\ContentType\ContentTypeUpdateStruct;
 /**
  * Base data class for ContentType update form, with FieldDefinitions data and ContentTypeDraft.
  *
+ * @property-read \eZ\Publish\API\Repository\Values\ContentType\ContentTypeDraft $contentTypeDraft
  * @property-read \EzSystems\RepositoryForms\Data\FieldDefinitionData[] $fieldDefinitionsData
  */
 class ContentTypeData extends ContentTypeUpdateStruct
