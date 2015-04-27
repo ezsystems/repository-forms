@@ -10,19 +10,34 @@
 namespace EzSystems\RepositoryForms\Form\Type;
 
 use eZ\Publish\API\Repository\Values\Content\Location;
+use EzSystems\RepositoryForms\FieldType\FieldTypeFormMapperRegistryInterface;
 use EzSystems\RepositoryForms\Form\DataTransformer\TranslatablePropertyTransformer;
-use EzSystems\RepositoryForms\Form\Type\FieldDefinition\FieldDefinitionType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\Translation\TranslatorInterface;
 
 /**
  * Form type for ContentType update.
- *
- * @author Jérôme Vieilledent <jerome.vieilledent@ez.no>
  */
 class ContentTypeUpdateType extends AbstractType
 {
+    /**
+     * @var FieldTypeFormMapperRegistryInterface
+     */
+    private $fieldTypeFormMapperRegistry;
+
+    /**
+     * @var TranslatorInterface
+     */
+    private $translator;
+
+    public function __construct(FieldTypeFormMapperRegistryInterface $fieldTypeFormMapperRegistry, TranslatorInterface $translator)
+    {
+        $this->fieldTypeFormMapperRegistry = $fieldTypeFormMapperRegistry;
+        $this->translator = $translator;
+    }
+
     public function getName()
     {
         return 'ezrepoforms_contenttype_update';
@@ -76,14 +91,29 @@ class ContentTypeUpdateType extends AbstractType
             ])
             ->add('defaultAlwaysAvailable', 'checkbox', ['required' => false])
             ->add('fieldDefinitionsData', 'collection', [
-                'type' => new FieldDefinitionType(),
+                'type' => 'ezrepoforms_fielddefinition_update',
                 'options' => ['languageCode' => $options['languageCode']]
             ])
             ->add('fieldTypeSelection', 'choice', [
-                'choices' => ['ezstring' => 'Text line'],
+                'choices' => $this->getFieldTypeList(),
                 'mapped' => false
             ])
             ->add('addFieldDefinition', 'submit', ['label' => 'Add field definition'])
             ->add('saveContentType', 'submit', ['label' => 'Update']);
+    }
+
+    /**
+     * Returns a hash, with fieldType identifiers as keys and human readable names as values.
+     *
+     * @return array
+     */
+    private function getFieldTypeList()
+    {
+        $list = [];
+        foreach ($this->fieldTypeFormMapperRegistry->getMappers() as $fieldTypeIdentifier => $mapper) {
+            $list[$fieldTypeIdentifier] = $this->translator->trans("$fieldTypeIdentifier.name", [], 'fieldtypes');
+        }
+
+        return $list;
     }
 }

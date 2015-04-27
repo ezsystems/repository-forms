@@ -9,6 +9,8 @@
 
 namespace EzSystems\RepositoryForms\Form\Type\FieldDefinition;
 
+use eZ\Publish\API\Repository\FieldTypeService;
+use EzSystems\RepositoryForms\FieldType\FieldTypeFormMapperRegistryInterface;
 use EzSystems\RepositoryForms\Form\DataTransformer\TranslatablePropertyTransformer;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -18,11 +20,25 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 /**
  * Form type for FieldDefinition update.
- *
- * @author Jérôme Vieilledent <jerome.vieilledent@ez.no>
  */
 class FieldDefinitionType extends AbstractType
 {
+    /**
+     * @var FieldTypeFormMapperRegistryInterface
+     */
+    private $fieldTypeMapperRegistry;
+
+    /**
+     * @var FieldTypeService
+     */
+    private $fieldTypeService;
+
+    public function __construct(FieldTypeFormMapperRegistryInterface $fieldTypeMapperRegistry, FieldTypeService $fieldTypeService)
+    {
+        $this->fieldTypeMapperRegistry = $fieldTypeMapperRegistry;
+        $this->fieldTypeService = $fieldTypeService;
+    }
+
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver
@@ -47,30 +63,24 @@ class FieldDefinitionType extends AbstractType
                     ->addModelTransformer($translatablePropertyTransformer)
             )
             ->add('isRequired', 'checkbox', ['required' => false])
-            ->add('isSearchable', 'checkbox', ['required' => false])
             ->add('isTranslatable', 'checkbox', ['required' => false])
             ->add('fieldGroup', 'choice', ['choices' => []], ['required' => false])
             ->add('position', 'integer');
 
         // Hook on form generation for specific FieldType needs
         $builder->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) {
-            $form = $event->getForm();
             /** @var \EzSystems\RepositoryForms\Data\FieldDefinitionData $data */
             $data = $event->getData();
-            // TODO: To be refactored cleanly with a registry and an interface.
-            // FieldTypes may define a service that would alter the form for their own needs.
-            switch ($data->getFieldTypeIdentifier()) {
-                case 'ezstring':
-                    $form
-                        ->add('minLength', 'integer', [
-                            'required' => false,
-                            'property_path' => 'validatorConfiguration[StringLengthValidator][minStringLength]',
-                        ])
-                        ->add('maxLength', 'integer', [
-                            'required' => false,
-                            'property_path' => 'validatorConfiguration[StringLengthValidator][maxStringLength]',
-                        ]);
-                    break;
+            $form = $event->getForm();
+            $fieldTypeIdentifier = $data->getFieldTypeIdentifier();
+            $fieldType = $this->fieldTypeService->getFieldType($fieldTypeIdentifier);
+            // isSearchable field should be present only if the FieldType allows it.
+            $form->add('isSearchable', 'checkbox', ['required' => false, 'disabled' => !$fieldType->isSearchable()]);
+
+            // Let fieldType mappers do their jobs to complete the form.
+            if ($this->fieldTypeMapperRegistry->hasMapper($fieldTypeIdentifier)) {
+                $mapper = $this->fieldTypeMapperRegistry->getMapper($fieldTypeIdentifier);
+                $mapper->mapFieldDefinitionForm($form, $data);
             }
         });
     }

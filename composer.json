@@ -9,12 +9,18 @@
         }
     ],
     "require": {
-        "ezsystems/ezpublish-kernel": "dev-master"
+        "ezsystems/ezpublish-api": "dev-master",
+        "symfony/form": "~2.6"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "~4.1"
     },
     "autoload": {
         "psr-4": {
             "EzSystems\\RepositoryFormsBundle\\": "bundle",
-            "EzSystems\\RepositoryForms\\": "lib"
+            "EzSystems\\RepositoryForms\\": "lib",
+            "EzSystems\\RepositoryForms\\Tests\\": "tests/RepositoryForms",
+            "EzSystems\\RepositoryFormsBundle\\Tests\\": "tests/RepositoryFormsBundle"
         }
     }
 }

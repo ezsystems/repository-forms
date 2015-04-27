@@ -14,8 +14,6 @@ use eZ\Publish\API\Repository\Values\ContentType\FieldDefinitionUpdateStruct;
 /**
  * Base class for FieldDefinition forms, with corresponding FieldDefinition object.
  *
- * @author Jérôme Vieilledent <jerome.vieilledent@ez.no>
- *
  * @property-read \eZ\Publish\API\Repository\Values\ContentType\FieldDefinition $fieldDefinition
  */
 class FieldDefinitionData extends FieldDefinitionUpdateStruct
