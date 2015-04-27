@@ -38,7 +38,7 @@ class FieldTypeFormMapperRegistry implements FieldTypeFormMapperRegistryInterfac
     public function mapFieldDefinitionForm(FormInterface $fieldDefinitionForm, FieldDefinitionData $data)
     {
         $fieldTypeIdentifier = $data->getFieldTypeIdentifier();
-        if (!isset($this->fieldTypeFormMappers[$fieldTypeIdentifier])) {
+        if (!$this->hasMapper($fieldTypeIdentifier)) {
             return;
         }
 
