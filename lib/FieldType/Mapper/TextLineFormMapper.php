@@ -27,9 +27,4 @@ class TextLineFormMapper implements FieldTypeFormMapperInterface
                 'property_path' => 'validatorConfiguration[StringLengthValidator][maxStringLength]',
             ]);
     }
-
-    public function getName()
-    {
-        return "Text line";
-    }
 }

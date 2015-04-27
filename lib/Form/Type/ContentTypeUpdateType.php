@@ -15,6 +15,7 @@ use EzSystems\RepositoryForms\Form\DataTransformer\TranslatablePropertyTransform
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\Translation\TranslatorInterface;
 
 /**
  * Form type for ContentType update.
@@ -26,9 +27,15 @@ class ContentTypeUpdateType extends AbstractType
      */
     private $fieldTypeFormMapperRegistry;
 
-    public function __construct(FieldTypeFormMapperRegistryInterface $fieldTypeFormMapperRegistry)
+    /**
+     * @var TranslatorInterface
+     */
+    private $translator;
+
+    public function __construct(FieldTypeFormMapperRegistryInterface $fieldTypeFormMapperRegistry, TranslatorInterface $translator)
     {
         $this->fieldTypeFormMapperRegistry = $fieldTypeFormMapperRegistry;
+        $this->translator = $translator;
     }
 
     public function getName()
@@ -104,7 +111,7 @@ class ContentTypeUpdateType extends AbstractType
     {
         $list = [];
         foreach ($this->fieldTypeFormMapperRegistry->getMappers() as $fieldTypeIdentifier => $mapper) {
-            $list[$fieldTypeIdentifier] = $mapper->getName();
+            $list[$fieldTypeIdentifier] = $this->translator->trans("$fieldTypeIdentifier.name", [], 'fieldtypes');
         }
 
         return $list;

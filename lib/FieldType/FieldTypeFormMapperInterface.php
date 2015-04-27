@@ -32,11 +32,4 @@ interface FieldTypeFormMapperInterface
      * @return void
      */
     public function mapFieldDefinitionForm(FormInterface $fieldDefinitionForm, FieldDefinitionData $data);
-
-    /**
-     * Returns human readable name of the FieldType (e.g. "Text line")
-     *
-     * @return string
-     */
-    public function getName();
 }
