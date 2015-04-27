@@ -18,7 +18,9 @@
     "autoload": {
         "psr-4": {
             "EzSystems\\RepositoryFormsBundle\\": "bundle",
-            "EzSystems\\RepositoryForms\\": "lib"
+            "EzSystems\\RepositoryForms\\": "lib",
+            "EzSystems\\RepositoryForms\\Tests\\": "tests/RepositoryForms",
+            "EzSystems\\RepositoryFormsBundle\\Tests\\": "tests/RepositoryFormsBundle"
         }
     }
 }
