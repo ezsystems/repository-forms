@@ -1,0 +1,75 @@
+{# @var contentTypeDraft \eZ\Publish\API\Repository\Values\ContentType\ContentTypeDraft #}
+{# @var fieldTypeMapper \EzSystems\RepositoryForms\FieldType\FieldTypeFormMapperRegistryInterface #}
+<h1>{{ "content_type.edit_title"|trans({"%contentTypeName%": contentTypeName}, 'ezrepoforms_content_type') }}</h1>
+Last modified: {{ contentTypeDraft.modificationDate|localizeddate('medium', 'medium', app.request.locale) }}
+
+{{ form_start(form) }}
+    {{ form_errors(form) }}
+
+    <div>
+        {{ form_label(form.name) }}
+        {{ form_errors(form.name) }}
+        {{ form_widget(form.name) }}
+    </div>
+
+    <div>
+        {{ form_label(form.identifier) }}
+        {{ form_errors(form.identifier) }}
+        {{ form_widget(form.identifier) }}
+    </div>
+
+    <div>
+        {{ form_label(form.description) }}
+        {{ form_errors(form.description) }}
+        {{ form_widget(form.description) }}
+    </div>
+
+    <div>
+        {{ form_label(form.nameSchema) }}
+        {{ form_errors(form.nameSchema) }}
+        {{ form_widget(form.nameSchema) }}
+    </div>
+
+    <div>
+        {{ form_label(form.urlAliasSchema) }}
+        {{ form_errors(form.urlAliasSchema) }}
+        {{ form_widget(form.urlAliasSchema) }}
+    </div>
+
+    <div>
+        {{ form_label(form.isContainer) }}
+        {{ form_errors(form.isContainer) }}
+        {{ form_widget(form.isContainer) }}
+    </div>
+
+    <div>
+        {{ form_label(form.defaultSortField) }}
+        {{ form_errors(form.defaultSortField) }}
+        {{ form_widget(form.defaultSortField) }}
+    </div>
+
+    <div>
+        {{ form_label(form.defaultSortOrder) }}
+        {{ form_errors(form.defaultSortOrder) }}
+        {{ form_widget(form.defaultSortOrder) }}
+    </div>
+
+    <div>
+        {{ form_label(form.defaultAlwaysAvailable) }}
+        {{ form_errors(form.defaultAlwaysAvailable) }}
+        {{ form_widget(form.defaultAlwaysAvailable) }}
+    </div>
+
+    <h2>{{ form_label(form.fieldDefinitionsData) }}</h2>
+    {% for fieldDefForm in form.fieldDefinitionsData %}
+        {% form_theme fieldDefForm "EzSystemsRepositoryFormsBundle:ContentType:field_definition_row.html.twig" %}
+        {% set fieldTypeConfig, fieldTypeIdentifier = {}, fieldDefForm.vars.data.fieldTypeIdentifier %}
+
+        {% if fieldTypeMapperRegistry.hasMapper(fieldTypeIdentifier) %}
+            {% set fieldTypeConfig = fieldTypeMapperRegistry.getMapper(fieldTypeIdentifier).fieldDefinitionEditConfig %}
+        {% endif %}
+        {{ form_row(fieldDefForm, {'contentTypeDraft': contentTypeDraft, 'languageCode': languageCode, 'fieldTypeConfig': fieldTypeConfig}) }}
+        {% if not loop.last %}<hr>{% endif %}
+    {% endfor %}
+
+{{ form_end(form) }}

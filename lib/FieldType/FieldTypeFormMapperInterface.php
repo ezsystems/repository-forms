@@ -32,4 +32,21 @@ interface FieldTypeFormMapperInterface
      * @return void
      */
     public function mapFieldDefinitionForm(FormInterface $fieldDefinitionForm, FieldDefinitionData $data);
+
+    /**
+     * Returns a hash containing config for edit form.
+     * Can return an empty array if no config is required. In that case, fields defined in mapFieldDefinition()
+     * will be rendered with default label/errors/widget views.
+     *
+     * The hash may contain following keys:
+     * - "template": Template where specific form fields defined in mapFieldDefinitionForm() will be displayed.
+     *   Default passed variables are:
+     *     - "data": FieldDefinitionData object
+     *     - "languageCode": Language code as passed to the main form
+     *     - "contentTypeDraft": The ContentTypeDraft object
+     * - "vars": Hash of additional variables to pass to the template.
+     *
+     * @return array
+     */
+    public function getFieldDefinitionEditConfig();
 }

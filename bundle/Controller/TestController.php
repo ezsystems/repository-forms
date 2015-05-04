@@ -109,8 +109,12 @@ class TestController extends Controller
             return $this->redirectToRoute('contenttype/update', ['contentTypeId' => $contentTypeId, 'languageCode' => $languageCode]);
         }
 
-        return $this->render('EzSystemsRepositoryFormsBundle::update_content_type.html.twig', [
-            'form' => $form->createView()
+        return $this->render('EzSystemsRepositoryFormsBundle:ContentType:update_content_type.html.twig', [
+            'form' => $form->createView(),
+            'contentTypeName' => $contentTypeDraft->getName($languageCode),
+            'contentTypeDraft' => $contentTypeDraft,
+            'languageCode' => $languageCode,
+            'fieldTypeMapperRegistry' => $this->get('ezrepoforms.field_type_form_mapper.registry')
         ]);
     }
 }

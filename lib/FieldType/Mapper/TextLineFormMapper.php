@@ -29,4 +29,9 @@ class TextLineFormMapper implements FieldTypeFormMapperInterface
                 'label' => 'field_definition.ezstring.max_length',
             ]);
     }
+
+    public function getFieldDefinitionEditConfig()
+    {
+        return ['template' => 'EzSystemsRepositoryFormsBundle:FieldDefinition:ezstring_edit.html.twig'];
+    }
 }

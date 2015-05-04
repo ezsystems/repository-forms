@@ -1,0 +1,71 @@
+{# @var value \EzSystems\RepositoryForms\Data\FieldDefinitionData #}
+{% block form_row %}
+    <div class="field-definition-edit field-type-{{ value.fieldTypeIdentifier }}">
+        <h3>{{ value.names[languageCode] }} [{{ value.fieldTypeIdentifier }}] (id: {{ value.fieldDefinition.id }})</h3>
+
+        <div class="field-definition-position">
+            {{ form_label(form.position) }}
+            {{ form_errors(form.position) }}
+            {{ form_widget(form.position) }}
+        </div>
+
+        <div class="field-definition-name">
+            {{ form_label(form.name) }}
+            {{ form_errors(form.name) }}
+            {{ form_widget(form.name) }}
+        </div>
+
+        <div class="field-definition-identifier">
+            {{ form_label(form.identifier) }}
+            {{ form_errors(form.identifier) }}
+            {{ form_widget(form.identifier) }}
+        </div>
+
+        <div class="field-definition-description">
+            {{ form_label(form.description) }}
+            {{ form_errors(form.description) }}
+            {{ form_widget(form.description) }}
+        </div>
+
+        <div class="field-definition-isRequired">
+            {{ form_label(form.isRequired) }}
+            {{ form_errors(form.isRequired) }}
+            {{ form_widget(form.isRequired) }}
+        </div>
+
+        <div class="field-definition-isSearchable">
+            {{ form_label(form.isSearchable) }}
+            {{ form_errors(form.isSearchable) }}
+            {{ form_widget(form.isSearchable) }}
+        </div>
+
+        <div class="field-definition-isTranslatable">
+            {{ form_label(form.isTranslatable) }}
+            {{ form_errors(form.isTranslatable) }}
+            {{ form_widget(form.isTranslatable) }}
+        </div>
+
+        <div class="field-definition-fieldGroup">
+            {{ form_label(form.fieldGroup) }}
+            {{ form_errors(form.fieldGroup) }}
+            {{ form_widget(form.fieldGroup) }}
+        </div>
+
+        {# Field type specific fields below #}
+        {# Use field type config, if provided. #}
+        {% if fieldTypeConfig["template"] is defined %}
+            {% set includeVars = {"data": value, "languageCode": languageCode, "contentTypeDraft": contentTypeDraft, "form": form} %}
+            {% set configVars = fieldTypeConfig["vars"]|default({}) %}
+            {{ include(fieldTypeConfig["template"], includeVars|merge(configVars), with_context = false) }}
+        {% else %}
+            {# Default rendering #}
+            {% for child in form %}
+                {% if not child.rendered %}
+                    {{ form_label(child) }}
+                    {{ form_errors(child) }}
+                    {{ form_widget(child) }}
+                {% endif %}
+            {% endfor %}
+        {% endif %}
+    </div>
+{% endblock %}
