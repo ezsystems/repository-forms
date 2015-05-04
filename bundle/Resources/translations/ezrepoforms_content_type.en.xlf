@@ -99,6 +99,10 @@
                 <source>field_definition.ezstring.max_length</source>
                 <target>Maximum length</target>
             </trans-unit>
+            <trans-unit id="25">
+                <source>field_definition.ezstring.default_value</source>
+                <target>Default value</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>
