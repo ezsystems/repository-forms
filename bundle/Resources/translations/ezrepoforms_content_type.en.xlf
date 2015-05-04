@@ -1,0 +1,104 @@
+<?xml version="1.0"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+    <file source-language="en" datatype="plaintext" original="file.ext">
+        <body>
+            <trans-unit id="1">
+                <source>content_type.name</source>
+                <target>Name</target>
+            </trans-unit>
+            <trans-unit id="2">
+                <source>content_type.identifier</source>
+                <target>Identifier</target>
+            </trans-unit>
+            <trans-unit id="3">
+                <source>content_type.description</source>
+                <target>Description</target>
+            </trans-unit>
+            <trans-unit id="4">
+                <source>content_type.name_schema</source>
+                <target>Content name pattern</target>
+            </trans-unit>
+            <trans-unit id="5">
+                <source>content_type.url_alias_schema</source>
+                <target>URL alias name pattern</target>
+            </trans-unit>
+            <trans-unit id="6">
+                <source>content_type.is_container</source>
+                <target>Container</target>
+            </trans-unit>
+            <trans-unit id="7">
+                <source>content_type.default_sort_field</source>
+                <target>Default field for sorting children</target>
+            </trans-unit>
+            <trans-unit id="8">
+                <source>content_type.default_sort_order</source>
+                <target>Default sort order</target>
+            </trans-unit>
+            <trans-unit id="9">
+                <source>content_type.default_always_available</source>
+                <target>Default content availability</target>
+            </trans-unit>
+            <trans-unit id="10">
+                <source>content_type.field_definitions_data</source>
+                <target>Content field definitions</target>
+            </trans-unit>
+            <trans-unit id="11">
+                <source>content_type.field_type_selection</source>
+                <target>Field type selection</target>
+            </trans-unit>
+            <trans-unit id="12">
+                <source>content_type.add_field_definition</source>
+                <target>Add field definition</target>
+            </trans-unit>
+            <trans-unit id="13">
+                <source>content_type.save</source>
+                <target>Apply</target>
+            </trans-unit>
+            <trans-unit id="14">
+                <source>content_type.edit_title</source>
+                <target>Edit &lt;%contentTypeName%&gt;</target>
+            </trans-unit>
+            <!-- Field definition -->
+            <trans-unit id="15">
+                <source>field_definition.name</source>
+                <target>Name</target>
+            </trans-unit>
+            <trans-unit id="16">
+                <source>field_definition.identifier</source>
+                <target>Identifier</target>
+            </trans-unit>
+            <trans-unit id="17">
+                <source>field_definition.description</source>
+                <target>Description</target>
+            </trans-unit>
+            <trans-unit id="18">
+                <source>field_definition.is_required</source>
+                <target>Required</target>
+            </trans-unit>
+            <trans-unit id="19">
+                <source>field_definition.is_translatable</source>
+                <target>Translatable</target>
+            </trans-unit>
+            <trans-unit id="20">
+                <source>field_definition.field_group</source>
+                <target>Category</target>
+            </trans-unit>
+            <trans-unit id="21">
+                <source>field_definition.position</source>
+                <target>Position</target>
+            </trans-unit>
+            <trans-unit id="22">
+                <source>field_definition.is_searchable</source>
+                <target>Searchable</target>
+            </trans-unit>
+            <trans-unit id="23">
+                <source>field_definition.ezstring.min_length</source>
+                <target>Minimum length</target>
+            </trans-unit>
+            <trans-unit id="24">
+                <source>field_definition.ezstring.max_length</source>
+                <target>Maximum length</target>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>

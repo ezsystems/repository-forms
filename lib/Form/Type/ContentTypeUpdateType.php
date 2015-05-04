@@ -47,7 +47,8 @@ class ContentTypeUpdateType extends AbstractType
     {
         $resolver
             ->setDefaults([
-                'data_class' => 'EzSystems\RepositoryForms\Data\ContentTypeData'
+                'data_class' => 'EzSystems\RepositoryForms\Data\ContentTypeData',
+                'translation_domain' => 'ezrepoforms_content_type',
             ])
             ->setRequired(['languageCode']);
     }
@@ -58,18 +59,22 @@ class ContentTypeUpdateType extends AbstractType
         $builder
             ->add(
                 $builder
-                    ->create('name', 'text', ['property_path' => 'names'])
+                    ->create('name', 'text', ['property_path' => 'names', 'label' => 'content_type.name'])
                     ->addModelTransformer($translatablePropertyTransformer)
             )
-            ->add('identifier', 'text')
+            ->add('identifier', 'text', ['label' => 'content_type.identifier'])
             ->add(
                 $builder
-                    ->create('description', 'text', ['property_path' => 'descriptions', 'required' => false])
+                    ->create('description', 'text', [
+                        'property_path' => 'descriptions',
+                        'required' => false,
+                        'label' => 'content_type.description'
+                    ])
                     ->addModelTransformer($translatablePropertyTransformer)
             )
-            ->add('nameSchema', 'text', ['required' => false])
-            ->add('urlAliasSchema', 'text', ['required' => false])
-            ->add('isContainer', 'checkbox', ['required' => false])
+            ->add('nameSchema', 'text', ['required' => false, 'label' => 'content_type.name_schema'])
+            ->add('urlAliasSchema', 'text', ['required' => false, 'label' => 'content_type.url_alias_schema'])
+            ->add('isContainer', 'checkbox', ['required' => false, 'label' => 'content_type.is_container'])
             ->add('defaultSortField', 'choice', [
                 'choices' => [
                     Location::SORT_FIELD_NAME => 'Content name',
@@ -81,25 +86,32 @@ class ContentTypeUpdateType extends AbstractType
                     Location::SORT_FIELD_MODIFIED => 'Modification date',
                     Location::SORT_FIELD_PUBLISHED => 'Publication date',
                     Location::SORT_FIELD_SECTION => 'Section',
-                ]
+                ],
+                'label' => 'content_type.default_sort_field',
             ])
             ->add('defaultSortOrder', 'choice', [
                 'choices' => [
                     Location::SORT_ORDER_ASC => 'Ascending',
                     Location::SORT_ORDER_DESC => 'Descending',
-                ]
+                ],
+                'label' => 'content_type.default_sort_order',
             ])
-            ->add('defaultAlwaysAvailable', 'checkbox', ['required' => false])
+            ->add('defaultAlwaysAvailable', 'checkbox', [
+                'required' => false,
+                'label' => 'content_type.default_always_available',
+            ])
             ->add('fieldDefinitionsData', 'collection', [
                 'type' => 'ezrepoforms_fielddefinition_update',
-                'options' => ['languageCode' => $options['languageCode']]
+                'options' => ['languageCode' => $options['languageCode']],
+                'label' => 'content_type.field_definitions_data',
             ])
             ->add('fieldTypeSelection', 'choice', [
                 'choices' => $this->getFieldTypeList(),
-                'mapped' => false
+                'mapped' => false,
+                'label' => 'content_type.field_type_selection',
             ])
-            ->add('addFieldDefinition', 'submit', ['label' => 'Add field definition'])
-            ->add('saveContentType', 'submit', ['label' => 'Update']);
+            ->add('addFieldDefinition', 'submit', ['label' => 'content_type.add_field_definition'])
+            ->add('saveContentType', 'submit', ['label' => 'content_type.save']);
     }
 
     /**

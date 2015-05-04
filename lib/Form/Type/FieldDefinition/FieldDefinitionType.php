@@ -43,7 +43,8 @@ class FieldDefinitionType extends AbstractType
     {
         $resolver
             ->setDefaults([
-                'data_class' => 'EzSystems\RepositoryForms\Data\FieldDefinitionData'
+                'data_class' => 'EzSystems\RepositoryForms\Data\FieldDefinitionData',
+                'translation_domain' => 'ezrepoforms_content_type',
             ])
             ->setRequired(['languageCode']);
     }
@@ -52,20 +53,23 @@ class FieldDefinitionType extends AbstractType
     {
         $translatablePropertyTransformer = new TranslatablePropertyTransformer($options['languageCode']);
         $builder
-            ->add('fieldTypeIdentifier', 'hidden')
             ->add(
-                $builder->create('name', 'text', ['property_path' => 'names'])
+                $builder->create('name', 'text', ['property_path' => 'names', 'label' => 'field_definition.name'])
                     ->addModelTransformer($translatablePropertyTransformer)
             )
-            ->add('identifier', 'text', ['required' => true])
+            ->add('identifier', 'text', ['label' => 'field_definition.identifier'])
             ->add(
-                $builder->create('description', 'text', ['property_path' => 'descriptions', 'required' => false])
+                $builder->create('description', 'text', [
+                    'property_path' => 'descriptions',
+                    'required' => false,
+                    'label' => 'field_definition.description'
+                ])
                     ->addModelTransformer($translatablePropertyTransformer)
             )
-            ->add('isRequired', 'checkbox', ['required' => false])
-            ->add('isTranslatable', 'checkbox', ['required' => false])
-            ->add('fieldGroup', 'choice', ['choices' => []], ['required' => false])
-            ->add('position', 'integer');
+            ->add('isRequired', 'checkbox', ['required' => false, 'label' => 'field_definition.is_required'])
+            ->add('isTranslatable', 'checkbox', ['required' => false, 'label' => 'field_definition.is_translatable'])
+            ->add('fieldGroup', 'choice', ['choices' => []], ['required' => false, 'label' => 'field_definition.field_group'])
+            ->add('position', 'integer', ['label' => 'field_definition.position']);
 
         // Hook on form generation for specific FieldType needs
         $builder->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) {
@@ -75,7 +79,11 @@ class FieldDefinitionType extends AbstractType
             $fieldTypeIdentifier = $data->getFieldTypeIdentifier();
             $fieldType = $this->fieldTypeService->getFieldType($fieldTypeIdentifier);
             // isSearchable field should be present only if the FieldType allows it.
-            $form->add('isSearchable', 'checkbox', ['required' => false, 'disabled' => !$fieldType->isSearchable()]);
+            $form->add('isSearchable', 'checkbox', [
+                'required' => false,
+                'disabled' => !$fieldType->isSearchable(),
+                'label' => 'field_definition.is_searchable'
+            ]);
 
             // Let fieldType mappers do their jobs to complete the form.
             if ($this->fieldTypeMapperRegistry->hasMapper($fieldTypeIdentifier)) {

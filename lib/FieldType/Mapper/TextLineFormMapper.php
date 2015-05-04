@@ -21,10 +21,12 @@ class TextLineFormMapper implements FieldTypeFormMapperInterface
             ->add('minLength', 'integer', [
                 'required' => false,
                 'property_path' => 'validatorConfiguration[StringLengthValidator][minStringLength]',
+                'label' => 'field_definition.ezstring.min_length',
             ])
             ->add('maxLength', 'integer', [
                 'required' => false,
                 'property_path' => 'validatorConfiguration[StringLengthValidator][maxStringLength]',
+                'label' => 'field_definition.ezstring.max_length',
             ]);
     }
 }
