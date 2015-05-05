@@ -1,0 +1,31 @@
+EzSystems\RepositoryForms\Data\ContentTypeData:
+    properties:
+        identifier:
+            - NotBlank: ~
+            - Length:
+                max: 50
+            - Regex:
+                pattern: "/^[[:alnum:]_]+$/"
+                message: "ez.content_type.identifier.pattern"
+        urlAliasSchema:
+            - Length:
+                max: 255
+        nameSchema:
+            - Length:
+                max: 255
+        defaultSortField:
+            - Choice:
+                # See eZ\Publish\API\Repository\Values\Content\Location::SORT_FIELD_*
+                choices: [1, 2, 3, 4, 5, 6, 7, 8, 9]
+        defaultSortOrder:
+            - Choice:
+                # See eZ\Publish\API\Repository\Values\Content\Location::SORT_ORDER_*
+                choices: [0, 1]
+        names:
+            - Expression:
+                expression: "value and value[this.mainLanguageCode] matches '/^.{1,255}$/'"
+                message: "ez.content_type.names"
+        descriptions:
+            - Expression:
+                expression: "value and value[this.mainLanguageCode] matches '/^.{0,255}$/'"
+                message: "ez.content_type.descriptions"
