@@ -61,6 +61,7 @@ class TestController extends Controller
         foreach ($contentTypeDraft->fieldDefinitions as $fieldDef) {
             $formData->addFieldDefinitionData(new FieldDefinitionData([
                 'fieldDefinition' => $fieldDef,
+                'contentTypeData' => $formData,
                 'identifier' => $fieldDef->identifier,
                 'names' => $fieldDef->getNames(),
                 'descriptions' => $fieldDef->getDescriptions(),

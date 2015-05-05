@@ -29,3 +29,27 @@ EzSystems\RepositoryForms\Data\ContentTypeData:
             - Expression:
                 expression: "value and value[this.mainLanguageCode] matches '/^.{0,255}$/'"
                 message: "ez.content_type.descriptions"
+
+EzSystems\RepositoryForms\Data\FieldDefinitionData:
+    properties:
+        identifier:
+            - NotBlank: ~
+            - Length:
+                max: 50
+            - Regex:
+                pattern: "/^[[:alnum:]_]+$/"
+                message: "ez.content_type.identifier.pattern"
+            # TODO: Check each field is unique within a ContentType
+        names:
+            - Expression:
+                expression: "value and value[this.contentTypeData.mainLanguageCode] matches '/^.{1,255}$/'"
+                message: "ez.field_definition.names"
+        descriptions:
+            - Expression:
+                expression: "value and value[this.contentTypeData.mainLanguageCode] matches '/^.{0,255}$/'"
+                message: "ez.field_definition.descriptions"
+        position:
+            - Type:
+                type: integer
+        # TODO: Implement a custom validation constraint to use a dedicated service to validate validatorConfiguration and fieldSettings
+        # TODO: default value validation

@@ -14,6 +14,14 @@
                 <source>ez.content_type.descriptions</source>
                 <target>Content type description cannot exceed 255 characters.</target>
             </trans-unit>
+            <trans-unit id="4">
+                <source>ez.field_definition.names</source>
+                <target>Field definition name cannot be blank cannot exceed 255 characters.</target>
+            </trans-unit>
+            <trans-unit id="5">
+                <source>ez.field_definition.descriptions</source>
+                <target>Field definition description cannot exceed 255 characters.</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>
