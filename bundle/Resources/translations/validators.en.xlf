@@ -26,6 +26,10 @@
                 <source>ez.field_definition.descriptions</source>
                 <target>Field definition description cannot exceed 255 characters.</target>
             </trans-unit>
+            <trans-unit id="12">
+                <source>ez.field_definition.identifier.unique</source>
+                <target>Identifier "%identifier%" already exists in current Content type.</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>

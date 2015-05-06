@@ -34,6 +34,8 @@ EzSystems\RepositoryForms\Data\ContentTypeData:
             - Valid: ~
 
 EzSystems\RepositoryForms\Data\FieldDefinitionData:
+    constraints:
+        - EzSystems\RepositoryForms\Validator\Constraints\UniqueFieldDefinitionIdentifier: ~
     properties:
         identifier:
             - NotBlank: ~
@@ -42,7 +44,6 @@ EzSystems\RepositoryForms\Data\FieldDefinitionData:
             - Regex:
                 pattern: "/^[[:alnum:]_]+$/"
                 message: "ez.content_type.identifier.pattern"
-            # TODO: Check each field is unique within a ContentType
         names:
             - Expression:
                 expression: "value and value[this.contentTypeData.mainLanguageCode] matches '/^.{1,255}$/'"
