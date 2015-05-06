@@ -28,7 +28,7 @@ EzSystems\RepositoryForms\Data\ContentTypeData:
                 message: "ez.content_type.names"
         descriptions:
             - Expression:
-                expression: "value and value[this.mainLanguageCode] matches '/^.{0,255}$/'"
+                expression: "!value or value[this.mainLanguageCode] matches '/^.{0,255}$/'"
                 message: "ez.content_type.descriptions"
 
 EzSystems\RepositoryForms\Data\FieldDefinitionData:
@@ -47,7 +47,7 @@ EzSystems\RepositoryForms\Data\FieldDefinitionData:
                 message: "ez.field_definition.names"
         descriptions:
             - Expression:
-                expression: "value and value[this.contentTypeData.mainLanguageCode] matches '/^.{0,255}$/'"
+                expression: "!value or value[this.contentTypeData.mainLanguageCode] matches '/^.{0,255}$/'"
                 message: "ez.field_definition.descriptions"
         position:
             - Type:
