@@ -30,6 +30,8 @@ EzSystems\RepositoryForms\Data\ContentTypeData:
             - Expression:
                 expression: "!value or value[this.mainLanguageCode] matches '/^.{0,255}$/'"
                 message: "ez.content_type.descriptions"
+        fieldDefinitionsData:
+            - Valid: ~
 
 EzSystems\RepositoryForms\Data\FieldDefinitionData:
     properties:
