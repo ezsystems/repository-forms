@@ -15,10 +15,14 @@
                 <target>Content type description cannot exceed 255 characters.</target>
             </trans-unit>
             <trans-unit id="4">
+                <source>ez.content_type.identifier.unique</source>
+                <target>Identifier "%identifier%" already exists. Content type identifier must be unique.</target>
+            </trans-unit>
+            <trans-unit id="10">
                 <source>ez.field_definition.names</source>
                 <target>Field definition name cannot be blank cannot exceed 255 characters.</target>
             </trans-unit>
-            <trans-unit id="5">
+            <trans-unit id="11">
                 <source>ez.field_definition.descriptions</source>
                 <target>Field definition description cannot exceed 255 characters.</target>
             </trans-unit>
