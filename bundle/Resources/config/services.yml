@@ -6,6 +6,7 @@ parameters:
     ezrepoforms.field_type.form_mapper.ezstring.class: EzSystems\RepositoryForms\FieldType\Mapper\TextLineFormMapper
 
     ezrepoforms.validator.unique_content_type_identifier.class: EzSystems\RepositoryForms\Validator\Constraints\UniqueContentTypeIdentifierValidator
+    ezrepoforms.validator.validator_configuration.class: EzSystems\RepositoryForms\Validator\Constraints\ValidatorConfigurationValidator
 
 services:
     ezrepoforms.field_type_form_mapper.registry:
@@ -35,3 +36,14 @@ services:
         arguments: [@ezpublish.api.service.content_type]
         tags:
             - { name: validator.constraint_validator, alias: ezrepoforms.validator.unique_content_type_identifier }
+
+    ezrepoforms.validator.field_type.abstract:
+        class: EzSystems\RepositoryForms\Validator\Constraints\FieldTypeValidator
+        arguments: [@ezpublish.api.service.field_type]
+        abstract: true
+
+    ezrepoforms.validator.validator_configuration:
+        parent: ezrepoforms.validator.field_type.abstract
+        class: %ezrepoforms.validator.validator_configuration.class%
+        tags:
+            - { name: validator.constraint_validator, alias: ezrepoforms.validator.validator_configuration }

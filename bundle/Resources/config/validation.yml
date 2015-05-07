@@ -36,6 +36,7 @@ EzSystems\RepositoryForms\Data\ContentTypeData:
 EzSystems\RepositoryForms\Data\FieldDefinitionData:
     constraints:
         - EzSystems\RepositoryForms\Validator\Constraints\UniqueFieldDefinitionIdentifier: ~
+        - EzSystems\RepositoryForms\Validator\Constraints\ValidatorConfiguration: ~
     properties:
         identifier:
             - NotBlank: ~

@@ -30,6 +30,10 @@
                 <source>ez.field_definition.identifier.unique</source>
                 <target>Identifier "%identifier%" already exists in current Content type.</target>
             </trans-unit>
+            <trans-unit id="13">
+                <source>ez.field_definition.validator_configuration</source>
+                <target>Validator configuration is invalid.</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>
