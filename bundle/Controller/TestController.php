@@ -44,7 +44,7 @@ class TestController extends Controller
         $contentTypeDraft = $contentTypeService->loadContentTypeDraft($contentTypeId);
 
         // TODO: This must be done in a dedicated service
-        $formData = new ContentTypeData([
+        $contentTypeData = new ContentTypeData([
             'contentTypeDraft' => $contentTypeDraft,
             'identifier' => $contentTypeDraft->identifier,
             'remoteId' => $contentTypeDraft->remoteId,
@@ -59,9 +59,9 @@ class TestController extends Controller
             'descriptions' => $contentTypeDraft->getDescriptions(),
         ]);
         foreach ($contentTypeDraft->fieldDefinitions as $fieldDef) {
-            $formData->addFieldDefinitionData(new FieldDefinitionData([
+            $contentTypeData->addFieldDefinitionData(new FieldDefinitionData([
                 'fieldDefinition' => $fieldDef,
-                'contentTypeData' => $formData,
+                'contentTypeData' => $contentTypeData,
                 'identifier' => $fieldDef->identifier,
                 'names' => $fieldDef->getNames(),
                 'descriptions' => $fieldDef->getDescriptions(),
@@ -77,7 +77,7 @@ class TestController extends Controller
             ]));
         }
 
-        $form = $this->createForm('ezrepoforms_contenttype_update', $formData, [
+        $form = $this->createForm('ezrepoforms_contenttype_update', $contentTypeData, [
             'languageCode' => $languageCode,
         ]);
 
@@ -100,10 +100,10 @@ class TestController extends Controller
                     break;
 
                 case 'saveContentType':
-                    foreach ($formData->fieldDefinitionsData as $fieldDefData) {
+                    foreach ($contentTypeData->fieldDefinitionsData as $fieldDefData) {
                         $contentTypeService->updateFieldDefinition($contentTypeDraft, $fieldDefData->fieldDefinition, $fieldDefData);
                     }
-                    $contentTypeService->updateContentTypeDraft($contentTypeDraft, $formData);
+                    $contentTypeService->updateContentTypeDraft($contentTypeDraft, $contentTypeData);
                     break;
             }
 
