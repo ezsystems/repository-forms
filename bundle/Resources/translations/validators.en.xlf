@@ -34,6 +34,10 @@
                 <source>ez.field_definition.validator_configuration</source>
                 <target>Validator configuration is invalid.</target>
             </trans-unit>
+            <trans-unit id="14">
+                <source>ez.field_definition.field_settings</source>
+                <target>Field settings are invalid.</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>

@@ -37,6 +37,7 @@ EzSystems\RepositoryForms\Data\FieldDefinitionData:
     constraints:
         - EzSystems\RepositoryForms\Validator\Constraints\UniqueFieldDefinitionIdentifier: ~
         - EzSystems\RepositoryForms\Validator\Constraints\ValidatorConfiguration: ~
+        - EzSystems\RepositoryForms\Validator\Constraints\FieldSettings: ~
     properties:
         identifier:
             - NotBlank: ~
@@ -56,5 +57,4 @@ EzSystems\RepositoryForms\Data\FieldDefinitionData:
         position:
             - Type:
                 type: integer
-        # TODO: Implement a custom validation constraint to use a dedicated service to validate validatorConfiguration and fieldSettings
         # TODO: default value validation
