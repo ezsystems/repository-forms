@@ -9,7 +9,7 @@
         }
     ],
     "require": {
-        "ezsystems/ezpublish-kernel": "dev-master",
+        "ezsystems/ezpublish-kernel": "*",
         "symfony/form": "~2.6"
     },
     "require-dev": {
