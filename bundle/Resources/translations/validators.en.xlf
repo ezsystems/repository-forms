@@ -38,6 +38,10 @@
                 <source>ez.field_definition.field_settings</source>
                 <target>Field settings are invalid.</target>
             </trans-unit>
+            <trans-unit id="15">
+                <source>ez.field_definition.default_field_value</source>
+                <target>Default field value is invalid.</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>

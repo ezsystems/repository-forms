@@ -8,6 +8,7 @@ parameters:
     ezrepoforms.validator.unique_content_type_identifier.class: EzSystems\RepositoryForms\Validator\Constraints\UniqueContentTypeIdentifierValidator
     ezrepoforms.validator.validator_configuration.class: EzSystems\RepositoryForms\Validator\Constraints\ValidatorConfigurationValidator
     ezrepoforms.validator.field_settings.class: EzSystems\RepositoryForms\Validator\Constraints\FieldSettingsValidator
+    ezrepoforms.validator.default_field_value.class: EzSystems\RepositoryForms\Validator\Constraints\FieldDefinitionDefaultValueValidator
 
 services:
     ezrepoforms.field_type_form_mapper.registry:
@@ -54,3 +55,9 @@ services:
         class: %ezrepoforms.validator.field_settings.class%
         tags:
             - { name: validator.constraint_validator, alias: ezrepoforms.validator.field_settings }
+
+    ezrepoforms.validator.default_field_value:
+        parent: ezrepoforms.validator.field_type.abstract
+        class: %ezrepoforms.validator.default_field_value.class%
+        tags:
+            - { name: validator.constraint_validator, alias: ezrepoforms.validator.default_field_value }

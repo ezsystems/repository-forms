@@ -38,6 +38,7 @@ EzSystems\RepositoryForms\Data\FieldDefinitionData:
         - EzSystems\RepositoryForms\Validator\Constraints\UniqueFieldDefinitionIdentifier: ~
         - EzSystems\RepositoryForms\Validator\Constraints\ValidatorConfiguration: ~
         - EzSystems\RepositoryForms\Validator\Constraints\FieldSettings: ~
+        - EzSystems\RepositoryForms\Validator\Constraints\FieldDefinitionDefaultValue: ~
     properties:
         identifier:
             - NotBlank: ~
@@ -57,4 +58,3 @@ EzSystems\RepositoryForms\Data\FieldDefinitionData:
         position:
             - Type:
                 type: integer
-        # TODO: default value validation
