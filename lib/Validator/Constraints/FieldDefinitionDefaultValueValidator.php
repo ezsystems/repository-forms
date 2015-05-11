@@ -67,4 +67,9 @@ class FieldDefinitionDefaultValueValidator extends FieldValueValidator
     {
         return $value->getFieldTypeIdentifier();
     }
+
+    protected function generatePropertyPath($errorIndex, $errorTarget)
+    {
+        return 'defaultValue';
+    }
 }
