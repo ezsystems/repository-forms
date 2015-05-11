@@ -24,6 +24,6 @@
         }
     },
     "conflict": {
-        "symfony/symfony": "2.6.5|2.6.6"
+        "symfony/symfony": "2.6.5|2.6.6|2.6.7"
     }
 }
