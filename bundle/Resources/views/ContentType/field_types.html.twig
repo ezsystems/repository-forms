@@ -27,3 +27,11 @@
         {{- form_widget(form.defaultValue) -}}
     </div>
 {% endblock %}
+
+{% block eztext_field_definition_edit %}
+    <div class="eztext-settings text-rows">
+        {{- form_label(form.textRows) -}}
+        {{- form_errors(form.textRows) -}}
+        {{- form_widget(form.textRows) -}}
+    </div>
+{% endblock %}
