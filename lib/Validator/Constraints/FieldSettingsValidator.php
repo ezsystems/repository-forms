@@ -26,4 +26,9 @@ class FieldSettingsValidator extends FieldTypeValidator
         $fieldType = $this->fieldTypeService->getFieldType($value->getFieldTypeIdentifier());
         $this->processValidationErrors($fieldType->validateFieldSettings($value->fieldSettings));
     }
+
+    protected function generatePropertyPath($errorIndex, $errorTarget)
+    {
+        return 'fieldSettings' . $errorTarget;
+    }
 }
