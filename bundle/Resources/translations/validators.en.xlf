@@ -1,0 +1,47 @@
+<?xml version="1.0"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+    <file source-language="en" datatype="plaintext" original="file.ext">
+        <body>
+            <trans-unit id="1">
+                <source>ez.content_type.identifier.pattern</source>
+                <target>Content type identifier may only contain letters, numbers and underscores.</target>
+            </trans-unit>
+            <trans-unit id="2">
+                <source>ez.content_type.names</source>
+                <target>Content type name cannot be blank and cannot exceed 255 characters.</target>
+            </trans-unit>
+            <trans-unit id="3">
+                <source>ez.content_type.descriptions</source>
+                <target>Content type description cannot exceed 255 characters.</target>
+            </trans-unit>
+            <trans-unit id="4">
+                <source>ez.content_type.identifier.unique</source>
+                <target>Identifier "%identifier%" already exists. Content type identifier must be unique.</target>
+            </trans-unit>
+            <trans-unit id="10">
+                <source>ez.field_definition.names</source>
+                <target>Field definition name cannot be blank cannot exceed 255 characters.</target>
+            </trans-unit>
+            <trans-unit id="11">
+                <source>ez.field_definition.descriptions</source>
+                <target>Field definition description cannot exceed 255 characters.</target>
+            </trans-unit>
+            <trans-unit id="12">
+                <source>ez.field_definition.identifier.unique</source>
+                <target>Identifier "%identifier%" already exists in current Content type.</target>
+            </trans-unit>
+            <trans-unit id="13">
+                <source>ez.field_definition.validator_configuration</source>
+                <target>Validator configuration is invalid.</target>
+            </trans-unit>
+            <trans-unit id="14">
+                <source>ez.field_definition.field_settings</source>
+                <target>Field settings are invalid.</target>
+            </trans-unit>
+            <trans-unit id="15">
+                <source>ez.field_definition.default_field_value</source>
+                <target>Default field value is invalid.</target>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>

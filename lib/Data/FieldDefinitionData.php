@@ -15,6 +15,7 @@ use eZ\Publish\API\Repository\Values\ContentType\FieldDefinitionUpdateStruct;
  * Base class for FieldDefinition forms, with corresponding FieldDefinition object.
  *
  * @property-read \eZ\Publish\API\Repository\Values\ContentType\FieldDefinition $fieldDefinition
+ * @property-read \EzSystems\RepositoryForms\Data\ContentTypeData $contentTypeData
  */
 class FieldDefinitionData extends FieldDefinitionUpdateStruct
 {
@@ -22,6 +23,14 @@ class FieldDefinitionData extends FieldDefinitionUpdateStruct
      * @var \eZ\Publish\API\Repository\Values\ContentType\FieldDefinition
      */
     protected $fieldDefinition;
+
+    /**
+     * ContentTypeData holding current FieldDefinitionData.
+     * Mainly used for validation.
+     *
+     * @var \EzSystems\RepositoryForms\Data\ContentTypeData
+     */
+    protected $contentTypeData;
 
     public function getFieldTypeIdentifier()
     {
