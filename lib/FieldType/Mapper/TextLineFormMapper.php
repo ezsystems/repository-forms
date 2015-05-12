@@ -7,7 +7,7 @@
  * @version //autogentag//
  */
 
-namespace EzSystems\RepositoryForms\FieldType\Mapper;;
+namespace EzSystems\RepositoryForms\FieldType\Mapper;
 
 use EzSystems\RepositoryForms\Data\FieldDefinitionData;
 use EzSystems\RepositoryForms\FieldType\DataTransformer\TextLineValueTransformer;
