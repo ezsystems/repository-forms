@@ -10,7 +10,7 @@
 namespace EzSystems\RepositoryForms\Form\Type;
 
 use eZ\Publish\API\Repository\Values\Content\Location;
-use EzSystems\RepositoryForms\FieldType\FieldTypeFormMapperRegistryInterface;
+use eZ\Publish\Core\Base\Container\ApiLoader\FieldTypeCollectionFactory;
 use EzSystems\RepositoryForms\Form\DataTransformer\TranslatablePropertyTransformer;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -23,18 +23,18 @@ use Symfony\Component\Translation\TranslatorInterface;
 class ContentTypeUpdateType extends AbstractType
 {
     /**
-     * @var FieldTypeFormMapperRegistryInterface
+     * @var FieldTypeCollectionFactory
      */
-    private $fieldTypeFormMapperRegistry;
+    private $fieldTypeCollectionFactory;
 
     /**
      * @var TranslatorInterface
      */
     private $translator;
 
-    public function __construct(FieldTypeFormMapperRegistryInterface $fieldTypeFormMapperRegistry, TranslatorInterface $translator)
+    public function __construct(FieldTypeCollectionFactory $fieldTypeCollectionFactory, TranslatorInterface $translator)
     {
-        $this->fieldTypeFormMapperRegistry = $fieldTypeFormMapperRegistry;
+        $this->fieldTypeCollectionFactory = $fieldTypeCollectionFactory;
         $this->translator = $translator;
     }
 
@@ -122,7 +122,7 @@ class ContentTypeUpdateType extends AbstractType
     private function getFieldTypeList()
     {
         $list = [];
-        foreach ($this->fieldTypeFormMapperRegistry->getMappers() as $fieldTypeIdentifier => $mapper) {
+        foreach ($this->fieldTypeCollectionFactory->getFieldTypes() as $fieldTypeIdentifier => $fieldType) {
             $list[$fieldTypeIdentifier] = $this->translator->trans("$fieldTypeIdentifier.name", [], 'fieldtypes');
         }
 
