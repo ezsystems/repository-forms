@@ -10,6 +10,8 @@ parameters:
     ezrepoforms.validator.field_settings.class: EzSystems\RepositoryForms\Validator\Constraints\FieldSettingsValidator
     ezrepoforms.validator.default_field_value.class: EzSystems\RepositoryForms\Validator\Constraints\FieldDefinitionDefaultValueValidator
 
+    ezrepoforms.twig.field_edit_rendering_extension.class: EzSystems\RepositoryForms\Twig\FieldEditRenderingExtension
+
 services:
     ezrepoforms.field_type_form_mapper.registry:
         class: %ezrepoforms.field_type_form_mapper.registry.class%
@@ -61,3 +63,9 @@ services:
         class: %ezrepoforms.validator.default_field_value.class%
         tags:
             - { name: validator.constraint_validator, alias: ezrepoforms.validator.default_field_value }
+
+    ezrepoforms.twig.field_edit_rendering_extension:
+        class: %ezrepoforms.twig.field_edit_rendering_extension.class%
+        arguments: [@ezpublish.templating.field_block_renderer]
+        tags:
+            - { name: twig.extension }

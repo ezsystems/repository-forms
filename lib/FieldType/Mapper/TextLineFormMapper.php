@@ -41,9 +41,4 @@ class TextLineFormMapper implements FieldTypeFormMapperInterface
                     ->setAutoInitialize(false)->getForm()
             );
     }
-
-    public function getFieldDefinitionEditConfig()
-    {
-        return ['template' => 'EzSystemsRepositoryFormsBundle:FieldDefinition:ezstring_edit.html.twig'];
-    }
 }

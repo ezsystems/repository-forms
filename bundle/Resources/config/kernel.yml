@@ -1,0 +1,4 @@
+system:
+    default:
+        fielddefinition_edit_templates:
+            - { template: "EzSystemsRepositoryFormsBundle:ContentType:field_types.html.twig", priority: 0 }

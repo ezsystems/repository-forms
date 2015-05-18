@@ -63,12 +63,7 @@ Last modified: {{ contentTypeDraft.modificationDate|localizeddate('medium', 'med
     <h2>{{ form_label(form.fieldDefinitionsData) }}</h2>
     {% for fieldDefForm in form.fieldDefinitionsData %}
         {% form_theme fieldDefForm "EzSystemsRepositoryFormsBundle:ContentType:field_definition_row.html.twig" %}
-        {% set fieldTypeConfig, fieldTypeIdentifier = {}, fieldDefForm.vars.data.fieldTypeIdentifier %}
-
-        {% if fieldTypeMapperRegistry.hasMapper(fieldTypeIdentifier) %}
-            {% set fieldTypeConfig = fieldTypeMapperRegistry.getMapper(fieldTypeIdentifier).fieldDefinitionEditConfig %}
-        {% endif %}
-        {{ form_row(fieldDefForm, {'contentTypeDraft': contentTypeDraft, 'languageCode': languageCode, 'fieldTypeConfig': fieldTypeConfig}) }}
+        {{ form_row(fieldDefForm, {'contentTypeDraft': contentTypeDraft, 'languageCode': languageCode}) }}
         {% if not loop.last %}<hr>{% endif %}
     {% endfor %}
 
