@@ -4,6 +4,7 @@ parameters:
     ezrepoforms.field_definition.form_type.class: EzSystems\RepositoryForms\Form\Type\FieldDefinition\FieldDefinitionType
 
     ezrepoforms.field_type.form_mapper.ezstring.class: EzSystems\RepositoryForms\FieldType\Mapper\TextLineFormMapper
+    ezrepoforms.field_type.form_mapper.eztext.class: EzSystems\RepositoryForms\FieldType\Mapper\TextBlockFormMapper
 
     ezrepoforms.validator.unique_content_type_identifier.class: EzSystems\RepositoryForms\Validator\Constraints\UniqueContentTypeIdentifierValidator
     ezrepoforms.validator.validator_configuration.class: EzSystems\RepositoryForms\Validator\Constraints\ValidatorConfigurationValidator
@@ -33,6 +34,11 @@ services:
         class: %ezrepoforms.field_type.form_mapper.ezstring.class%
         tags:
             - { name: ez.fieldType.formMapper, fieldType: ezstring }
+
+    ezrepoforms.field_type.form_mapper.eztext:
+        class: %ezrepoforms.field_type.form_mapper.eztext.class%
+        tags:
+            - { name: ez.fieldType.formMapper, fieldType: eztext }
 
     # Validators
     ezrepoforms.validator.unique_content_type_identifier:
