@@ -53,19 +53,16 @@
 
         {# Field type specific fields below #}
         {# Use field type config, if provided. #}
-        {% if fieldTypeConfig["template"] is defined %}
-            {% set includeVars = {"data": value, "languageCode": languageCode, "contentTypeDraft": contentTypeDraft, "form": form} %}
-            {% set configVars = fieldTypeConfig["vars"]|default({}) %}
-            {{ include(fieldTypeConfig["template"], includeVars|merge(configVars), with_context = false) }}
-        {% else %}
-            {# Default rendering #}
-            {% for child in form %}
-                {% if not child.rendered %}
-                    {{ form_label(child) }}
-                    {{ form_errors(child) }}
-                    {{ form_widget(child) }}
-                {% endif %}
-            {% endfor %}
-        {% endif %}
+        {{ ez_render_fielddefinition_edit(value, {"languageCode": languageCode, "form": form}) }}
+        {# Default rendering #}
+        {% for child in form %}
+            {% if not child.rendered %}
+                <div>
+                    {{- form_label(child) -}}
+                    {{- form_errors(child) -}}
+                    {{- form_widget(child) -}}
+                </div>
+            {% endif %}
+        {% endfor %}
     </div>
 {% endblock %}

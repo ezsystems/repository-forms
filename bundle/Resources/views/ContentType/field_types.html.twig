@@ -1,0 +1,29 @@
+{# Template blocks to be used for fieldDefinition edition #}
+{# Block naming convention is <fieldTypeIdentifier>_field_definition_edit #}
+{# Following variables are passed:
+ # - \EzSystems\RepositoryForms\Data\FieldDefinitionData data Data object for current fieldDefinition.
+ # - \Symfony\Component\Form\FormView form Field definition form.
+ # - string languageCode
+ #}
+
+{# @var data \EzSystems\RepositoryForms\Data\FieldDefinitionData #}
+{# @var form \Symfony\Component\Form\FormView #}
+{% block ezstring_field_definition_edit %}
+    <div class="ezstring-validator min-length">
+        {{- form_label(form.minLength) -}}
+        {{- form_errors(form.minLength) -}}
+        {{- form_widget(form.minLength) -}}
+    </div>
+
+    <div class="ezstring-validator max-length">
+        {{- form_label(form.maxLength) -}}
+        {{- form_errors(form.maxLength) -}}
+        {{- form_widget(form.maxLength) -}}
+    </div>
+
+    <div class="ezstring-default-value">
+        {{- form_label(form.defaultValue) -}}
+        {{- form_errors(form.defaultValue) -}}
+        {{- form_widget(form.defaultValue) -}}
+    </div>
+{% endblock %}
