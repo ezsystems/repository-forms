@@ -6,7 +6,7 @@ php:
     - 5.6
 
 before_script:
-    - sudo composer selfupdate
+    - composer selfupdate
     - composer install --dev --prefer-source
 
 script: phpunit --coverage-text
