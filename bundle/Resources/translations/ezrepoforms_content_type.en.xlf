@@ -103,6 +103,10 @@
                 <source>field_definition.ezstring.default_value</source>
                 <target>Default value</target>
             </trans-unit>
+            <trans-unit id="26">
+                <source>field_definition.eztext.text_rows</source>
+                <target>Number of text rows</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>
