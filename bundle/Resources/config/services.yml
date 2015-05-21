@@ -3,6 +3,7 @@ parameters:
     ezrepoforms.content_type.update.form_type.class: EzSystems\RepositoryForms\Form\Type\ContentTypeUpdateType
     ezrepoforms.field_definition.form_type.class: EzSystems\RepositoryForms\Form\Type\FieldDefinition\FieldDefinitionType
 
+    ezrepoforms.field_type.form_mapper.ezfloat.class: EzSystems\RepositoryForms\FieldType\Mapper\FloatFormMapper
     ezrepoforms.field_type.form_mapper.ezstring.class: EzSystems\RepositoryForms\FieldType\Mapper\TextLineFormMapper
     ezrepoforms.field_type.form_mapper.eztext.class: EzSystems\RepositoryForms\FieldType\Mapper\TextBlockFormMapper
 
@@ -30,6 +31,11 @@ services:
             - { name: form.type, alias: ezrepoforms_fielddefinition_update }
 
     # FieldType form mappers
+    ezrepoforms.field_type.form_mapper.ezfloat:
+        class: %ezrepoforms.field_type.form_mapper.ezfloat.class%
+        tags:
+            - { name: ez.fieldType.formMapper, fieldType: ezfloat }
+
     ezrepoforms.field_type.form_mapper.ezstring:
         class: %ezrepoforms.field_type.form_mapper.ezstring.class%
         tags:

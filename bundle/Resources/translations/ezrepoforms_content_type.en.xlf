@@ -107,6 +107,14 @@
                 <source>field_definition.eztext.text_rows</source>
                 <target>Number of text rows</target>
             </trans-unit>
+            <trans-unit id="27">
+                <source>field_definition.ezfloat.min_value</source>
+                <target>Minimum value</target>
+            </trans-unit>
+            <trans-unit id="28">
+                <source>field_definition.ezfloat.max_value</source>
+                <target>Maximum value</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>
