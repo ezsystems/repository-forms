@@ -8,6 +8,20 @@
 
 {# @var data \EzSystems\RepositoryForms\Data\FieldDefinitionData #}
 {# @var form \Symfony\Component\Form\FormView #}
+{% block ezfloat_field_definition_edit %}
+    <div class="ezfloat-validator min-value">
+        {{- form_label(form.minValue) -}}
+        {{- form_errors(form.minValue) -}}
+        {{- form_widget(form.minValue) -}}
+    </div>
+
+    <div class="ezfloat-validator max-value">
+        {{- form_label(form.maxValue) -}}
+        {{- form_errors(form.maxValue) -}}
+        {{- form_widget(form.maxValue) -}}
+    </div>
+{% endblock %}
+
 {% block ezstring_field_definition_edit %}
     <div class="ezstring-validator min-length">
         {{- form_label(form.minLength) -}}
