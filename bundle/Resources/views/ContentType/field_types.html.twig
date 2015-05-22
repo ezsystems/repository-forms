@@ -38,6 +38,26 @@
     </div>
 {% endblock %}
 
+{% block ezdatetime_field_definition_edit %}
+    <div class="ezdatetime-settings use-seconds">
+        {{- form_label(form.useSeconds) -}}
+        {{- form_errors(form.useSeconds) -}}
+        {{- form_widget(form.useSeconds) -}}
+    </div>
+
+    <div class="ezdatetime-settings default-type">
+        {{- form_label(form.defaultType) -}}
+        {{- form_errors(form.defaultType) -}}
+        {{- form_widget(form.defaultType) -}}
+    </div>
+
+    <div class="ezdatetime-settings date-interval">
+        {{- form_label(form.dateInterval) -}}
+        {{- form_errors(form.dateInterval) -}}
+        {{- form_widget(form.dateInterval) -}}
+    </div>
+{% endblock %}
+
 {% block ezfloat_field_definition_edit %}
     <div class="ezfloat-validator min-value">
         {{- form_label(form.minValue) -}}

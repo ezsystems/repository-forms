@@ -279,6 +279,30 @@
                 <source>field_definition.ezimage.max_file_size</source>
                 <target>Maximum file size (byte)</target>
             </trans-unit>
+            <trans-unit id="142">
+                <source>field_definition.ezdatetime.use_seconds</source>
+                <target>Use seconds</target>
+            </trans-unit>
+            <trans-unit id="143">
+                <source>field_definition.ezdatetime.default_type</source>
+                <target>Default value</target>
+            </trans-unit>
+            <trans-unit id="144">
+                <source>field_definition.ezdatetime.default_type_empty</source>
+                <target>Empty</target>
+            </trans-unit>
+            <trans-unit id="145">
+                <source>field_definition.ezdatetime.default_type_current</source>
+                <target>Current datetime</target>
+            </trans-unit>
+            <trans-unit id="146">
+                <source>field_definition.ezdatetime.default_type_adjusted</source>
+                <target>Adjusted current datetime</target>
+            </trans-unit>
+            <trans-unit id="147">
+                <source>field_definition.ezdatetime.date_interval</source>
+                <target>Current date and time adjusted by</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>
