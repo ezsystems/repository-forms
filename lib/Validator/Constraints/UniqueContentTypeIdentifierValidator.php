@@ -11,6 +11,7 @@ namespace EzSystems\RepositoryForms\Validator\Constraints;
 
 use eZ\Publish\API\Repository\ContentTypeService;
 use eZ\Publish\API\Repository\Exceptions\NotFoundException;
+use EzSystems\RepositoryForms\Data\ContentTypeData;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
 
@@ -29,12 +30,30 @@ class UniqueContentTypeIdentifierValidator extends ConstraintValidator
         $this->contentTypeService = $contentTypeService;
     }
 
+    /**
+     * Checks if the passed value is valid.
+     *
+     * @param ContentTypeData $value The value that should be validated
+     * @param Constraint|UniqueFieldDefinitionIdentifier $constraint The constraint for the validation
+     *
+     * @api
+     */
     public function validate($value, Constraint $constraint)
     {
+        if (!$value instanceof ContentTypeData) {
+            return;
+        }
+
         try {
-            $this->contentTypeService->loadContentTypeByIdentifier($value);
+            $contentType = $this->contentTypeService->loadContentTypeByIdentifier($value->identifier);
+            // It's of course OK to edit a draft of an existing ContentType :-)
+            if ($contentType->id === $value->contentTypeDraft->id) {
+                return;
+            }
+
             $this->context->buildViolation($constraint->message)
-                ->setParameter('%identifier%', $value)
+                ->atPath('identifier')
+                ->setParameter('%identifier%', $value->identifier)
                 ->addViolation();
         } catch (NotFoundException $e) {
             // Do nothing
