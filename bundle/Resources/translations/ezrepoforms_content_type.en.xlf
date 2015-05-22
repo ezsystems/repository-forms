@@ -59,59 +59,59 @@
                 <target>Edit &lt;%contentTypeName%&gt;</target>
             </trans-unit>
             <!-- Field definition -->
-            <trans-unit id="15">
+            <trans-unit id="101">
                 <source>field_definition.name</source>
                 <target>Name</target>
             </trans-unit>
-            <trans-unit id="16">
+            <trans-unit id="102">
                 <source>field_definition.identifier</source>
                 <target>Identifier</target>
             </trans-unit>
-            <trans-unit id="17">
+            <trans-unit id="103">
                 <source>field_definition.description</source>
                 <target>Description</target>
             </trans-unit>
-            <trans-unit id="18">
+            <trans-unit id="104">
                 <source>field_definition.is_required</source>
                 <target>Required</target>
             </trans-unit>
-            <trans-unit id="19">
+            <trans-unit id="105">
                 <source>field_definition.is_translatable</source>
                 <target>Translatable</target>
             </trans-unit>
-            <trans-unit id="20">
+            <trans-unit id="106">
                 <source>field_definition.field_group</source>
                 <target>Category</target>
             </trans-unit>
-            <trans-unit id="21">
+            <trans-unit id="107">
                 <source>field_definition.position</source>
                 <target>Position</target>
             </trans-unit>
-            <trans-unit id="22">
+            <trans-unit id="108">
                 <source>field_definition.is_searchable</source>
                 <target>Searchable</target>
             </trans-unit>
-            <trans-unit id="23">
+            <trans-unit id="109">
                 <source>field_definition.ezstring.min_length</source>
                 <target>Minimum length</target>
             </trans-unit>
-            <trans-unit id="24">
+            <trans-unit id="110">
                 <source>field_definition.ezstring.max_length</source>
                 <target>Maximum length</target>
             </trans-unit>
-            <trans-unit id="25">
+            <trans-unit id="111">
                 <source>field_definition.ezstring.default_value</source>
                 <target>Default value</target>
             </trans-unit>
-            <trans-unit id="26">
+            <trans-unit id="112">
                 <source>field_definition.eztext.text_rows</source>
                 <target>Number of text rows</target>
             </trans-unit>
-            <trans-unit id="27">
+            <trans-unit id="113">
                 <source>field_definition.ezfloat.min_value</source>
                 <target>Minimum value</target>
             </trans-unit>
-            <trans-unit id="28">
+            <trans-unit id="114">
                 <source>field_definition.ezfloat.max_value</source>
                 <target>Maximum value</target>
             </trans-unit>
