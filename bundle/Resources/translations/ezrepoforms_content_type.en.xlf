@@ -58,6 +58,10 @@
                 <source>content_type.edit_title</source>
                 <target>Edit &lt;%contentTypeName%&gt;</target>
             </trans-unit>
+            <trans-unit id="15">
+                <source>content_type.publish</source>
+                <target>OK</target>
+            </trans-unit>
             <!-- Field definition -->
             <trans-unit id="101">
                 <source>field_definition.name</source>

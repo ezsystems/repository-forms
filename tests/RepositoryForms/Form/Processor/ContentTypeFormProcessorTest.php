@@ -27,6 +27,11 @@ class ContentTypeFormProcessorTest extends PHPUnit_Framework_TestCase
     private $contentTypeService;
 
     /**
+     * @var \PHPUnit_Framework_MockObject_MockObject
+     */
+    private $router;
+
+    /**
      * @var ContentTypeFormProcessor
      */
     private $formProcessor;
@@ -35,13 +40,15 @@ class ContentTypeFormProcessorTest extends PHPUnit_Framework_TestCase
     {
         parent::setUp();
         $this->contentTypeService = $this->getMock('\eZ\Publish\API\Repository\ContentTypeService');
-        $this->formProcessor = new ContentTypeFormProcessor($this->contentTypeService);
+        $this->router = $this->getMock('\Symfony\Component\Routing\RouterInterface');
+        $this->formProcessor = new ContentTypeFormProcessor($this->contentTypeService, $this->router);
     }
 
     public function testSubscribedEvents()
     {
         self::assertSame([
             RepositoryFormEvents::CONTENT_TYPE_ADD_FIELD_DEFINITION => 'processAddFieldDefinition',
+            RepositoryFormEvents::CONTENT_TYPE_PUBLISH => 'processPublishContentType',
         ], ContentTypeFormProcessor::getSubscribedEvents());
     }
 

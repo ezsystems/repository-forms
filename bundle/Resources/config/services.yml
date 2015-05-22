@@ -14,6 +14,9 @@ parameters:
 
     ezrepoforms.twig.field_edit_rendering_extension.class: EzSystems\RepositoryForms\Twig\FieldEditRenderingExtension
     ezrepoforms.form_processor.content_type.class: EzSystems\RepositoryForms\Form\Processor\ContentTypeFormProcessor
+    ezrepoforms.form_processor.content_type.options.redirect_route_after_publish: ~
+    ezrepoforms.form_processor.content_type.options:
+        redirectRouteAfterPublish: %ezrepoforms.form_processor.content_type.options.redirect_route_after_publish%
 
 services:
     ezrepoforms.field_type_form_mapper.registry:
@@ -85,6 +88,6 @@ services:
 
     ezrepoforms.form_processor.content_type:
         class: %ezrepoforms.form_processor.content_type.class%
-        arguments: [@ezpublish.api.service.content_type]
+        arguments: [@ezpublish.api.service.content_type, @router, %ezrepoforms.form_processor.content_type.options%]
         tags:
             - { name: kernel.event_subscriber }
