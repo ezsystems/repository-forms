@@ -22,6 +22,11 @@ final class RepositoryFormEvents
     const CONTENT_TYPE_ADD_FIELD_DEFINITION = 'contentType.update.addFieldDefinition';
 
     /**
+     * Triggered when removing a FieldDefinition from the ContentTypeDraft.
+     */
+    const CONTENT_TYPE_REMOVE_FIELD_DEFINITION = 'contentType.update.removeFieldDefinition';
+
+    /**
      * Triggered when saving the draft + publishing the ContentType.
      */
     const CONTENT_TYPE_PUBLISH = 'contentType.update.publishContentType';

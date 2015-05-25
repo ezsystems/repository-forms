@@ -51,6 +51,7 @@ class ContentTypeFormProcessor implements EventSubscriberInterface
     {
         return [
             RepositoryFormEvents::CONTENT_TYPE_ADD_FIELD_DEFINITION => 'processAddFieldDefinition',
+            RepositoryFormEvents::CONTENT_TYPE_REMOVE_FIELD_DEFINITION => 'processRemoveFieldDefinition',
             RepositoryFormEvents::CONTENT_TYPE_PUBLISH => 'processPublishContentType',
         ];
     }
@@ -65,6 +66,21 @@ class ContentTypeFormProcessor implements EventSubscriberInterface
             'names' => [$event->getLanguageCode() => 'New FieldDefinition'],
         ]);
         $this->contentTypeService->addFieldDefinition($contentTypeDraft, $fieldDefCreateStruct);
+    }
+
+    public function processRemoveFieldDefinition(FormActionEvent $event)
+    {
+        /** @var \eZ\Publish\API\Repository\Values\ContentType\ContentTypeDraft $contentTypeDraft */
+        $contentTypeDraft = $event->getData()->contentTypeDraft;
+
+        // Accessing FieldDefinition user selection through the form and not the data,
+        // as "selected" is not a property of FieldDefinitionData.
+        /** @var \Symfony\Component\Form\FormInterface $fieldDefForm */
+        foreach ($event->getForm()->get('fieldDefinitionsData') as $fieldDefForm) {
+            if ($fieldDefForm->get('selected')->getData() === true) {
+                $this->contentTypeService->removeFieldDefinition($contentTypeDraft, $fieldDefForm->getData()->fieldDefinition);
+            }
+        }
     }
 
     public function processPublishContentType(FormActionEvent $event)

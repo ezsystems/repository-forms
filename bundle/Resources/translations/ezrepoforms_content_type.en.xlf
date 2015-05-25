@@ -62,6 +62,10 @@
                 <source>content_type.publish</source>
                 <target>OK</target>
             </trans-unit>
+            <trans-unit id="16">
+                <source>content_type.remove_field_definitions</source>
+                <target>Remove selected field definitions</target>
+            </trans-unit>
             <!-- Field definition -->
             <trans-unit id="101">
                 <source>field_definition.name</source>
