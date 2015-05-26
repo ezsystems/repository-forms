@@ -10,6 +10,7 @@
 namespace EzSystems\RepositoryFormsBundle\Controller;
 
 use eZ\Bundle\EzPublishCoreBundle\Controller;
+use eZ\Publish\API\Repository\Exceptions\NotFoundException;
 use eZ\Publish\Core\Repository\Values\ContentType\ContentTypeCreateStruct;
 use EzSystems\RepositoryForms\Data\Mapper\ContentTypeDraftMapper;
 use EzSystems\RepositoryForms\Event\FormActionEvent;
@@ -41,7 +42,16 @@ class ContentTypeController extends Controller
     {
         $languageCode = $languageCode ?: $this->getConfigResolver()->getParameter('languages')[0];
         $contentTypeService = $this->getRepository()->getContentTypeService();
-        $contentTypeDraft = $contentTypeService->loadContentTypeDraft($contentTypeId);
+        // First try to load the draft.
+        // If it doesn't exist, create it.
+        try {
+            $contentTypeDraft = $contentTypeService->loadContentTypeDraft($contentTypeId);
+        } catch (NotFoundException $e) {
+            $contentTypeDraft = $contentTypeService->createContentTypeDraft(
+                $contentTypeService->loadContentType($contentTypeId)
+            );
+        }
+
         $contentTypeData = (new ContentTypeDraftMapper())->mapToFormData($contentTypeDraft);
         $form = $this->createForm('ezrepoforms_contenttype_update', $contentTypeData, [
             'languageCode' => $languageCode,

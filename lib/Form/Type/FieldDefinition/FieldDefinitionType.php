@@ -69,7 +69,8 @@ class FieldDefinitionType extends AbstractType
             ->add('isRequired', 'checkbox', ['required' => false, 'label' => 'field_definition.is_required'])
             ->add('isTranslatable', 'checkbox', ['required' => false, 'label' => 'field_definition.is_translatable'])
             ->add('fieldGroup', 'choice', ['choices' => []], ['required' => false, 'label' => 'field_definition.field_group'])
-            ->add('position', 'integer', ['label' => 'field_definition.position']);
+            ->add('position', 'integer', ['label' => 'field_definition.position'])
+            ->add('selected', 'checkbox', ['required' => false, 'mapped' => false]);
 
         // Hook on form generation for specific FieldType needs
         $builder->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) {

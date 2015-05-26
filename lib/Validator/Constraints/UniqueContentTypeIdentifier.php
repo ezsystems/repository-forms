@@ -27,4 +27,9 @@ class UniqueContentTypeIdentifier extends Constraint
     {
         return 'ezrepoforms.validator.unique_content_type_identifier';
     }
+
+    public function getTargets()
+    {
+        return self::CLASS_CONSTRAINT;
+    }
 }

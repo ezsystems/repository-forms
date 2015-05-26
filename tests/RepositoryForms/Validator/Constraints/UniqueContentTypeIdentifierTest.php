@@ -25,4 +25,10 @@ class UniqueContentTypeIdentifierTest extends PHPUnit_Framework_TestCase
         $constraint = new UniqueContentTypeIdentifier();
         self::assertSame('ezrepoforms.validator.unique_content_type_identifier', $constraint->validatedBy());
     }
+
+    public function testGetTargets()
+    {
+        $constraint = new UniqueContentTypeIdentifier();
+        self::assertSame(UniqueContentTypeIdentifier::CLASS_CONSTRAINT, $constraint->getTargets());
+    }
 }

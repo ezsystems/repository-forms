@@ -1,7 +1,10 @@
 {# @var value \EzSystems\RepositoryForms\Data\FieldDefinitionData #}
 {% block form_row %}
     <div class="field-definition-edit field-type-{{ value.fieldTypeIdentifier }}">
-        <h3>{{ value.names[languageCode] }} [{{ value.fieldTypeIdentifier }}] (id: {{ value.fieldDefinition.id }})</h3>
+        <h3>
+            {{ form_widget(form.selected) }}
+            {{ value.names[languageCode] }} [{{ value.fieldTypeIdentifier }}] (id: {{ value.fieldDefinition.id }})
+        </h3>
 
         <div class="field-definition-position">
             {{ form_label(form.position) }}

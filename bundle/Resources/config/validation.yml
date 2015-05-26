@@ -1,4 +1,6 @@
 EzSystems\RepositoryForms\Data\ContentTypeData:
+    constraints:
+        - EzSystems\RepositoryForms\Validator\Constraints\UniqueContentTypeIdentifier: ~
     properties:
         identifier:
             - NotBlank: ~
@@ -7,7 +9,6 @@ EzSystems\RepositoryForms\Data\ContentTypeData:
             - Regex:
                 pattern: "/^[[:alnum:]_]+$/"
                 message: "ez.content_type.identifier.pattern"
-            - EzSystems\RepositoryForms\Validator\Constraints\UniqueContentTypeIdentifier: ~
         urlAliasSchema:
             - Length:
                 max: 255
