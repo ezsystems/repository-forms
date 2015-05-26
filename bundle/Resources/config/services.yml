@@ -93,10 +93,15 @@ services:
         tags:
             - { name: twig.extension }
 
-    ezrepoforms.action_dispatcher.content_type:
-        class: %ezrepoforms.action_dispatcher.content_type.class%
+    ezrepoforms.action_dispatcher.base:
+        class: EzSystems\RepositoryForms\Form\ActionDispatcher\AbstractActionDispatcher
+        abstract: true
         calls:
             - [setEventDispatcher, [@event_dispatcher]]
+
+    ezrepoforms.action_dispatcher.content_type:
+        class: %ezrepoforms.action_dispatcher.content_type.class%
+        parent: ezrepoforms.action_dispatcher.base
 
     ezrepoforms.form_processor.content_type:
         class: %ezrepoforms.form_processor.content_type.class%
