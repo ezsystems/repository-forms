@@ -21,20 +21,20 @@ class FormActionEventTest extends PHPUnit_Framework_TestCase
         $form = $this->getMock('\Symfony\Component\Form\FormInterface');
         $data = new stdClass();
         $clickedButton = 'fooButton';
-        $languageCode = 'eng-GB';
+        $options = ['languageCode' => 'eng-GB', 'foo' => 'bar'];
 
-        $event = new FormActionEvent($form, $data, $clickedButton, $languageCode);
+        $event = new FormActionEvent($form, $data, $clickedButton, $options);
         self::assertSame($form, $event->getForm());
         self::assertSame($data, $event->getData());
         self::assertSame($clickedButton, $event->getClickedButton());
-        self::assertSame($languageCode, $event->getLanguageCode());
+        self::assertSame($options, $event->getOptions());
     }
 
     public function testEventDoesntHaveResponse()
     {
         $event = new FormActionEvent(
             $this->getMock('\Symfony\Component\Form\FormInterface'),
-            new stdClass(), 'fooButton', 'eng-GB'
+            new stdClass(), 'fooButton'
         );
         self::assertFalse($event->hasResponse());
         self::assertNull($event->getResponse());
@@ -44,7 +44,7 @@ class FormActionEventTest extends PHPUnit_Framework_TestCase
     {
         $event = new FormActionEvent(
             $this->getMock('\Symfony\Component\Form\FormInterface'),
-            new stdClass(), 'fooButton', 'eng-GB'
+            new stdClass(), 'fooButton'
         );
         self::assertFalse($event->hasResponse());
         self::assertNull($event->getResponse());
@@ -53,5 +53,22 @@ class FormActionEventTest extends PHPUnit_Framework_TestCase
         $event->setResponse($response);
         self::assertTrue($event->hasResponse());
         self::assertSame($response, $event->getResponse());
+    }
+
+    public function testGetOption()
+    {
+        $objectOption = new stdClass();
+        $options = ['languageCode' => 'eng-GB', 'foo' => 'bar', 'obj' => $objectOption];
+
+        $event = new FormActionEvent(
+            $this->getMock('\Symfony\Component\Form\FormInterface'),
+            new stdClass(), 'fooButton', $options
+        );
+        self::assertTrue($event->hasOption('languageCode'));
+        self::assertTrue($event->hasOption('foo'));
+        self::assertTrue($event->hasOption('obj'));
+        self::assertSame('eng-GB', $event->getOption('languageCode'));
+        self::assertSame('bar', $event->getOption('foo'));
+        self::assertSame($objectOption, $event->getOption('obj'));
     }
 }

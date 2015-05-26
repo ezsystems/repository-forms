@@ -60,17 +60,14 @@ class ContentTypeController extends Controller
         // Synchronize form and data.
         $form->handleRequest($request);
         if ($form->isValid()) {
-            // Always update FieldDefinitions and ContentTypeDraft
-            foreach ($contentTypeData->fieldDefinitionsData as $fieldDefData) {
-                $contentTypeService->updateFieldDefinition($contentTypeDraft, $fieldDefData->fieldDefinition, $fieldDefData);
-            }
-            $contentTypeService->updateContentTypeDraft($contentTypeDraft, $contentTypeData);
+            $actionDispatcher = $this->get('ezrepoforms.action_dispatcher.content_type');
+            $actionDispatcher->dispatchFormAction(
+                $form, $contentTypeData, $form->getClickedButton()->getName(),
+                ['languageCode' => $languageCode]
+            );
 
-            $clickedButtonName = $form->getClickedButton()->getName();
-            $event = new FormActionEvent($form, $form->getData(), $clickedButtonName, $languageCode);
-            $this->get('event_dispatcher')->dispatch(RepositoryFormEvents::CONTENT_TYPE_UPDATE . ".$clickedButtonName", $event);
-            if ($event->hasResponse()) {
-                return $event->getResponse();
+            if ($response = $actionDispatcher->getResponse()) {
+                return $response;
             }
 
             return $this->redirectToRoute('contenttype/update', ['contentTypeId' => $contentTypeId, 'languageCode' => $languageCode]);

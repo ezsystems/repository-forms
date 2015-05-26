@@ -14,6 +14,7 @@ parameters:
     ezrepoforms.validator.default_field_value.class: EzSystems\RepositoryForms\Validator\Constraints\FieldDefinitionDefaultValueValidator
 
     ezrepoforms.twig.field_edit_rendering_extension.class: EzSystems\RepositoryForms\Twig\FieldEditRenderingExtension
+    ezrepoforms.action_dispatcher.content_type.class: EzSystems\RepositoryForms\Form\ActionDispatcher\ContentTypeDispatcher
     ezrepoforms.form_processor.content_type.class: EzSystems\RepositoryForms\Form\Processor\ContentTypeFormProcessor
     ezrepoforms.form_processor.content_type.options.redirect_route_after_publish: ~
     ezrepoforms.form_processor.content_type.options:
@@ -91,6 +92,11 @@ services:
         arguments: [@ezpublish.templating.field_block_renderer]
         tags:
             - { name: twig.extension }
+
+    ezrepoforms.action_dispatcher.content_type:
+        class: %ezrepoforms.action_dispatcher.content_type.class%
+        calls:
+            - [setEventDispatcher, [@event_dispatcher]]
 
     ezrepoforms.form_processor.content_type:
         class: %ezrepoforms.form_processor.content_type.class%

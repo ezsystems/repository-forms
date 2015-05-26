@@ -49,10 +49,40 @@ class ContentTypeFormProcessorTest extends PHPUnit_Framework_TestCase
     public function testSubscribedEvents()
     {
         self::assertSame([
+            RepositoryFormEvents::CONTENT_TYPE_UPDATE => 'processDefaultAction',
             RepositoryFormEvents::CONTENT_TYPE_ADD_FIELD_DEFINITION => 'processAddFieldDefinition',
             RepositoryFormEvents::CONTENT_TYPE_REMOVE_FIELD_DEFINITION => 'processRemoveFieldDefinition',
             RepositoryFormEvents::CONTENT_TYPE_PUBLISH => 'processPublishContentType',
         ], ContentTypeFormProcessor::getSubscribedEvents());
+    }
+
+    public function testProcessDefaultAction()
+    {
+        $contentTypeDraft = new ContentTypeDraft();
+        $fieldDef1 = new FieldDefinition();
+        $fieldDefData1 = new FieldDefinitionData(['fieldDefinition' => $fieldDef1]);
+        $fieldDef2 = new FieldDefinition();
+        $fieldDefData2 = new FieldDefinitionData(['fieldDefinition' => $fieldDef2]);
+        $contentTypeData = new ContentTypeData(['contentTypeDraft' => $contentTypeDraft]);
+        $contentTypeData->addFieldDefinitionData($fieldDefData1);
+        $contentTypeData->addFieldDefinitionData($fieldDefData2);
+
+        $this->contentTypeService
+            ->expects($this->at(0))
+            ->method('updateFieldDefinition')
+            ->with($contentTypeDraft, $fieldDef1, $fieldDefData1);
+        $this->contentTypeService
+            ->expects($this->at(1))
+            ->method('updateFieldDefinition')
+            ->with($contentTypeDraft, $fieldDef2, $fieldDefData2);
+        $this->contentTypeService
+            ->expects($this->at(2))
+            ->method('updateContentTypeDraft')
+            ->with($contentTypeDraft, $contentTypeData);
+
+        $event = new FormActionEvent($this->getMock('\Symfony\Component\Form\FormInterface'), $contentTypeData, 'fooAction');
+        $this->formProcessor->processDefaultAction($event);
+
     }
 
     public function testAddFieldDefinition()
@@ -100,7 +130,7 @@ class ContentTypeFormProcessorTest extends PHPUnit_Framework_TestCase
             $mainForm,
             new ContentTypeData(['contentTypeDraft' => $contentTypeDraft]),
             'addFieldDefinition',
-            $languageCode
+            ['languageCode' => $languageCode]
         );
         $this->formProcessor->processAddFieldDefinition($event);
     }
@@ -111,7 +141,7 @@ class ContentTypeFormProcessorTest extends PHPUnit_Framework_TestCase
         $event = new FormActionEvent(
             $this->getMock('\Symfony\Component\Form\FormInterface'),
             new ContentTypeData(['contentTypeDraft' => $contentTypeDraft]),
-            'publishContentType', 'eng-GB'
+            'publishContentType', ['languageCode' => 'eng-GB']
         );
         $this->contentTypeService
             ->expects($this->once())
@@ -129,7 +159,7 @@ class ContentTypeFormProcessorTest extends PHPUnit_Framework_TestCase
         $event = new FormActionEvent(
             $this->getMock('\Symfony\Component\Form\FormInterface'),
             new ContentTypeData(['contentTypeDraft' => $contentTypeDraft]),
-            'publishContentType', 'eng-GB'
+            'publishContentType', ['languageCode' => 'eng-GB']
         );
         $this->contentTypeService
             ->expects($this->once())
@@ -217,7 +247,7 @@ class ContentTypeFormProcessorTest extends PHPUnit_Framework_TestCase
         $event = new FormActionEvent(
             $mainForm,
             new ContentTypeData(['contentTypeDraft' => $contentTypeDraft]),
-            'removeFieldDefinition', 'eng-GB'
+            'removeFieldDefinition', ['languageCode' => 'eng-GB']
         );
         $this->formProcessor->processRemoveFieldDefinition($event);
     }
