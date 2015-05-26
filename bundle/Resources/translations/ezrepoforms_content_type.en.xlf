@@ -123,6 +123,14 @@
                 <source>field_definition.ezfloat.max_value</source>
                 <target>Maximum value</target>
             </trans-unit>
+            <trans-unit id="115">
+                <source>field_definition.ezinteger.min_value</source>
+                <target>Minimum value</target>
+            </trans-unit>
+            <trans-unit id="116">
+                <source>field_definition.ezinteger.max_value</source>
+                <target>Maximum value</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>

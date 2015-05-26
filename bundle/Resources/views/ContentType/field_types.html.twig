@@ -22,6 +22,20 @@
     </div>
 {% endblock %}
 
+{% block ezinteger_field_definition_edit %}
+    <div class="ezinteger-validator min-value">
+        {{- form_label(form.minValue) -}}
+        {{- form_errors(form.minValue) -}}
+        {{- form_widget(form.minValue) -}}
+    </div>
+
+    <div class="ezinteger-validator max-value">
+        {{- form_label(form.maxValue) -}}
+        {{- form_errors(form.maxValue) -}}
+        {{- form_widget(form.maxValue) -}}
+    </div>
+{% endblock %}
+
 {% block ezstring_field_definition_edit %}
     <div class="ezstring-validator min-length">
         {{- form_label(form.minLength) -}}
