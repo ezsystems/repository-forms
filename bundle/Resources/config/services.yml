@@ -3,6 +3,7 @@ parameters:
     ezrepoforms.content_type.update.form_type.class: EzSystems\RepositoryForms\Form\Type\ContentTypeUpdateType
     ezrepoforms.field_definition.form_type.class: EzSystems\RepositoryForms\Form\Type\FieldDefinition\FieldDefinitionType
 
+    ezrepoforms.field_type.form_mapper.ezcountry.class: EzSystems\RepositoryForms\FieldType\Mapper\CountryFormMapper
     ezrepoforms.field_type.form_mapper.ezfloat.class: EzSystems\RepositoryForms\FieldType\Mapper\FloatFormMapper
     ezrepoforms.field_type.form_mapper.ezinteger.class: EzSystems\RepositoryForms\FieldType\Mapper\IntegerFormMapper
     ezrepoforms.field_type.form_mapper.ezisbn.class: EzSystems\RepositoryForms\FieldType\Mapper\ISBNFormMapper
@@ -37,6 +38,12 @@ services:
             - { name: form.type, alias: ezrepoforms_fielddefinition_update }
 
     # FieldType form mappers
+    ezrepoforms.field_type.form_mapper.ezcountry:
+        class: %ezrepoforms.field_type.form_mapper.ezcountry.class%
+        arguments: [%ezpublish.fieldType.ezcountry.data%]
+        tags:
+            - { name: ez.fieldType.formMapper, fieldType: ezcountry }
+
     ezrepoforms.field_type.form_mapper.ezfloat:
         class: %ezrepoforms.field_type.form_mapper.ezfloat.class%
         tags:
