@@ -23,11 +23,11 @@ class FormActionEvent extends FormEvent
     private $clickedButton;
 
     /**
-     * Language code current form is edited in.
+     * Hash of options.
      *
-     * @var string
+     * @var array
      */
-    private $languageCode;
+    private $options;
 
     /**
      * Response to return after form post-processing. Typically a RedirectResponse.
@@ -36,11 +36,11 @@ class FormActionEvent extends FormEvent
      */
     private $response;
 
-    public function __construct(FormInterface $form, $data, $clickedButton, $languageCode)
+    public function __construct(FormInterface $form, $data, $clickedButton, array $options = [])
     {
         parent::__construct($form, $data);
         $this->clickedButton = $clickedButton;
-        $this->languageCode = $languageCode;
+        $this->options = $options;
     }
 
     /**
@@ -52,11 +52,36 @@ class FormActionEvent extends FormEvent
     }
 
     /**
-     * @return string
+     * @return array
      */
-    public function getLanguageCode()
+    public function getOptions()
     {
-        return $this->languageCode;
+        return $this->options;
+    }
+
+    /**
+     * @param string $optionName The option name
+     * @param mixed $defaultValue Default value to return if option is not set.
+     *
+     * @return mixed
+     */
+    public function getOption($optionName, $defaultValue = null)
+    {
+        if (!isset($this->options[$optionName])) {
+            return $defaultValue;
+        }
+
+        return $this->options[$optionName];
+    }
+
+    /**
+     * @param string $optionName
+     *
+     * @return bool
+     */
+    public function hasOption($optionName)
+    {
+        return isset($this->options[$optionName]);
     }
 
     /**

@@ -15,7 +15,6 @@ use EzSystems\RepositoryForms\Event\FormActionEvent;
 use EzSystems\RepositoryForms\Event\RepositoryFormEvents;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\RouterInterface;
 
 class ContentTypeFormProcessor implements EventSubscriberInterface
@@ -50,10 +49,23 @@ class ContentTypeFormProcessor implements EventSubscriberInterface
     public static function getSubscribedEvents()
     {
         return [
+            RepositoryFormEvents::CONTENT_TYPE_UPDATE => 'processDefaultAction',
             RepositoryFormEvents::CONTENT_TYPE_ADD_FIELD_DEFINITION => 'processAddFieldDefinition',
             RepositoryFormEvents::CONTENT_TYPE_REMOVE_FIELD_DEFINITION => 'processRemoveFieldDefinition',
             RepositoryFormEvents::CONTENT_TYPE_PUBLISH => 'processPublishContentType',
         ];
+    }
+
+    public function processDefaultAction(FormActionEvent $event)
+    {
+        // Always update FieldDefinitions and ContentTypeDraft
+        /** @var \EzSystems\RepositoryForms\Data\ContentTypeData $contentTypeData */
+        $contentTypeData = $event->getData();
+        $contentTypeDraft = $contentTypeData->contentTypeDraft;
+        foreach ($contentTypeData->fieldDefinitionsData as $fieldDefData) {
+            $this->contentTypeService->updateFieldDefinition($contentTypeDraft, $fieldDefData->fieldDefinition, $fieldDefData);
+        }
+        $this->contentTypeService->updateContentTypeDraft($contentTypeDraft, $contentTypeData);
     }
 
     public function processAddFieldDefinition(FormActionEvent $event)
@@ -63,7 +75,7 @@ class ContentTypeFormProcessor implements EventSubscriberInterface
         $fieldDefCreateStruct = new FieldDefinitionCreateStruct([
             'fieldTypeIdentifier' => $fieldTypeIdentifier,
             'identifier' => sprintf('new_%s_%d', $fieldTypeIdentifier, count($contentTypeDraft->fieldDefinitions) + 1),
-            'names' => [$event->getLanguageCode() => 'New FieldDefinition'],
+            'names' => [$event->getOption('languageCode') => 'New FieldDefinition'],
         ]);
         $this->contentTypeService->addFieldDefinition($contentTypeDraft, $fieldDefCreateStruct);
     }

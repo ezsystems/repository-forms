@@ -1,0 +1,90 @@
+<?php
+/**
+ * This file is part of the eZ RepositoryForms package.
+ *
+ * @copyright Copyright (C) eZ Systems AS. All rights reserved.
+ * @license For full copyright and license information view LICENSE file distributed with this source code.
+ * @version //autogentag//
+ */
+
+namespace EzSystems\RepositoryForms\Form\ActionDispatcher;
+
+use eZ\Publish\API\Repository\Values\ValueObject;
+use EzSystems\RepositoryForms\Event\FormActionEvent;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Symfony\Component\Form\FormInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
+
+/**
+ * Base class for action dispatchers.
+ */
+abstract class AbstractActionDispatcher implements ActionDispatcherInterface
+{
+    /**
+     * @var EventDispatcherInterface
+     */
+    private $eventDispatcher;
+
+    /**
+     * @var \Symfony\Component\HttpFoundation\Response
+     */
+    protected $response;
+
+    public function setEventDispatcher(EventDispatcherInterface $eventDispatcher)
+    {
+        $this->eventDispatcher = $eventDispatcher;
+    }
+
+    public function dispatchFormAction(FormInterface $form, ValueObject $data, $actionName, array $options = [])
+    {
+        $resolver = new OptionsResolver();
+        $this->configureOptions($resolver);
+        $options = $resolver->resolve($options);
+
+        // First dispatch default action, then $actionName.
+        $event = new FormActionEvent($form, $data, $actionName, $options);
+        $defaultActionEventName = $this->getActionEventBaseName();
+        $this->dispatchDefaultAction($defaultActionEventName, $event);
+        $this->dispatchAction($defaultActionEventName . ($actionName ? ".$actionName" : ''), $event);
+        $this->response = $event->getResponse();
+    }
+
+    /**
+     * Configures options to pass to the form action event.
+     * Might do nothing if there are no options.
+     *
+     * @param OptionsResolver $resolver
+     */
+    abstract protected function configureOptions(OptionsResolver $resolver);
+
+    /**
+     * Returns base for action event name. It will be used as default action event name.
+     * By convention, other action event names will have the format "<actionEventBaseName>.<actionName>".
+     *
+     * @return string
+     */
+    abstract protected function getActionEventBaseName();
+
+    /**
+     * @param $defaultActionEventName
+     * @param $event
+     */
+    protected function dispatchDefaultAction($defaultActionEventName, FormActionEvent $event)
+    {
+        $this->eventDispatcher->dispatch($defaultActionEventName, $event);
+    }
+
+    /**
+     * @param $actionEventName
+     * @param $event
+     */
+    protected function dispatchAction($actionEventName, FormActionEvent $event)
+    {
+        $this->eventDispatcher->dispatch($actionEventName, $event);
+    }
+
+    public function getResponse()
+    {
+        return $this->response;
+    }
+}
