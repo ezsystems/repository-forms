@@ -131,6 +131,10 @@
                 <source>field_definition.ezinteger.max_value</source>
                 <target>Maximum value</target>
             </trans-unit>
+            <trans-unit id="117">
+                <source>field_definition.ezisbn.is_isbn13</source>
+                <target>ISBN-13 format</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>

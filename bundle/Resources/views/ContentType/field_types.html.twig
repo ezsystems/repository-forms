@@ -36,6 +36,14 @@
     </div>
 {% endblock %}
 
+{% block ezisbn_field_definition_edit %}
+    <div class="ezisbn-settings is-isbn13">
+        {{- form_label(form.isISBN13) -}}
+        {{- form_errors(form.isISBN13) -}}
+        {{- form_widget(form.isISBN13) -}}
+    </div>
+{% endblock %}
+
 {% block ezstring_field_definition_edit %}
     <div class="ezstring-validator min-length">
         {{- form_label(form.minLength) -}}
