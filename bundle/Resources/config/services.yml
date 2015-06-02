@@ -4,6 +4,7 @@ parameters:
     ezrepoforms.field_definition.form_type.class: EzSystems\RepositoryForms\Form\Type\FieldDefinition\FieldDefinitionType
 
     ezrepoforms.field_type.form_mapper.ezcountry.class: EzSystems\RepositoryForms\FieldType\Mapper\CountryFormMapper
+    ezrepoforms.field_type.form_mapper.ezdate.class: EzSystems\RepositoryForms\FieldType\Mapper\DateFormMapper
     ezrepoforms.field_type.form_mapper.ezfloat.class: EzSystems\RepositoryForms\FieldType\Mapper\FloatFormMapper
     ezrepoforms.field_type.form_mapper.ezinteger.class: EzSystems\RepositoryForms\FieldType\Mapper\IntegerFormMapper
     ezrepoforms.field_type.form_mapper.ezisbn.class: EzSystems\RepositoryForms\FieldType\Mapper\ISBNFormMapper
@@ -45,6 +46,11 @@ services:
         arguments: [%ezpublish.fieldType.ezcountry.data%]
         tags:
             - { name: ez.fieldType.formMapper, fieldType: ezcountry }
+
+    ezrepoforms.field_type.form_mapper.ezdate:
+        class: %ezrepoforms.field_type.form_mapper.ezdate.class%
+        tags:
+            - { name: ez.fieldType.formMapper, fieldType: ezdate }
 
     ezrepoforms.field_type.form_mapper.ezfloat:
         class: %ezrepoforms.field_type.form_mapper.ezfloat.class%

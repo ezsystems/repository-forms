@@ -159,6 +159,18 @@
                 <source>field_definition.eztime.default_type_current</source>
                 <target>Current time</target>
             </trans-unit>
+            <trans-unit id="124">
+                <source>field_definition.ezdate.default_type</source>
+                <target>Default value</target>
+            </trans-unit>
+            <trans-unit id="125">
+                <source>field_definition.ezdate.default_type_empty</source>
+                <target>Empty</target>
+            </trans-unit>
+            <trans-unit id="126">
+                <source>field_definition.ezdate.default_type_current</source>
+                <target>Current date</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>
