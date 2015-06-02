@@ -135,6 +135,14 @@
                 <source>field_definition.ezisbn.is_isbn13</source>
                 <target>ISBN-13 format</target>
             </trans-unit>
+            <trans-unit id="118">
+                <source>field_definition.ezcountry.is_multiple</source>
+                <target>Multiple choice</target>
+            </trans-unit>
+            <trans-unit id="119">
+                <source>field_definition.ezcountry.default_value</source>
+                <target>Select which countries by default</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>
