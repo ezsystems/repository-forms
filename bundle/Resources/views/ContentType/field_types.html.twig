@@ -85,3 +85,17 @@
         {{- form_widget(form.textRows) -}}
     </div>
 {% endblock %}
+
+{% block eztime_field_definition_edit %}
+    <div class="eztime-settings use-seconds">
+        {{- form_label(form.useSeconds) -}}
+        {{- form_errors(form.useSeconds) -}}
+        {{- form_widget(form.useSeconds) -}}
+    </div>
+
+    <div class="eztime-settings default-type">
+        {{- form_label(form.defaultType) -}}
+        {{- form_errors(form.defaultType) -}}
+        {{- form_widget(form.defaultType) -}}
+    </div>
+{% endblock %}
