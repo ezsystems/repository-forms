@@ -143,6 +143,22 @@
                 <source>field_definition.ezcountry.default_value</source>
                 <target>Select which countries by default</target>
             </trans-unit>
+            <trans-unit id="120">
+                <source>field_definition.eztime.use_seconds</source>
+                <target>Use seconds</target>
+            </trans-unit>
+            <trans-unit id="121">
+                <source>field_definition.eztime.default_type</source>
+                <target>Default value</target>
+            </trans-unit>
+            <trans-unit id="122">
+                <source>field_definition.eztime.default_type_empty</source>
+                <target>Empty</target>
+            </trans-unit>
+            <trans-unit id="123">
+                <source>field_definition.eztime.default_type_current</source>
+                <target>Current time</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>
