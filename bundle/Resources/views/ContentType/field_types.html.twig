@@ -22,6 +22,14 @@
     </div>
 {% endblock %}
 
+{% block ezdate_field_definition_edit %}
+    <div class="ezdate-settings default-type">
+        {{- form_label(form.defaultType) -}}
+        {{- form_errors(form.defaultType) -}}
+        {{- form_widget(form.defaultType) -}}
+    </div>
+{% endblock %}
+
 {% block ezfloat_field_definition_edit %}
     <div class="ezfloat-validator min-value">
         {{- form_label(form.minValue) -}}
