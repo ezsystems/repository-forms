@@ -227,6 +227,10 @@
                 <source>field_definition.ezselection.options</source>
                 <target>Options</target>
             </trans-unit>
+            <trans-unit id="140">
+                <source>field_definition.ezrichtext.num_rows</source>
+                <target>Number of text rows in the editor</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>

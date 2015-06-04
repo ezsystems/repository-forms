@@ -11,6 +11,7 @@ parameters:
     ezrepoforms.field_type.form_mapper.ezisbn.class: EzSystems\RepositoryForms\FieldType\Mapper\ISBNFormMapper
     ezrepoforms.field_type.form_mapper.ezmedia.class: EzSystems\RepositoryForms\FieldType\Mapper\MediaFormMapper
     ezrepoforms.field_type.form_mapper.ezpage.class: EzSystems\RepositoryForms\FieldType\Mapper\PageFormMapper
+    ezrepoforms.field_type.form_mapper.ezrichtext.class: EzSystems\RepositoryForms\FieldType\Mapper\RichTextFormMapper
     ezrepoforms.field_type.form_mapper.ezselection.class: EzSystems\RepositoryForms\FieldType\Mapper\SelectionFormMapper
     ezrepoforms.field_type.form_mapper.ezstring.class: EzSystems\RepositoryForms\FieldType\Mapper\TextLineFormMapper
     ezrepoforms.field_type.form_mapper.eztext.class: EzSystems\RepositoryForms\FieldType\Mapper\TextBlockFormMapper
@@ -86,6 +87,11 @@ services:
         arguments: [@ezpublish.fieldType.ezpage.pageService]
         tags:
             - { name: ez.fieldType.formMapper, fieldType: ezpage }
+
+    ezrepoforms.field_type.form_mapper.ezrichtext:
+        class: %ezrepoforms.field_type.form_mapper.ezrichtext.class%
+        tags:
+            - { name: ez.fieldType.formMapper, fieldType: ezrichtext }
 
     ezrepoforms.field_type.form_mapper.ezselection:
         class: %ezrepoforms.field_type.form_mapper.ezselection.class%

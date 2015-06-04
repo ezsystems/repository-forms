@@ -96,6 +96,14 @@
     </div>
 {% endblock %}
 
+{% block ezrichtext_field_definition_edit %}
+    <div class="ezrichtext-settings num-rows">
+        {{- form_label(form.numRows) -}}
+        {{- form_errors(form.numRows) -}}
+        {{- form_widget(form.numRows) -}}
+    </div>
+{% endblock %}
+
 {% block ezselection_field_definition_edit %}
     <div class="ezselection-settings is-multiple">
         {{- form_label(form.isMultiple) -}}
