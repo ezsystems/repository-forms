@@ -171,6 +171,10 @@
                 <source>field_definition.ezdate.default_type_current</source>
                 <target>Current date</target>
             </trans-unit>
+            <trans-unit id="127">
+                <source>field_definition.ezbinaryfile.max_file_size</source>
+                <target>Maximum file size (MB)</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>
