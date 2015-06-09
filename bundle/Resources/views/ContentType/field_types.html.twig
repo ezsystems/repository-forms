@@ -8,6 +8,14 @@
 
 {# @var data \EzSystems\RepositoryForms\Data\FieldDefinitionData #}
 {# @var form \Symfony\Component\Form\FormView #}
+{% block ezbinaryfile_field_definition_edit %}
+    <div class="ezbinaryfile-validator max-file-size">
+        {{- form_label(form.maxSize) -}}
+        {{- form_errors(form.maxSize) -}}
+        {{- form_widget(form.maxSize) -}}
+    </div>
+{% endblock %}
+
 {% block ezcountry_field_definition_edit %}
     <div class="ezcountry-settings is-multiple">
         {{- form_label(form.isMultiple) -}}
