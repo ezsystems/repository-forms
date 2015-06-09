@@ -211,6 +211,10 @@
                 <source>field_definition.ezmedia.type_html5_audio</source>
                 <target>HTML5 audio</target>
             </trans-unit>
+            <trans-unit id="137">
+                <source>field_definition.ezpage.default_layout</source>
+                <target>Default layout</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>
