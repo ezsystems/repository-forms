@@ -231,6 +231,10 @@
                 <source>field_definition.ezrichtext.num_rows</source>
                 <target>Number of text rows in the editor</target>
             </trans-unit>
+            <trans-unit id="141">
+                <source>field_definition.ezimage.max_file_size</source>
+                <target>Maximum file size (byte)</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>
