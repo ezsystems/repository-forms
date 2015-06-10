@@ -19,7 +19,7 @@ class BinaryFileFormMapper implements FieldTypeFormMapperInterface
     {
         $fieldDefinitionForm
             ->add('maxSize', 'integer', [
-                'required' => true,
+                'required' => false,
                 'property_path' => 'validatorConfiguration[FileSizeValidator][maxFileSize]',
                 'label' => 'field_definition.ezbinaryfile.max_file_size',
             ]);
