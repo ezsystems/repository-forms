@@ -53,6 +53,7 @@ class ContentTypeFormProcessorTest extends PHPUnit_Framework_TestCase
             RepositoryFormEvents::CONTENT_TYPE_ADD_FIELD_DEFINITION => 'processAddFieldDefinition',
             RepositoryFormEvents::CONTENT_TYPE_REMOVE_FIELD_DEFINITION => 'processRemoveFieldDefinition',
             RepositoryFormEvents::CONTENT_TYPE_PUBLISH => 'processPublishContentType',
+            RepositoryFormEvents::CONTENT_TYPE_REMOVE_DRAFT => 'processRemoveContentTypeDraft',
         ], ContentTypeFormProcessor::getSubscribedEvents());
     }
 
@@ -250,5 +251,48 @@ class ContentTypeFormProcessorTest extends PHPUnit_Framework_TestCase
             'removeFieldDefinition', ['languageCode' => 'eng-GB']
         );
         $this->formProcessor->processRemoveFieldDefinition($event);
+    }
+
+    public function testRemoveContentTypeDraft()
+    {
+        $contentTypeDraft = new ContentTypeDraft();
+        $event = new FormActionEvent(
+            $this->getMock('\Symfony\Component\Form\FormInterface'),
+            new ContentTypeData(['contentTypeDraft' => $contentTypeDraft]),
+            'removeDraft', ['languageCode' => 'eng-GB']
+        );
+        $this->contentTypeService
+            ->expects($this->once())
+            ->method('deleteContentType')
+            ->with($contentTypeDraft);
+
+        $this->formProcessor->processRemoveContentTypeDraft($event);
+    }
+
+    public function testRemoveContentTypeDraftWithRedirection()
+    {
+        $redirectRoute = 'foo';
+        $redirectUrl = 'http://foo.com/bar';
+        $contentTypeDraft = new ContentTypeDraft();
+        $event = new FormActionEvent(
+            $this->getMock('\Symfony\Component\Form\FormInterface'),
+            new ContentTypeData(['contentTypeDraft' => $contentTypeDraft]),
+            'removeDraft', ['languageCode' => 'eng-GB']
+        );
+        $this->contentTypeService
+            ->expects($this->once())
+            ->method('deleteContentType')
+            ->with($contentTypeDraft);
+
+        $this->router
+            ->expects($this->once())
+            ->method('generate')
+            ->with($redirectRoute)
+            ->willReturn($redirectUrl);
+        $expectedRedirectResponse = new RedirectResponse($redirectUrl);
+        $formProcessor = new ContentTypeFormProcessor($this->contentTypeService, $this->router, ['redirectRouteAfterPublish' => $redirectRoute]);
+        $formProcessor->processRemoveContentTypeDraft($event);
+        self::assertTrue($event->hasResponse());
+        self::assertEquals($expectedRedirectResponse, $event->getResponse());
     }
 }
