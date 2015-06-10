@@ -96,6 +96,27 @@
     </div>
 {% endblock %}
 
+{% block ezselection_field_definition_edit %}
+    <div class="ezselection-settings is-multiple">
+        {{- form_label(form.isMultiple) -}}
+        {{- form_errors(form.isMultiple) -}}
+        {{- form_widget(form.isMultiple) -}}
+    </div>
+
+    <div class="ezselection-settings options">
+        {{ form_label(form.options) }}
+        {{ form_errors(form.options) }}
+        {% for option in form.options %}
+            <div>
+                {{ form_errors(option) }}
+                {{ form_widget(option) }}
+            </div>
+        {% endfor %}
+        {# This field is used for adding new select items #}
+        {{ form_widget(form.options.vars.prototype) }}
+    </div>
+{% endblock %}
+
 {% block ezstring_field_definition_edit %}
     <div class="ezstring-validator min-length">
         {{- form_label(form.minLength) -}}
