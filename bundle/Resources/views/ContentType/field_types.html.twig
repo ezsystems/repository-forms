@@ -74,6 +74,20 @@
     </div>
 {% endblock %}
 
+{% block ezmedia_field_definition_edit %}
+    <div class="ezmedia-validator max-file-size">
+        {{- form_label(form.maxSize) -}}
+        {{- form_errors(form.maxSize) -}}
+        {{- form_widget(form.maxSize) -}}
+    </div>
+
+    <div class="ezmedia-settings media-type">
+        {{- form_label(form.mediaType) -}}
+        {{- form_errors(form.mediaType) -}}
+        {{- form_widget(form.mediaType) -}}
+    </div>
+{% endblock %}
+
 {% block ezstring_field_definition_edit %}
     <div class="ezstring-validator min-length">
         {{- form_label(form.minLength) -}}
