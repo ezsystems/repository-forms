@@ -88,6 +88,14 @@
     </div>
 {% endblock %}
 
+{% block ezpage_field_definition_edit %}
+    <div class="ezpage-settings default-layout">
+        {{- form_label(form.defaultLayout) -}}
+        {{- form_errors(form.defaultLayout) -}}
+        {{- form_widget(form.defaultLayout) -}}
+    </div>
+{% endblock %}
+
 {% block ezstring_field_definition_edit %}
     <div class="ezstring-validator min-length">
         {{- form_label(form.minLength) -}}
