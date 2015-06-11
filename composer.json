@@ -23,5 +23,10 @@
             "EzSystems\\RepositoryForms\\Tests\\": "tests/RepositoryForms",
             "EzSystems\\RepositoryFormsBundle\\Tests\\": "tests/RepositoryFormsBundle"
         }
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "0.1.x-dev"
+        }
     }
 }
