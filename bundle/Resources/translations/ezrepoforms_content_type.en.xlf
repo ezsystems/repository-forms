@@ -175,6 +175,42 @@
                 <source>field_definition.ezbinaryfile.max_file_size</source>
                 <target>Maximum file size (MB)</target>
             </trans-unit>
+            <trans-unit id="128">
+                <source>field_definition.ezmedia.max_file_size</source>
+                <target>Maximum file size (MB)</target>
+            </trans-unit>
+            <trans-unit id="129">
+                <source>field_definition.ezmedia.media_type</source>
+                <target>Media type</target>
+            </trans-unit>
+            <trans-unit id="130">
+                <source>field_definition.ezmedia.type_html5_video</source>
+                <target>HTML5 video</target>
+            </trans-unit>
+            <trans-unit id="131">
+                <source>field_definition.ezmedia.type_flash</source>
+                <target>Flash</target>
+            </trans-unit>
+            <trans-unit id="132">
+                <source>field_definition.ezmedia.type_quick_time</source>
+                <target>QuickTime</target>
+            </trans-unit>
+            <trans-unit id="133">
+                <source>field_definition.ezmedia.type_real_player</source>
+                <target>RealPlayer</target>
+            </trans-unit>
+            <trans-unit id="134">
+                <source>field_definition.ezmedia.type_silverlight</source>
+                <target>Silverlight</target>
+            </trans-unit>
+            <trans-unit id="135">
+                <source>field_definition.ezmedia.type_windows_media_player</source>
+                <target>Windows Media Player</target>
+            </trans-unit>
+            <trans-unit id="136">
+                <source>field_definition.ezmedia.type_html5_audio</source>
+                <target>HTML5 audio</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>
