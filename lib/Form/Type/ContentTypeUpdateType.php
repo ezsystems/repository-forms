@@ -125,10 +125,11 @@ class ContentTypeUpdateType extends AbstractType
     private function getFieldTypeList()
     {
         $list = [];
-        foreach ($this->fieldTypeCollectionFactory->getFieldTypes() as $fieldTypeIdentifier => $fieldType) {
+        foreach ($this->fieldTypeCollectionFactory->getConcreteFieldTypesIdentifiers() as $fieldTypeIdentifier) {
             $list[$fieldTypeIdentifier] = $this->translator->trans("$fieldTypeIdentifier.name", [], 'fieldtypes');
         }
 
+        asort($list, SORT_NATURAL);
         return $list;
     }
 }
