@@ -116,6 +116,29 @@
     </div>
 {% endblock %}
 
+{% block ezobjectrelationlist_field_definition_edit %}
+    <div class="ezobjectrelationlist-settings selection-default-location">
+        {{- form_label(form.selectionDefaultLocation) -}}
+        {{- form_errors(form.selectionDefaultLocation) -}}
+        {{- form_widget(form.selectionDefaultLocation) -}}
+
+        <button data-universaldiscovery-title="{{"field_definition.ezobjectrelationlist.selection_root_udw_title"|trans({}, "ezrepoforms_content_type")}}"
+                class="ez-button-tree pure-button ez-font-icon ez-button ez-relation-pick-root-button"
+                data-relation-root-input-selector="#{{form.selectionDefaultLocation.vars.id}}"
+                data-relation-selected-root-name-selector="#{{form.selectionDefaultLocation.vars.id}}-selected-root-name"
+                >{{"field_definition.ezobjectrelationlist.selection_root_udw_button"|trans({}, "ezrepoforms_content_type")}}</button>
+        <div id="{{form.selectionDefaultLocation.vars.id}}-selected-root-name">
+            {{ render( controller( "ez_content:viewLocation", {'locationId': form.selectionDefaultLocation.vars.value, 'viewType': '_platformui_content_name'} ) ) }}
+        </div>
+    </div>
+
+    <div class="ezobjectrelationlist-settings selection-content-types">
+        {{- form_label(form.selectionContentTypes) -}}
+        {{- form_errors(form.selectionContentTypes) -}}
+        {{- form_widget(form.selectionContentTypes) -}}
+    </div>
+{% endblock %}
+
 {% block ezpage_field_definition_edit %}
     <div class="ezpage-settings default-layout">
         {{- form_label(form.defaultLayout) -}}
