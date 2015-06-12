@@ -303,6 +303,18 @@
                 <source>field_definition.ezdatetime.date_interval</source>
                 <target>Current date and time adjusted by</target>
             </trans-unit>
+            <trans-unit id="148">
+                <source>field_definition.ezobjectrelation.selection_root</source>
+                <target>Default selection item</target>
+            </trans-unit>
+            <trans-unit id="149">
+                <source>field_definition.ezobjectrelation.selection_root_udw_title</source>
+                <target>Select a start location for browsing for relations</target>
+            </trans-unit>
+            <trans-unit id="150">
+                <source>field_definition.ezobjectrelation.selection_root_udw_button</source>
+                <target>Select item</target>
+            </trans-unit>
             <trans-unit id="151">
                 <source>field_definition.ezobjectrelationlist.selection_default_location</source>
                 <target>Default location</target>

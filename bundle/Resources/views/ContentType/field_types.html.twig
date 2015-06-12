@@ -116,6 +116,23 @@
     </div>
 {% endblock %}
 
+{% block ezobjectrelation_field_definition_edit %}
+    <div class="ezobjectrelation-settings selection-root">
+        {{- form_label(form.selectionRoot) -}}
+        {{- form_errors(form.selectionRoot) -}}
+        {{- form_widget(form.selectionRoot) -}}
+
+        <button data-universaldiscovery-title="{{"field_definition.ezobjectrelation.selection_root_udw_title"|trans({}, "ezrepoforms_content_type")}}"
+                class="ez-button-tree pure-button ez-font-icon ez-button ez-relation-pick-root-button"
+                data-relation-root-input-selector="#{{form.selectionRoot.vars.id}}"
+                data-relation-selected-root-name-selector="#{{form.selectionRoot.vars.id}}-selected-root-name"
+                >{{"field_definition.ezobjectrelation.selection_root_udw_button"|trans({}, "ezrepoforms_content_type")}}</button>
+        <div id="{{form.selectionRoot.vars.id}}-selected-root-name">
+            {{ render( controller( "ez_content:viewLocation", {'locationId': form.selectionRoot.vars.value, 'viewType': '_platformui_content_name'} ) ) }}
+        </div>
+    </div>
+{% endblock %}
+
 {% block ezobjectrelationlist_field_definition_edit %}
     <div class="ezobjectrelationlist-settings selection-default-location">
         {{- form_label(form.selectionDefaultLocation) -}}
