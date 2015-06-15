@@ -59,7 +59,8 @@
         {{ ez_render_fielddefinition_edit(value, {"languageCode": languageCode, "form": form}) }}
         {# Default rendering #}
         {% for child in form %}
-            {% if not child.rendered %}
+            {# Iterable children means collections, they are handled in field_types.html.twig #}
+            {% if not child.rendered and child is not iterable %}
                 <div>
                     {{- form_label(child) -}}
                     {{- form_errors(child) -}}

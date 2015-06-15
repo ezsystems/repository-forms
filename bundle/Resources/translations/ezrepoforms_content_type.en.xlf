@@ -219,6 +219,14 @@
                 <source>field_definition.ezpage.default_layout</source>
                 <target>Default layout</target>
             </trans-unit>
+            <trans-unit id="138">
+                <source>field_definition.ezselection.is_multiple</source>
+                <target>Multiple choice</target>
+            </trans-unit>
+            <trans-unit id="139">
+                <source>field_definition.ezselection.options</source>
+                <target>Options</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>
