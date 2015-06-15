@@ -114,6 +114,7 @@ class ContentTypeUpdateType extends AbstractType
             ->add('addFieldDefinition', 'submit', ['label' => 'content_type.add_field_definition'])
             ->add('removeFieldDefinition', 'submit', ['label' => 'content_type.remove_field_definitions'])
             ->add('saveContentType', 'submit', ['label' => 'content_type.save'])
+            ->add('removeDraft', 'submit', ['label' => 'content_type.remove_draft'])
             ->add('publishContentType', 'submit', ['label' => 'content_type.publish']);
     }
 

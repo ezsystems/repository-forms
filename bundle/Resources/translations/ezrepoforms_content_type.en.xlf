@@ -66,6 +66,10 @@
                 <source>content_type.remove_field_definitions</source>
                 <target>Remove selected field definitions</target>
             </trans-unit>
+            <trans-unit id="17">
+                <source>content_type.remove_draft</source>
+                <target>Cancel</target>
+            </trans-unit>
             <!-- Field definition -->
             <trans-unit id="101">
                 <source>field_definition.name</source>

@@ -30,4 +30,9 @@ final class RepositoryFormEvents
      * Triggered when saving the draft + publishing the ContentType.
      */
     const CONTENT_TYPE_PUBLISH = 'contentType.update.publishContentType';
+
+    /**
+     * Triggered when removing the draft (e.g. "cancel" action).
+     */
+    const CONTENT_TYPE_REMOVE_DRAFT = 'contentType.update.removeDraft';
 }

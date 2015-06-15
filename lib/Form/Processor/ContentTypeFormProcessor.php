@@ -53,6 +53,7 @@ class ContentTypeFormProcessor implements EventSubscriberInterface
             RepositoryFormEvents::CONTENT_TYPE_ADD_FIELD_DEFINITION => 'processAddFieldDefinition',
             RepositoryFormEvents::CONTENT_TYPE_REMOVE_FIELD_DEFINITION => 'processRemoveFieldDefinition',
             RepositoryFormEvents::CONTENT_TYPE_PUBLISH => 'processPublishContentType',
+            RepositoryFormEvents::CONTENT_TYPE_REMOVE_DRAFT => 'processRemoveContentTypeDraft',
         ];
     }
 
@@ -99,6 +100,17 @@ class ContentTypeFormProcessor implements EventSubscriberInterface
     {
         $contentTypeDraft = $event->getData()->contentTypeDraft;
         $this->contentTypeService->publishContentTypeDraft($contentTypeDraft);
+        if (isset($this->options['redirectRouteAfterPublish'])) {
+            $event->setResponse(
+                new RedirectResponse($this->router->generate($this->options['redirectRouteAfterPublish']))
+            );
+        }
+    }
+
+    public function processRemoveContentTypeDraft(FormActionEvent $event)
+    {
+        $contentTypeDraft = $event->getData()->contentTypeDraft;
+        $this->contentTypeService->deleteContentType($contentTypeDraft);
         if (isset($this->options['redirectRouteAfterPublish'])) {
             $event->setResponse(
                 new RedirectResponse($this->router->generate($this->options['redirectRouteAfterPublish']))
