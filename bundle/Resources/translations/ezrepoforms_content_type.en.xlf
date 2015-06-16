@@ -70,6 +70,50 @@
                 <source>content_type.remove_draft</source>
                 <target>Cancel</target>
             </trans-unit>
+            <trans-unit id="18">
+                <source>content_type.sort_field.1</source>
+                <target>Location path</target>
+            </trans-unit>
+            <trans-unit id="19">
+                <source>content_type.sort_field.2</source>
+                <target>Publication date</target>
+            </trans-unit>
+            <trans-unit id="20">
+                <source>content_type.sort_field.3</source>
+                <target>Modification date</target>
+            </trans-unit>
+            <trans-unit id="21">
+                <source>content_type.sort_field.4</source>
+                <target>Section</target>
+            </trans-unit>
+            <trans-unit id="22">
+                <source>content_type.sort_field.5</source>
+                <target>Location depth</target>
+            </trans-unit>
+            <trans-unit id="23">
+                <source>content_type.sort_field.6</source>
+                <target>ContentType identifier</target>
+            </trans-unit>
+            <trans-unit id="24">
+                <source>content_type.sort_field.7</source>
+                <target>ContentType name</target>
+            </trans-unit>
+            <trans-unit id="25">
+                <source>content_type.sort_field.8</source>
+                <target>Location priority</target>
+            </trans-unit>
+            <trans-unit id="26">
+                <source>content_type.sort_field.9</source>
+                <target>Content name</target>
+            </trans-unit>
+            <trans-unit id="27">
+                <source>content_type.sort_order.0</source>
+                <target>Descending</target>
+            </trans-unit>
+            <trans-unit id="28">
+                <source>content_type.sort_order.1</source>
+                <target>Ascending</target>
+            </trans-unit>
             <!-- Field definition -->
             <trans-unit id="101">
                 <source>field_definition.name</source>

@@ -78,22 +78,22 @@ class ContentTypeUpdateType extends AbstractType
             ->add('isContainer', 'checkbox', ['required' => false, 'label' => 'content_type.is_container'])
             ->add('defaultSortField', 'choice', [
                 'choices' => [
-                    Location::SORT_FIELD_NAME => 'Content name',
-                    Location::SORT_FIELD_CLASS_NAME => 'ContentType name',
-                    Location::SORT_FIELD_CLASS_IDENTIFIER => 'ContentType identifier',
-                    Location::SORT_FIELD_DEPTH => 'Location depth',
-                    Location::SORT_FIELD_PATH => 'Location path',
-                    Location::SORT_FIELD_PRIORITY => 'Location priority',
-                    Location::SORT_FIELD_MODIFIED => 'Modification date',
-                    Location::SORT_FIELD_PUBLISHED => 'Publication date',
-                    Location::SORT_FIELD_SECTION => 'Section',
+                    Location::SORT_FIELD_NAME => $this->translator->trans('content_type.sort_field.' . Location::SORT_FIELD_NAME, [], 'ezrepoforms_content_type'),
+                    Location::SORT_FIELD_CLASS_NAME => $this->translator->trans('content_type.sort_field.' . Location::SORT_FIELD_CLASS_NAME, [], 'ezrepoforms_content_type'),
+                    Location::SORT_FIELD_CLASS_IDENTIFIER => $this->translator->trans('content_type.sort_field.' . Location::SORT_FIELD_CLASS_IDENTIFIER, [], 'ezrepoforms_content_type'),
+                    Location::SORT_FIELD_DEPTH => $this->translator->trans('content_type.sort_field.' . Location::SORT_FIELD_DEPTH, [], 'ezrepoforms_content_type'),
+                    Location::SORT_FIELD_PATH => $this->translator->trans('content_type.sort_field.' . Location::SORT_FIELD_PATH, [], 'ezrepoforms_content_type'),
+                    Location::SORT_FIELD_PRIORITY => $this->translator->trans('content_type.sort_field.' . Location::SORT_FIELD_PRIORITY, [], 'ezrepoforms_content_type'),
+                    Location::SORT_FIELD_MODIFIED => $this->translator->trans('content_type.sort_field.' . Location::SORT_FIELD_MODIFIED, [], 'ezrepoforms_content_type'),
+                    Location::SORT_FIELD_PUBLISHED => $this->translator->trans('content_type.sort_field.' . Location::SORT_FIELD_PUBLISHED, [], 'ezrepoforms_content_type'),
+                    Location::SORT_FIELD_SECTION => $this->translator->trans('content_type.sort_field.' . Location::SORT_FIELD_SECTION, [], 'ezrepoforms_content_type'),
                 ],
                 'label' => 'content_type.default_sort_field',
             ])
             ->add('defaultSortOrder', 'choice', [
                 'choices' => [
-                    Location::SORT_ORDER_ASC => 'Ascending',
-                    Location::SORT_ORDER_DESC => 'Descending',
+                    Location::SORT_ORDER_ASC => $this->translator->trans('content_type.sort_order.' . Location::SORT_ORDER_ASC, [], 'ezrepoforms_content_type'),
+                    Location::SORT_ORDER_DESC => $this->translator->trans('content_type.sort_order.' . Location::SORT_ORDER_DESC, [], 'ezrepoforms_content_type'),
                 ],
                 'label' => 'content_type.default_sort_order',
             ])
