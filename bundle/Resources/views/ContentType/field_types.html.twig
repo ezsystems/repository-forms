@@ -52,6 +52,14 @@
     </div>
 {% endblock %}
 
+{% block ezimage_field_definition_edit %}
+    <div class="ezimage-validator max-file-size">
+        {{- form_label(form.maxSize) -}}
+        {{- form_errors(form.maxSize) -}}
+        {{- form_widget(form.maxSize) -}}
+    </div>
+{% endblock %}
+
 {% block ezinteger_field_definition_edit %}
     <div class="ezinteger-validator min-value">
         {{- form_label(form.minValue) -}}
