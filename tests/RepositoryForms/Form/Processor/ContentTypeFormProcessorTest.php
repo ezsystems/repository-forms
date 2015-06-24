@@ -34,6 +34,21 @@ class ContentTypeFormProcessorTest extends PHPUnit_Framework_TestCase
     private $router;
 
     /**
+     * @var \PHPUnit_Framework_MockObject_MockObject
+     */
+    private $translator;
+
+    /**
+     * @var \PHPUnit_Framework_MockObject_MockObject
+     */
+    private $session;
+
+    /**
+     * @var \PHPUnit_Framework_MockObject_MockObject
+     */
+    private $flashBag;
+
+    /**
      * @var ContentTypeFormProcessor
      */
     private $formProcessor;
@@ -43,7 +58,19 @@ class ContentTypeFormProcessorTest extends PHPUnit_Framework_TestCase
         parent::setUp();
         $this->contentTypeService = $this->getMock('\eZ\Publish\API\Repository\ContentTypeService');
         $this->router = $this->getMock('\Symfony\Component\Routing\RouterInterface');
-        $this->formProcessor = new ContentTypeFormProcessor($this->contentTypeService, $this->router);
+        $this->translator = $this->getMock('\Symfony\Component\Translation\TranslatorInterface');
+        $this->session = $this->getMock('\Symfony\Component\HttpFoundation\Session\Session');
+        $this->flashBag = $this->getMock('\Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface');
+        $this->session
+            ->expects($this->any())
+            ->method('getFlashBag')
+            ->willReturn($this->flashBag);
+        $this->formProcessor = new ContentTypeFormProcessor(
+            $this->contentTypeService,
+            $this->router,
+            $this->translator,
+            $this->session
+        );
     }
 
     public function testSubscribedEvents()
@@ -81,9 +108,19 @@ class ContentTypeFormProcessorTest extends PHPUnit_Framework_TestCase
             ->method('updateContentTypeDraft')
             ->with($contentTypeDraft, $contentTypeData);
 
+        $notificationMessage = 'foo notification message';
+        $this->translator
+            ->expects($this->once())
+            ->method('trans')
+            ->with('content_type.notification.draft_updated', [], 'ezrepoforms_content_type')
+            ->willReturn($notificationMessage);
+        $this->flashBag
+            ->expects($this->once())
+            ->method('set')
+            ->with('notification', $notificationMessage);
+
         $event = new FormActionEvent($this->getMock('\Symfony\Component\Form\FormInterface'), $contentTypeData, 'fooAction');
         $this->formProcessor->processDefaultAction($event);
-
     }
 
     public function testAddFieldDefinition()
@@ -149,6 +186,17 @@ class ContentTypeFormProcessorTest extends PHPUnit_Framework_TestCase
             ->method('publishContentTypeDraft')
             ->with($contentTypeDraft);
 
+        $notificationMessage = 'foo notification message';
+        $this->translator
+            ->expects($this->once())
+            ->method('trans')
+            ->with('content_type.notification.published', [], 'ezrepoforms_content_type')
+            ->willReturn($notificationMessage);
+        $this->flashBag
+            ->expects($this->once())
+            ->method('set')
+            ->with('notification', $notificationMessage);
+
         $this->formProcessor->processPublishContentType($event);
     }
 
@@ -173,7 +221,25 @@ class ContentTypeFormProcessorTest extends PHPUnit_Framework_TestCase
             ->with($redirectRoute)
             ->willReturn($redirectUrl);
         $expectedRedirectResponse = new RedirectResponse($redirectUrl);
-        $formProcessor = new ContentTypeFormProcessor($this->contentTypeService, $this->router, ['redirectRouteAfterPublish' => $redirectRoute]);
+
+        $notificationMessage = 'foo notification message';
+        $this->translator
+            ->expects($this->once())
+            ->method('trans')
+            ->with('content_type.notification.published', [], 'ezrepoforms_content_type')
+            ->willReturn($notificationMessage);
+        $this->flashBag
+            ->expects($this->once())
+            ->method('set')
+            ->with('notification', $notificationMessage);
+
+        $formProcessor = new ContentTypeFormProcessor(
+            $this->contentTypeService,
+            $this->router,
+            $this->translator,
+            $this->session,
+            ['redirectRouteAfterPublish' => $redirectRoute]
+        );
         $formProcessor->processPublishContentType($event);
         self::assertTrue($event->hasResponse());
         self::assertEquals($expectedRedirectResponse, $event->getResponse());
@@ -266,6 +332,17 @@ class ContentTypeFormProcessorTest extends PHPUnit_Framework_TestCase
             ->method('deleteContentType')
             ->with($contentTypeDraft);
 
+        $notificationMessage = 'foo notification message';
+        $this->translator
+            ->expects($this->once())
+            ->method('trans')
+            ->with('content_type.notification.draft_removed', [], 'ezrepoforms_content_type')
+            ->willReturn($notificationMessage);
+        $this->flashBag
+            ->expects($this->once())
+            ->method('set')
+            ->with('notification', $notificationMessage);
+
         $this->formProcessor->processRemoveContentTypeDraft($event);
     }
 
@@ -290,7 +367,25 @@ class ContentTypeFormProcessorTest extends PHPUnit_Framework_TestCase
             ->with($redirectRoute)
             ->willReturn($redirectUrl);
         $expectedRedirectResponse = new RedirectResponse($redirectUrl);
-        $formProcessor = new ContentTypeFormProcessor($this->contentTypeService, $this->router, ['redirectRouteAfterPublish' => $redirectRoute]);
+
+        $notificationMessage = 'foo notification message';
+        $this->translator
+            ->expects($this->once())
+            ->method('trans')
+            ->with('content_type.notification.draft_removed', [], 'ezrepoforms_content_type')
+            ->willReturn($notificationMessage);
+        $this->flashBag
+            ->expects($this->once())
+            ->method('set')
+            ->with('notification', $notificationMessage);
+
+        $formProcessor = new ContentTypeFormProcessor(
+            $this->contentTypeService,
+            $this->router,
+            $this->translator,
+            $this->session,
+            ['redirectRouteAfterPublish' => $redirectRoute]
+        );
         $formProcessor->processRemoveContentTypeDraft($event);
         self::assertTrue($event->hasResponse());
         self::assertEquals($expectedRedirectResponse, $event->getResponse());
