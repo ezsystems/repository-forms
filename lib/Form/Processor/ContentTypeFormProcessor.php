@@ -15,7 +15,9 @@ use EzSystems\RepositoryForms\Event\FormActionEvent;
 use EzSystems\RepositoryForms\Event\RepositoryFormEvents;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\Routing\RouterInterface;
+use Symfony\Component\Translation\TranslatorInterface;
 
 class ContentTypeFormProcessor implements EventSubscriberInterface
 {
@@ -30,14 +32,26 @@ class ContentTypeFormProcessor implements EventSubscriberInterface
     private $router;
 
     /**
+     * @var TranslatorInterface
+     */
+    private $translator;
+
+    /**
+     * @var Session
+     */
+    private $session;
+
+    /**
      * @var array
      */
     private $options;
 
-    public function __construct(ContentTypeService $contentTypeService, RouterInterface $router, array $options = [])
+    public function __construct(ContentTypeService $contentTypeService, RouterInterface $router, TranslatorInterface $translator, Session $session, array $options = [])
     {
         $this->contentTypeService = $contentTypeService;
         $this->router = $router;
+        $this->translator = $translator;
+        $this->session = $session;
         $this->setOptions($options);
     }
 
@@ -67,6 +81,7 @@ class ContentTypeFormProcessor implements EventSubscriberInterface
             $this->contentTypeService->updateFieldDefinition($contentTypeDraft, $fieldDefData->fieldDefinition, $fieldDefData);
         }
         $this->contentTypeService->updateContentTypeDraft($contentTypeDraft, $contentTypeData);
+        $this->addNotification('content_type.notification.draft_updated');
     }
 
     public function processAddFieldDefinition(FormActionEvent $event)
@@ -105,6 +120,8 @@ class ContentTypeFormProcessor implements EventSubscriberInterface
                 new RedirectResponse($this->router->generate($this->options['redirectRouteAfterPublish']))
             );
         }
+
+        $this->addNotification('content_type.notification.published');
     }
 
     public function processRemoveContentTypeDraft(FormActionEvent $event)
@@ -116,5 +133,20 @@ class ContentTypeFormProcessor implements EventSubscriberInterface
                 new RedirectResponse($this->router->generate($this->options['redirectRouteAfterPublish']))
             );
         }
+
+        $this->addNotification('content_type.notification.draft_removed');
+    }
+
+    /**
+     * Pushes a flash notification to session.
+     *
+     * @param string $message
+     */
+    private function addNotification($message, array $params = [])
+    {
+        $this->session->getFlashBag()->set(
+            'notification',
+            $this->translator->trans($message, $params, 'ezrepoforms_content_type')
+        );
     }
 }

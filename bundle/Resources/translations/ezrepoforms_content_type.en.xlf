@@ -114,6 +114,18 @@
                 <source>content_type.sort_order.1</source>
                 <target>Ascending</target>
             </trans-unit>
+            <trans-unit id="29">
+                <source>content_type.notification.draft_updated</source>
+                <target>The ContentType draft was successfully updated.</target>
+            </trans-unit>
+            <trans-unit id="30">
+                <source>content_type.notification.draft_removed</source>
+                <target>The ContentType draft was successfully removed.</target>
+            </trans-unit>
+            <trans-unit id="31">
+                <source>content_type.notification.published</source>
+                <target>The ContentType draft was successfully updated and published. Related Content has also been updated.</target>
+            </trans-unit>
             <!-- Field definition -->
             <trans-unit id="101">
                 <source>field_definition.name</source>
