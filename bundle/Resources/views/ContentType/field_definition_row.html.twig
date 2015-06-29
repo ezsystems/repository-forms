@@ -70,3 +70,13 @@
         {% endfor %}
     </div>
 {% endblock %}
+
+{% block datetimeinterval_widget %}
+    {% for child in form %}
+        <div>
+            {{- form_label(child) -}}
+            {{- form_errors(child) -}}
+            {{- form_widget(child) -}}
+        </div>
+    {% endfor %}
+{% endblock %}
