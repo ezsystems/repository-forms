@@ -2,3 +2,8 @@ system:
     default:
         fielddefinition_edit_templates:
             - { template: "EzSystemsRepositoryFormsBundle:ContentType:field_types.html.twig", priority: 0 }
+        location_view:
+            _platformui_content_name:
+                content_name:
+                    template: "EzSystemsRepositoryFormsBundle:content_name:content_name.html.twig"
+                    match: {}

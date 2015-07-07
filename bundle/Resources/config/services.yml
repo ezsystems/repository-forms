@@ -12,6 +12,7 @@ parameters:
     ezrepoforms.field_type.form_mapper.ezinteger.class: EzSystems\RepositoryForms\FieldType\Mapper\IntegerFormMapper
     ezrepoforms.field_type.form_mapper.ezisbn.class: EzSystems\RepositoryForms\FieldType\Mapper\ISBNFormMapper
     ezrepoforms.field_type.form_mapper.ezmedia.class: EzSystems\RepositoryForms\FieldType\Mapper\MediaFormMapper
+    ezrepoforms.field_type.form_mapper.ezobjectrelationlist.class: EzSystems\RepositoryForms\FieldType\Mapper\RelationListFormMapper
     ezrepoforms.field_type.form_mapper.ezpage.class: EzSystems\RepositoryForms\FieldType\Mapper\PageFormMapper
     ezrepoforms.field_type.form_mapper.ezrichtext.class: EzSystems\RepositoryForms\FieldType\Mapper\RichTextFormMapper
     ezrepoforms.field_type.form_mapper.ezselection.class: EzSystems\RepositoryForms\FieldType\Mapper\SelectionFormMapper
@@ -93,6 +94,12 @@ services:
         class: %ezrepoforms.field_type.form_mapper.ezmedia.class%
         tags:
             - { name: ez.fieldType.formMapper, fieldType: ezmedia }
+
+    ezrepoforms.field_type.form_mapper.ezobjectrelationlist:
+        class: %ezrepoforms.field_type.form_mapper.ezobjectrelationlist.class%
+        arguments: [@ezpublish.api.service.content_type, @ezpublish.translation_helper]
+        tags:
+            - { name: ez.fieldType.formMapper, fieldType: ezobjectrelationlist }
 
     ezrepoforms.field_type.form_mapper.ezpage:
         class: %ezrepoforms.field_type.form_mapper.ezpage.class%
