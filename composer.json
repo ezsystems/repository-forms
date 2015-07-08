@@ -9,7 +9,7 @@
         }
     ],
     "require": {
-        "ezsystems/ezpublish-kernel": "~6.0@dev",
+        "ezsystems/ezpublish-kernel": "~6.0@alpha",
         "symfony/form": "~2.7",
         "symfony/validator": "~2.7"
     },
@@ -22,11 +22,6 @@
             "EzSystems\\RepositoryForms\\": "lib",
             "EzSystems\\RepositoryForms\\Tests\\": "tests/RepositoryForms",
             "EzSystems\\RepositoryFormsBundle\\Tests\\": "tests/RepositoryFormsBundle"
-        }
-    },
-    "extra": {
-        "branch-alias": {
-            "dev-master": "0.2.x-dev"
         }
     }
 }
