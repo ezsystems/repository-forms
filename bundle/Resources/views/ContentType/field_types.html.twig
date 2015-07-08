@@ -128,7 +128,9 @@
                 data-relation-selected-root-name-selector="#{{form.selectionRoot.vars.id}}-selected-root-name"
                 >{{"field_definition.ezobjectrelation.selection_root_udw_button"|trans({}, "ezrepoforms_content_type")}}</button>
         <div id="{{form.selectionRoot.vars.id}}-selected-root-name">
-            {{ render( controller( "ez_content:viewLocation", {'locationId': form.selectionRoot.vars.value, 'viewType': '_platformui_content_name'} ) ) }}
+            {% if form.selectionRoot.vars.value is not empty %}
+                {{ render( controller( "ez_content:viewLocation", {'locationId': form.selectionRoot.vars.value, 'viewType': '_platformui_content_name'} ) ) }}
+            {% endif %}
         </div>
     </div>
 {% endblock %}
@@ -145,7 +147,9 @@
                 data-relation-selected-root-name-selector="#{{form.selectionDefaultLocation.vars.id}}-selected-root-name"
                 >{{"field_definition.ezobjectrelationlist.selection_root_udw_button"|trans({}, "ezrepoforms_content_type")}}</button>
         <div id="{{form.selectionDefaultLocation.vars.id}}-selected-root-name">
-            {{ render( controller( "ez_content:viewLocation", {'locationId': form.selectionDefaultLocation.vars.value, 'viewType': '_platformui_content_name'} ) ) }}
+            {% if form.selectionDefaultLocation.vars.value is not empty %}
+                {{ render( controller( "ez_content:viewLocation", {'locationId': form.selectionDefaultLocation.vars.value, 'viewType': '_platformui_content_name'} ) ) }}
+            {% endif %}
         </div>
     </div>
 
