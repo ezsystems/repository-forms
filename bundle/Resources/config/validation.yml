@@ -63,3 +63,15 @@ EzSystems\RepositoryForms\Data\FieldDefinitionData:
 EzSystems\RepositoryForms\Data\RoleData:
     constraints:
         - EzSystems\RepositoryForms\Validator\Constraints\UniqueRoleIdentifier: ~
+
+EzSystems\RepositoryForms\Data\SectionData:
+    constraints:
+        - EzSystems\RepositoryForms\Validator\Constraints\UniqueSectionIdentifier: ~
+    properties:
+        identifier:
+            - NotBlank: ~
+            - Regex:
+                pattern: "/^[[:alnum:]_]+$/"
+                message: "ez.section.identifier.format"
+        name:
+            - NotBlank: ~
