@@ -1,9 +1,11 @@
 <?php
+
 /**
  * This file is part of the eZ RepositoryForms package.
  *
  * @copyright Copyright (C) eZ Systems AS. All rights reserved.
  * @license For full copyright and license information view LICENSE file distributed with this source code.
+ *
  * @version //autogentag//
  */
 
@@ -15,7 +17,6 @@ use EzSystems\RepositoryForms\Form\DataTransformer\TranslatablePropertyTransform
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Symfony\Component\Translation\TranslatorInterface;
 
 /**
@@ -69,7 +70,7 @@ class ContentTypeUpdateType extends AbstractType
                     ->create('description', 'text', [
                         'property_path' => 'descriptions',
                         'required' => false,
-                        'label' => 'content_type.description'
+                        'label' => 'content_type.description',
                     ])
                     ->addModelTransformer($translatablePropertyTransformer)
             )
@@ -131,6 +132,7 @@ class ContentTypeUpdateType extends AbstractType
         }
 
         asort($list, SORT_NATURAL);
+
         return $list;
     }
 }

@@ -1,15 +1,16 @@
 <?php
+
 /**
  * This file is part of the eZ RepositoryForms package.
  *
  * @copyright Copyright (C) eZ Systems AS. All rights reserved.
  * @license For full copyright and license information view LICENSE file distributed with this source code.
+ *
  * @version //autogentag//
  */
 
 namespace EzSystems\RepositoryForms\FieldType\Mapper;
 
-use eZ\Publish\Core\FieldType\Country;
 use EzSystems\RepositoryForms\Data\FieldDefinitionData;
 use EzSystems\RepositoryForms\FieldType\DataTransformer\CountryValueTransformer;
 use EzSystems\RepositoryForms\FieldType\FieldTypeFormMapperInterface;
@@ -51,13 +52,13 @@ class CountryFormMapper implements FieldTypeFormMapperInterface
                             'choice_list' => new ChoiceList(
                                 array_map(
                                     function ($country) {
-                                        return $country["Alpha2"];
+                                        return $country['Alpha2'];
                                     },
                                     $this->countriesInfo
                                 ),
                                 array_map(
                                     function ($country) {
-                                        return $country["Name"];
+                                        return $country['Name'];
                                     },
                                     $this->countriesInfo
                                 )
@@ -65,7 +66,7 @@ class CountryFormMapper implements FieldTypeFormMapperInterface
                             'multiple' => true,
                             'expanded' => false,
                             'required' => false,
-                            'label' => 'field_definition.ezcountry.default_value'
+                            'label' => 'field_definition.ezcountry.default_value',
                         ]
                     )
                     ->addModelTransformer(new CountryValueTransformer($this->countriesInfo))

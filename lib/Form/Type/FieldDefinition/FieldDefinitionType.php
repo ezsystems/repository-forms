@@ -1,9 +1,11 @@
 <?php
+
 /**
  * This file is part of the eZ RepositoryForms package.
  *
  * @copyright Copyright (C) eZ Systems AS. All rights reserved.
  * @license For full copyright and license information view LICENSE file distributed with this source code.
+ *
  * @version //autogentag//
  */
 
@@ -17,7 +19,6 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 /**
  * Form type for FieldDefinition update.
@@ -63,7 +64,7 @@ class FieldDefinitionType extends AbstractType
                 $builder->create('description', 'text', [
                     'property_path' => 'descriptions',
                     'required' => false,
-                    'label' => 'field_definition.description'
+                    'label' => 'field_definition.description',
                 ])
                     ->addModelTransformer($translatablePropertyTransformer)
             )
@@ -84,7 +85,7 @@ class FieldDefinitionType extends AbstractType
             $form->add('isSearchable', 'checkbox', [
                 'required' => false,
                 'disabled' => !$fieldType->isSearchable(),
-                'label' => 'field_definition.is_searchable'
+                'label' => 'field_definition.is_searchable',
             ]);
 
             // Let fieldType mappers do their jobs to complete the form.

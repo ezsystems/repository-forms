@@ -1,9 +1,11 @@
 <?php
+
 /**
  * This file is part of the eZ RepositoryForms package.
  *
  * @copyright Copyright (C) eZ Systems AS. All rights reserved.
  * @license For full copyright and license information view LICENSE file distributed with this source code.
+ *
  * @version //autogentag//
  */
 
@@ -83,7 +85,6 @@ class ContentTypeFormProcessorTest extends PHPUnit_Framework_TestCase
 
         $event = new FormActionEvent($this->getMock('\Symfony\Component\Form\FormInterface'), $contentTypeData, 'fooAction');
         $this->formProcessor->processDefaultAction($event);
-
     }
 
     public function testAddFieldDefinition()
@@ -95,8 +96,8 @@ class ContentTypeFormProcessorTest extends PHPUnit_Framework_TestCase
         ];
         $contentTypeDraft = new ContentTypeDraft([
             'innerContentType' => new ContentType([
-                'fieldDefinitions' => $existingFieldDefinitions
-            ])
+                'fieldDefinitions' => $existingFieldDefinitions,
+            ]),
         ]);
         $fieldTypeIdentifier = 'ezstring';
         $expectedNewFieldDefIdentifier = sprintf(
@@ -187,8 +188,8 @@ class ContentTypeFormProcessorTest extends PHPUnit_Framework_TestCase
         $existingFieldDefinitions = [$fieldDefinition1, $fieldDefinition2, $fieldDefinition3];
         $contentTypeDraft = new ContentTypeDraft([
             'innerContentType' => new ContentType([
-                'fieldDefinitions' => $existingFieldDefinitions
-            ])
+                'fieldDefinitions' => $existingFieldDefinitions,
+            ]),
         ]);
 
         $fieldDefForm1 = $this->getMock('\Symfony\Component\Form\FormInterface');

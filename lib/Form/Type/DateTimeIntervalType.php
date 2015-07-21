@@ -1,9 +1,11 @@
 <?php
+
 /**
  * This file is part of the eZ RepositoryForms package.
  *
  * @copyright Copyright (C) eZ Systems AS. All rights reserved.
  * @license For full copyright and license information view LICENSE file distributed with this source code.
+ *
  * @version //autogentag//
  */
 
@@ -12,10 +14,6 @@ namespace EzSystems\RepositoryForms\Form\Type;
 use EzSystems\RepositoryForms\Form\DataTransformer\DateIntervalToArrayTransformer;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\Form\ReversedTransformer;
-use Symfony\Component\Form\Extension\Core\DataTransformer\DataTransformerChain;
-use Symfony\Component\Form\Extension\Core\DataTransformer\ArrayToPartsTransformer;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 /**
  * Form type for ContentType update.
