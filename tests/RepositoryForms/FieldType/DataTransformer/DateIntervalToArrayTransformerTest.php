@@ -1,9 +1,11 @@
 <?php
+
 /**
  * This file is part of the eZ RepositoryForms package.
  *
  * @copyright Copyright (C) eZ Systems AS. All rights reserved.
  * @license For full copyright and license information view LICENSE file distributed with this source code.
+ *
  * @version //autogentag//
  */
 
@@ -12,7 +14,6 @@ namespace EzSystems\RepositoryForms\Tests\FieldType\DataTransformer;
 use DateInterval;
 use EzSystems\RepositoryForms\Form\DataTransformer\DateIntervalToArrayTransformer;
 use PHPUnit_Framework_TestCase;
-use Symfony\Component\Form\Exception\TransformationFailedException;
 
 class DateIntervalToArrayTransformerTest extends PHPUnit_Framework_TestCase
 {

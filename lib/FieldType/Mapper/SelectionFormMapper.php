@@ -1,9 +1,11 @@
 <?php
+
 /**
  * This file is part of the eZ RepositoryForms package.
  *
  * @copyright Copyright (C) eZ Systems AS. All rights reserved.
  * @license For full copyright and license information view LICENSE file distributed with this source code.
+ *
  * @version //autogentag//
  */
 
@@ -11,7 +13,6 @@ namespace EzSystems\RepositoryForms\FieldType\Mapper;
 
 use EzSystems\RepositoryForms\Data\FieldDefinitionData;
 use EzSystems\RepositoryForms\FieldType\FieldTypeFormMapperInterface;
-use Symfony\Component\Form\Extension\Core\ChoiceList\ChoiceList;
 use Symfony\Component\Form\FormInterface;
 
 class SelectionFormMapper implements FieldTypeFormMapperInterface
@@ -35,7 +36,7 @@ class SelectionFormMapper implements FieldTypeFormMapperInterface
             ])
             ->add('options', 'collection', [
                 'type' => 'text',
-                'options' => [ 'required' => false ],
+                'options' => ['required' => false],
                 'allow_add' => true,
                 'allow_delete' => true,
                 'delete_empty' => true,

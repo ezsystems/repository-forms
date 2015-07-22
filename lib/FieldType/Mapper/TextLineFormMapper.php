@@ -1,9 +1,11 @@
 <?php
+
 /**
  * This file is part of the eZ RepositoryForms package.
  *
  * @copyright Copyright (C) eZ Systems AS. All rights reserved.
  * @license For full copyright and license information view LICENSE file distributed with this source code.
+ *
  * @version //autogentag//
  */
 
@@ -34,7 +36,7 @@ class TextLineFormMapper implements FieldTypeFormMapperInterface
                 $fieldDefinitionForm->getConfig()->getFormFactory()->createBuilder()
                     ->create('defaultValue', 'text', [
                         'required' => false,
-                        'label' => 'field_definition.ezstring.default_value'
+                        'label' => 'field_definition.ezstring.default_value',
                     ])
                     ->addModelTransformer(new TextLineValueTransformer())
                     // Deactivate auto-initialize as we're not on the root form.

@@ -1,9 +1,11 @@
 <?php
+
 /**
  * This file is part of the eZ RepositoryForms package.
  *
  * @copyright Copyright (C) eZ Systems AS. All rights reserved.
  * @license For full copyright and license information view LICENSE file distributed with this source code.
+ *
  * @version //autogentag//
  */
 
@@ -12,7 +14,6 @@ namespace EzSystems\RepositoryForms\FieldType\Mapper;
 use eZ\Publish\Core\FieldType\Page\PageService;
 use EzSystems\RepositoryForms\Data\FieldDefinitionData;
 use EzSystems\RepositoryForms\FieldType\FieldTypeFormMapperInterface;
-use Symfony\Component\Form\Extension\Core\ChoiceList\ChoiceList;
 use Symfony\Component\Form\FormInterface;
 
 class PageFormMapper implements FieldTypeFormMapperInterface
@@ -41,7 +42,7 @@ class PageFormMapper implements FieldTypeFormMapperInterface
                 'expanded' => false,
                 'required' => false,
                 'property_path' => 'fieldSettings[defaultLayout]',
-                'label' => 'field_definition.ezpage.default_layout'
+                'label' => 'field_definition.ezpage.default_layout',
             ]);
     }
 }

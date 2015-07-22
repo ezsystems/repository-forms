@@ -1,13 +1,15 @@
 <?php
+
 /**
  * This file is part of the eZ RepositoryForms package.
  *
  * @copyright Copyright (C) eZ Systems AS. All rights reserved.
  * @license For full copyright and license information view LICENSE file distributed with this source code.
+ *
  * @version //autogentag//
  */
 
-namespace EzSystems\RepositoryForms\Tests\RepositoryForms\Data;
+namespace EzSystems\RepositoryForms\tests\RepositoryForms\Data;
 
 use EzSystems\RepositoryForms\Data\FieldDefinitionData;
 use PHPUnit_Framework_TestCase;

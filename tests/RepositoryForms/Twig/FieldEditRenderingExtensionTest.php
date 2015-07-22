@@ -1,9 +1,11 @@
 <?php
+
 /**
  * This file is part of the eZ RepositoryForms package.
  *
  * @copyright Copyright (C) eZ Systems AS. All rights reserved.
  * @license For full copyright and license information view LICENSE file distributed with this source code.
+ *
  * @version //autogentag//
  */
 
@@ -23,16 +25,16 @@ class FieldEditRenderingExtensionTest extends FileSystemTwigIntegrationTestCase
         $fieldBlockRenderer->setBaseTemplate($this->getTemplatePath('base.html.twig'));
         $fieldBlockRenderer->setFieldDefinitionEditResources([
             [
-                'template' => $this->getTemplatePath( 'fields_override1.html.twig' ),
-                'priority' => 10
+                'template' => $this->getTemplatePath('fields_override1.html.twig'),
+                'priority' => 10,
             ],
             [
-                'template' => $this->getTemplatePath( 'fields_default.html.twig' ),
-                'priority' => 0
+                'template' => $this->getTemplatePath('fields_default.html.twig'),
+                'priority' => 0,
             ],
             [
-                'template' => $this->getTemplatePath( 'fields_override2.html.twig' ),
-                'priority' => 20
+                'template' => $this->getTemplatePath('fields_override2.html.twig'),
+                'priority' => 20,
             ],
         ]);
 
@@ -50,12 +52,12 @@ class FieldEditRenderingExtensionTest extends FileSystemTwigIntegrationTestCase
             'fieldDefinition' => new FieldDefinition([
                 'id' => $id,
                 'fieldSettings' => $settings,
-                'fieldTypeIdentifier' => $typeIdentifier
-            ])
+                'fieldTypeIdentifier' => $typeIdentifier,
+            ]),
         ]);
     }
 
-    private function getTemplatePath( $tpl )
+    private function getTemplatePath($tpl)
     {
         return 'templates/' . $tpl;
     }

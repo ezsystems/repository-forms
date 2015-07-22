@@ -1,9 +1,11 @@
 <?php
+
 /**
  * This file is part of the eZ RepositoryForms package.
  *
  * @copyright Copyright (C) eZ Systems AS. All rights reserved.
  * @license For full copyright and license information view LICENSE file distributed with this source code.
+ *
  * @version //autogentag//
  */
 
@@ -34,7 +36,7 @@ class TimeFormMapper implements FieldTypeFormMapperInterface
                 [
                     'choices' => [
                         Type::DEFAULT_EMPTY => 'field_definition.eztime.default_type_empty',
-                        Type::DEFAULT_CURRENT_TIME => 'field_definition.eztime.default_type_current'
+                        Type::DEFAULT_CURRENT_TIME => 'field_definition.eztime.default_type_current',
                     ],
                     'expanded' => true,
                     'required' => true,

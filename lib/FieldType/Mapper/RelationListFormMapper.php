@@ -1,9 +1,11 @@
 <?php
+
 /**
  * This file is part of the eZ RepositoryForms package.
  *
  * @copyright Copyright (C) eZ Systems AS. All rights reserved.
  * @license For full copyright and license information view LICENSE file distributed with this source code.
+ *
  * @version //autogentag//
  */
 
@@ -15,7 +17,6 @@ use eZ\Publish\Core\Helper\TranslationHelper;
 use EzSystems\RepositoryForms\Data\FieldDefinitionData;
 use EzSystems\RepositoryForms\FieldType\FieldTypeFormMapperInterface;
 use Symfony\Component\Form\FormInterface;
-
 
 class RelationListFormMapper implements FieldTypeFormMapperInterface
 {
@@ -45,7 +46,7 @@ class RelationListFormMapper implements FieldTypeFormMapperInterface
         $contentTypeHash = [];
         foreach ($this->contentTypeService->loadContentTypeGroups() as $contentTypeGroup) {
             foreach ($this->contentTypeService->loadContentTypes($contentTypeGroup) as $contentType) {
-                $contentTypeHash[$contentType->identifier] = $this->translationHelper->getTranslatedByProperty($contentType, "names");
+                $contentTypeHash[$contentType->identifier] = $this->translationHelper->getTranslatedByProperty($contentType, 'names');
             }
         }
         sort($contentTypeHash);

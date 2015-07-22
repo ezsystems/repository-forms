@@ -1,9 +1,11 @@
 <?php
+
 /**
  * This file is part of the eZ RepositoryForms package.
  *
  * @copyright Copyright (C) eZ Systems AS. All rights reserved.
  * @license For full copyright and license information view LICENSE file distributed with this source code.
+ *
  * @version //autogentag//
  */
 
@@ -14,12 +16,12 @@ use Symfony\Component\Form\DataTransformerInterface;
 use Symfony\Component\Form\Exception\TransformationFailedException;
 
 /**
- * Data transformer from PHP DateInterval to array for form inputs
+ * Data transformer from PHP DateInterval to array for form inputs.
  */
 class DateIntervalToArrayTransformer implements DataTransformerInterface
 {
     /**
-     * Transforms a date interval into an array of date interval elements
+     * Transforms a date interval into an array of date interval elements.
      *
      * @param DateInterval $dateInterval Date interval.
      *
@@ -57,7 +59,7 @@ class DateIntervalToArrayTransformer implements DataTransformerInterface
     }
 
     /**
-     * Transforms an array of date interval elements into a date interval
+     * Transforms an array of date interval elements into a date interval.
      *
      * @param array $value Date interval elements.
      *
@@ -104,7 +106,7 @@ class DateIntervalToArrayTransformer implements DataTransformerInterface
             throw new TransformationFailedException('This year is invalid');
         }
 
-        if (!empty( $value['month']) && !empty($value['day']) && !empty($value['year']) &&
+        if (!empty($value['month']) && !empty($value['day']) && !empty($value['year']) &&
             false === checkdate($value['month'], $value['day'], $value['year'])) {
             throw new TransformationFailedException('This is an invalid date');
         }

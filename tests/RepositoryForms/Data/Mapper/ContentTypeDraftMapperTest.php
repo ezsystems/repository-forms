@@ -1,9 +1,11 @@
 <?php
+
 /**
  * This file is part of the eZ RepositoryForms package.
  *
  * @copyright Copyright (C) eZ Systems AS. All rights reserved.
  * @license For full copyright and license information view LICENSE file distributed with this source code.
+ *
  * @version //autogentag//
  */
 
@@ -79,7 +81,7 @@ class ContentTypeDraftMapperTest extends PHPUnit_Framework_TestCase
                 'defaultAlwaysAvailable' => $defaultAlwaysAvailable,
                 'names' => $names,
                 'descriptions' => $descriptions,
-            ])
+            ]),
         ]);
 
         $expectedContentTypeData = new ContentTypeData([
@@ -115,7 +117,7 @@ class ContentTypeDraftMapperTest extends PHPUnit_Framework_TestCase
         $expectedContentTypeData->addFieldDefinitionData($expectedFieldDefData1);
         $expectedFieldDefData2 = new FieldDefinitionData([
             'fieldDefinition' => $fieldDef2,
-            'contentTypeData' => $expectedContentTypeData,'identifier' => $fieldDef2->identifier,
+            'contentTypeData' => $expectedContentTypeData, 'identifier' => $fieldDef2->identifier,
             'names' => $fieldDef2->names,
             'descriptions' => $fieldDef2->descriptions,
             'fieldGroup' => $fieldDef2->fieldGroup,
