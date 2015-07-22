@@ -6,7 +6,6 @@
  * @license For full copyright and license information view LICENSE file distributed with this source code.
  * @version //autogentag//
  */
-
 namespace EzSystems\RepositoryForms\Data\Mapper;
 
 use eZ\Publish\API\Repository\Values\Content\Section;

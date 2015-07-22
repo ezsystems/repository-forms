@@ -6,7 +6,6 @@
  * @license For full copyright and license information view LICENSE file distributed with this source code.
  * @version //autogentag//
  */
-
 namespace EzSystems\RepositoryForms\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
@@ -21,7 +20,7 @@ class SectionType extends AbstractType
             ->add('name', 'text')
             ->add('identifier', 'text')
             ->add('save', 'submit', ['label' => 'section.form.save'])
-            ->add('cancel', 'submit', ['label' =>  'section.form.cancel']);
+            ->add('cancel', 'submit', ['label' => 'section.form.cancel']);
     }
 
     public function getName()

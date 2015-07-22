@@ -6,12 +6,9 @@
  * @license For full copyright and license information view LICENSE file distributed with this source code.
  * @version //autogentag//
  */
-
 namespace EzSystems\RepositoryForms\Form\Processor;
 
 use eZ\Publish\API\Repository\SectionService;
-use EzSystems\PlatformUIBundle\Notification\NotificationPoolInterface;
-use EzSystems\PlatformUIBundle\Notification\TranslatableNotificationMessage;
 use EzSystems\RepositoryForms\Event\FormActionEvent;
 use EzSystems\RepositoryForms\Event\RepositoryFormEvents;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
