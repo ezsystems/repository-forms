@@ -21,6 +21,11 @@ use eZ\Publish\API\Repository\Values\ContentType\ContentTypeUpdateStruct;
 class ContentTypeData extends ContentTypeUpdateStruct
 {
     /**
+     * Trait which provides isNew(), and mandates getIdentifier().
+     */
+    use NewnessChecker;
+
+    /**
      * @var \eZ\Publish\API\Repository\Values\ContentType\ContentTypeDraft
      */
     protected $contentTypeDraft;
@@ -29,6 +34,11 @@ class ContentTypeData extends ContentTypeUpdateStruct
      * @var \EzSystems\RepositoryForms\Data\FieldDefinitionData[]
      */
     protected $fieldDefinitionsData = [];
+
+    public function getIdentifier()
+    {
+        return $this->identifier;
+    }
 
     public function addFieldDefinitionData(FieldDefinitionData $fieldDefinitionData)
     {
