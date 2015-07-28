@@ -20,7 +20,7 @@ class RelationFormMapper implements FieldTypeFormMapperInterface
     public function mapFieldDefinitionForm(FormInterface $fieldDefinitionForm, FieldDefinitionData $data)
     {
         $fieldDefinitionForm
-            ->add('selectionRoot', 'text', [ // TODO: Replace 'text' with 'hidden' when the UDW is ready to use
+            ->add('selectionRoot', 'hidden', [
                 'required' => false,
                 'property_path' => 'fieldSettings[selectionRoot]',
                 'label' => 'field_definition.ezobjectrelation.selection_root',

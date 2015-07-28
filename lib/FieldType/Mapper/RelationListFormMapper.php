@@ -52,7 +52,7 @@ class RelationListFormMapper implements FieldTypeFormMapperInterface
         sort($contentTypeHash);
 
         $fieldDefinitionForm
-            ->add('selectionDefaultLocation', 'text', [ // TODO: Replace 'text' with 'hidden' when the UDW is ready to use
+            ->add('selectionDefaultLocation', 'hidden', [
                 'required' => false,
                 'property_path' => 'fieldSettings[selectionDefaultLocation]',
                 'label' => 'field_definition.ezobjectrelationlist.selection_default_location',
