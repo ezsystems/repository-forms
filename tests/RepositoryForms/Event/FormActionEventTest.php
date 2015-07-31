@@ -8,7 +8,6 @@
  *
  * @version //autogentag//
  */
-
 namespace EzSystems\RepositoryForms\Tests\Event;
 
 use EzSystems\RepositoryForms\Event\FormActionEvent;

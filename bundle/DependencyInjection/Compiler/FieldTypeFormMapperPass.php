@@ -8,8 +8,7 @@
  *
  * @version //autogentag//
  */
-
-namespace EzSystems\RepositoryFormsBundle\DependencyInjection\Compiler;
+namespace EzSystems\RepositoryFormsbundle\DependencyInjection\Compiler;
 
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;

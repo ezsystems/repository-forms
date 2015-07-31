@@ -8,7 +8,6 @@
  *
  * @version //autogentag//
  */
-
 namespace EzSystems\RepositoryForms\Tests\Form\DataTransformer;
 
 use EzSystems\RepositoryForms\Form\DataTransformer\TranslatablePropertyTransformer;

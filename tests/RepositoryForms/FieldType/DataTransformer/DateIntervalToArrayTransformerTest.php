@@ -8,7 +8,6 @@
  *
  * @version //autogentag//
  */
-
 namespace EzSystems\RepositoryForms\Tests\FieldType\DataTransformer;
 
 use DateInterval;

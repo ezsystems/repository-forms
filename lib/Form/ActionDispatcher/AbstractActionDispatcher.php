@@ -8,7 +8,6 @@
  *
  * @version //autogentag//
  */
-
 namespace EzSystems\RepositoryForms\Form\ActionDispatcher;
 
 use eZ\Publish\API\Repository\Values\ValueObject;

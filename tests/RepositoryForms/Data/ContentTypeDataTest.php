@@ -8,7 +8,6 @@
  *
  * @version //autogentag//
  */
-
 namespace EzSystems\RepositoryForms\Tests\Data;
 
 use EzSystems\RepositoryForms\Data\ContentTypeData;

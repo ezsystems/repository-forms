@@ -8,7 +8,6 @@
  *
  * @version //autogentag//
  */
-
 namespace EzSystems\RepositoryForms\Event;
 
 use Symfony\Component\Form\FormEvent;

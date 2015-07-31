@@ -8,8 +8,7 @@
  *
  * @version //autogentag//
  */
-
-namespace EzSystems\RepositoryFormsBundle\DependencyInjection;
+namespace EzSystems\RepositoryFormsbundle\DependencyInjection;
 
 use Symfony\Component\Config\Resource\FileResource;
 use Symfony\Component\DependencyInjection\ContainerBuilder;

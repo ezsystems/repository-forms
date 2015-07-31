@@ -8,7 +8,6 @@
  *
  * @version //autogentag//
  */
-
 namespace EzSystems\RepositoryForms\Form\Type;
 
 use eZ\Publish\API\Repository\Values\Content\Location;

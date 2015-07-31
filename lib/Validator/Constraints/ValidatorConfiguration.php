@@ -8,7 +8,6 @@
  *
  * @version //autogentag//
  */
-
 namespace EzSystems\RepositoryForms\Validator\Constraints;
 
 use Symfony\Component\Validator\Constraint;

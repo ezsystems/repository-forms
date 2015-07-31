@@ -8,7 +8,6 @@
  *
  * @version //autogentag//
  */
-
 namespace EzSystems\RepositoryForms\Twig;
 
 use eZ\Publish\Core\MVC\Symfony\Templating\Exception\MissingFieldBlockException;

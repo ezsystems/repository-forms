@@ -8,7 +8,6 @@
  *
  * @version //autogentag//
  */
-
 namespace EzSystems\RepositoryForms\Form\Type\FieldDefinition;
 
 use eZ\Publish\API\Repository\FieldTypeService;

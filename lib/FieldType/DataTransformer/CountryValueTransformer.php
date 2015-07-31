@@ -8,7 +8,6 @@
  *
  * @version //autogentag//
  */
-
 namespace EzSystems\RepositoryForms\FieldType\DataTransformer;
 
 use eZ\Publish\Core\FieldType\Country\Value;
