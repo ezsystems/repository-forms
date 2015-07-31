@@ -8,7 +8,6 @@
  *
  * @version //autogentag//
  */
-
 namespace EzSystems\RepositoryForms\Tests\FieldType;
 
 use EzSystems\RepositoryForms\FieldType\FieldTypeFormMapperRegistry;

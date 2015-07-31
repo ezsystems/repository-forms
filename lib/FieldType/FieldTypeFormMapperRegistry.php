@@ -8,7 +8,6 @@
  *
  * @version //autogentag//
  */
-
 namespace EzSystems\RepositoryForms\FieldType;
 
 use EzSystems\RepositoryForms\Data\FieldDefinitionData;

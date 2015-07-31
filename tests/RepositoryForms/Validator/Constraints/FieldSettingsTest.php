@@ -8,7 +8,6 @@
  *
  * @version //autogentag//
  */
-
 namespace EzSystems\RepositoryForms\Tests\Validator\Constraints;
 
 use EzSystems\RepositoryForms\Validator\Constraints\FieldSettings;

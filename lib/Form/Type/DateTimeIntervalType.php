@@ -8,7 +8,6 @@
  *
  * @version //autogentag//
  */
-
 namespace EzSystems\RepositoryForms\Form\Type;
 
 use EzSystems\RepositoryForms\Form\DataTransformer\DateIntervalToArrayTransformer;

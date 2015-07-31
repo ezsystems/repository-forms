@@ -8,7 +8,6 @@
  *
  * @version //autogentag//
  */
-
 namespace EzSystems\RepositoryForms\Tests\Form\Processor;
 
 use eZ\Publish\API\Repository\Values\ContentType\FieldDefinitionCreateStruct;

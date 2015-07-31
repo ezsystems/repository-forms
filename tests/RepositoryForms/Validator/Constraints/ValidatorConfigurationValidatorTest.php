@@ -8,7 +8,6 @@
  *
  * @version //autogentag//
  */
-
 namespace EzSystems\RepositoryForms\Tests\Validator\Constraints;
 
 use eZ\Publish\Core\FieldType\ValidationError;
