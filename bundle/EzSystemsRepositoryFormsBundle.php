@@ -8,7 +8,7 @@
  *
  * @version //autogentag//
  */
-namespace EzSystems\RepositoryFormsbundle;
+namespace EzSystems\RepositoryFormsBundle;
 
 use EzSystems\RepositoryFormsBundle\DependencyInjection\Compiler\FieldTypeFormMapperPass;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
