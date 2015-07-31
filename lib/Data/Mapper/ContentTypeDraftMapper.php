@@ -26,20 +26,20 @@ class ContentTypeDraftMapper implements FormDataMapperInterface
      */
     public function mapToFormData(ValueObject $contentTypeDraft, array $params = [])
     {
-        $contentTypeData = new ContentTypeData([
-            'contentTypeDraft' => $contentTypeDraft,
-            'identifier' => $contentTypeDraft->identifier,
-            'remoteId' => $contentTypeDraft->remoteId,
-            'urlAliasSchema' => $contentTypeDraft->urlAliasSchema,
-            'nameSchema' => $contentTypeDraft->nameSchema,
-            'isContainer' => $contentTypeDraft->isContainer,
-            'mainLanguageCode' => $contentTypeDraft->mainLanguageCode,
-            'defaultSortField' => $contentTypeDraft->defaultSortField,
-            'defaultSortOrder' => $contentTypeDraft->defaultSortOrder,
-            'defaultAlwaysAvailable' => $contentTypeDraft->defaultAlwaysAvailable,
-            'names' => $contentTypeDraft->getNames(),
-            'descriptions' => $contentTypeDraft->getDescriptions(),
-        ]);
+        $contentTypeData = new ContentTypeData(['contentTypeDraft' => $contentTypeDraft]);
+        if (!$contentTypeData->isNew()) {
+            $contentTypeData->identifier = $contentTypeDraft->identifier;
+            $contentTypeData->remoteId = $contentTypeDraft->remoteId;
+            $contentTypeData->urlAliasSchema = $contentTypeDraft->urlAliasSchema;
+            $contentTypeData->nameSchema = $contentTypeDraft->nameSchema;
+            $contentTypeData->isContainer = $contentTypeDraft->isContainer;
+            $contentTypeData->mainLanguageCode = $contentTypeDraft->mainLanguageCode;
+            $contentTypeData->defaultSortField = $contentTypeDraft->defaultSortField;
+            $contentTypeData->defaultSortOrder = $contentTypeDraft->defaultSortOrder;
+            $contentTypeData->defaultAlwaysAvailable = $contentTypeDraft->defaultAlwaysAvailable;
+            $contentTypeData->names = $contentTypeDraft->getNames();
+            $contentTypeData->descriptions = $contentTypeDraft->getDescriptions();
+        }
 
         foreach ($contentTypeDraft->fieldDefinitions as $fieldDef) {
             $contentTypeData->addFieldDefinitionData(new FieldDefinitionData([
