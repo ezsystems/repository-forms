@@ -36,4 +36,19 @@ final class RepositoryFormEvents
      * Triggered when removing the draft (e.g. "cancel" action).
      */
     const CONTENT_TYPE_REMOVE_DRAFT = 'contentType.update.removeDraft';
+
+    /**
+     * Base name for Role update processing events.
+     */
+    const ROLE_UPDATE = 'role.update';
+
+    /**
+     * Triggered when saving the role.
+     */
+    const ROLE_SAVE = 'role.update.saveRole';
+
+    /**
+     * Triggered when removing the draft (e.g. "cancel" action).
+     */
+    const ROLE_REMOVE_DRAFT = 'role.update.removeDraft';
 }

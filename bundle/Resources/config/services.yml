@@ -2,6 +2,7 @@ parameters:
     ezrepoforms.field_type_form_mapper.registry.class: EzSystems\RepositoryForms\FieldType\FieldTypeFormMapperRegistry
     ezrepoforms.content_type.update.form_type.class: EzSystems\RepositoryForms\Form\Type\ContentTypeUpdateType
     ezrepoforms.field_definition.form_type.class: EzSystems\RepositoryForms\Form\Type\FieldDefinition\FieldDefinitionType
+    ezrepoforms.role.update.form_type.class: EzSystems\RepositoryForms\Form\Type\RoleUpdateType
 
     ezrepoforms.field_type.form_mapper.ezbinaryfile.class: EzSystems\RepositoryForms\FieldType\Mapper\BinaryFileFormMapper
     ezrepoforms.field_type.form_mapper.ezcountry.class: EzSystems\RepositoryForms\FieldType\Mapper\CountryFormMapper
@@ -32,6 +33,7 @@ parameters:
     ezrepoforms.form_processor.content_type.options.redirect_route_after_publish: ~
     ezrepoforms.form_processor.content_type.options:
         redirectRouteAfterPublish: %ezrepoforms.form_processor.content_type.options.redirect_route_after_publish%
+    ezrepoforms.action_dispatcher.role.class: EzSystems\RepositoryForms\Form\ActionDispatcher\RoleDispatcher
 
 services:
     ezrepoforms.field_type_form_mapper.registry:
@@ -48,6 +50,11 @@ services:
         arguments: [@ezrepoforms.field_type_form_mapper.registry, @ezpublish.api.service.field_type]
         tags:
             - { name: form.type, alias: ezrepoforms_fielddefinition_update }
+
+    ezrepoforms.role.update.form_type:
+        class: %ezrepoforms.role.update.form_type.class%
+        tags:
+            - {name: form.type, alias: ezrepoforms_role_update}
 
     # FieldType form mappers
     ezrepoforms.field_type.form_mapper.ezbinaryfile:
@@ -189,3 +196,7 @@ services:
         arguments: [@ezpublish.api.service.content_type, @router, %ezrepoforms.form_processor.content_type.options%]
         tags:
             - { name: kernel.event_subscriber }
+
+    ezrepoforms.action_dispatcher.role:
+        class: %ezrepoforms.action_dispatcher.role.class%
+        parent: ezrepoforms.action_dispatcher.base
