@@ -9,7 +9,7 @@
 {# @var data \EzSystems\RepositoryForms\Data\FieldDefinitionData #}
 {# @var form \Symfony\Component\Form\FormView #}
 {% block ezbinaryfile_field_definition_edit %}
-    <div class="ezbinaryfile-validator max-file-size">
+    <div class="ezbinaryfile-validator max-file-size{% if group_class is not empty %} {{ group_class }}{% endif %}">
         {{- form_label(form.maxSize) -}}
         {{- form_errors(form.maxSize) -}}
         {{- form_widget(form.maxSize) -}}
@@ -17,13 +17,13 @@
 {% endblock %}
 
 {% block ezcountry_field_definition_edit %}
-    <div class="ezcountry-settings is-multiple">
+    <div class="ezcountry-settings is-multiple{% if group_class is not empty %} {{ group_class }}{% endif %}">
         {{- form_label(form.isMultiple) -}}
         {{- form_errors(form.isMultiple) -}}
         {{- form_widget(form.isMultiple) -}}
     </div>
 
-    <div class="ezcountry-default-value">
+    <div class="ezcountry-default-value{% if group_class is not empty %} {{ group_class }}{% endif %}">
         {{- form_label(form.defaultValue) -}}
         {{- form_errors(form.defaultValue) -}}
         {{- form_widget(form.defaultValue) -}}
@@ -31,7 +31,7 @@
 {% endblock %}
 
 {% block ezdate_field_definition_edit %}
-    <div class="ezdate-settings default-type">
+    <div class="ezdate-settings default-type{% if group_class is not empty %} {{ group_class }}{% endif %}">
         {{- form_label(form.defaultType) -}}
         {{- form_errors(form.defaultType) -}}
         {{- form_widget(form.defaultType) -}}
@@ -39,19 +39,19 @@
 {% endblock %}
 
 {% block ezdatetime_field_definition_edit %}
-    <div class="ezdatetime-settings use-seconds">
+    <div class="ezdatetime-settings use-seconds{% if group_class is not empty %} {{ group_class }}{% endif %}">
         {{- form_label(form.useSeconds) -}}
         {{- form_errors(form.useSeconds) -}}
         {{- form_widget(form.useSeconds) -}}
     </div>
 
-    <div class="ezdatetime-settings default-type">
+    <div class="ezdatetime-settings default-type{% if group_class is not empty %} {{ group_class }}{% endif %}">
         {{- form_label(form.defaultType) -}}
         {{- form_errors(form.defaultType) -}}
         {{- form_widget(form.defaultType) -}}
     </div>
 
-    <div class="ezdatetime-settings date-interval">
+    <div class="ezdatetime-settings date-interval{% if group_class is not empty %} {{ group_class }}{% endif %}">
         {{- form_label(form.dateInterval) -}}
         {{- form_errors(form.dateInterval) -}}
         {{- form_widget(form.dateInterval) -}}
@@ -59,13 +59,13 @@
 {% endblock %}
 
 {% block ezfloat_field_definition_edit %}
-    <div class="ezfloat-validator min-value">
+    <div class="ezfloat-validator min-value{% if group_class is not empty %} {{ group_class }}{% endif %}">
         {{- form_label(form.minValue) -}}
         {{- form_errors(form.minValue) -}}
         {{- form_widget(form.minValue) -}}
     </div>
 
-    <div class="ezfloat-validator max-value">
+    <div class="ezfloat-validator max-value{% if group_class is not empty %} {{ group_class }}{% endif %}">
         {{- form_label(form.maxValue) -}}
         {{- form_errors(form.maxValue) -}}
         {{- form_widget(form.maxValue) -}}
@@ -73,7 +73,7 @@
 {% endblock %}
 
 {% block ezimage_field_definition_edit %}
-    <div class="ezimage-validator max-file-size">
+    <div class="ezimage-validator max-file-size{% if group_class is not empty %} {{ group_class }}{% endif %}">
         {{- form_label(form.maxSize) -}}
         {{- form_errors(form.maxSize) -}}
         {{- form_widget(form.maxSize) -}}
@@ -81,13 +81,13 @@
 {% endblock %}
 
 {% block ezinteger_field_definition_edit %}
-    <div class="ezinteger-validator min-value">
+    <div class="ezinteger-validator min-value{% if group_class is not empty %} {{ group_class }}{% endif %}">
         {{- form_label(form.minValue) -}}
         {{- form_errors(form.minValue) -}}
         {{- form_widget(form.minValue) -}}
     </div>
 
-    <div class="ezinteger-validator max-value">
+    <div class="ezinteger-validator max-value{% if group_class is not empty %} {{ group_class }}{% endif %}">
         {{- form_label(form.maxValue) -}}
         {{- form_errors(form.maxValue) -}}
         {{- form_widget(form.maxValue) -}}
@@ -95,7 +95,7 @@
 {% endblock %}
 
 {% block ezisbn_field_definition_edit %}
-    <div class="ezisbn-settings is-isbn13">
+    <div class="ezisbn-settings is-isbn13{% if group_class is not empty %} {{ group_class }}{% endif %}">
         {{- form_label(form.isISBN13) -}}
         {{- form_errors(form.isISBN13) -}}
         {{- form_widget(form.isISBN13) -}}
@@ -103,13 +103,13 @@
 {% endblock %}
 
 {% block ezmedia_field_definition_edit %}
-    <div class="ezmedia-validator max-file-size">
+    <div class="ezmedia-validator max-file-size{% if group_class is not empty %} {{ group_class }}{% endif %}">
         {{- form_label(form.maxSize) -}}
         {{- form_errors(form.maxSize) -}}
         {{- form_widget(form.maxSize) -}}
     </div>
 
-    <div class="ezmedia-settings media-type">
+    <div class="ezmedia-settings media-type{% if group_class is not empty %} {{ group_class }}{% endif %}">
         {{- form_label(form.mediaType) -}}
         {{- form_errors(form.mediaType) -}}
         {{- form_widget(form.mediaType) -}}
@@ -161,7 +161,7 @@
 {% endblock %}
 
 {% block ezpage_field_definition_edit %}
-    <div class="ezpage-settings default-layout">
+    <div class="ezpage-settings default-layout{% if group_class is not empty %} {{ group_class }}{% endif %}">
         {{- form_label(form.defaultLayout) -}}
         {{- form_errors(form.defaultLayout) -}}
         {{- form_widget(form.defaultLayout) -}}
@@ -169,7 +169,7 @@
 {% endblock %}
 
 {% block ezrichtext_field_definition_edit %}
-    <div class="ezrichtext-settings num-rows">
+    <div class="ezrichtext-settings num-rows{% if group_class is not empty %} {{ group_class }}{% endif %}">
         {{- form_label(form.numRows) -}}
         {{- form_errors(form.numRows) -}}
         {{- form_widget(form.numRows) -}}
@@ -177,13 +177,13 @@
 {% endblock %}
 
 {% block ezselection_field_definition_edit %}
-    <div class="ezselection-settings is-multiple">
+    <div class="ezselection-settings is-multiple{% if group_class is not empty %} {{ group_class }}{% endif %}">
         {{- form_label(form.isMultiple) -}}
         {{- form_errors(form.isMultiple) -}}
         {{- form_widget(form.isMultiple) -}}
     </div>
 
-    <div class="ezselection-settings options">
+    <div class="ezselection-settings options{% if group_class is not empty %} {{ group_class }}{% endif %}">
         {{ form_label(form.options) }}
         {{ form_errors(form.options) }}
         {% for option in form.options %}
@@ -198,19 +198,19 @@
 {% endblock %}
 
 {% block ezstring_field_definition_edit %}
-    <div class="ezstring-validator min-length">
+    <div class="ezstring-validator min-length{% if group_class is not empty %} {{ group_class }}{% endif %}">
         {{- form_label(form.minLength) -}}
         {{- form_errors(form.minLength) -}}
         {{- form_widget(form.minLength) -}}
     </div>
 
-    <div class="ezstring-validator max-length">
+    <div class="ezstring-validator max-length{% if group_class is not empty %} {{ group_class }}{% endif %}">
         {{- form_label(form.maxLength) -}}
         {{- form_errors(form.maxLength) -}}
         {{- form_widget(form.maxLength) -}}
     </div>
 
-    <div class="ezstring-default-value">
+    <div class="ezstring-default-value{% if group_class is not empty %} {{ group_class }}{% endif %}">
         {{- form_label(form.defaultValue) -}}
         {{- form_errors(form.defaultValue) -}}
         {{- form_widget(form.defaultValue) -}}
@@ -218,7 +218,7 @@
 {% endblock %}
 
 {% block eztext_field_definition_edit %}
-    <div class="eztext-settings text-rows">
+    <div class="eztext-settings text-rows{% if group_class is not empty %} {{ group_class }}{% endif %}">
         {{- form_label(form.textRows) -}}
         {{- form_errors(form.textRows) -}}
         {{- form_widget(form.textRows) -}}
@@ -226,13 +226,13 @@
 {% endblock %}
 
 {% block eztime_field_definition_edit %}
-    <div class="eztime-settings use-seconds">
+    <div class="eztime-settings use-seconds{% if group_class is not empty %} {{ group_class }}{% endif %}">
         {{- form_label(form.useSeconds) -}}
         {{- form_errors(form.useSeconds) -}}
         {{- form_widget(form.useSeconds) -}}
     </div>
 
-    <div class="eztime-settings default-type">
+    <div class="eztime-settings default-type{% if group_class is not empty %} {{ group_class }}{% endif %}">
         {{- form_label(form.defaultType) -}}
         {{- form_errors(form.defaultType) -}}
         {{- form_widget(form.defaultType) -}}
