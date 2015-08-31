@@ -35,9 +35,9 @@ class ContentTypeData extends ContentTypeUpdateStruct
      */
     protected $fieldDefinitionsData = [];
 
-    public function getIdentifier()
+    protected function getIdentifierValue()
     {
-        return $this->identifier;
+        return $this->contentTypeDraft->identifier;
     }
 
     public function addFieldDefinitionData(FieldDefinitionData $fieldDefinitionData)

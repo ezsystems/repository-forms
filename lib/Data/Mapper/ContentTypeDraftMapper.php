@@ -29,17 +29,18 @@ class ContentTypeDraftMapper implements FormDataMapperInterface
         $contentTypeData = new ContentTypeData(['contentTypeDraft' => $contentTypeDraft]);
         if (!$contentTypeData->isNew()) {
             $contentTypeData->identifier = $contentTypeDraft->identifier;
-            $contentTypeData->remoteId = $contentTypeDraft->remoteId;
-            $contentTypeData->urlAliasSchema = $contentTypeDraft->urlAliasSchema;
-            $contentTypeData->nameSchema = $contentTypeDraft->nameSchema;
-            $contentTypeData->isContainer = $contentTypeDraft->isContainer;
-            $contentTypeData->mainLanguageCode = $contentTypeDraft->mainLanguageCode;
-            $contentTypeData->defaultSortField = $contentTypeDraft->defaultSortField;
-            $contentTypeData->defaultSortOrder = $contentTypeDraft->defaultSortOrder;
-            $contentTypeData->defaultAlwaysAvailable = $contentTypeDraft->defaultAlwaysAvailable;
-            $contentTypeData->names = $contentTypeDraft->getNames();
-            $contentTypeData->descriptions = $contentTypeDraft->getDescriptions();
         }
+
+        $contentTypeData->remoteId = $contentTypeDraft->remoteId;
+        $contentTypeData->urlAliasSchema = $contentTypeDraft->urlAliasSchema;
+        $contentTypeData->nameSchema = $contentTypeDraft->nameSchema;
+        $contentTypeData->isContainer = $contentTypeDraft->isContainer;
+        $contentTypeData->mainLanguageCode = $contentTypeDraft->mainLanguageCode;
+        $contentTypeData->defaultSortField = $contentTypeDraft->defaultSortField;
+        $contentTypeData->defaultSortOrder = $contentTypeDraft->defaultSortOrder;
+        $contentTypeData->defaultAlwaysAvailable = $contentTypeDraft->defaultAlwaysAvailable;
+        $contentTypeData->names = $contentTypeDraft->getNames();
+        $contentTypeData->descriptions = $contentTypeDraft->getDescriptions();
 
         foreach ($contentTypeDraft->fieldDefinitions as $fieldDef) {
             $contentTypeData->addFieldDefinitionData(new FieldDefinitionData([
