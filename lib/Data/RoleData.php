@@ -30,8 +30,8 @@ class RoleData extends RoleUpdateStruct
      */
     protected $role;
 
-    public function getIdentifier()
+    protected function getIdentifierValue()
     {
-        return $this->identifier;
+        return $this->role->identifier;
     }
 }

@@ -18,14 +18,18 @@ trait NewnessChecker
     /**
      * Whether the Data object is considered new, based on the identifier
      * If it isn't new, one can e.g. use the identifier from the underlying value object.
+     *
+     * @return bool
      */
     public function isNew()
     {
-        return strpos($this->getIdentifier(), '__new__') === 0;
+        return strpos($this->getIdentifierValue(), '__new__') === 0;
     }
 
     /**
-     * The value of the property which is the identifier of the value object.
+     * Returns the value of the property which can be considered as the value object identifier.
+     *
+     * @return string
      */
-    abstract public function getIdentifier();
+    abstract protected function getIdentifierValue();
 }
