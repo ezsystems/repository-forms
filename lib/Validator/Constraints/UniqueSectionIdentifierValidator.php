@@ -45,7 +45,7 @@ class UniqueSectionIdentifierValidator extends ConstraintValidator
 
         try {
             $section = $this->sectionService->loadSectionByIdentifier($value->identifier);
-            if ($section->id === $value->getId()) {
+            if ($section->id == $value->getId()) {
                 return;
             }
 
