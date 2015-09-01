@@ -16,6 +16,11 @@ use eZ\Publish\API\Repository\Values\Content\SectionUpdateStruct;
 class SectionData extends SectionUpdateStruct
 {
     /**
+     * Trait which provides isNew(), and mandates getIdentifierValue().
+     */
+    use NewnessChecker;
+
+    /**
      * @var \eZ\Publish\API\Repository\Values\Content\Section
      */
     protected $section;
@@ -25,8 +30,13 @@ class SectionData extends SectionUpdateStruct
         return $this->section->id;
     }
 
-    public function isNew()
+    /**
+     * Returns the value of the property which can be considered as the value object identifier.
+     *
+     * @return string
+     */
+    protected function getIdentifierValue()
     {
-        return strpos($this->section->identifier, '__new__') === 0;
+        return $this->section->identifier;
     }
 }
