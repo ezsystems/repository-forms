@@ -56,9 +56,4 @@ final class RepositoryFormEvents
      * Triggered when updating a section.
      */
     const SECTION_UPDATE = 'section.update';
-
-    /**
-     * Triggered when canceling section edition.
-     */
-    const SECTION_CANCEL = 'section.update.cancel';
 }

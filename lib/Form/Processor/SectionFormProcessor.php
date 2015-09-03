@@ -31,7 +31,6 @@ class SectionFormProcessor implements EventSubscriberInterface
     {
         return [
             RepositoryFormEvents::SECTION_UPDATE => ['processUpdate', 10],
-            RepositoryFormEvents::SECTION_CANCEL => ['processCancel', 10],
         ];
     }
 
@@ -46,14 +45,5 @@ class SectionFormProcessor implements EventSubscriberInterface
         }
 
         $sectionData->setSection($section);
-    }
-
-    public function processCancel(FormActionEvent $event)
-    {
-        /** @var \EzSystems\RepositoryForms\Data\Section\SectionUpdateData $sectionData */
-        $sectionData = $event->getData();
-        if ($sectionData->isNew()) {
-            $this->sectionService->deleteSection($sectionData->section);
-        }
     }
 }

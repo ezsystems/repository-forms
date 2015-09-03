@@ -19,13 +19,12 @@ class SectionType extends AbstractType
         $builder
             ->add('name', 'text')
             ->add('identifier', 'text')
-            ->add('save', 'submit', ['label' => 'section.form.save'])
-            ->add('cancel', 'submit', ['label' => 'section.form.cancel']);
+            ->add('save', 'submit', ['label' => 'section.form.save']);
     }
 
     public function getName()
     {
-        return 'ezrepoforms_section_update';
+        return 'ezrepoforms_section_edit';
     }
 
     public function configureOptions(OptionsResolver $resolver)
