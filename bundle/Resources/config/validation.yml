@@ -64,7 +64,7 @@ EzSystems\RepositoryForms\Data\RoleData:
     constraints:
         - EzSystems\RepositoryForms\Validator\Constraints\UniqueRoleIdentifier: ~
 
-EzSystems\RepositoryForms\Data\SectionData:
+eZ\Publish\API\Repository\Values\Content\SectionStruct:
     constraints:
         - EzSystems\RepositoryForms\Validator\Constraints\UniqueSectionIdentifier: ~
     properties:

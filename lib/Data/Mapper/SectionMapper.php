@@ -10,7 +10,8 @@ namespace EzSystems\RepositoryForms\Data\Mapper;
 
 use eZ\Publish\API\Repository\Values\Content\Section;
 use eZ\Publish\API\Repository\Values\ValueObject;
-use EzSystems\RepositoryForms\Data\SectionUpdateData;
+use EzSystems\RepositoryForms\Data\Section\SectionCreateData;
+use EzSystems\RepositoryForms\Data\Section\SectionUpdateData;
 
 class SectionMapper implements FormDataMapperInterface
 {
@@ -20,16 +21,23 @@ class SectionMapper implements FormDataMapperInterface
      * @param ValueObject|\eZ\Publish\API\Repository\Values\Content\Section $section
      * @param array $params
      *
-     * @return mixed
+     * @return SectionCreateData|SectionUpdateData
      */
     public function mapToFormData(ValueObject $section, array $params = [])
     {
-        $data = new SectionUpdateData(['section' => $section]);
-        if (!$data->isNew()) {
+        if (!$this->isSectionNew($section)) {
+            $data = new SectionUpdateData(['section' => $section]);
             $data->identifier = $section->identifier;
             $data->name = $section->name;
+        } else {
+            $data = new SectionCreateData(['section' => $section]);
         }
 
         return $data;
+    }
+
+    private function isSectionNew(Section $section)
+    {
+        return $section->id === null;
     }
 }

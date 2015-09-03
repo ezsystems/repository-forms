@@ -31,7 +31,7 @@ class SectionType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => '\EzSystems\RepositoryForms\Data\SectionData',
+            'data_class' => '\eZ\Publish\API\Repository\Values\Content\SectionStruct',
             'translation_domain' => 'ezrepoforms_section',
         ]);
     }
