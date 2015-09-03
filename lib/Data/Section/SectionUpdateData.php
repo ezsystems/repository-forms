@@ -13,7 +13,7 @@ use eZ\Publish\API\Repository\Values\Content\SectionUpdateStruct;
 /**
  * @property-read \eZ\Publish\API\Repository\Values\Content\Section $section
  */
-class SectionData extends SectionUpdateStruct
+class SectionUpdateData extends SectionUpdateStruct
 {
     /**
      * Trait which provides isNew(), and mandates getIdentifierValue().

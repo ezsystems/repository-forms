@@ -10,7 +10,7 @@ namespace EzSystems\RepositoryForms\Validator\Constraints;
 
 use eZ\Publish\API\Repository\Exceptions\NotFoundException;
 use eZ\Publish\API\Repository\SectionService;
-use EzSystems\RepositoryForms\Data\SectionData;
+use EzSystems\RepositoryForms\Data\SectionUpdateData;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
 
@@ -32,14 +32,14 @@ class UniqueSectionIdentifierValidator extends ConstraintValidator
     /**
      * Checks if the passed value is valid.
      *
-     * @param SectionData $value The value that should be validated
+     * @param SectionUpdateData $value The value that should be validated
      * @param Constraint|UniqueFieldDefinitionIdentifier $constraint The constraint for the validation
      *
      * @api
      */
     public function validate($value, Constraint $constraint)
     {
-        if (!$value instanceof SectionData) {
+        if (!$value instanceof SectionUpdateData) {
             return;
         }
 

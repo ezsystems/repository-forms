@@ -35,14 +35,14 @@ class SectionFormProcessor implements EventSubscriberInterface
 
     public function processUpdate(FormActionEvent $event)
     {
-        /** @var \EzSystems\RepositoryForms\Data\SectionData $sectionData */
+        /** @var \EzSystems\RepositoryForms\Data\SectionUpdateData $sectionData */
         $sectionData = $event->getData();
         $this->sectionService->updateSection($sectionData->section, $sectionData);
     }
 
     public function processCancel(FormActionEvent $event)
     {
-        /** @var \EzSystems\RepositoryForms\Data\SectionData $sectionData */
+        /** @var \EzSystems\RepositoryForms\Data\SectionUpdateData $sectionData */
         $sectionData = $event->getData();
         if ($sectionData->isNew()) {
             $this->sectionService->deleteSection($sectionData->section);
