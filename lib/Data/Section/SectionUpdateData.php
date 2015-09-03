@@ -6,14 +6,16 @@
  * @license For full copyright and license information view LICENSE file distributed with this source code.
  * @version //autogentag//
  */
-namespace EzSystems\RepositoryForms\Data;
+namespace EzSystems\RepositoryForms\Section\Data;
 
 use eZ\Publish\API\Repository\Values\Content\SectionUpdateStruct;
+use EzSystems\RepositoryForms\Data\NewnessChecker;
+use EzSystems\RepositoryForms\Data\NewsnessCheckable;
 
 /**
  * @property-read \eZ\Publish\API\Repository\Values\Content\Section $section
  */
-class SectionUpdateData extends SectionUpdateStruct
+class SectionUpdateData extends SectionUpdateStruct implements NewsnessCheckable
 {
     /**
      * Trait which provides isNew(), and mandates getIdentifierValue().

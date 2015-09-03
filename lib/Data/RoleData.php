@@ -18,7 +18,7 @@ use eZ\Publish\API\Repository\Values\User\RoleUpdateStruct;
  * @property-read \eZ\Publish\API\Repository\Values\ContentType\ContentTypeDraft $contentTypeDraft
  * @property-read \EzSystems\RepositoryForms\Data\FieldDefinitionData[] $fieldDefinitionsData
  */
-class RoleData extends RoleUpdateStruct
+class RoleData extends RoleUpdateStruct implements NewsnessCheckable
 {
     /**
      * Trait which provides isNew(), and mandates getIdentifier().
