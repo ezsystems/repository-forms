@@ -9,8 +9,6 @@
 namespace EzSystems\RepositoryForms\Form\Processor;
 
 use eZ\Publish\API\Repository\SectionService;
-use EzSystems\RepositoryForms\Data\Section\SectionCreateData;
-use EzSystems\RepositoryForms\Data\Section\SectionUpdateData;
 use EzSystems\RepositoryForms\Event\FormActionEvent;
 use EzSystems\RepositoryForms\Event\RepositoryFormEvents;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
