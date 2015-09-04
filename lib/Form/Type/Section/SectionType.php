@@ -6,7 +6,7 @@
  * @license For full copyright and license information view LICENSE file distributed with this source code.
  * @version //autogentag//
  */
-namespace EzSystems\RepositoryForms\Form\Type;
+namespace EzSystems\RepositoryForms\Form\Type\Section;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
