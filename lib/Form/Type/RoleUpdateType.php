@@ -38,6 +38,6 @@ class RoleUpdateType extends AbstractType
         $builder
             ->add('identifier', 'text', ['label' => 'role.identifier'])
             ->add('saveRole', 'submit', ['label' => 'role.save'])
-            ->add('removeDraft', 'submit', ['label' => 'role.remove_draft']);
+            ->add('removeDraft', 'submit', ['label' => 'role.remove_draft', 'validation_groups' => false]);
     }
 }
