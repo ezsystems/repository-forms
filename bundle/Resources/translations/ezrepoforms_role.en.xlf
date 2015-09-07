@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+    <file source-language="en" datatype="plaintext" original="file.ext">
+        <body>
+            <trans-unit id="15a96bd8e517e1cfb6d989c69ccd4a07" resname="role.identifier">
+                <source>role.identifier</source>
+                <target>Name</target>
+            </trans-unit>
+            <trans-unit id="b240ba7952e3686902a0ea78ae3fec91" resname="role.save">
+                <source>role.save</source>
+                <target>Save</target>
+            </trans-unit>
+            <trans-unit id="97ccb80e8991c2b37daf50834a8d7a18" resname="role.remove_draft">
+                <source>role.remove_draft</source>
+                <target>Cancel</target>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>

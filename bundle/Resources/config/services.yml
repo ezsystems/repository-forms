@@ -34,6 +34,7 @@ parameters:
     ezrepoforms.form_processor.content_type.options:
         redirectRouteAfterPublish: %ezrepoforms.form_processor.content_type.options.redirect_route_after_publish%
     ezrepoforms.action_dispatcher.role.class: EzSystems\RepositoryForms\Form\ActionDispatcher\RoleDispatcher
+    ezrepoforms.form_processor.role.class: EzSystems\RepositoryForms\Form\Processor\RoleFormProcessor
 
 services:
     ezrepoforms.field_type_form_mapper.registry:
@@ -200,3 +201,9 @@ services:
     ezrepoforms.action_dispatcher.role:
         class: %ezrepoforms.action_dispatcher.role.class%
         parent: ezrepoforms.action_dispatcher.base
+
+    ezrepoforms.form_processor.role:
+        class: %ezrepoforms.form_processor.role.class%
+        arguments: [@ezpublish.api.service.role]
+        tags:
+            - { name: kernel.event_subscriber }
