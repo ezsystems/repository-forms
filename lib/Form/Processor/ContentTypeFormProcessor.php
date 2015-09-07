@@ -60,6 +60,11 @@ class ContentTypeFormProcessor implements EventSubscriberInterface
 
     public function processDefaultAction(FormActionEvent $event)
     {
+        // Don't update anything if we just want to cancel the draft.
+        if ($event->getClickedButton() === 'removeDraft') {
+            return;
+        }
+
         // Always update FieldDefinitions and ContentTypeDraft
         /** @var \EzSystems\RepositoryForms\Data\ContentTypeData $contentTypeData */
         $contentTypeData = $event->getData();
