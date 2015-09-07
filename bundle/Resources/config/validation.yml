@@ -59,3 +59,7 @@ EzSystems\RepositoryForms\Data\FieldDefinitionData:
         position:
             - Type:
                 type: integer
+
+EzSystems\RepositoryForms\Data\RoleData:
+    constraints:
+        - EzSystems\RepositoryForms\Validator\Constraints\UniqueRoleIdentifier: ~

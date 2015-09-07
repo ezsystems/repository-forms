@@ -42,6 +42,10 @@
                 <source>ez.field_definition.default_field_value</source>
                 <target>Default field value is invalid.</target>
             </trans-unit>
+            <trans-unit id="b4bcdedc4147dd912dc0247cea16c750" resname="ez.role.identifier.unique">
+                <source>ez.role.identifier.unique</source>
+                <target>Identifier "%identifier%" already exists. Role identifier must be unique.</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>

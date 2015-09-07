@@ -26,6 +26,7 @@ parameters:
     ezrepoforms.validator.validator_configuration.class: EzSystems\RepositoryForms\Validator\Constraints\ValidatorConfigurationValidator
     ezrepoforms.validator.field_settings.class: EzSystems\RepositoryForms\Validator\Constraints\FieldSettingsValidator
     ezrepoforms.validator.default_field_value.class: EzSystems\RepositoryForms\Validator\Constraints\FieldDefinitionDefaultValueValidator
+    ezrepoforms.validator.unique_role_identifier.class: EzSystems\RepositoryForms\Validator\Constraints\UniqueRoleIdentifierValidator
 
     ezrepoforms.twig.field_edit_rendering_extension.class: EzSystems\RepositoryForms\Twig\FieldEditRenderingExtension
     ezrepoforms.action_dispatcher.content_type.class: EzSystems\RepositoryForms\Form\ActionDispatcher\ContentTypeDispatcher
@@ -175,6 +176,12 @@ services:
         class: %ezrepoforms.validator.default_field_value.class%
         tags:
             - { name: validator.constraint_validator, alias: ezrepoforms.validator.default_field_value }
+
+    ezrepoforms.validator.unique_role_identifier:
+        class: %ezrepoforms.validator.unique_role_identifier.class%
+        arguments: [@ezpublish.api.service.role]
+        tags:
+            - { name: validator.constraint_validator, alias: ezrepoforms.validator.unique_role_identifier }
 
     ezrepoforms.twig.field_edit_rendering_extension:
         class: %ezrepoforms.twig.field_edit_rendering_extension.class%
