@@ -46,6 +46,14 @@
                 <source>ez.role.identifier.unique</source>
                 <target>Identifier "%identifier%" already exists. Role identifier must be unique.</target>
             </trans-unit>
+            <trans-unit id="5387d26cceb54294dafe82be9b0d61d0">
+                <source>ez.section.identifier.format</source>
+                <target>Section identifier should consist of letters, numbers or '_'.</target>
+            </trans-unit>
+            <trans-unit id="3782ffaac11648e8ead7248adb7a42bc">
+                <source>ez.section.identifier.unique</source>
+                <target>A section with this identifier already exists, please enter a different one</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>

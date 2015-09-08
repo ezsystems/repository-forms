@@ -1,0 +1,21 @@
+parameters:
+    ezrepoforms.validator.unique_section_identifier.class: EzSystems\RepositoryForms\Validator\Constraints\UniqueSectionIdentifierValidator
+    ezrepoforms.action_dispatcher.section.class: EzSystems\RepositoryForms\Form\ActionDispatcher\SectionDispatcher
+    ezrepoforms.form_processor.section.class: EzSystems\RepositoryForms\Form\Processor\SectionFormProcessor
+
+services:
+    ezrepoforms.validator.unique_section_identifier:
+        class: %ezrepoforms.validator.unique_section_identifier.class%
+        arguments: [@ezpublish.api.service.section]
+        tags:
+            - { name: validator.constraint_validator, alias: ezrepoforms.validator.unique_section_identifier }
+
+    ezrepoforms.action_dispatcher.section:
+        class: %ezrepoforms.action_dispatcher.section.class%
+        parent: ezrepoforms.action_dispatcher.base
+
+    ezrepoforms.form_processor.section:
+        class: %ezrepoforms.form_processor.section.class%
+        arguments: [@ezpublish.api.service.section]
+        tags:
+            - { name: kernel.event_subscriber }

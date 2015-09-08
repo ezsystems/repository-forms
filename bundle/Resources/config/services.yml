@@ -1,3 +1,6 @@
+imports:
+    - {resource: section.yml}
+
 parameters:
     ezrepoforms.field_type_form_mapper.registry.class: EzSystems\RepositoryForms\FieldType\FieldTypeFormMapperRegistry
     ezrepoforms.content_type.update.form_type.class: EzSystems\RepositoryForms\Form\Type\ContentTypeUpdateType

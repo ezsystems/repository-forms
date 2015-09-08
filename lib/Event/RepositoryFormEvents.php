@@ -51,4 +51,9 @@ final class RepositoryFormEvents
      * Triggered when removing the draft (e.g. "cancel" action).
      */
     const ROLE_REMOVE_DRAFT = 'role.update.removeDraft';
+
+    /**
+     * Triggered when updating a section.
+     */
+    const SECTION_UPDATE = 'section.update';
 }
