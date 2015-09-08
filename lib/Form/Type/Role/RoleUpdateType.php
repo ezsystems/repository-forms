@@ -8,7 +8,7 @@
  *
  * @version //autogentag//
  */
-namespace EzSystems\RepositoryForms\Form\Type;
+namespace EzSystems\RepositoryForms\Form\Type\Role;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
