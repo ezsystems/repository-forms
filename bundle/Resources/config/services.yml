@@ -56,11 +56,6 @@ services:
         tags:
             - { name: form.type, alias: ezrepoforms_fielddefinition_update }
 
-    ezrepoforms.role.update.form_type:
-        class: %ezrepoforms.role.update.form_type.class%
-        tags:
-            - {name: form.type, alias: ezrepoforms_role_update}
-
     # FieldType form mappers
     ezrepoforms.field_type.form_mapper.ezbinaryfile:
         class: %ezrepoforms.field_type.form_mapper.ezbinaryfile.class%
