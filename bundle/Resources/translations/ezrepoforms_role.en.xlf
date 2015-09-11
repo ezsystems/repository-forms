@@ -18,6 +18,10 @@
                 <source>role.form.delete</source>
                 <target>Delete</target>
             </trans-unit>
+            <trans-unit id="565405ab5f15e4274e9edf5301d567b1">
+                <source>role.create</source>
+                <target>Create a role</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>
