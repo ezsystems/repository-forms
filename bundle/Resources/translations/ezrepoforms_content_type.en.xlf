@@ -114,6 +114,10 @@
                 <source>content_type.sort_order.1</source>
                 <target>Ascending</target>
             </trans-unit>
+            <trans-unit id="c922cb4d7cf06dd353a1c42e5beaa942">
+                <source>content_type.create</source>
+                <target>Create a content type</target>
+            </trans-unit>
             <!-- Field definition -->
             <trans-unit id="101">
                 <source>field_definition.name</source>
@@ -330,6 +334,11 @@
             <trans-unit id="154">
                 <source>field_definition.ezobjectrelationlist.selection_root_udw_button</source>
                 <target>Select location</target>
+            </trans-unit>
+            <!-- Errors -->
+            <trans-unit id="1ccb9c8a9c5030a616b4caf4b2e532c0">
+                <source>content_type.error.content_type_group.not_found</source>
+                <target>ContentType group #%id% doesn't exist.</target>
             </trans-unit>
         </body>
     </file>
