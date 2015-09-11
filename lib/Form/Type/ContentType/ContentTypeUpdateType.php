@@ -8,7 +8,7 @@
  *
  * @version //autogentag//
  */
-namespace EzSystems\RepositoryForms\Form\Type;
+namespace EzSystems\RepositoryForms\Form\Type\ContentType;
 
 use eZ\Publish\API\Repository\Values\Content\Location;
 use eZ\Publish\Core\Base\Container\ApiLoader\FieldTypeCollectionFactory;

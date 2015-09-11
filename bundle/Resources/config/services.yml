@@ -3,7 +3,7 @@ imports:
 
 parameters:
     ezrepoforms.field_type_form_mapper.registry.class: EzSystems\RepositoryForms\FieldType\FieldTypeFormMapperRegistry
-    ezrepoforms.content_type.update.form_type.class: EzSystems\RepositoryForms\Form\Type\ContentTypeUpdateType
+    ezrepoforms.content_type.update.form_type.class: EzSystems\RepositoryForms\Form\Type\ContentType\ContentTypeUpdateType
     ezrepoforms.field_definition.form_type.class: EzSystems\RepositoryForms\Form\Type\FieldDefinition\FieldDefinitionType
     ezrepoforms.role.update.form_type.class: EzSystems\RepositoryForms\Form\Type\RoleUpdateType
 
