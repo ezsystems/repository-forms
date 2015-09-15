@@ -75,3 +75,8 @@ eZ\Publish\API\Repository\Values\Content\SectionStruct:
                 message: "ez.section.identifier.format"
         name:
             - NotBlank: ~
+
+eZ\Publish\API\Repository\Values\ContentType\ContentTypeGroupStruct:
+    properties:
+        identifier:
+            - NotBlank: ~

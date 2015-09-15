@@ -340,6 +340,15 @@
                 <source>content_type.error.content_type_group.not_found</source>
                 <target>ContentType group #%id% doesn't exist.</target>
             </trans-unit>
+            <!-- ContentType groups -->
+            <trans-unit id="4fc6b746712fd2aeaea4d323a89ee4a3">
+                <source>content_type.group.identifier</source>
+                <target>Name</target>
+            </trans-unit>
+            <trans-unit id="efa6eedcf144d6acddf602ffe497fedf">
+                <source>content_type.group.save</source>
+                <target>Save</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>
