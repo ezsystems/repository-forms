@@ -349,6 +349,10 @@
                 <source>content_type.group.save</source>
                 <target>Save</target>
             </trans-unit>
+            <trans-unit id="21b3559b40d1828b8fc109bcfeebc70e">
+                <source>content_type.group.delete</source>
+                <target>Delete</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>
