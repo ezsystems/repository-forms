@@ -38,6 +38,11 @@ final class RepositoryFormEvents
     const CONTENT_TYPE_REMOVE_DRAFT = 'contentType.update.removeDraft';
 
     /**
+     * Triggered when updating a ContentType group.
+     */
+    const CONTENT_TYPE_GROUP_UPDATE = 'contentType.group.update';
+
+    /**
      * Base name for Role update processing events.
      */
     const ROLE_UPDATE = 'role.update';

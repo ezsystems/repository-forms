@@ -32,10 +32,12 @@ parameters:
 
     ezrepoforms.twig.field_edit_rendering_extension.class: EzSystems\RepositoryForms\Twig\FieldEditRenderingExtension
     ezrepoforms.action_dispatcher.content_type.class: EzSystems\RepositoryForms\Form\ActionDispatcher\ContentTypeDispatcher
+    ezrepoforms.action_dispatcher.content_type.group.class: EzSystems\RepositoryForms\Form\ActionDispatcher\ContentTypeGroupDispatcher
     ezrepoforms.form_processor.content_type.class: EzSystems\RepositoryForms\Form\Processor\ContentTypeFormProcessor
     ezrepoforms.form_processor.content_type.options.redirect_route_after_publish: ~
     ezrepoforms.form_processor.content_type.options:
         redirectRouteAfterPublish: %ezrepoforms.form_processor.content_type.options.redirect_route_after_publish%
+    ezrepoforms.form_processor.content_type_group.class: EzSystems\RepositoryForms\Form\Processor\ContentTypeGroupFormProcessor
     ezrepoforms.action_dispatcher.role.class: EzSystems\RepositoryForms\Form\ActionDispatcher\RoleDispatcher
     ezrepoforms.form_processor.role.class: EzSystems\RepositoryForms\Form\Processor\RoleFormProcessor
 
@@ -196,9 +198,19 @@ services:
         class: %ezrepoforms.action_dispatcher.content_type.class%
         parent: ezrepoforms.action_dispatcher.base
 
+    ezrepoforms.action_dispatcher.content_type.group:
+        class: %ezrepoforms.action_dispatcher.content_type.group.class%
+        parent: ezrepoforms.action_dispatcher.base
+
     ezrepoforms.form_processor.content_type:
         class: %ezrepoforms.form_processor.content_type.class%
         arguments: [@ezpublish.api.service.content_type, @router, %ezrepoforms.form_processor.content_type.options%]
+        tags:
+            - { name: kernel.event_subscriber }
+
+    ezrepoforms.form_processor.content_type_group:
+        class: %ezrepoforms.form_processor.content_type_group.class%
+        arguments: [@ezpublish.api.service.content_type]
         tags:
             - { name: kernel.event_subscriber }
 
