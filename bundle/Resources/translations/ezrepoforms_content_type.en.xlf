@@ -118,6 +118,10 @@
                 <source>content_type.create</source>
                 <target>Create a content type</target>
             </trans-unit>
+            <trans-unit id="d8ed8632f53a803e8c0b7686aca78dfd">
+                <source>content_type.delete</source>
+                <target>Delete</target>
+            </trans-unit>
             <!-- Field definition -->
             <trans-unit id="101">
                 <source>field_definition.name</source>
