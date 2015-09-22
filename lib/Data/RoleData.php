@@ -26,12 +26,12 @@ class RoleData extends RoleUpdateStruct implements NewsnessCheckable
     use NewnessChecker;
 
     /**
-     * @var \eZ\Publish\API\Repository\Values\User\Role
+     * @var \eZ\Publish\API\Repository\Values\User\RoleDraft
      */
-    protected $role;
+    protected $roleDraft;
 
     protected function getIdentifierValue()
     {
-        return $this->role->identifier;
+        return $this->roleDraft->identifier;
     }
 }

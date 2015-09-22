@@ -19,16 +19,16 @@ class RoleMapper implements FormDataMapperInterface
      * Maps a ValueObject from eZ content repository to a data usable as underlying form data
      * (e.g. create/update struct).
      *
-     * @param ValueObject|\eZ\Publish\API\Repository\Values\User\Role $role
+     * @param ValueObject|\eZ\Publish\API\Repository\Values\User\RoleDraft $role
      * @param array $params
      *
      * @return RoleData
      */
-    public function mapToFormData(ValueObject $role, array $params = [])
+    public function mapToFormData(ValueObject $roleDraft, array $params = [])
     {
-        $roleData = new RoleData(['role' => $role]);
+        $roleData = new RoleData(['roleDraft' => $roleDraft]);
         if (!$roleData->isNew()) {
-            $roleData->identifier = $role->identifier;
+            $roleData->identifier = $roleDraft->identifier;
         }
 
         return $roleData;
