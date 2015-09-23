@@ -37,6 +37,11 @@ class RoleFormProcessor implements EventSubscriberInterface
 
     public function processDefaultAction(FormActionEvent $event)
     {
+        // Don't update anything if we just want to cancel the draft.
+        if ($event->getClickedButton() === 'removeDraft') {
+            return;
+        }
+
         /** @var \EzSystems\RepositoryForms\Data\RoleData $roleData */
         $roleData = $event->getData();
         $roleDraft = $roleData->roleDraft;
