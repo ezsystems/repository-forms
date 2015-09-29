@@ -8,9 +8,11 @@
  *
  * @version //autogentag//
  */
-namespace EzSystems\RepositoryForms\Data;
+namespace EzSystems\RepositoryForms\Data\Role;
 
 use eZ\Publish\API\Repository\Values\User\RoleUpdateStruct;
+use EzSystems\RepositoryForms\Data\NewnessChecker;
+use EzSystems\RepositoryForms\Data\NewsnessCheckable;
 
 /**
  * Base data class for ContentType update form, with FieldDefinitions data and ContentTypeDraft.

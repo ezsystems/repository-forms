@@ -10,7 +10,7 @@ namespace EzSystems\RepositoryForms\Validator\Constraints;
 
 use eZ\Publish\API\Repository\Exceptions\NotFoundException;
 use eZ\Publish\API\Repository\RoleService;
-use EzSystems\RepositoryForms\Data\RoleData;
+use EzSystems\RepositoryForms\Data\Role\RoleData;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
 

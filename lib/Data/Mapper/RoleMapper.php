@@ -11,7 +11,7 @@
 namespace EzSystems\RepositoryForms\Data\Mapper;
 
 use eZ\Publish\API\Repository\Values\ValueObject;
-use EzSystems\RepositoryForms\Data\RoleData;
+use EzSystems\RepositoryForms\Data\Role\RoleData;
 
 class RoleMapper implements FormDataMapperInterface
 {
