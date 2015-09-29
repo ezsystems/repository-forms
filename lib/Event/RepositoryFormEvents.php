@@ -53,6 +53,11 @@ final class RepositoryFormEvents
     const ROLE_SAVE = 'role.update.saveRole';
 
     /**
+     * Triggered when saving the policy.
+     */
+    const POLICY_UPDATE = 'policy.update';
+
+    /**
      * Triggered when removing the draft (e.g. "cancel" action).
      */
     const ROLE_REMOVE_DRAFT = 'role.update.removeDraft';

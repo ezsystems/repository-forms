@@ -5,6 +5,7 @@ parameters:
     ezrepoforms.field_type_form_mapper.registry.class: EzSystems\RepositoryForms\FieldType\FieldTypeFormMapperRegistry
     ezrepoforms.content_type.update.form_type.class: EzSystems\RepositoryForms\Form\Type\ContentType\ContentTypeUpdateType
     ezrepoforms.field_definition.form_type.class: EzSystems\RepositoryForms\Form\Type\FieldDefinition\FieldDefinitionType
+    ezrepoforms.policy.edit.form.class: EzSystems\RepositoryForms\Form\Type\Role\PolicyType
 
     ezrepoforms.field_type.form_mapper.ezbinaryfile.class: EzSystems\RepositoryForms\FieldType\Mapper\BinaryFileFormMapper
     ezrepoforms.field_type.form_mapper.ezcountry.class: EzSystems\RepositoryForms\FieldType\Mapper\CountryFormMapper
@@ -33,12 +34,13 @@ parameters:
     ezrepoforms.twig.field_edit_rendering_extension.class: EzSystems\RepositoryForms\Twig\FieldEditRenderingExtension
     ezrepoforms.action_dispatcher.content_type.class: EzSystems\RepositoryForms\Form\ActionDispatcher\ContentTypeDispatcher
     ezrepoforms.action_dispatcher.content_type.group.class: EzSystems\RepositoryForms\Form\ActionDispatcher\ContentTypeGroupDispatcher
+    ezrepoforms.action_dispatcher.role.class: EzSystems\RepositoryForms\Form\ActionDispatcher\RoleDispatcher
+    ezrepoforms.action_dispatcher.policy.class: EzSystems\RepositoryForms\Form\ActionDispatcher\PolicyDispatcher
     ezrepoforms.form_processor.content_type.class: EzSystems\RepositoryForms\Form\Processor\ContentTypeFormProcessor
     ezrepoforms.form_processor.content_type.options.redirect_route_after_publish: ~
     ezrepoforms.form_processor.content_type.options:
         redirectRouteAfterPublish: %ezrepoforms.form_processor.content_type.options.redirect_route_after_publish%
     ezrepoforms.form_processor.content_type_group.class: EzSystems\RepositoryForms\Form\Processor\ContentTypeGroupFormProcessor
-    ezrepoforms.action_dispatcher.role.class: EzSystems\RepositoryForms\Form\ActionDispatcher\RoleDispatcher
     ezrepoforms.form_processor.role.class: EzSystems\RepositoryForms\Form\Processor\RoleFormProcessor
 
 services:
@@ -56,6 +58,12 @@ services:
         arguments: [@ezrepoforms.field_type_form_mapper.registry, @ezpublish.api.service.field_type]
         tags:
             - { name: form.type, alias: ezrepoforms_fielddefinition_update }
+
+    ezrepoforms.policy.edit.form:
+        class: %ezrepoforms.policy.edit.form.class%
+        arguments: [%ezpublish.api.role.policy_map%]
+        tags:
+            - { name: form.type, alias: ezrepoforms_policy_edit }
 
     # FieldType form mappers
     ezrepoforms.field_type.form_mapper.ezbinaryfile:
@@ -188,6 +196,7 @@ services:
         tags:
             - { name: twig.extension }
 
+    # Actop, dispatchers
     ezrepoforms.action_dispatcher.base:
         class: EzSystems\RepositoryForms\Form\ActionDispatcher\AbstractActionDispatcher
         abstract: true
@@ -202,6 +211,15 @@ services:
         class: %ezrepoforms.action_dispatcher.content_type.group.class%
         parent: ezrepoforms.action_dispatcher.base
 
+    ezrepoforms.action_dispatcher.role:
+        class: %ezrepoforms.action_dispatcher.role.class%
+        parent: ezrepoforms.action_dispatcher.base
+
+    ezrepoforms.action_dispatcher.policy:
+        class: %ezrepoforms.action_dispatcher.policy.class%
+        parent: ezrepoforms.action_dispatcher.base
+
+    # Form processors
     ezrepoforms.form_processor.content_type:
         class: %ezrepoforms.form_processor.content_type.class%
         arguments: [@ezpublish.api.service.content_type, @router, %ezrepoforms.form_processor.content_type.options%]
@@ -213,10 +231,6 @@ services:
         arguments: [@ezpublish.api.service.content_type]
         tags:
             - { name: kernel.event_subscriber }
-
-    ezrepoforms.action_dispatcher.role:
-        class: %ezrepoforms.action_dispatcher.role.class%
-        parent: ezrepoforms.action_dispatcher.base
 
     ezrepoforms.form_processor.role:
         class: %ezrepoforms.form_processor.role.class%

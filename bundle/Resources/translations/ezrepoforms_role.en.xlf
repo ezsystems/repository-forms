@@ -22,6 +22,18 @@
                 <source>role.create</source>
                 <target>Create a role</target>
             </trans-unit>
+            <trans-unit id="e5cad95e7e4a9e50c68dae5020daf2fd">
+                <source>role.policy.add</source>
+                <target>Add a new policy</target>
+            </trans-unit>
+            <trans-unit id="">
+                <source>role.policy.edit_limitations</source>
+                <target>Edit limitations</target>
+            </trans-unit>
+            <trans-unit id="f69be0366fdb75154d6781d3d1d63590">
+                <source>role.policy.type</source>
+                <target>Policy type</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>
