@@ -31,6 +31,7 @@ parameters:
     ezrepoforms.validator.unique_role_identifier.class: EzSystems\RepositoryForms\Validator\Constraints\UniqueRoleIdentifierValidator
 
     ezrepoforms.twig.field_edit_rendering_extension.class: EzSystems\RepositoryForms\Twig\FieldEditRenderingExtension
+    ezrepoforms.action_dispatcher.section.class: EzSystems\RepositoryForms\Form\ActionDispatcher\SectionDispatcher
     ezrepoforms.action_dispatcher.content_type.class: EzSystems\RepositoryForms\Form\ActionDispatcher\ContentTypeDispatcher
     ezrepoforms.action_dispatcher.content_type.group.class: EzSystems\RepositoryForms\Form\ActionDispatcher\ContentTypeGroupDispatcher
     ezrepoforms.form_processor.content_type.class: EzSystems\RepositoryForms\Form\Processor\ContentTypeFormProcessor
@@ -193,6 +194,10 @@ services:
         abstract: true
         calls:
             - [setEventDispatcher, [@event_dispatcher]]
+
+    ezrepoforms.action_dispatcher.section:
+        class: %ezrepoforms.action_dispatcher.section.class%
+        parent: ezrepoforms.action_dispatcher.base
 
     ezrepoforms.action_dispatcher.content_type:
         class: %ezrepoforms.action_dispatcher.content_type.class%
