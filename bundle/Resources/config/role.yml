@@ -1,0 +1,44 @@
+parameters:
+    # Form types
+    ezrepoforms.policy.edit.form.class: EzSystems\RepositoryForms\Form\Type\Role\PolicyType
+
+    # Validators
+    ezrepoforms.validator.unique_role_identifier.class: EzSystems\RepositoryForms\Validator\Constraints\UniqueRoleIdentifierValidator
+
+    # Action dispatchers
+    ezrepoforms.action_dispatcher.role.class: EzSystems\RepositoryForms\Form\ActionDispatcher\RoleDispatcher
+    ezrepoforms.action_dispatcher.policy.class: EzSystems\RepositoryForms\Form\ActionDispatcher\PolicyDispatcher
+
+    # Form processors
+    ezrepoforms.form_processor.role.class: EzSystems\RepositoryForms\Form\Processor\RoleFormProcessor
+
+services:
+    # Form types
+    ezrepoforms.policy.edit.form:
+        class: %ezrepoforms.policy.edit.form.class%
+        arguments: [%ezpublish.api.role.policy_map%]
+        tags:
+            - { name: form.type, alias: ezrepoforms_policy_edit }
+
+    # Validators
+    ezrepoforms.validator.unique_role_identifier:
+        class: %ezrepoforms.validator.unique_role_identifier.class%
+        arguments: [@ezpublish.api.service.role]
+        tags:
+            - { name: validator.constraint_validator, alias: ezrepoforms.validator.unique_role_identifier }
+
+    # Action dispatchers
+    ezrepoforms.action_dispatcher.role:
+        class: %ezrepoforms.action_dispatcher.role.class%
+        parent: ezrepoforms.action_dispatcher.base
+
+    ezrepoforms.action_dispatcher.policy:
+        class: %ezrepoforms.action_dispatcher.policy.class%
+        parent: ezrepoforms.action_dispatcher.base
+
+    # Form processors
+    ezrepoforms.form_processor.role:
+        class: %ezrepoforms.form_processor.role.class%
+        arguments: [@ezpublish.api.service.role]
+        tags:
+            - { name: kernel.event_subscriber }
