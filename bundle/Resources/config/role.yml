@@ -11,6 +11,7 @@ parameters:
 
     # Form processors
     ezrepoforms.form_processor.role.class: EzSystems\RepositoryForms\Form\Processor\RoleFormProcessor
+    ezrepoforms.form_processor.policy.class: EzSystems\RepositoryForms\Form\Processor\PolicyFormProcessor
 
 services:
     # Form types
@@ -39,6 +40,12 @@ services:
     # Form processors
     ezrepoforms.form_processor.role:
         class: %ezrepoforms.form_processor.role.class%
+        arguments: [@ezpublish.api.service.role]
+        tags:
+            - { name: kernel.event_subscriber }
+
+    ezrepoforms.form_processor.policy:
+        class: %ezrepoforms.form_processor.policy.class%
         arguments: [@ezpublish.api.service.role]
         tags:
             - { name: kernel.event_subscriber }
