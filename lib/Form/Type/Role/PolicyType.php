@@ -77,8 +77,12 @@ class PolicyType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('moduleFunction', 'choice', ['choices' => $this->policyChoices, 'label' => 'role.policy.type'])
-            ->add('removeDraft', 'submit', ['label' => 'role.cancel'])
+            ->add('moduleFunction', 'choice', [
+                'choices' => $this->policyChoices,
+                'label' => 'role.policy.type',
+                'placeholder' => 'role.policy.type.choose',
+            ])
+            ->add('removeDraft', 'submit', ['label' => 'role.cancel', 'validation_groups' => false])
             ->add('savePolicy', 'submit', ['label' => 'role.save']);
     }
 

@@ -43,7 +43,7 @@ class PolicyFormProcessor implements EventSubscriberInterface
 
         /** @var \EzSystems\RepositoryForms\Data\Role\PolicyCreateData|\EzSystems\RepositoryForms\Data\Role\PolicyUpdateData $data */
         $data = $event->getData();
-        if ($data->isNew()) {
+        if ($data->isNew() && $data->moduleFunction) {
             list($module, $function) = explode('|', $data->moduleFunction);
             $data->module = $module;
             $data->function = $function;
