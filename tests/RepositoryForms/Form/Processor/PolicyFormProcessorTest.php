@@ -87,9 +87,32 @@ class PolicyFormProcessorTest extends PHPUnit_Framework_TestCase
         $this->processor->processSavePolicy($event);
     }
 
-    public function testRemoveDraft()
+    public function testRemoveDraftOnCreateData()
     {
         $policy = new PolicyDraft(['innerPolicy' => new Policy()]);
+        $roleDraft = new RoleDraft();
+        $initialRole = new Role();
+        $data = (new PolicyMapper())->mapToFormData($policy, ['roleDraft' => $roleDraft, 'initialRole' => $initialRole]);
+        $module = 'foo';
+        $function = 'bar';
+        $data->moduleFunction = "$module|$function";
+        $event = new FormActionEvent($this->getMock('\Symfony\Component\Form\FormInterface'), $data, 'foo');
+
+        $this->roleService
+            ->expects($this->never())
+            ->method('removePolicyByRoleDraft');
+
+        $this->roleService
+            ->expects($this->once())
+            ->method('deleteRoleDraft')
+            ->with($roleDraft);
+
+        $this->processor->processRemoveDraft($event);
+    }
+
+    public function testRemoveDraftOnUpdateData()
+    {
+        $policy = new PolicyDraft(['innerPolicy' => new Policy(['id' => 123])]);
         $roleDraft = new RoleDraft();
         $initialRole = new Role();
         $data = (new PolicyMapper())->mapToFormData($policy, ['roleDraft' => $roleDraft, 'initialRole' => $initialRole]);

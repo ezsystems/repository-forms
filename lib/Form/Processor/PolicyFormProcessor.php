@@ -64,7 +64,9 @@ class PolicyFormProcessor implements EventSubscriberInterface
     {
         /** @var \EzSystems\RepositoryForms\Data\Role\PolicyCreateData|\EzSystems\RepositoryForms\Data\Role\PolicyUpdateData $data */
         $data = $event->getData();
-        $this->roleService->removePolicyByRoleDraft($data->roleDraft, $data->policyDraft);
+        if (!$data->isNew()) {
+            $this->roleService->removePolicyByRoleDraft($data->roleDraft, $data->policyDraft);
+        }
         $this->roleService->deleteRoleDraft($data->roleDraft);
     }
 }
