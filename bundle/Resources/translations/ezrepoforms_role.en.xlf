@@ -10,6 +10,10 @@
                 <source>role.save</source>
                 <target>Save</target>
             </trans-unit>
+            <trans-unit id="2bcaf8ca5d0b4a50085011b522da0dfc">
+                <source>role.cancel</source>
+                <target>Cancel</target>
+            </trans-unit>
             <trans-unit id="97ccb80e8991c2b37daf50834a8d7a18" resname="role.remove_draft">
                 <source>role.remove_draft</source>
                 <target>Cancel</target>
@@ -33,6 +37,14 @@
             <trans-unit id="f69be0366fdb75154d6781d3d1d63590">
                 <source>role.policy.type</source>
                 <target>Policy type</target>
+            </trans-unit>
+            <trans-unit id="be06833a23ccaafde1d58b4876abe401">
+                <source>role.policy.all_modules</source>
+                <target>All modules</target>
+            </trans-unit>
+            <trans-unit id="51cb855a33cf4446b6ffa51308c3ed1f">
+                <source>role.policy.all_functions</source>
+                <target>All functions</target>
             </trans-unit>
         </body>
     </file>

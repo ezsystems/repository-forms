@@ -11,6 +11,7 @@ namespace EzSystems\RepositoryForms\Form\Type\Role;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Translation\TranslatorInterface;
 
 class PolicyType extends AbstractType
 {
@@ -19,8 +20,14 @@ class PolicyType extends AbstractType
      */
     private $policyChoices;
 
-    public function __construct(array $policyMap)
+    /**
+     * @var TranslatorInterface
+     */
+    private $translator;
+
+    public function __construct(array $policyMap, TranslatorInterface $translator)
     {
+        $this->translator = $translator;
         $this->policyChoices = $this->buildPolicyChoicesFromMap($policyMap);
     }
 
@@ -33,10 +40,14 @@ class PolicyType extends AbstractType
      */
     private function buildPolicyChoicesFromMap($policyMap)
     {
-        $policyChoices = [];
+        $policyChoices = ['role.policy.all_modules' => ['*|*' => 'role.policy.all_functions']];
         foreach ($policyMap as $module => $functionList) {
             $humanizedModule = $this->humanize($module);
-            $policyChoices[$humanizedModule] = [];
+            // For each module, add possibility to grant access to all functions.
+            $policyChoices[$humanizedModule] = [
+                "$module|*" => "$humanizedModule / " . $this->translator->trans('role.policy.all_functions', [], 'ezrepoforms_role')
+            ];
+
             foreach ($functionList as $function => $limitationList) {
                 $policyChoices[$humanizedModule]["$module|$function"] = $humanizedModule . ' / ' . $this->humanize($function);
             }
@@ -67,7 +78,8 @@ class PolicyType extends AbstractType
     {
         $builder
             ->add('moduleFunction', 'choice', ['choices' => $this->policyChoices, 'label' => 'role.policy.type'])
-            ->add('save', 'submit', ['label' => 'role.save']);
+            ->add('removeDraft', 'submit', ['label' => 'role.cancel'])
+            ->add('savePolicy', 'submit', ['label' => 'role.save']);
     }
 
     public function getName()

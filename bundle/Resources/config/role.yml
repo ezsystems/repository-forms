@@ -16,7 +16,7 @@ services:
     # Form types
     ezrepoforms.policy.edit.form:
         class: %ezrepoforms.policy.edit.form.class%
-        arguments: [%ezpublish.api.role.policy_map%]
+        arguments: [%ezpublish.api.role.policy_map%, @translator]
         tags:
             - { name: form.type, alias: ezrepoforms_policy_edit }
 
