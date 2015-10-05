@@ -12,8 +12,9 @@ use eZ\Publish\Core\Repository\Values\User\PolicyCreateStruct;
 use EzSystems\RepositoryForms\Data\NewsnessCheckable;
 
 /**
- * @property-read \eZ\Publish\API\Repository\Values\User\Policy $policy
+ * @property-read \eZ\Publish\API\Repository\Values\User\PolicyDraft $policyDraft
  * @property-read \eZ\Publish\API\Repository\Values\User\RoleDraft $roleDraft
+ * @property-read \eZ\Publish\API\Repository\Values\User\Role $initialRole
  */
 class PolicyCreateData extends PolicyCreateStruct implements NewsnessCheckable
 {

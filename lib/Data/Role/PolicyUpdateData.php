@@ -12,8 +12,9 @@ use eZ\Publish\Core\Repository\Values\User\PolicyUpdateStruct;
 use EzSystems\RepositoryForms\Data\NewnessChecker;
 
 /**
- * @property-read \eZ\Publish\API\Repository\Values\User\Policy $policy
+ * @property-read \eZ\Publish\API\Repository\Values\User\PolicyDraft $policyDraft
  * @property-read \eZ\Publish\API\Repository\Values\User\RoleDraft $roleDraft
+ * @property-read \eZ\Publish\API\Repository\Values\User\Role $initialRole
  */
 class PolicyUpdateData extends PolicyUpdateStruct
 {
@@ -21,6 +22,16 @@ class PolicyUpdateData extends PolicyUpdateStruct
 
     protected function getIdentifierValue()
     {
-        return $this->policy->module;
+        return $this->policyDraft->module;
+    }
+
+    public function getModule()
+    {
+        return $this->policyDraft->module;
+    }
+
+    public function getFunction()
+    {
+        return $this->policyDraft->function;
     }
 }

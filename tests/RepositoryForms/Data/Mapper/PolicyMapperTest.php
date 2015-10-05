@@ -9,6 +9,8 @@
 namespace EzSystems\RepositoryForms\Tests\Data\Mapper;
 
 use eZ\Publish\Core\Repository\Values\User\Policy;
+use eZ\Publish\Core\Repository\Values\User\PolicyDraft;
+use eZ\Publish\Core\Repository\Values\User\Role;
 use eZ\Publish\Core\Repository\Values\User\RoleDraft;
 use EzSystems\RepositoryForms\Data\Mapper\PolicyMapper;
 use PHPUnit_Framework_TestCase;
@@ -20,18 +22,29 @@ class PolicyMapperTest extends PHPUnit_Framework_TestCase
      */
     public function testMapToCreateNoRoleDraft()
     {
-        $policy = new Policy();
+        $policy = new PolicyDraft();
         (new PolicyMapper())->mapToFormData($policy);
+    }
+
+    /**
+     * @expectedException \Symfony\Component\OptionsResolver\Exception\MissingOptionsException
+     */
+    public function testMapToCreateNoInitialRole()
+    {
+        $policy = new PolicyDraft();
+        (new PolicyMapper())->mapToFormData($policy, ['roleDraft' => new RoleDraft()]);
     }
 
     public function testMapToCreate()
     {
-        $policy = new Policy();
+        $policy = new PolicyDraft(['innerPolicy' => new Policy()]);
         $roleDraft = new RoleDraft();
-        $data = (new PolicyMapper())->mapToFormData($policy, ['roleDraft' => $roleDraft]);
+        $initialRole = new Role();
+        $data = (new PolicyMapper())->mapToFormData($policy, ['roleDraft' => $roleDraft, 'initialRole' => $initialRole]);
         self::assertInstanceOf('\EzSystems\RepositoryForms\Data\Role\PolicyCreateData', $data);
-        self::assertSame($policy, $data->policy);
+        self::assertSame($policy, $data->policyDraft);
         self::assertSame($roleDraft, $data->roleDraft);
+        self::assertSame($initialRole, $data->initialRole);
         self::assertTrue($data->isNew());
     }
 
@@ -40,18 +53,38 @@ class PolicyMapperTest extends PHPUnit_Framework_TestCase
      */
     public function testMapToUpdateNoRoleDraft()
     {
-        $policy = new Policy(['id' => 123]);
+        $policy = new PolicyDraft(['innerPolicy' => new Policy(['id' => 123])]);
         (new PolicyMapper())->mapToFormData($policy);
+    }
+
+    /**
+     * @expectedException \Symfony\Component\OptionsResolver\Exception\MissingOptionsException
+     */
+    public function testMapToUpdateNoInitialRole()
+    {
+        $policy = new PolicyDraft(['innerPolicy' => new Policy(['id' => 123])]);
+        $roleDraft = new RoleDraft();
+        (new PolicyMapper())->mapToFormData($policy, ['roleDraft' => $roleDraft]);
     }
 
     public function testMapToUpdate()
     {
-        $policy = new Policy(['id' => 123]);
+        $policy = new PolicyDraft([
+            'originalId' => 123,
+            'innerPolicy' => new Policy([
+                'id' => 456,
+                'module' => 'foo',
+                'function' => 'bar',
+            ]),
+        ]);
         $roleDraft = new RoleDraft();
-        $data = (new PolicyMapper())->mapToFormData($policy, ['roleDraft' => $roleDraft]);
+        $initialRole = new Role();
+        $data = (new PolicyMapper())->mapToFormData($policy, ['roleDraft' => $roleDraft, 'initialRole' => $initialRole]);
         self::assertInstanceOf('\EzSystems\RepositoryForms\Data\Role\PolicyUpdateData', $data);
-        self::assertSame($policy, $data->policy);
+        self::assertSame($policy, $data->policyDraft);
         self::assertSame($roleDraft, $data->roleDraft);
+        self::assertSame($initialRole, $data->initialRole);
+        self::assertSame('foo|bar', $data->moduleFunction);
         self::assertFalse($data->isNew());
     }
 }

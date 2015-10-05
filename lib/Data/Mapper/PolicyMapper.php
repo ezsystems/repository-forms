@@ -8,7 +8,7 @@
  */
 namespace EzSystems\RepositoryForms\Data\Mapper;
 
-use eZ\Publish\API\Repository\Values\User\Policy;
+use eZ\Publish\API\Repository\Values\User\PolicyDraft;
 use eZ\Publish\API\Repository\Values\ValueObject;
 use EzSystems\RepositoryForms\Data\Role\PolicyCreateData;
 use EzSystems\RepositoryForms\Data\Role\PolicyUpdateData;
@@ -19,27 +19,29 @@ class PolicyMapper implements FormDataMapperInterface
     /**
      * Maps a ValueObject from eZ content repository to a data usable as underlying form data (e.g. create/update struct).
      *
-     * @param ValueObject|\eZ\Publish\API\Repository\Values\User\Policy $policy
+     * @param ValueObject|\eZ\Publish\API\Repository\Values\User\PolicyDraft $policyDraft
      * @param array $params
      *
      * @return PolicyUpdateData|PolicyCreateData
      */
-    public function mapToFormData(ValueObject $policy, array $params = [])
+    public function mapToFormData(ValueObject $policyDraft, array $params = [])
     {
         $resolver = new OptionsResolver();
         $this->configureOptions($resolver);
         $params = $resolver->resolve($params);
 
-        if (!$this->isPolicyNew($policy)) {
+        if (!$this->isPolicyNew($policyDraft)) {
             $data = new PolicyUpdateData([
-                'policy' => $policy,
+                'policyDraft' => $policyDraft,
                 'roleDraft' => $params['roleDraft'],
-                'moduleFunction' => "{$policy->module}|{$policy->function}",
+                'initialRole' => $params['initialRole'],
+                'moduleFunction' => "{$policyDraft->module}|{$policyDraft->function}",
             ]);
         } else {
             $data = new PolicyCreateData([
-                'policy' => $policy,
+                'policyDraft' => $policyDraft,
                 'roleDraft' => $params['roleDraft'],
+                'initialRole' => $params['initialRole'],
             ]);
         }
 
@@ -49,11 +51,12 @@ class PolicyMapper implements FormDataMapperInterface
     private function configureOptions(OptionsResolver $optionsResolver)
     {
         $optionsResolver
-            ->setRequired('roleDraft')
-            ->setAllowedTypes('roleDraft', '\eZ\Publish\API\Repository\Values\User\RoleDraft');
+            ->setRequired(['roleDraft', 'initialRole'])
+            ->setAllowedTypes('roleDraft', '\eZ\Publish\API\Repository\Values\User\RoleDraft')
+            ->setAllowedTypes('initialRole', '\eZ\Publish\API\Repository\Values\User\Role');
     }
 
-    private function isPolicyNew(Policy $policy)
+    private function isPolicyNew(PolicyDraft $policy)
     {
         return $policy->id === null;
     }

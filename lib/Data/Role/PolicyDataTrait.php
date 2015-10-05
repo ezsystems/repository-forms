@@ -8,19 +8,26 @@
  */
 namespace EzSystems\RepositoryForms\Data\Role;
 
-use eZ\Publish\API\Repository\Values\User\Policy;
+use eZ\Publish\API\Repository\Values\User\PolicyDraft;
 
 trait PolicyDataTrait
 {
     /**
-     * @var Policy
+     * @var PolicyDraft
      */
-    protected $policy;
+    protected $policyDraft;
 
     /**
      * @var \eZ\Publish\API\Repository\Values\User\RoleDraft
      */
     protected $roleDraft;
+
+    /**
+     * Role the draft was created from.
+     *
+     * @var \eZ\Publish\API\Repository\Values\User\RoleDraft
+     */
+    protected $initialRole;
 
     /**
      * Combination of module + function as a single string.
@@ -30,13 +37,13 @@ trait PolicyDataTrait
      */
     public $moduleFunction;
 
-    public function setPolicy(Policy $policy)
+    public function setPolicy(PolicyDraft $policyDraft)
     {
-        $this->policy = $policy;
+        $this->policy = $policyDraft;
     }
 
     public function getId()
     {
-        return $this->policy ? $this->policy->id : null;
+        return $this->policyDraft ? $this->policyDraft->id : null;
     }
 }
