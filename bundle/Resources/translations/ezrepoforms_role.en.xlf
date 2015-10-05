@@ -46,6 +46,10 @@
                 <source>role.policy.all_functions</source>
                 <target>All functions</target>
             </trans-unit>
+            <trans-unit id="7de073d0c9d3b8cd9a26a7362d2ae3de">
+                <source>role.policy.all_modules_all_functions</source>
+                <target>All modules / All functions</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>
