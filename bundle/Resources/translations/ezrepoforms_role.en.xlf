@@ -26,14 +26,6 @@
                 <source>role.create</source>
                 <target>Create a role</target>
             </trans-unit>
-            <trans-unit id="e5cad95e7e4a9e50c68dae5020daf2fd">
-                <source>role.policy.add</source>
-                <target>Add a new policy</target>
-            </trans-unit>
-            <trans-unit id="">
-                <source>role.policy.edit_limitations</source>
-                <target>Edit limitations</target>
-            </trans-unit>
             <trans-unit id="f69be0366fdb75154d6781d3d1d63590">
                 <source>role.policy.type</source>
                 <target>Policy type</target>
@@ -53,6 +45,10 @@
             <trans-unit id="ad15636cac36e85c7cb8abd53378feb9">
                 <source>role.policy.type.choose</source>
                 <target>Choose a combination of module/function</target>
+            </trans-unit>
+            <trans-unit id="c66259bddf003273f41e31e77b7af64d">
+                <source>role.policy.form.delete</source>
+                <target>Delete policy</target>
             </trans-unit>
         </body>
     </file>
