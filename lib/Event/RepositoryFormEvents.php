@@ -58,6 +58,21 @@ final class RepositoryFormEvents
     const ROLE_REMOVE_DRAFT = 'role.update.removeDraft';
 
     /**
+     * Base name for Policy update processing events.
+     */
+    const POLICY_UPDATE = 'policy.update';
+
+    /**
+     * Triggered when saving the policy.
+     */
+    const POLICY_SAVE = 'policy.update.savePolicy';
+
+    /**
+     * Triggered when canceling policy edition.
+     */
+    const POLICY_REMOVE_DRAFT = 'policy.update.removeDraft';
+
+    /**
      * Triggered when updating a section.
      */
     const SECTION_UPDATE = 'section.update';

@@ -42,7 +42,7 @@ class RoleFormProcessor implements EventSubscriberInterface
             return;
         }
 
-        /** @var \EzSystems\RepositoryForms\Data\RoleData $roleData */
+        /** @var \EzSystems\RepositoryForms\Data\Role\RoleData $roleData */
         $roleData = $event->getData();
         $roleDraft = $roleData->roleDraft;
         $this->roleService->updateRoleDraft($roleDraft, $roleData);

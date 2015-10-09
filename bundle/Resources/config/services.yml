@@ -1,5 +1,6 @@
 imports:
     - {resource: section.yml}
+    - {resource: role.yml}
 
 parameters:
     ezrepoforms.field_type_form_mapper.registry.class: EzSystems\RepositoryForms\FieldType\FieldTypeFormMapperRegistry
@@ -28,7 +29,6 @@ parameters:
     ezrepoforms.validator.validator_configuration.class: EzSystems\RepositoryForms\Validator\Constraints\ValidatorConfigurationValidator
     ezrepoforms.validator.field_settings.class: EzSystems\RepositoryForms\Validator\Constraints\FieldSettingsValidator
     ezrepoforms.validator.default_field_value.class: EzSystems\RepositoryForms\Validator\Constraints\FieldDefinitionDefaultValueValidator
-    ezrepoforms.validator.unique_role_identifier.class: EzSystems\RepositoryForms\Validator\Constraints\UniqueRoleIdentifierValidator
 
     ezrepoforms.twig.field_edit_rendering_extension.class: EzSystems\RepositoryForms\Twig\FieldEditRenderingExtension
     ezrepoforms.action_dispatcher.content_type.class: EzSystems\RepositoryForms\Form\ActionDispatcher\ContentTypeDispatcher
@@ -38,8 +38,6 @@ parameters:
     ezrepoforms.form_processor.content_type.options:
         redirectRouteAfterPublish: %ezrepoforms.form_processor.content_type.options.redirect_route_after_publish%
     ezrepoforms.form_processor.content_type_group.class: EzSystems\RepositoryForms\Form\Processor\ContentTypeGroupFormProcessor
-    ezrepoforms.action_dispatcher.role.class: EzSystems\RepositoryForms\Form\ActionDispatcher\RoleDispatcher
-    ezrepoforms.form_processor.role.class: EzSystems\RepositoryForms\Form\Processor\RoleFormProcessor
 
 services:
     ezrepoforms.field_type_form_mapper.registry:
@@ -176,18 +174,13 @@ services:
         tags:
             - { name: validator.constraint_validator, alias: ezrepoforms.validator.default_field_value }
 
-    ezrepoforms.validator.unique_role_identifier:
-        class: %ezrepoforms.validator.unique_role_identifier.class%
-        arguments: [@ezpublish.api.service.role]
-        tags:
-            - { name: validator.constraint_validator, alias: ezrepoforms.validator.unique_role_identifier }
-
     ezrepoforms.twig.field_edit_rendering_extension:
         class: %ezrepoforms.twig.field_edit_rendering_extension.class%
         arguments: [@ezpublish.templating.field_block_renderer]
         tags:
             - { name: twig.extension }
 
+    # Action dispatchers
     ezrepoforms.action_dispatcher.base:
         class: EzSystems\RepositoryForms\Form\ActionDispatcher\AbstractActionDispatcher
         abstract: true
@@ -202,6 +195,7 @@ services:
         class: %ezrepoforms.action_dispatcher.content_type.group.class%
         parent: ezrepoforms.action_dispatcher.base
 
+    # Form processors
     ezrepoforms.form_processor.content_type:
         class: %ezrepoforms.form_processor.content_type.class%
         arguments: [@ezpublish.api.service.content_type, @router, %ezrepoforms.form_processor.content_type.options%]
@@ -211,15 +205,5 @@ services:
     ezrepoforms.form_processor.content_type_group:
         class: %ezrepoforms.form_processor.content_type_group.class%
         arguments: [@ezpublish.api.service.content_type]
-        tags:
-            - { name: kernel.event_subscriber }
-
-    ezrepoforms.action_dispatcher.role:
-        class: %ezrepoforms.action_dispatcher.role.class%
-        parent: ezrepoforms.action_dispatcher.base
-
-    ezrepoforms.form_processor.role:
-        class: %ezrepoforms.form_processor.role.class%
-        arguments: [@ezpublish.api.service.role]
         tags:
             - { name: kernel.event_subscriber }

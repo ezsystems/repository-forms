@@ -28,7 +28,7 @@ class RoleUpdateType extends AbstractType
     {
         $resolver
             ->setDefaults([
-                'data_class' => 'EzSystems\RepositoryForms\Data\RoleData',
+                'data_class' => 'EzSystems\RepositoryForms\Data\Role\RoleData',
                 'translation_domain' => 'ezrepoforms_role',
             ]);
     }
