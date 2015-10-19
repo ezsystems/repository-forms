@@ -1,6 +1,7 @@
 parameters:
     # Form types
     ezrepoforms.policy.edit.form.class: EzSystems\RepositoryForms\Form\Type\Role\PolicyType
+    ezrepoforms.policy.limitation.form.class: EzSystems\RepositoryForms\Form\Type\Role\LimitationType
 
     # Validators
     ezrepoforms.validator.unique_role_identifier.class: EzSystems\RepositoryForms\Validator\Constraints\UniqueRoleIdentifierValidator
@@ -13,13 +14,22 @@ parameters:
     ezrepoforms.form_processor.role.class: EzSystems\RepositoryForms\Form\Processor\RoleFormProcessor
     ezrepoforms.form_processor.policy.class: EzSystems\RepositoryForms\Form\Processor\PolicyFormProcessor
 
+    ezrepoforms.limitation_form_mapper.registry.class: EzSystems\RepositoryForms\Limitation\LimitationFormMapperRegistry
+    ezrepoforms.limitation.form_mapper.siteaccess.class: EzSystems\RepositoryForms\Limitation\SiteAccessLimitationMapper
+
 services:
     # Form types
     ezrepoforms.policy.edit.form:
         class: %ezrepoforms.policy.edit.form.class%
-        arguments: [%ezpublish.api.role.policy_map%, @translator]
+        arguments: [%ezpublish.api.role.policy_map%, @translator, @ezpublish.api.service.role]
         tags:
             - { name: form.type, alias: ezrepoforms_policy_edit }
+
+    ezrepoforms.policy.limitation.form:
+        class: %ezrepoforms.policy.limitation.form.class%
+        arguments: [@ezrepoforms.limitation_form_mapper.registry]
+        tags:
+            - { name: form.type, alias: ezrepoforms_policy_limitation_edit }
 
     # Validators
     ezrepoforms.validator.unique_role_identifier:
@@ -49,3 +59,12 @@ services:
         arguments: [@ezpublish.api.service.role]
         tags:
             - { name: kernel.event_subscriber }
+
+    ezrepoforms.limitation_form_mapper.registry:
+        class: %ezrepoforms.limitation_form_mapper.registry.class%
+
+    ezrepoforms.limitation.form_mapper.siteaccess:
+        class: %ezrepoforms.limitation.form_mapper.siteaccess.class%
+        arguments: [%ezpublish.siteaccess.list%]
+        tags:
+            - { name: ez.limitation.formMapper, limitationType: SiteAccess }

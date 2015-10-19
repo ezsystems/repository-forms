@@ -29,6 +29,8 @@ trait PolicyDataTrait
      */
     protected $initialRole;
 
+    protected $limitationsData;
+
     /**
      * Combination of module + function as a single string.
      * Example: "content|read".
@@ -46,4 +48,8 @@ trait PolicyDataTrait
     {
         return $this->policyDraft ? $this->policyDraft->id : null;
     }
+
+    abstract public function getModule();
+
+    abstract public function getFunction();
 }

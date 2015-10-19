@@ -24,4 +24,14 @@ class PolicyCreateData extends PolicyCreateStruct implements NewsnessCheckable
     {
         return true;
     }
+
+    public function getModule()
+    {
+        return $this->module;
+    }
+
+    public function getFunction()
+    {
+        return $this->function;
+    }
 }

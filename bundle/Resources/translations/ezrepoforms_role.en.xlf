@@ -50,6 +50,30 @@
                 <source>role.policy.form.delete</source>
                 <target>Delete policy</target>
             </trans-unit>
+            <trans-unit id="157e46260f2070af0f4f00093c8ee07c">
+                <source>role.policy.limitation.none</source>
+                <target>No limitations available</target>
+            </trans-unit>
+            <trans-unit id="afbaa2b43495f534ce1d02c20a792bef">
+                <source>role.policy.save_and_add_limitation</source>
+                <target>Save and add limitations</target>
+            </trans-unit>
+            <trans-unit id="09ecb68c2da6cf95b2f61a9019b67e28">
+                <source>role.policy.available_limitations</source>
+                <target>Limitations</target>
+            </trans-unit>
+            <trans-unit id="39446b5a5e8148ddb6197abc65cf7e82">
+                <source>role.policy.save</source>
+                <target>Save</target>
+            </trans-unit>
+            <trans-unit id="d04fa11f7880f330c284bff3f44f42fb">
+                <source>Class</source>
+                <target>ContentType</target>
+            </trans-unit>
+            <trans-unit id="a23eb7e851c75169666f9bcc4539e4c3">
+                <source>Node</source>
+                <target>Location</target>
+            </trans-unit>
             <trans-unit id="7ba51a99524d33986e1169814afd8584" resname="role.assignment.form.delete">
                 <source>role.assignment.form.delete</source>
                 <target>Delete assignment</target>
