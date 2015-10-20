@@ -36,9 +36,6 @@ class LimitationType extends AbstractType
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder
-            ->add('identifier', 'hidden');
-
         $builder->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) {
             /** @var \eZ\Publish\API\Repository\Values\User\Limitation $data */
             $data = $event->getData();
