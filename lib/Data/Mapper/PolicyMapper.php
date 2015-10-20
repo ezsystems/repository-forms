@@ -64,7 +64,7 @@ class PolicyMapper implements FormDataMapperInterface
 
     /**
      * Generates the limitation list from existing limitations (already configured for current policy) and
-     * available limitation types available for current policy (i.e. current module/function combination)
+     * available limitation types available for current policy (i.e. current module/function combination).
      *
      * @param \eZ\Publish\API\Repository\Values\User\Limitation[] $existingLimitations
      * @param \eZ\Publish\SPI\Limitation\Type[] $availableLimitationTypes
@@ -87,6 +87,7 @@ class PolicyMapper implements FormDataMapperInterface
         }
 
         ksort($limitations);
+
         return $limitations;
     }
 }

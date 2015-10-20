@@ -11,7 +11,6 @@
 namespace EzSystems\RepositoryForms\Limitation;
 
 use eZ\Publish\API\Repository\Values\User\Limitation;
-use Symfony\Component\Form\FormInterface;
 use InvalidArgumentException;
 
 /**
