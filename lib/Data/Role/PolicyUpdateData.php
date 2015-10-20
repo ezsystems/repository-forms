@@ -15,6 +15,7 @@ use EzSystems\RepositoryForms\Data\NewnessChecker;
  * @property-read \eZ\Publish\API\Repository\Values\User\PolicyDraft $policyDraft
  * @property-read \eZ\Publish\API\Repository\Values\User\RoleDraft $roleDraft
  * @property-read \eZ\Publish\API\Repository\Values\User\Role $initialRole
+ * @property-read \eZ\Publish\API\Repository\Values\User\Limitation[] $limitationsData
  */
 class PolicyUpdateData extends PolicyUpdateStruct
 {

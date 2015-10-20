@@ -29,6 +29,11 @@ trait PolicyDataTrait
      */
     protected $initialRole;
 
+    /**
+     * List of limitations that were posted.
+     *
+     * @var \eZ\Publish\API\Repository\Values\User\Limitation[]
+     */
     protected $limitationsData;
 
     /**
