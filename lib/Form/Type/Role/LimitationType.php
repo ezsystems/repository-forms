@@ -13,6 +13,8 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
+use Symfony\Component\Form\FormInterface;
+use Symfony\Component\Form\FormView;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class LimitationType extends AbstractType
@@ -21,6 +23,11 @@ class LimitationType extends AbstractType
      * @var LimitationFormMapperRegistryInterface
      */
     private $limitationFormMapperRegistry;
+
+    /**
+     * @var \EzSystems\RepositoryForms\Limitation\LimitationFormMapperInterface
+     */
+    private $mapper;
 
     public function __construct(LimitationFormMapperRegistryInterface $limitationFormMapperRegistry)
     {
@@ -36,8 +43,15 @@ class LimitationType extends AbstractType
             /** @var \eZ\Publish\API\Repository\Values\User\Limitation $data */
             $data = $event->getData();
             $form = $event->getForm();
-            $this->limitationFormMapperRegistry->getMapper($data->getIdentifier())->mapLimitationForm($form, $data);
+            $this->mapper = $this->limitationFormMapperRegistry->getMapper($data->getIdentifier());
+            $this->mapper->mapLimitationForm($form, $data);
         });
+    }
+
+    public function buildView(FormView $view, FormInterface $form, array $options)
+    {
+        $view->vars['mapper'] = $this->mapper;
+        $view->vars['template'] = $this->mapper->getFormTemplate();
     }
 
     public function configureOptions(OptionsResolver $resolver)
