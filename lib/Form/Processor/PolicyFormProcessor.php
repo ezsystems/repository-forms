@@ -49,7 +49,14 @@ class PolicyFormProcessor implements EventSubscriberInterface
             $data->function = $function;
             $this->roleService->addPolicyByRoleDraft($data->roleDraft, $data);
         } else {
-            // TODO: Save limitations. It's not possible by design to update policy module/function.
+            // Only save limitations on update.
+            // It is not possible by design to update policy module/function.
+            foreach ($data->limitationsData as $limitation) {
+                // Add posted limitations as valid ones, recognized by RoleService.
+                $data->addLimitation($limitation);
+            }
+
+            $this->roleService->updatePolicyByRoleDraft($data->roleDraft, $data->policyDraft, $data);
         }
     }
 
