@@ -78,6 +78,10 @@
                 <source>role.assignment.form.delete</source>
                 <target>Delete assignment</target>
             </trans-unit>
+            <trans-unit id="b4b711374bd2445bc8716c0b10c0d361">
+                <source>role.policy.limitation.any</source>
+                <target>Any</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>

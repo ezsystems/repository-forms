@@ -14,8 +14,10 @@ parameters:
     ezrepoforms.form_processor.role.class: EzSystems\RepositoryForms\Form\Processor\RoleFormProcessor
     ezrepoforms.form_processor.policy.class: EzSystems\RepositoryForms\Form\Processor\PolicyFormProcessor
 
+    # Limitation mappers
     ezrepoforms.limitation_form_mapper.registry.class: EzSystems\RepositoryForms\Limitation\LimitationFormMapperRegistry
-    ezrepoforms.limitation.form_mapper.siteaccess.class: EzSystems\RepositoryForms\Limitation\SiteAccessLimitationMapper
+    ezrepoforms.limitation.multiple_selection.template: "EzSystemsRepositoryFormsBundle:Limitation:base_limitation_values.html.twig"
+    ezrepoforms.limitation.form_mapper.siteaccess.class: EzSystems\RepositoryForms\Limitation\Mapper\SiteAccessLimitationMapper
 
 services:
     # Form types
@@ -63,7 +65,14 @@ services:
     ezrepoforms.limitation_form_mapper.registry:
         class: %ezrepoforms.limitation_form_mapper.registry.class%
 
+    ezrepoforms.limitation.form_mapper.multiple_selection:
+        class: EzSystems\RepositoryForms\Limitation\Mapper\MultipleSelectionBasedMapper
+        abstract: true
+        calls:
+            - [setFormTemplate, [%ezrepoforms.limitation.multiple_selection.template%]]
+
     ezrepoforms.limitation.form_mapper.siteaccess:
+        parent: ezrepoforms.limitation.form_mapper.multiple_selection
         class: %ezrepoforms.limitation.form_mapper.siteaccess.class%
         arguments: [%ezpublish.siteaccess.list%]
         tags:

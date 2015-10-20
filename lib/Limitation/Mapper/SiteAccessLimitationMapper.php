@@ -6,12 +6,9 @@
  * @license For full copyright and license information view LICENSE file distributed with this source code.
  * @version //autogentag//
  */
-namespace EzSystems\RepositoryForms\Limitation;
+namespace EzSystems\RepositoryForms\Limitation\Mapper;
 
-use eZ\Publish\API\Repository\Values\User\Limitation;
-use Symfony\Component\Form\FormInterface;
-
-class SiteAccessLimitationMapper implements LimitationFormMapperInterface
+class SiteAccessLimitationMapper extends MultipleSelectionBasedMapper
 {
     /**
      * @var array
@@ -23,14 +20,18 @@ class SiteAccessLimitationMapper implements LimitationFormMapperInterface
         $this->siteAccessList = $siteAccessList;
     }
 
-    public function mapLimitationForm(FormInterface $form, Limitation $data)
+    protected function getSelectionChoices()
     {
         $siteAccesses = [];
         foreach ($this->siteAccessList as $sa) {
             $siteAccesses[sprintf('%u', crc32($sa))] = $sa;
         }
 
-        $form
-            ->add('limitationValues', 'choice', ['choices' => $siteAccesses, 'multiple' => true]);
+        return $siteAccesses;
+    }
+
+    protected function getChoiceFieldOptions()
+    {
+        return ['required' => false];
     }
 }
