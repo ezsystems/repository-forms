@@ -16,6 +16,8 @@ parameters:
 
     # Limitation mappers
     ezrepoforms.limitation_form_mapper.registry.class: EzSystems\RepositoryForms\Limitation\LimitationFormMapperRegistry
+    ezrepoforms.limitation.null.template: "EzSystemsRepositoryFormsBundle:Limitation:null_limitation_values.html.twig"
+    ezrepoforms.limitation.form_mapper.null.class: EzSystems\RepositoryForms\Limitation\Mapper\NullLimitationMapper
     ezrepoforms.limitation.multiple_selection.template: "EzSystemsRepositoryFormsBundle:Limitation:base_limitation_values.html.twig"
     ezrepoforms.limitation.form_mapper.siteaccess.class: EzSystems\RepositoryForms\Limitation\Mapper\SiteAccessLimitationMapper
 
@@ -29,7 +31,7 @@ services:
 
     ezrepoforms.policy.limitation.form:
         class: %ezrepoforms.policy.limitation.form.class%
-        arguments: [@ezrepoforms.limitation_form_mapper.registry]
+        arguments: [@ezrepoforms.limitation_form_mapper.registry, @ezrepoforms.limitation.form_mapper.null]
         tags:
             - { name: form.type, alias: ezrepoforms_policy_limitation_edit }
 
@@ -77,3 +79,9 @@ services:
         arguments: [%ezpublish.siteaccess.list%]
         tags:
             - { name: ez.limitation.formMapper, limitationType: SiteAccess }
+
+    ezrepoforms.limitation.form_mapper.null:
+        class: %ezrepoforms.limitation.form_mapper.null.class%
+        arguments: [%ezrepoforms.limitation.null.template%]
+        tags:
+            - { name: ez.limitation.formMapper, limitationType: "Null" }

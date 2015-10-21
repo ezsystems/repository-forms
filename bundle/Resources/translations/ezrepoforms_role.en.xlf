@@ -82,6 +82,10 @@
                 <source>role.policy.limitation.any</source>
                 <target>Any</target>
             </trans-unit>
+            <trans-unit id="8d4b6dfff06f5ca9afc003c3aea32402">
+                <source>role.policy.limitation.not_implemented</source>
+                <target>Limitation edition for '%limitationTypeIdentifier%' is not implemented yet.</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>

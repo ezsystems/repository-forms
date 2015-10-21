@@ -8,6 +8,7 @@
  */
 namespace EzSystems\RepositoryForms\Form\Type\Role;
 
+use EzSystems\RepositoryForms\Limitation\LimitationFormMapperInterface;
 use EzSystems\RepositoryForms\Limitation\LimitationFormMapperRegistryInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -29,9 +30,15 @@ class LimitationType extends AbstractType
      */
     private $mapper;
 
-    public function __construct(LimitationFormMapperRegistryInterface $limitationFormMapperRegistry)
+    /**
+     * @var LimitationFormMapperInterface
+     */
+    private $nullMapper;
+
+    public function __construct(LimitationFormMapperRegistryInterface $limitationFormMapperRegistry, LimitationFormMapperInterface $nullMapper)
     {
         $this->limitationFormMapperRegistry = $limitationFormMapperRegistry;
+        $this->nullMapper = $nullMapper;
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options)
@@ -40,7 +47,12 @@ class LimitationType extends AbstractType
             /** @var \eZ\Publish\API\Repository\Values\User\Limitation $data */
             $data = $event->getData();
             $form = $event->getForm();
-            $this->mapper = $this->limitationFormMapperRegistry->getMapper($data->getIdentifier());
+
+            if ($this->limitationFormMapperRegistry->hasMapper($data->getIdentifier())) {
+                $this->mapper = $this->limitationFormMapperRegistry->getMapper($data->getIdentifier());
+            } else {
+                $this->mapper = $this->nullMapper;
+            }
             $this->mapper->mapLimitationForm($form, $data);
         });
     }
