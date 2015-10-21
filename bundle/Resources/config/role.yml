@@ -21,6 +21,7 @@ parameters:
     ezrepoforms.limitation.multiple_selection.template: "EzSystemsRepositoryFormsBundle:Limitation:base_limitation_values.html.twig"
     ezrepoforms.limitation.form_mapper.siteaccess.class: EzSystems\RepositoryForms\Limitation\Mapper\SiteAccessLimitationMapper
     ezrepoforms.limitation.form_mapper.contenttype.class: EzSystems\RepositoryForms\Limitation\Mapper\ContentTypeLimitationMapper
+    ezrepoforms.limitation.form_mapper.section.class: EzSystems\RepositoryForms\Limitation\Mapper\SectionLimitationMapper
 
 services:
     # Form types
@@ -93,3 +94,10 @@ services:
         arguments: [@ezpublish.api.service.content_type]
         tags:
             - { name: ez.limitation.formMapper, limitationType: Class }
+
+    ezrepoforms.limitation.form_mapper.section:
+        parent: ezrepoforms.limitation.form_mapper.multiple_selection
+        class: %ezrepoforms.limitation.form_mapper.section.class%
+        arguments: [@ezpublish.api.service.section]
+        tags:
+            - { name: ez.limitation.formMapper, limitationType: Section }
