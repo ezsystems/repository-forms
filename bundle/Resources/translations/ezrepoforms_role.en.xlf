@@ -18,11 +18,11 @@
                 <source>role.remove_draft</source>
                 <target>Cancel</target>
             </trans-unit>
-            <trans-unit id="0b4cb733c3b00614be932928650a567f">
+            <trans-unit id="0b4cb733c3b00614be932928650a567f" resname="role.form.delete">
                 <source>role.form.delete</source>
                 <target>Delete</target>
             </trans-unit>
-            <trans-unit id="565405ab5f15e4274e9edf5301d567b1">
+            <trans-unit id="565405ab5f15e4274e9edf5301d567b1" resname="role.create">
                 <source>role.create</source>
                 <target>Create a role</target>
             </trans-unit>
@@ -49,6 +49,10 @@
             <trans-unit id="c66259bddf003273f41e31e77b7af64d">
                 <source>role.policy.form.delete</source>
                 <target>Delete policy</target>
+            </trans-unit>
+            <trans-unit id="7ba51a99524d33986e1169814afd8584" resname="role.assignment.form.delete">
+                <source>role.assignment.form.delete</source>
+                <target>Delete assignment</target>
             </trans-unit>
         </body>
     </file>
