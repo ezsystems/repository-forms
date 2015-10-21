@@ -48,6 +48,14 @@ class LimitationType extends AbstractType
                 $this->limitationFormMapperRegistry->getMapper($data->getIdentifier())->mapLimitationForm($form, $data);
             }
         });
+
+        $builder->addEventListener(FormEvents::SUBMIT, function (FormEvent $event) {
+            /** @var \eZ\Publish\API\Repository\Values\User\Limitation $data */
+            $data = $event->getData();
+            if ($this->limitationFormMapperRegistry->hasMapper($data->getIdentifier())) {
+                $this->limitationFormMapperRegistry->getMapper($data->getIdentifier())->filterLimitationValues($data);
+            }
+        });
     }
 
     public function buildView(FormView $view, FormInterface $form, array $options)

@@ -30,7 +30,8 @@ abstract class MultipleSelectionBasedMapper implements LimitationFormMapperInter
             'multiple' => true,
             'label' => $data->getIdentifier(),
         ];
-        $options['choices'] = $this->getSelectionChoices();
+        $choices = $this->getSelectionChoices();
+        asort($choices, SORT_NATURAL | SORT_FLAG_CASE);
         $form->add('limitationValues', 'choice', $options);
     }
 
@@ -59,5 +60,9 @@ abstract class MultipleSelectionBasedMapper implements LimitationFormMapperInter
     public function getFormTemplate()
     {
         return $this->template;
+    }
+
+    public function filterLimitationValues(Limitation $limitation)
+    {
     }
 }

@@ -32,4 +32,8 @@ class NullLimitationMapper implements LimitationFormMapperInterface
     {
         return $this->template;
     }
+
+    public function filterLimitationValues(Limitation $limitation)
+    {
+    }
 }
