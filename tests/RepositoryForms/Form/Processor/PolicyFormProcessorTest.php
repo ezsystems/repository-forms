@@ -54,7 +54,11 @@ class PolicyFormProcessorTest extends PHPUnit_Framework_TestCase
         $policy = new PolicyDraft(['innerPolicy' => new Policy()]);
         $roleDraft = new RoleDraft();
         $initialRole = new Role();
-        $data = (new PolicyMapper())->mapToFormData($policy, ['roleDraft' => $roleDraft, 'initialRole' => $initialRole]);
+        $data = (new PolicyMapper())->mapToFormData($policy, [
+            'roleDraft' => $roleDraft,
+            'initialRole' => $initialRole,
+            'availableLimitationTypes' => [],
+        ]);
         $module = 'foo';
         $function = 'bar';
         $data->moduleFunction = "$module|$function";
@@ -73,7 +77,11 @@ class PolicyFormProcessorTest extends PHPUnit_Framework_TestCase
         $policy = new PolicyDraft(['innerPolicy' => new Policy()]);
         $roleDraft = new RoleDraft();
         $initialRole = new Role();
-        $data = (new PolicyMapper())->mapToFormData($policy, ['roleDraft' => $roleDraft, 'initialRole' => $initialRole]);
+        $data = (new PolicyMapper())->mapToFormData($policy, [
+            'roleDraft' => $roleDraft,
+            'initialRole' => $initialRole,
+            'availableLimitationTypes' => [],
+        ]);
         $module = 'foo';
         $function = 'bar';
         $data->moduleFunction = "$module|$function";
@@ -92,7 +100,11 @@ class PolicyFormProcessorTest extends PHPUnit_Framework_TestCase
         $policy = new PolicyDraft(['innerPolicy' => new Policy()]);
         $roleDraft = new RoleDraft();
         $initialRole = new Role();
-        $data = (new PolicyMapper())->mapToFormData($policy, ['roleDraft' => $roleDraft, 'initialRole' => $initialRole]);
+        $data = (new PolicyMapper())->mapToFormData($policy, [
+            'roleDraft' => $roleDraft,
+            'initialRole' => $initialRole,
+            'availableLimitationTypes' => [],
+        ]);
         $module = 'foo';
         $function = 'bar';
         $data->moduleFunction = "$module|$function";
@@ -115,7 +127,11 @@ class PolicyFormProcessorTest extends PHPUnit_Framework_TestCase
         $policy = new PolicyDraft(['innerPolicy' => new Policy(['id' => 123])]);
         $roleDraft = new RoleDraft();
         $initialRole = new Role();
-        $data = (new PolicyMapper())->mapToFormData($policy, ['roleDraft' => $roleDraft, 'initialRole' => $initialRole]);
+        $data = (new PolicyMapper())->mapToFormData($policy, [
+            'roleDraft' => $roleDraft,
+            'initialRole' => $initialRole,
+            'availableLimitationTypes' => [],
+        ]);
         $module = 'foo';
         $function = 'bar';
         $data->moduleFunction = "$module|$function";
