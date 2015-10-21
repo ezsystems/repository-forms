@@ -53,7 +53,9 @@ class PolicyFormProcessor implements EventSubscriberInterface
             // It is not possible by design to update policy module/function.
             foreach ($data->limitationsData as $limitation) {
                 // Add posted limitations as valid ones, recognized by RoleService.
-                $data->addLimitation($limitation);
+                if (!empty($limitation->limitationValues)) {
+                    $data->addLimitation($limitation);
+                }
             }
 
             $this->roleService->updatePolicyByRoleDraft($data->roleDraft, $data->policyDraft, $data);
