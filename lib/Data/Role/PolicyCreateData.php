@@ -15,6 +15,7 @@ use EzSystems\RepositoryForms\Data\NewsnessCheckable;
  * @property-read \eZ\Publish\API\Repository\Values\User\PolicyDraft $policyDraft
  * @property-read \eZ\Publish\API\Repository\Values\User\RoleDraft $roleDraft
  * @property-read \eZ\Publish\API\Repository\Values\User\Role $initialRole
+ * @property-read \eZ\Publish\API\Repository\Values\User\Limitation[] $limitationsData
  */
 class PolicyCreateData extends PolicyCreateStruct implements NewsnessCheckable
 {
@@ -23,5 +24,15 @@ class PolicyCreateData extends PolicyCreateStruct implements NewsnessCheckable
     public function isNew()
     {
         return true;
+    }
+
+    public function getModule()
+    {
+        return $this->module;
+    }
+
+    public function getFunction()
+    {
+        return $this->function;
     }
 }
