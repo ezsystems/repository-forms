@@ -36,6 +36,7 @@ class PolicyMapper implements FormDataMapperInterface
                 'roleDraft' => $params['roleDraft'],
                 'initialRole' => $params['initialRole'],
                 'moduleFunction' => "{$policyDraft->module}|{$policyDraft->function}",
+                'limitationsData' => $this->generateLimitationList($policyDraft->getLimitations(), $params['availableLimitationTypes']),
             ]);
         } else {
             $data = new PolicyCreateData([
@@ -51,7 +52,7 @@ class PolicyMapper implements FormDataMapperInterface
     private function configureOptions(OptionsResolver $optionsResolver)
     {
         $optionsResolver
-            ->setRequired(['roleDraft', 'initialRole'])
+            ->setRequired(['roleDraft', 'initialRole', 'availableLimitationTypes'])
             ->setAllowedTypes('roleDraft', '\eZ\Publish\API\Repository\Values\User\RoleDraft')
             ->setAllowedTypes('initialRole', '\eZ\Publish\API\Repository\Values\User\Role');
     }
@@ -59,5 +60,34 @@ class PolicyMapper implements FormDataMapperInterface
     private function isPolicyNew(PolicyDraft $policy)
     {
         return $policy->id === null;
+    }
+
+    /**
+     * Generates the limitation list from existing limitations (already configured for current policy) and
+     * available limitation types available for current policy (i.e. current module/function combination).
+     *
+     * @param \eZ\Publish\API\Repository\Values\User\Limitation[] $existingLimitations
+     * @param \eZ\Publish\SPI\Limitation\Type[] $availableLimitationTypes
+     *
+     * @return array|\eZ\Publish\API\Repository\Values\User\Limitation[]
+     */
+    private function generateLimitationList(array $existingLimitations, array $availableLimitationTypes)
+    {
+        $limitations = [];
+        foreach ($existingLimitations as $limitation) {
+            $limitations[$limitation->getIdentifier()] = $limitation;
+        }
+
+        foreach ($availableLimitationTypes as $identifier => $limitationType) {
+            if (isset($limitations[$identifier])) {
+                continue;
+            }
+
+            $limitations[$identifier] = $limitationType->buildValue([]);
+        }
+
+        ksort($limitations);
+
+        return $limitations;
     }
 }

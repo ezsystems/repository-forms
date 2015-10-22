@@ -8,8 +8,11 @@
  */
 namespace EzSystems\RepositoryForms\Form\Type\Role;
 
+use eZ\Publish\API\Repository\RoleService;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Translation\TranslatorInterface;
 
@@ -25,10 +28,16 @@ class PolicyType extends AbstractType
      */
     private $translator;
 
-    public function __construct(array $policyMap, TranslatorInterface $translator)
+    /**
+     * @var RoleService
+     */
+    private $roleService;
+
+    public function __construct(array $policyMap, TranslatorInterface $translator, RoleService $roleService)
     {
         $this->translator = $translator;
         $this->policyChoices = $this->buildPolicyChoicesFromMap($policyMap);
+        $this->roleService = $roleService;
     }
 
     /**
@@ -83,7 +92,23 @@ class PolicyType extends AbstractType
                 'placeholder' => 'role.policy.type.choose',
             ])
             ->add('removeDraft', 'submit', ['label' => 'role.cancel', 'validation_groups' => false])
-            ->add('savePolicy', 'submit', ['label' => 'role.save']);
+            ->add('savePolicy', 'submit', ['label' => 'role.policy.save']);
+
+        $builder->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) {
+            /** @var \EzSystems\RepositoryForms\Data\Role\PolicyCreateData|\EzSystems\RepositoryForms\Data\Role\PolicyUpdateData $data */
+            $data = $event->getData();
+            $form = $event->getForm();
+
+            if ($module = $data->getModule()) {
+                $form
+                    ->add('limitationsData', 'collection', [
+                        'type' => 'ezrepoforms_policy_limitation_edit',
+                        'label' => 'role.policy.available_limitations',
+                    ]);
+            } else {
+                $form->add('saveAndAddLimitation', 'submit', ['label' => 'role.policy.save_and_add_limitation']);
+            }
+        });
     }
 
     public function getName()

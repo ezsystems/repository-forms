@@ -32,7 +32,7 @@ class PolicyMapperTest extends PHPUnit_Framework_TestCase
     public function testMapToCreateNoInitialRole()
     {
         $policy = new PolicyDraft();
-        (new PolicyMapper())->mapToFormData($policy, ['roleDraft' => new RoleDraft()]);
+        (new PolicyMapper())->mapToFormData($policy, ['roleDraft' => new RoleDraft(), 'availableLimitationTypes' => []]);
     }
 
     public function testMapToCreate()
@@ -40,7 +40,11 @@ class PolicyMapperTest extends PHPUnit_Framework_TestCase
         $policy = new PolicyDraft(['innerPolicy' => new Policy()]);
         $roleDraft = new RoleDraft();
         $initialRole = new Role();
-        $data = (new PolicyMapper())->mapToFormData($policy, ['roleDraft' => $roleDraft, 'initialRole' => $initialRole]);
+        $data = (new PolicyMapper())->mapToFormData($policy, [
+            'roleDraft' => $roleDraft,
+            'initialRole' => $initialRole,
+            'availableLimitationTypes' => [],
+        ]);
         self::assertInstanceOf('\EzSystems\RepositoryForms\Data\Role\PolicyCreateData', $data);
         self::assertSame($policy, $data->policyDraft);
         self::assertSame($roleDraft, $data->roleDraft);
@@ -64,7 +68,7 @@ class PolicyMapperTest extends PHPUnit_Framework_TestCase
     {
         $policy = new PolicyDraft(['innerPolicy' => new Policy(['id' => 123])]);
         $roleDraft = new RoleDraft();
-        (new PolicyMapper())->mapToFormData($policy, ['roleDraft' => $roleDraft]);
+        (new PolicyMapper())->mapToFormData($policy, ['roleDraft' => $roleDraft, 'availableLimitationTypes' => []]);
     }
 
     public function testMapToUpdate()
@@ -79,7 +83,11 @@ class PolicyMapperTest extends PHPUnit_Framework_TestCase
         ]);
         $roleDraft = new RoleDraft();
         $initialRole = new Role();
-        $data = (new PolicyMapper())->mapToFormData($policy, ['roleDraft' => $roleDraft, 'initialRole' => $initialRole]);
+        $data = (new PolicyMapper())->mapToFormData($policy, [
+            'roleDraft' => $roleDraft,
+            'initialRole' => $initialRole,
+            'availableLimitationTypes' => [],
+        ]);
         self::assertInstanceOf('\EzSystems\RepositoryForms\Data\Role\PolicyUpdateData', $data);
         self::assertSame($policy, $data->policyDraft);
         self::assertSame($roleDraft, $data->roleDraft);

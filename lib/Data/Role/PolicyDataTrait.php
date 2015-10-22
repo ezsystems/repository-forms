@@ -30,6 +30,13 @@ trait PolicyDataTrait
     protected $initialRole;
 
     /**
+     * List of limitations that were posted.
+     *
+     * @var \eZ\Publish\API\Repository\Values\User\Limitation[]
+     */
+    protected $limitationsData;
+
+    /**
      * Combination of module + function as a single string.
      * Example: "content|read".
      *
@@ -46,4 +53,8 @@ trait PolicyDataTrait
     {
         return $this->policyDraft ? $this->policyDraft->id : null;
     }
+
+    abstract public function getModule();
+
+    abstract public function getFunction();
 }
