@@ -4,7 +4,7 @@
         <body>
             <trans-unit id="1">
                 <source>ez.content_type.identifier.pattern</source>
-                <target>Content type identifier may only contain letters, numbers and underscores.</target>
+                <target>Content type identifier may only contain letters from "a" to "z", numbers and underscores.</target>
             </trans-unit>
             <trans-unit id="2">
                 <source>ez.content_type.names</source>
@@ -48,7 +48,7 @@
             </trans-unit>
             <trans-unit id="5387d26cceb54294dafe82be9b0d61d0">
                 <source>ez.section.identifier.format</source>
-                <target>Section identifier should consist of letters, numbers or '_'.</target>
+                <target>Section identifier may only contain letters from "a" to "z", numbers and underscores.</target>
             </trans-unit>
             <trans-unit id="3782ffaac11648e8ead7248adb7a42bc">
                 <source>ez.section.identifier.unique</source>
