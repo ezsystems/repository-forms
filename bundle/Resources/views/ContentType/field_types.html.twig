@@ -193,7 +193,12 @@
             </div>
         {% endfor %}
         {# This field is used for adding new select items #}
-        {{ form_widget(form.options.vars.prototype) }}
+        <div>
+            {{ form_widget(form.options.vars.prototype) }}
+        </div>
+        <div>
+            {{ form_widget(form.addOption) }}
+        </div>
     </div>
 {% endblock %}
 
