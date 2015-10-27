@@ -53,7 +53,22 @@ class ContentTypeDraftMapperTest extends PHPUnit_Framework_TestCase
             'defaultValue' => null,
             'isSearchable' => false,
         ]);
-        $fieldDefs = [$fieldDef1, $fieldDef2];
+        $fieldDef3 = new FieldDefinition([
+            'identifier' => 'identifiea3',
+            'fieldTypeIdentifier' => 'eztext',
+            'names' => ['fre-FR' => 'foo3'],
+            'descriptions' => ['fre-FR' => 'some description 3'],
+            'fieldGroup' => 'foo3',
+            'position' => 15,
+            'isTranslatable' => false,
+            'isRequired' => false,
+            'isInfoCollector' => true,
+            'validatorConfiguration' => ['validator3' => 'config'],
+            'fieldSettings' => ['field3' => 'settings'],
+            'defaultValue' => null,
+            'isSearchable' => false,
+        ]);
+        $fieldDefs = [$fieldDef1, $fieldDef2, $fieldDef3];
 
         $identifier = 'identifier';
         $remoteId = 'remoteId';
@@ -114,6 +129,22 @@ class ContentTypeDraftMapperTest extends PHPUnit_Framework_TestCase
             'isSearchable' => $fieldDef1->isSearchable,
         ]);
         $expectedContentTypeData->addFieldDefinitionData($expectedFieldDefData1);
+        $expectedFieldDefData3 = new FieldDefinitionData([
+            'fieldDefinition' => $fieldDef3,
+            'contentTypeData' => $expectedContentTypeData, 'identifier' => $fieldDef3->identifier,
+            'names' => $fieldDef3->names,
+            'descriptions' => $fieldDef3->descriptions,
+            'fieldGroup' => $fieldDef3->fieldGroup,
+            'position' => $fieldDef3->position,
+            'isTranslatable' => $fieldDef3->isTranslatable,
+            'isRequired' => $fieldDef3->isRequired,
+            'isInfoCollector' => $fieldDef3->isInfoCollector,
+            'validatorConfiguration' => $fieldDef3->validatorConfiguration,
+            'fieldSettings' => $fieldDef3->fieldSettings,
+            'defaultValue' => $fieldDef3->defaultValue,
+            'isSearchable' => $fieldDef3->isSearchable,
+        ]);
+        $expectedContentTypeData->addFieldDefinitionData($expectedFieldDefData3);
         $expectedFieldDefData2 = new FieldDefinitionData([
             'fieldDefinition' => $fieldDef2,
             'contentTypeData' => $expectedContentTypeData, 'identifier' => $fieldDef2->identifier,
