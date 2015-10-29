@@ -9,49 +9,49 @@
 namespace EzSystems\RepositoryForms\Validator\Constraints;
 
 use eZ\Publish\API\Repository\Exceptions\NotFoundException;
-use eZ\Publish\API\Repository\SectionService;
-use EzSystems\RepositoryForms\Data\Section\SectionUpdateData;
+use eZ\Publish\API\Repository\LanguageService;
+use eZ\Publish\API\Repository\Values\Content\LanguageCreateStruct;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
 
 /**
- * Will check if ContentType identifier is not already used in the content repository.
+ * Will check if Language code is not already used in the content repository.
  */
-class UniqueSectionIdentifierValidator extends ConstraintValidator
+class UniqueLanguageCodeValidator extends ConstraintValidator
 {
     /**
-     * @var SectionService
+     * @var LanguageService
      */
-    private $sectionService;
+    private $languageService;
 
-    public function __construct(SectionService $sectionService)
+    public function __construct(LanguageService $languageService)
     {
-        $this->sectionService = $sectionService;
+        $this->languageService = $languageService;
     }
 
     /**
      * Checks if the passed value is valid.
      *
-     * @param SectionUpdateData $value The value that should be validated
+     * @param LanguageCreateStruct $value The value that should be validated
      * @param Constraint|UniqueFieldDefinitionIdentifier $constraint The constraint for the validation
      *
      * @api
      */
     public function validate($value, Constraint $constraint)
     {
-        if (!$value instanceof SectionUpdateData) {
+        if (!$value instanceof LanguageCreateStruct) {
             return;
         }
 
         try {
-            $section = $this->sectionService->loadSectionByIdentifier($value->identifier);
-            if ($section->id == $value->getId()) {
+            $language = $this->languageService->loadLanguage($value->languageCode);
+            if ($language->id == $value->getId()) {
                 return;
             }
 
             $this->context->buildViolation($constraint->message)
-                ->atPath('identifier')
-                ->setParameter('%identifier%', $value->identifier)
+                ->atPath('language_code')
+                ->setParameter('%language_code%', $value->languageCode)
                 ->addViolation();
         } catch (NotFoundException $e) {
             // Do nothing
