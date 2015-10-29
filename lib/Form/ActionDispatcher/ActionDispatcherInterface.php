@@ -27,10 +27,11 @@ interface ActionDispatcherInterface
      *
      * @param FormInterface $form The form that has been submitted.
      * @param ValueObject $data Underlying data for the form. Most likely a create or update struct.
-     * @param string $actionName The form action itself. Typically the form clicked button name.
+     * @param string|null $actionName The form action itself. Typically the form clicked button name,
+     *                                or null if the default action is used (e.g. when pressing enter).
      * @param array $options Arbitrary hash of options.
      */
-    public function dispatchFormAction(FormInterface $form, ValueObject $data, $actionName, array $options = []);
+    public function dispatchFormAction(FormInterface $form, ValueObject $data, $actionName = null, array $options = []);
 
     /**
      * Returns the generated response, if any. Typically a RedirectResponse.
