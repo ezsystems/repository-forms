@@ -44,7 +44,6 @@ class SelectionFormMapper implements FieldTypeFormMapperInterface
                 'required' => false,
                 'property_path' => 'fieldSettings[options]',
                 'label' => 'field_definition.ezselection.options',
-            ])
-            ->add('addOption', 'submit', ['label' => 'field_definition.ezselection.add_remove_empty_options']);
+            ]);
     }
 }

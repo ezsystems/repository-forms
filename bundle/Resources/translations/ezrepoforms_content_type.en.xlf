@@ -279,10 +279,6 @@
                 <source>field_definition.ezselection.options</source>
                 <target>Options</target>
             </trans-unit>
-            <trans-unit id="9346e6056cfea40f0386d670b68b7450">
-                <source>field_definition.ezselection.add_remove_empty_options</source>
-                <target>Add option / remove empty options</target>
-            </trans-unit>
             <trans-unit id="140">
                 <source>field_definition.ezrichtext.num_rows</source>
                 <target>Number of text rows in the editor</target>
