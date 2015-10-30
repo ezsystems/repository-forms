@@ -76,4 +76,9 @@ final class RepositoryFormEvents
      * Triggered when updating a section.
      */
     const SECTION_UPDATE = 'section.update';
+
+    /**
+     * Triggered when updating a language.
+     */
+    const LANGUAGE_UPDATE = 'language.update';
 }

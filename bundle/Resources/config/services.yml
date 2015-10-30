@@ -1,4 +1,5 @@
 imports:
+    - {resource: language.yml}
     - {resource: section.yml}
     - {resource: role.yml}
 
