@@ -9,6 +9,7 @@
 namespace EzSystems\RepositoryForms\Form\Processor;
 
 use eZ\Publish\API\Repository\RoleService;
+use eZ\Publish\API\Repository\Values\User\RoleDraft;
 use EzSystems\RepositoryForms\Event\FormActionEvent;
 use EzSystems\RepositoryForms\Event\RepositoryFormEvents;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
@@ -47,7 +48,17 @@ class PolicyFormProcessor implements EventSubscriberInterface
             list($module, $function) = explode('|', $data->moduleFunction);
             $data->module = $module;
             $data->function = $function;
-            $this->roleService->addPolicyByRoleDraft($data->roleDraft, $data);
+            $initialRoleDraft = $data->roleDraft;
+            $updatedRoleDraft = $this->roleService->addPolicyByRoleDraft($initialRoleDraft, $data);
+
+            $initialPoliciesById = $this->getPoliciesById($initialRoleDraft);
+            $updatedPoliciesById = $this->getPoliciesById($updatedRoleDraft);
+            foreach ($updatedPoliciesById as $policyId => $policyDraft) {
+                if (!isset($initialPoliciesById[$policyId])) {
+                    $data->setPolicyDraft($policyDraft);
+                    break;
+                }
+            }
         } else {
             // Only save limitations on update.
             // It is not possible by design to update policy module/function.
@@ -60,6 +71,22 @@ class PolicyFormProcessor implements EventSubscriberInterface
 
             $this->roleService->updatePolicyByRoleDraft($data->roleDraft, $data->policyDraft, $data);
         }
+    }
+
+    /**
+     * Returns policies for passed RoleDraft object, indexed by their IDs.
+     *
+     * @param RoleDraft $roleDraft
+     * @return array
+     */
+    private function getPoliciesById(RoleDraft $roleDraft)
+    {
+        $policies = [];
+        foreach ($roleDraft->getPolicies() as $policy) {
+            $policies[$policy->id] = $policy;
+        }
+
+        return $policies;
     }
 
     public function processSavePolicy(FormActionEvent $event)
