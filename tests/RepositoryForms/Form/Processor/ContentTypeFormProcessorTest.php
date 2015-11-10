@@ -121,7 +121,13 @@ class ContentTypeFormProcessorTest extends PHPUnit_Framework_TestCase
             'fieldTypeIdentifier' => $fieldTypeIdentifier,
             'identifier' => $expectedNewFieldDefIdentifier,
             'names' => [$languageCode => 'New FieldDefinition'],
+            'position' => 1,
         ]);
+        $this->contentTypeService
+            ->expects($this->once())
+            ->method('loadContentTypeDraft')
+            ->with($contentTypeDraft->id)
+            ->willReturn($contentTypeDraft);
         $this->contentTypeService
             ->expects($this->once())
             ->method('addFieldDefinition')
