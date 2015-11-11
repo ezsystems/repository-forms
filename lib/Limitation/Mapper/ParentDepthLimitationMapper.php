@@ -8,25 +8,25 @@
  */
 namespace EzSystems\RepositoryForms\Limitation\Mapper;
 
-class SiteAccessLimitationMapper extends MultipleSelectionBasedMapper
+class ParentDepthLimitationMapper extends MultipleSelectionBasedMapper
 {
     /**
-     * @var array
+     * @var int The maximum possible depth to use in a limitation
      */
-    private $siteAccessList;
+    private $maxDepth;
 
-    public function __construct(array $siteAccessList)
+    public function __construct($maxDepth)
     {
-        $this->siteAccessList = $siteAccessList;
+        $this->maxDepth = $maxDepth;
     }
 
     protected function getSelectionChoices()
     {
-        $siteAccesses = [];
-        foreach ($this->siteAccessList as $sa) {
-            $siteAccesses[sprintf('%u', crc32($sa))] = $sa;
+        $choices = [];
+        foreach (range(1, $this->maxDepth) as $depth) {
+            $choices[$depth] = $depth;
         }
 
-        return $siteAccesses;
+        return $choices;
     }
 }
