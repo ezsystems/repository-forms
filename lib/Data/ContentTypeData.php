@@ -18,7 +18,7 @@ use eZ\Publish\API\Repository\Values\ContentType\ContentTypeUpdateStruct;
  * @property-read \eZ\Publish\API\Repository\Values\ContentType\ContentTypeDraft $contentTypeDraft
  * @property-read \EzSystems\RepositoryForms\Data\FieldDefinitionData[] $fieldDefinitionsData
  */
-class ContentTypeData extends ContentTypeUpdateStruct implements NewsnessCheckable
+class ContentTypeData extends ContentTypeUpdateStruct implements NewnessCheckable
 {
     /**
      * Trait which provides isNew(), and mandates getIdentifier().

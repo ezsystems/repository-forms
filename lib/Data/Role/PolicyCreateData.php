@@ -9,7 +9,7 @@
 namespace EzSystems\RepositoryForms\Data\Role;
 
 use eZ\Publish\Core\Repository\Values\User\PolicyCreateStruct;
-use EzSystems\RepositoryForms\Data\NewsnessCheckable;
+use EzSystems\RepositoryForms\Data\NewnessCheckable;
 
 /**
  * @property-read \eZ\Publish\API\Repository\Values\User\PolicyDraft $policyDraft
@@ -17,7 +17,7 @@ use EzSystems\RepositoryForms\Data\NewsnessCheckable;
  * @property-read \eZ\Publish\API\Repository\Values\User\Role $initialRole
  * @property-read \eZ\Publish\API\Repository\Values\User\Limitation[] $limitationsData
  */
-class PolicyCreateData extends PolicyCreateStruct implements NewsnessCheckable
+class PolicyCreateData extends PolicyCreateStruct implements NewnessCheckable
 {
     use PolicyDataTrait;
 
