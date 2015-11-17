@@ -11,10 +11,12 @@ namespace EzSystems\RepositoryFormsBundle\Controller;
 use eZ\Bundle\EzPublishCoreBundle\Controller;
 use EzSystems\RepositoryForms\Data\Content\ContentCreateData;
 use EzSystems\RepositoryForms\Data\Content\FieldData;
+use EzSystems\RepositoryForms\Form\Type\Content\ContentEditType;
+use Symfony\Component\HttpFoundation\Request;
 
 class ContentEditController extends Controller
 {
-    public function createWithoutDraftAction($contentTypeId, $language, $parentLocationId)
+    public function createWithoutDraftAction($contentTypeId, $language, $parentLocationId, Request $request)
     {
         $contentTypeService = $this->getRepository()->getContentTypeService();
         $contentType = $contentTypeService->loadContentType($contentTypeId);
@@ -22,6 +24,17 @@ class ContentEditController extends Controller
         foreach ($contentType->fieldDefinitions as $fieldDef) {
             $data->addFieldData(new FieldData(['fieldDefinition' => $fieldDef]));
         }
+
+        $form = $this->createForm(new ContentEditType(), $data, ['languageCode' => $language]);
+        $form->handleRequest($request);
+
+        if ($form->isValid()) {
+            $data = $form->getData();
+        }
+
+        return $this->render('EzSystemsRepositoryFormsBundle:Content:content_create_no_draft.html.twig', [
+            'form' => $form->createView(),
+        ]);
     }
 
     public function createAction($contentTypeId, $language, $parentLocationId)
