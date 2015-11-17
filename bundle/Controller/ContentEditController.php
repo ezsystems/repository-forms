@@ -18,7 +18,7 @@ class ContentEditController extends Controller
     {
         $contentTypeService = $this->getRepository()->getContentTypeService();
         $contentType = $contentTypeService->loadContentType($contentTypeId);
-        $data = new ContentCreateData(['contentTypeId' => $contentTypeId, 'mainLanguageCode' => $language]);
+        $data = new ContentCreateData(['contentType' => $contentType, 'mainLanguageCode' => $language]);
         foreach ($contentType->fieldDefinitions as $fieldDef) {
             $data->addFieldData(new FieldData(['fieldDefinition' => $fieldDef]));
         }
