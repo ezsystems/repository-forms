@@ -57,6 +57,12 @@ services:
             - { name: form.type, alias: ezrepoforms_fielddefinition_update }
 
     # FieldType form mappers
+    ezrepoforms.field_type.form_mapper.abstract:
+        class: EzSystems\RepositoryForms\FieldType\Mapper\AbstractMapper
+        calls:
+            - [setFieldTypeService, [@ezpublish.api.service.field_type]]
+        abstract: true
+
     ezrepoforms.field_type.form_mapper.ezbinaryfile:
         class: %ezrepoforms.field_type.form_mapper.ezbinaryfile.class%
         tags:
