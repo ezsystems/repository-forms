@@ -145,6 +145,7 @@ services:
 
     ezrepoforms.field_type.form_mapper.ezstring:
         class: %ezrepoforms.field_type.form_mapper.ezstring.class%
+        parent: ezrepoforms.field_type.form_mapper.abstract
         tags:
             - { name: ez.fieldType.formMapper, fieldType: ezstring }
 
