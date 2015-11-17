@@ -22,7 +22,7 @@ class ContentEditType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('fieldData', 'collection', [
+            ->add('fieldsData', 'collection', [
                 'type' => 'ezrepoforms_content_field',
                 'label' => 'ezrepoforms.content.fields',
             ])

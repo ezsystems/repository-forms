@@ -17,6 +17,6 @@ trait ContentData
 
     public function addFieldData(FieldData $fieldData)
     {
-        $this->fieldsData[$fieldData->field->fieldDefIdentifier] = $fieldData;
+        $this->fieldsData[$fieldData->fieldDefinition->identifier] = $fieldData;
     }
 }
