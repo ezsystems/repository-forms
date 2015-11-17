@@ -26,11 +26,9 @@ class ContentEditController extends Controller
 
     public function createAction($contentTypeId, $language, $parentLocationId)
     {
-
     }
 
     public function editAction($contentId, $version, $language = null)
     {
-
     }
 }

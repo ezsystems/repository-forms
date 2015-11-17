@@ -8,7 +8,6 @@
  */
 namespace EzSystems\RepositoryForms\Form\Type\Content;
 
-
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -25,7 +24,7 @@ class ContentEditType extends AbstractType
         $builder
             ->add('fieldData', 'collection', [
                 'type' => 'ezrepoforms_content_field',
-                'label' => 'ezrepoforms.content.fields'
+                'label' => 'ezrepoforms.content.fields',
             ])
             ->add('publish', 'submit')
             ->add('cancel', 'submit');
