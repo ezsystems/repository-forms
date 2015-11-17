@@ -7,6 +7,7 @@ parameters:
     ezrepoforms.field_type_form_mapper.registry.class: EzSystems\RepositoryForms\FieldType\FieldTypeFormMapperRegistry
     ezrepoforms.content_type.update.form_type.class: EzSystems\RepositoryForms\Form\Type\ContentType\ContentTypeUpdateType
     ezrepoforms.field_definition.form_type.class: EzSystems\RepositoryForms\Form\Type\FieldDefinition\FieldDefinitionType
+    ezrepoforms.field.form_type.class: EzSystems\RepositoryForms\Form\Type\Content\ContentFieldType
 
     ezrepoforms.field_type.form_mapper.ezbinaryfile.class: EzSystems\RepositoryForms\FieldType\Mapper\BinaryFileFormMapper
     ezrepoforms.field_type.form_mapper.ezcountry.class: EzSystems\RepositoryForms\FieldType\Mapper\CountryFormMapper
@@ -55,6 +56,12 @@ services:
         arguments: [@ezrepoforms.field_type_form_mapper.registry, @ezpublish.api.service.field_type]
         tags:
             - { name: form.type, alias: ezrepoforms_fielddefinition_update }
+
+    ezrepoforms.field.form_type:
+        class: %ezrepoforms.field.form_type.class%
+        arguments: [@ezrepoforms.field_type_form_mapper.registry]
+        tags:
+            - { name: form.type, alias: ezrepoforms_content_field }
 
     # FieldType form mappers
     ezrepoforms.field_type.form_mapper.abstract:
