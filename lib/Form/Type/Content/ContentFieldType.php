@@ -34,10 +34,12 @@ class ContentFieldType extends AbstractType
 
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults([
-            'data_class' => '\EzSystems\RepositoryForms\Data\Content\FieldData',
-            'translation_domain' => 'ezrepoforms_content',
-        ]);
+        $resolver
+            ->setDefaults([
+                'data_class' => '\EzSystems\RepositoryForms\Data\Content\FieldData',
+                'translation_domain' => 'ezrepoforms_content',
+            ])
+            ->setRequired(['languageCode']);
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options)

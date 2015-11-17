@@ -25,6 +25,7 @@ class ContentEditType extends AbstractType
             ->add('fieldsData', 'collection', [
                 'type' => 'ezrepoforms_content_field',
                 'label' => 'ezrepoforms.content.fields',
+                'options' => ['languageCode' => $options['languageCode']],
             ])
             ->add('publish', 'submit')
             ->add('cancel', 'submit');
@@ -36,10 +37,12 @@ class ContentEditType extends AbstractType
 
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults([
-            'drafts_enabled' => false,
-            'data_class' => '\eZ\Publish\API\Repository\Values\Content\ContentStruct',
-            'translation_domain' => 'ezrepoforms_content',
-        ]);
+        $resolver
+            ->setDefaults([
+                'drafts_enabled' => false,
+                'data_class' => '\eZ\Publish\API\Repository\Values\Content\ContentStruct',
+                'translation_domain' => 'ezrepoforms_content',
+            ])
+            ->setRequired(['languageCode']);
     }
 }
