@@ -27,11 +27,12 @@ class ContentEditType extends AbstractType
                 'label' => 'ezrepoforms.content.fields',
                 'options' => ['languageCode' => $options['languageCode']],
             ])
-            ->add('publish', 'submit')
-            ->add('cancel', 'submit');
+            ->add('publish', 'submit');
 
         if ($options['drafts_enabled']) {
-            $builder->add('saveDraft', 'submit');
+            $builder
+                ->add('saveDraft', 'submit')
+                ->add('cancel', 'submit');
         }
     }
 
