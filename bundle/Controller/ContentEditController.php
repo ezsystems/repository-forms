@@ -9,22 +9,27 @@
 namespace EzSystems\RepositoryFormsBundle\Controller;
 
 use eZ\Bundle\EzPublishCoreBundle\Controller;
-use EzSystems\RepositoryForms\Data\Content\ContentCreateData;
-use EzSystems\RepositoryForms\Data\Content\FieldData;
+use eZ\Publish\API\Repository\ContentTypeService;
+use EzSystems\RepositoryForms\Data\Mapper\ContentCreateMapper;
 use EzSystems\RepositoryForms\Form\Type\Content\ContentEditType;
 use Symfony\Component\HttpFoundation\Request;
 
 class ContentEditController extends Controller
 {
+    /**
+     * @var ContentTypeService
+     */
+    private $contentTypeService;
+
+    public function __construct(ContentTypeService $contentTypeService)
+    {
+        $this->contentTypeService = $contentTypeService;
+    }
+
     public function createWithoutDraftAction($contentTypeId, $language, $parentLocationId, Request $request)
     {
-        $contentTypeService = $this->getRepository()->getContentTypeService();
-        $contentType = $contentTypeService->loadContentType($contentTypeId);
-        $data = new ContentCreateData(['contentType' => $contentType, 'mainLanguageCode' => $language]);
-        foreach ($contentType->fieldDefinitions as $fieldDef) {
-            $data->addFieldData(new FieldData(['fieldDefinition' => $fieldDef]));
-        }
-
+        $contentType = $this->contentTypeService->loadContentType($contentTypeId);
+        $data = (new ContentCreateMapper())->mapToFormData($contentType, ['mainLanguageCode' => $language]);
         $form = $this->createForm(new ContentEditType(), $data, ['languageCode' => $language]);
         $form->handleRequest($request);
 
