@@ -49,7 +49,7 @@ class MediaFormMapper implements FieldTypeFormMapperInterface
      * @param FormInterface $fieldForm Form for the current Field.
      * @param FieldData $data Underlying data for current Field form.
      */
-    public function mapFieldForm(FormInterface $fieldForm, FieldData $data)
+    public function mapFieldValueForm(FormInterface $fieldForm, FieldData $data)
     {
         // TODO: Implement mapFieldForm() method.
     }

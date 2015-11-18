@@ -51,7 +51,7 @@ class ContentFieldType extends AbstractType
 
             $fieldTypeIdentifier = $data->fieldDefinition->fieldTypeIdentifier;
             if ($this->fieldTypeFormMapperRegistry->hasMapper($fieldTypeIdentifier)) {
-                $this->fieldTypeFormMapperRegistry->getMapper($fieldTypeIdentifier)->mapFieldForm($form, $data);
+                $this->fieldTypeFormMapperRegistry->getMapper($fieldTypeIdentifier)->mapFieldValueForm($form, $data);
             }
         });
     }

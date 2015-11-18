@@ -39,7 +39,7 @@ abstract class AbstractMapper implements FieldTypeFormMapperInterface
      * @param FormInterface $fieldForm Form for the current Field.
      * @param FieldData $data Underlying data for current Field form.
      */
-    public function mapFieldForm(FormInterface $fieldForm, FieldData $data)
+    public function mapFieldValueForm(FormInterface $fieldForm, FieldData $data)
     {
         $fieldDefinition = $data->fieldDefinition;
         $formConfig = $fieldForm->getConfig();
