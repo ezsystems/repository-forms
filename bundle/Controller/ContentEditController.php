@@ -12,6 +12,7 @@ use eZ\Bundle\EzPublishCoreBundle\Controller;
 use eZ\Publish\API\Repository\ContentTypeService;
 use eZ\Publish\API\Repository\LocationService;
 use EzSystems\RepositoryForms\Data\Mapper\ContentCreateMapper;
+use EzSystems\RepositoryForms\Form\ActionDispatcher\ActionDispatcherInterface;
 use EzSystems\RepositoryForms\Form\Type\Content\ContentEditType;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -27,9 +28,19 @@ class ContentEditController extends Controller
      */
     private $locationService;
 
-    public function __construct(ContentTypeService $contentTypeService, LocationService $locationService) {
+    /**
+     * @var ActionDispatcherInterface
+     */
+    private $contentActionDispatcher;
+
+    public function __construct(
+        ContentTypeService $contentTypeService,
+        LocationService $locationService,
+        ActionDispatcherInterface $contentActionDispatcher
+    ) {
         $this->contentTypeService = $contentTypeService;
         $this->locationService = $locationService;
+        $this->contentActionDispatcher = $contentActionDispatcher;
     }
 
     public function createWithoutDraftAction($contentTypeId, $language, $parentLocationId, Request $request)
@@ -43,7 +54,10 @@ class ContentEditController extends Controller
         $form->handleRequest($request);
 
         if ($form->isValid()) {
-            $data = $form->getData();
+            $this->contentActionDispatcher->dispatchFormAction($form, $data, $form->getClickedButton()->getName());
+            if ($response = $this->contentActionDispatcher->getResponse()) {
+                return $response;
+            }
         }
 
         return $this->render('EzSystemsRepositoryFormsBundle:Content:content_create_no_draft.html.twig', [

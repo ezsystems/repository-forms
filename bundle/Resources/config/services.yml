@@ -35,6 +35,7 @@ parameters:
     ezrepoforms.twig.field_edit_rendering_extension.class: EzSystems\RepositoryForms\Twig\FieldEditRenderingExtension
     ezrepoforms.action_dispatcher.content_type.class: EzSystems\RepositoryForms\Form\ActionDispatcher\ContentTypeDispatcher
     ezrepoforms.action_dispatcher.content_type.group.class: EzSystems\RepositoryForms\Form\ActionDispatcher\ContentTypeGroupDispatcher
+    ezrepoforms.action_dispatcher.content.class: EzSystems\RepositoryForms\Form\ActionDispatcher\ContentDispatcher
     ezrepoforms.form_processor.content_type.class: EzSystems\RepositoryForms\Form\Processor\ContentTypeFormProcessor
     ezrepoforms.form_processor.content_type.options.redirect_route_after_publish: ~
     ezrepoforms.form_processor.content_type.options:
@@ -212,6 +213,10 @@ services:
         class: %ezrepoforms.action_dispatcher.content_type.group.class%
         parent: ezrepoforms.action_dispatcher.base
 
+    ezrepoforms.action_dispatcher.content:
+        class: %ezrepoforms.action_dispatcher.content.class%
+        parent: ezrepoforms.action_dispatcher.base
+
     # Form processors
     ezrepoforms.form_processor.content_type:
         class: %ezrepoforms.form_processor.content_type.class%
@@ -231,6 +236,7 @@ services:
         arguments:
             - @ezpublish.api.service.content_type
             - @ezpublish.api.service.location
+            - @ezrepoforms.action_dispatcher.content
         parent: ezpublish.controller.base
 
     ez_content_edit:
