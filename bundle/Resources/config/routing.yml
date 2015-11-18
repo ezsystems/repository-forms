@@ -11,4 +11,4 @@ ez_content_create:
 ez_content_edit:
     path: /content/update/{contentId}/{version}/{language}
     defaults:
-        _controller: EzSystemsRepositoryFormsBundle:ContentEdit:edit
+        _controller: ez_content_edit:editAction
