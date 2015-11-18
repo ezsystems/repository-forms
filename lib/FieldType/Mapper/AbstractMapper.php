@@ -11,7 +11,7 @@ namespace EzSystems\RepositoryForms\FieldType\Mapper;
 use eZ\Publish\API\Repository\FieldTypeService;
 use eZ\Publish\API\Repository\Values\ContentType\FieldDefinition;
 use EzSystems\RepositoryForms\Data\Content\FieldData;
-use EzSystems\RepositoryForms\FieldType\DataTransformer\FieldTypeHashValueTransformer;
+use EzSystems\RepositoryForms\FieldType\DataTransformer\FieldValueTransformer;
 use EzSystems\RepositoryForms\FieldType\FieldTypeFormMapperInterface;
 use Symfony\Component\Form\FormInterface;
 
@@ -34,7 +34,7 @@ abstract class AbstractMapper implements FieldTypeFormMapperInterface
      * "Maps" Field form to current FieldType.
      * Allows to add form fields for content edition.
      *
-     * To map the field value, FieldTypeHashValueTransformer will be used.
+     * To map the field value, FieldValueTransformer will be used.
      *
      * @param FormInterface $fieldForm Form for the current Field.
      * @param FieldData $data Underlying data for current Field form.
@@ -57,7 +57,7 @@ abstract class AbstractMapper implements FieldTypeFormMapperInterface
                             'label' => $label,
                         ]
                     )
-                    ->addModelTransformer(new FieldTypeHashValueTransformer($this->getFieldType($fieldDefinition)))
+                    ->addModelTransformer(new FieldValueTransformer($this->getFieldType($fieldDefinition)))
                     // Deactivate auto-initialize as we're not on the root form.
                     ->setAutoInitialize(false)->getForm()
             );

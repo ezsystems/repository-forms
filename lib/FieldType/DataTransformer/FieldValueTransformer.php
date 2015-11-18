@@ -16,7 +16,7 @@ use Symfony\Component\Form\DataTransformerInterface;
  * Generic data transformer for FieldTypes values.
  * Uses FieldType::toHash() / FieldType::fromHash().
  */
-class FieldTypeHashValueTransformer implements DataTransformerInterface
+class FieldValueTransformer implements DataTransformerInterface
 {
     /**
      * @var FieldType
