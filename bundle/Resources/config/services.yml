@@ -41,6 +41,7 @@ parameters:
     ezrepoforms.form_processor.content_type.options:
         redirectRouteAfterPublish: %ezrepoforms.form_processor.content_type.options.redirect_route_after_publish%
     ezrepoforms.form_processor.content_type_group.class: EzSystems\RepositoryForms\Form\Processor\ContentTypeGroupFormProcessor
+    ezrepoforms.form_processor.content.class: EzSystems\RepositoryForms\Form\Processor\ContentFormProcessor
 
     ezrepoforms.controller.content_edit.class: EzSystems\RepositoryFormsBundle\Controller\ContentEditController
 
@@ -221,6 +222,12 @@ services:
     ezrepoforms.form_processor.content_type:
         class: %ezrepoforms.form_processor.content_type.class%
         arguments: [@ezpublish.api.service.content_type, @router, %ezrepoforms.form_processor.content_type.options%]
+        tags:
+            - { name: kernel.event_subscriber }
+
+    ezrepoforms.form_processor.content:
+        class: %ezrepoforms.form_processor.content.class%
+        arguments: [@ezpublish.api.service.content, @router]
         tags:
             - { name: kernel.event_subscriber }
 
