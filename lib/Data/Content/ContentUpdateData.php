@@ -14,6 +14,7 @@ use EzSystems\RepositoryForms\Data\NewnessCheckable;
 /**
  * @property-read \EzSystems\RepositoryForms\Data\Content\FieldData[] $fieldsData
  * @property-read \eZ\Publish\API\Repository\Values\ContentType\ContentType $contentType
+ * @property-read \eZ\Publish\API\Repository\Values\Content\Content $contentDraft
  */
 class ContentUpdateData extends ContentUpdateStruct implements NewnessCheckable
 {
@@ -23,6 +24,11 @@ class ContentUpdateData extends ContentUpdateStruct implements NewnessCheckable
      * @var \eZ\Publish\API\Repository\Values\ContentType\ContentType
      */
     protected $contentType;
+
+    /**
+     * @var \eZ\Publish\API\Repository\Values\Content\Content
+     */
+    protected $contentDraft;
 
     public function isNew()
     {
