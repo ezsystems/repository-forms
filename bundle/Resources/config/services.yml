@@ -228,7 +228,9 @@ services:
     # Controllers
     ezrepoforms.controller.content_edit:
         class: %ezrepoforms.controller.content_edit.class%
-        arguments: [@ezpublish.api.service.content_type]
+        arguments:
+            - @ezpublish.api.service.content_type
+            - @ezpublish.api.service.location
         parent: ezpublish.controller.base
 
     ez_content_edit:

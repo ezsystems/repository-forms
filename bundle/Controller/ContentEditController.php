@@ -10,6 +10,7 @@ namespace EzSystems\RepositoryFormsBundle\Controller;
 
 use eZ\Bundle\EzPublishCoreBundle\Controller;
 use eZ\Publish\API\Repository\ContentTypeService;
+use eZ\Publish\API\Repository\LocationService;
 use EzSystems\RepositoryForms\Data\Mapper\ContentCreateMapper;
 use EzSystems\RepositoryForms\Form\Type\Content\ContentEditType;
 use Symfony\Component\HttpFoundation\Request;
@@ -21,15 +22,23 @@ class ContentEditController extends Controller
      */
     private $contentTypeService;
 
-    public function __construct(ContentTypeService $contentTypeService)
-    {
+    /**
+     * @var LocationService
+     */
+    private $locationService;
+
+    public function __construct(ContentTypeService $contentTypeService, LocationService $locationService) {
         $this->contentTypeService = $contentTypeService;
+        $this->locationService = $locationService;
     }
 
     public function createWithoutDraftAction($contentTypeId, $language, $parentLocationId, Request $request)
     {
         $contentType = $this->contentTypeService->loadContentType($contentTypeId);
-        $data = (new ContentCreateMapper())->mapToFormData($contentType, ['mainLanguageCode' => $language]);
+        $data = (new ContentCreateMapper())->mapToFormData($contentType, [
+            'mainLanguageCode' => $language,
+            'parentLocation' => $this->locationService->newLocationCreateStruct($parentLocationId),
+        ]);
         $form = $this->createForm(new ContentEditType(), $data, ['languageCode' => $language]);
         $form->handleRequest($request);
 

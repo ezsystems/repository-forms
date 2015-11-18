@@ -28,14 +28,23 @@ class ContentCreateMapper implements FormDataMapperInterface
      */
     public function mapToFormData(ValueObject $contentType, array $params = [])
     {
-        $resolver = (new OptionsResolver())->setRequired('mainLanguageCode');
+        $resolver = new OptionsResolver();
+        $this->configureOptions($resolver);
         $params = $resolver->resolve($params);
 
         $data = new ContentCreateData(['contentType' => $contentType, 'mainLanguageCode' => $params['mainLanguageCode']]);
+        $data->addLocationStruct($params['parentLocation']);
         foreach ($contentType->fieldDefinitions as $fieldDef) {
             $data->addFieldData(new FieldData(['fieldDefinition' => $fieldDef]));
         }
 
         return $data;
+    }
+
+    private function configureOptions(OptionsResolver $optionsResolver)
+    {
+        $optionsResolver
+            ->setRequired(['mainLanguageCode', 'parentLocation'])
+            ->setAllowedTypes('parentLocation', '\eZ\Publish\API\Repository\Values\Content\LocationCreateStruct');
     }
 }
