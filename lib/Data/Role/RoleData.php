@@ -12,14 +12,14 @@ namespace EzSystems\RepositoryForms\Data\Role;
 
 use eZ\Publish\API\Repository\Values\User\RoleUpdateStruct;
 use EzSystems\RepositoryForms\Data\NewnessChecker;
-use EzSystems\RepositoryForms\Data\NewsnessCheckable;
+use EzSystems\RepositoryForms\Data\NewnessCheckable;
 
 /**
  * Base data class for ContentType update form, with FieldDefinitions data and ContentTypeDraft.
  *
  * @property-read \eZ\Publish\API\Repository\Values\User\RoleDraft $roleDraft
  */
-class RoleData extends RoleUpdateStruct implements NewsnessCheckable
+class RoleData extends RoleUpdateStruct implements NewnessCheckable
 {
     /**
      * Trait which provides isNew(), and mandates getIdentifier().

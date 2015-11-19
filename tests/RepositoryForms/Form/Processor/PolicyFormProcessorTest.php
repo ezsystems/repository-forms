@@ -51,9 +51,10 @@ class PolicyFormProcessorTest extends PHPUnit_Framework_TestCase
 
     public function testProcessCreate()
     {
+        $existingPolicy = new PolicyDraft(['innerPolicy' => new Policy(['id' => 123])]);
         $policy = new PolicyDraft(['innerPolicy' => new Policy()]);
-        $roleDraft = new RoleDraft();
-        $initialRole = new Role();
+        $initialRole = new Role(['policies' => [$existingPolicy]]);
+        $roleDraft = new RoleDraft(['innerRole' => $initialRole]);
         $data = (new PolicyMapper())->mapToFormData($policy, [
             'roleDraft' => $roleDraft,
             'initialRole' => $initialRole,
@@ -64,12 +65,16 @@ class PolicyFormProcessorTest extends PHPUnit_Framework_TestCase
         $data->moduleFunction = "$module|$function";
         $event = new FormActionEvent($this->getMock('\Symfony\Component\Form\FormInterface'), $data, 'foo');
 
+        $newPolicyDraft = new PolicyDraft(['innerPolicy' => new Policy(['id' => 456])]);
+        $updatedRoleDraft = new RoleDraft(['innerRole' => new Role(['policies' => [$existingPolicy, $newPolicyDraft]])]);
         $this->roleService
             ->expects($this->once())
             ->method('addPolicyByRoleDraft')
-            ->with($roleDraft, $data);
+            ->with($roleDraft, $data)
+            ->willReturn($updatedRoleDraft);
 
         $this->processor->processUpdatePolicy($event);
+        self::assertSame($newPolicyDraft, $event->getData()->policyDraft);
     }
 
     public function testSavePolicy()

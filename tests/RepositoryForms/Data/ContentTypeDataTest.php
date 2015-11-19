@@ -38,4 +38,39 @@ class ContentTypeDataTest extends PHPUnit_Framework_TestCase
         $data->addFieldDefinitionData($fieldDef4);
         self::assertSame([$fieldDef1, $fieldDef2, $fieldDef3, $fieldDef4], $data->fieldDefinitionsData);
     }
+
+    public function testSortFieldDefinitions()
+    {
+        $fieldDef1 = new FieldDefinitionData(
+            ['fieldDefinition' => $this->getMockForAbstractClass(
+                '\eZ\Publish\API\Repository\Values\ContentType\FieldDefinition',
+                [['id' => 1, 'identifier' => 'snarf', 'position' => 3]]
+            )]
+        );
+        $fieldDef2 = new FieldDefinitionData(
+            ['fieldDefinition' => $this->getMockForAbstractClass(
+                '\eZ\Publish\API\Repository\Values\ContentType\FieldDefinition',
+                [['id' => 2, 'identifier' => 'gnubel', 'position' => 2]]
+            )]
+        );
+        $fieldDef3 = new FieldDefinitionData(
+            ['fieldDefinition' => $this->getMockForAbstractClass(
+                '\eZ\Publish\API\Repository\Values\ContentType\FieldDefinition',
+                [['id' => 3, 'identifier' => 'heffa', 'position' => 2]]
+            )]
+        );
+        $fieldDef4 = new FieldDefinitionData(
+            ['fieldDefinition' => $this->getMockForAbstractClass(
+                '\eZ\Publish\API\Repository\Values\ContentType\FieldDefinition',
+                [['id' => 4, 'identifier' => 'lump', 'position' => 1]]
+            )]
+        );
+
+        $fieldDefs = [$fieldDef1, $fieldDef2, $fieldDef3, $fieldDef4];
+        $data = new ContentTypeData(['fieldDefinitionsData' => $fieldDefs]);
+        self::assertSame($fieldDefs, $data->fieldDefinitionsData);
+
+        $data->sortFieldDefinitions();
+        self::assertSame([$fieldDef4, $fieldDef2, $fieldDef3, $fieldDef1], $data->fieldDefinitionsData);
+    }
 }

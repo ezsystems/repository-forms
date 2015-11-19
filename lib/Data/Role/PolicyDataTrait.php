@@ -44,9 +44,9 @@ trait PolicyDataTrait
      */
     public $moduleFunction;
 
-    public function setPolicy(PolicyDraft $policyDraft)
+    public function setPolicyDraft(PolicyDraft $policyDraft)
     {
-        $this->policy = $policyDraft;
+        $this->policyDraft = $policyDraft;
     }
 
     public function getId()

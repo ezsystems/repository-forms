@@ -60,6 +60,7 @@ class ContentTypeDraftMapper implements FormDataMapperInterface
                 'isSearchable' => $fieldDef->isSearchable,
             ]));
         }
+        $contentTypeData->sortFieldDefinitions();
 
         return $contentTypeData;
     }

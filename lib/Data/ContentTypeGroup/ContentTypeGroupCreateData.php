@@ -9,12 +9,12 @@
 namespace EzSystems\RepositoryForms\Data\ContentTypeGroup;
 
 use eZ\Publish\API\Repository\Values\ContentType\ContentTypeGroupCreateStruct;
-use EzSystems\RepositoryForms\Data\NewsnessCheckable;
+use EzSystems\RepositoryForms\Data\NewnessCheckable;
 
 /**
  * @property-read \eZ\Publish\API\Repository\Values\ContentType\ContentTypeGroup $contentTypeGroup
  */
-class ContentTypeGroupCreateData extends ContentTypeGroupCreateStruct implements NewsnessCheckable
+class ContentTypeGroupCreateData extends ContentTypeGroupCreateStruct implements NewnessCheckable
 {
     use ContentTypeGroupDataTrait;
 

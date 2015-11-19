@@ -72,17 +72,28 @@ class ContentTypeFormProcessor implements EventSubscriberInterface
         foreach ($contentTypeData->fieldDefinitionsData as $fieldDefData) {
             $this->contentTypeService->updateFieldDefinition($contentTypeDraft, $fieldDefData->fieldDefinition, $fieldDefData);
         }
+        $contentTypeData->sortFieldDefinitions();
         $this->contentTypeService->updateContentTypeDraft($contentTypeDraft, $contentTypeData);
     }
 
     public function processAddFieldDefinition(FormActionEvent $event)
     {
-        $contentTypeDraft = $event->getData()->contentTypeDraft;
+        // Reload the draft, to make sure we include any changes made in the current form submit
+        $contentTypeDraft = $this->contentTypeService->loadContentTypeDraft($event->getData()->contentTypeDraft->id);
         $fieldTypeIdentifier = $event->getForm()->get('fieldTypeSelection')->getData();
+
+        $maxFieldPos = 0;
+        foreach ($contentTypeDraft->fieldDefinitions as $existingFieldDef) {
+            if ($existingFieldDef->position > $maxFieldPos) {
+                $maxFieldPos = $existingFieldDef->position;
+            }
+        }
+
         $fieldDefCreateStruct = new FieldDefinitionCreateStruct([
             'fieldTypeIdentifier' => $fieldTypeIdentifier,
             'identifier' => sprintf('new_%s_%d', $fieldTypeIdentifier, count($contentTypeDraft->fieldDefinitions) + 1),
             'names' => [$event->getOption('languageCode') => 'New FieldDefinition'],
+            'position' => $maxFieldPos + 1,
         ]);
         $this->contentTypeService->addFieldDefinition($contentTypeDraft, $fieldDefCreateStruct);
     }

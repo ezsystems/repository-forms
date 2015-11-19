@@ -9,12 +9,12 @@
 namespace EzSystems\RepositoryForms\Data\Language;
 
 use eZ\Publish\API\Repository\Values\Content\LanguageCreateStruct;
-use EzSystems\RepositoryForms\Data\NewsnessCheckable;
+use EzSystems\RepositoryForms\Data\NewnessCheckable;
 
 /**
  * @property-read \eZ\Publish\API\Repository\Values\Content\Language $language
  */
-class LanguageCreateData extends LanguageCreateStruct implements NewsnessCheckable
+class LanguageCreateData extends LanguageCreateStruct implements NewnessCheckable
 {
     use LanguageDataTrait;
 

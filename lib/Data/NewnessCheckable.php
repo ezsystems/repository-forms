@@ -8,7 +8,7 @@
  */
 namespace EzSystems\RepositoryForms\Data;
 
-interface NewsnessCheckable
+interface NewnessCheckable
 {
     /**
      * Whether the Data object can be considered new.

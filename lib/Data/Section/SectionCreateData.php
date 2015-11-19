@@ -9,12 +9,12 @@
 namespace EzSystems\RepositoryForms\Data\Section;
 
 use eZ\Publish\API\Repository\Values\Content\SectionCreateStruct;
-use EzSystems\RepositoryForms\Data\NewsnessCheckable;
+use EzSystems\RepositoryForms\Data\NewnessCheckable;
 
 /**
  * @property-read \eZ\Publish\API\Repository\Values\Content\Section $section
  */
-class SectionCreateData extends SectionCreateStruct implements NewsnessCheckable
+class SectionCreateData extends SectionCreateStruct implements NewnessCheckable
 {
     use SectionDataTrait;
 

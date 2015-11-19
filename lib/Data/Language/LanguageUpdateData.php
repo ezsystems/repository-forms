@@ -10,7 +10,7 @@ namespace EzSystems\RepositoryForms\Data\Language;
 
 use eZ\Publish\API\Repository\Values\Content\LanguageCreateStruct;
 use EzSystems\RepositoryForms\Data\NewnessChecker;
-use EzSystems\RepositoryForms\Data\NewsnessCheckable;
+use EzSystems\RepositoryForms\Data\NewnessCheckable;
 
 /**
  * Language Update Data struct.
@@ -21,7 +21,7 @@ use EzSystems\RepositoryForms\Data\NewsnessCheckable;
  *
  * @property-read \eZ\Publish\API\Repository\Values\Content\Language $language
  */
-class LanguageUpdateData extends LanguageCreateStruct implements NewsnessCheckable
+class LanguageUpdateData extends LanguageCreateStruct implements NewnessCheckable
 {
     use LanguageDataTrait, NewnessChecker;
 

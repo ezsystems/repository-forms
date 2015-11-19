@@ -18,7 +18,7 @@ use eZ\Publish\API\Repository\Values\ContentType\ContentTypeUpdateStruct;
  * @property-read \eZ\Publish\API\Repository\Values\ContentType\ContentTypeDraft $contentTypeDraft
  * @property-read \EzSystems\RepositoryForms\Data\FieldDefinitionData[] $fieldDefinitionsData
  */
-class ContentTypeData extends ContentTypeUpdateStruct implements NewsnessCheckable
+class ContentTypeData extends ContentTypeUpdateStruct implements NewnessCheckable
 {
     /**
      * Trait which provides isNew(), and mandates getIdentifier().
@@ -43,5 +43,23 @@ class ContentTypeData extends ContentTypeUpdateStruct implements NewsnessCheckab
     public function addFieldDefinitionData(FieldDefinitionData $fieldDefinitionData)
     {
         $this->fieldDefinitionsData[] = $fieldDefinitionData;
+    }
+
+    /**
+     * Sort $this->fieldDefinitionsData first by position, then by identifier.
+     */
+    public function sortFieldDefinitions()
+    {
+        usort(
+            $this->fieldDefinitionsData,
+            function ($a, $b) {
+                if ($a->fieldDefinition->position === $b->fieldDefinition->position) {
+                    // The identifiers can never be the same
+                    return $a->fieldDefinition->identifier < $b->fieldDefinition->identifier ? -1 : 1;
+                }
+
+                return $a->fieldDefinition->position < $b->fieldDefinition->position ? -1 : 1;
+            }
+        );
     }
 }
