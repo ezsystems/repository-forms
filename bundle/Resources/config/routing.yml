@@ -8,6 +8,11 @@ ez_content_create:
     defaults:
         _controller: EzSystemsRepositoryFormsBundle:ContentEdit:create
 
+ez_content_create_draft:
+    path: /content/createdraft/{contentId}/{language}
+    defaults:
+        _controller: ez_content_edit:createDraftAction
+
 ez_content_edit:
     path: /content/update/{contentId}/{version}/{language}
     defaults:

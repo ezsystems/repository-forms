@@ -15,6 +15,7 @@ use eZ\Publish\API\Repository\LocationService;
 use EzSystems\RepositoryForms\Data\Mapper\ContentCreateMapper;
 use EzSystems\RepositoryForms\Data\Mapper\ContentUpdateMapper;
 use EzSystems\RepositoryForms\Form\ActionDispatcher\ActionDispatcherInterface;
+use EzSystems\RepositoryForms\Form\Type\Content\ContentCreateType;
 use EzSystems\RepositoryForms\Form\Type\Content\ContentEditType;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -78,15 +79,44 @@ class ContentEditController extends Controller
     {
     }
 
-    public function editAction($contentId, $version, $language, Request $request)
+    /**
+     * Creates a content draft and then redirects to content edit.
+     * Draft creation ONLY occurs when using POST, for the sake of HTTP compliance (a change is done in the repository).
+     * If a GET request is incoming, a form will be displayed with a single button, allowing to do the needed POST.
+     *
+     * @param Request $request
+     * @param mixed $contentId
+     * @param string $language
+     * @param array $params Hash of arbitrary parameters to pass to the default template.
+     *                      If "template" key is provided, it will be used for rendering.
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+     */
+    public function createDraftAction(Request $request, $contentId, $language, array $params = [])
     {
-        // Create a new version if none is provided explicitly
-        if ($version == 0) {
+        $form = $this->createForm(new ContentCreateType());
+        $form->handleRequest($request);
+
+        if ($form->isValid()) {
             $contentDraft = $this->contentService->createContentDraft($this->contentService->loadContentInfo($contentId));
-        } else {
-            $contentDraft = $this->contentService->loadContent($contentId, $language ? [$language] : null, $version);
+            return $this->redirectToRoute('ez_content_edit', [
+                'contentId' => $contentId,
+                'version' => $contentDraft->getVersionInfo()->versionNo,
+                'language' => $language,
+            ]);
         }
 
+        $template = isset($params['template']) ? $params['template'] : 'EzSystemsRepositoryFormsBundle:Content:content_create_draft.html.twig';
+        return $this->render($template, $params + [
+            'contentId' => $contentId,
+            'language' => $language,
+            'form' => $form->createView(),
+        ]);
+    }
+
+    public function editAction($contentId, $version, $language, Request $request)
+    {
+        $contentDraft = $this->contentService->loadContent($contentId, [$language], $version);
         $contentType = $this->contentTypeService->loadContentType($contentDraft->contentInfo->contentTypeId);
         $data = (new ContentUpdateMapper())->mapToFormData($contentDraft, [
             'languageCode' => $language,
