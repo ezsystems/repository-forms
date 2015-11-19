@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+    <file source-language="en" datatype="plaintext" original="file.ext">
+        <body>
+            <trans-unit id="eb732abfbae397aca2742d95e9d0be74">
+                <source>content.create_button</source>
+                <target>Create</target>
+            </trans-unit>
+            <trans-unit id="feebb073e498ff5b9166f640554eeb60">
+                <source>content.edit_button</source>
+                <target>Edit</target>
+            </trans-unit>
+            <trans-unit id="f51270da268bd8eda1a5d49f51cf93f6">
+                <source>content.publish_button</source>
+                <target>Publish</target>
+            </trans-unit>
+            <trans-unit id="39a661284481408be917e7c121e7ab1d">
+                <source>content.save_button</source>
+                <target>Save draft</target>
+            </trans-unit>
+            <trans-unit id="6a0d486e8aa479d2af5f67112f464e20">
+                <source>content.cancel_button</source>
+                <target>Cancel</target>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>
