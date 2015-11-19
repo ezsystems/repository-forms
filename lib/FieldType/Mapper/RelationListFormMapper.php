@@ -48,7 +48,7 @@ class RelationListFormMapper implements FieldTypeFormMapperInterface
                 $contentTypeHash[$contentType->identifier] = $this->translationHelper->getTranslatedByProperty($contentType, 'names');
             }
         }
-        sort($contentTypeHash);
+        asort($contentTypeHash);
 
         $fieldDefinitionForm
             ->add('selectionDefaultLocation', 'hidden', [
