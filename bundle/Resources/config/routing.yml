@@ -6,7 +6,7 @@ ez_content_create_no_draft:
 ez_content_create:
     path: /content/create/{contentTypeId}/{language}/{parentLocationId}
     defaults:
-        _controller: EzSystemsRepositoryFormsBundle:ContentEdit:create
+        _controller: ez_content_edit:createAction
 
 ez_content_create_draft:
     path: /content/createdraft/{contentId}/{language}

@@ -99,6 +99,7 @@ class ContentEditController extends Controller
 
         if ($form->isValid()) {
             $contentDraft = $this->contentService->createContentDraft($this->contentService->loadContentInfo($contentId));
+
             return $this->redirectToRoute('ez_content_edit', [
                 'contentId' => $contentId,
                 'version' => $contentDraft->getVersionInfo()->versionNo,
@@ -107,6 +108,7 @@ class ContentEditController extends Controller
         }
 
         $template = isset($params['template']) ? $params['template'] : 'EzSystemsRepositoryFormsBundle:Content:content_create_draft.html.twig';
+
         return $this->render($template, $params + [
             'contentId' => $contentId,
             'language' => $language,
