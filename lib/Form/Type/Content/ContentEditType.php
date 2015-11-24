@@ -32,7 +32,10 @@ class ContentEditType extends AbstractType
         if ($options['drafts_enabled']) {
             $builder
                 ->add('saveDraft', 'submit', ['label' => 'content.save_button'])
-                ->add('cancel', 'submit', ['label' => 'content.cancel_button']);
+                ->add('cancel', 'submit', [
+                    'label' => 'content.cancel_button',
+                    'attr' => ['formnovalidate' => 'formnovalidate'],
+                ]);
         }
     }
 
