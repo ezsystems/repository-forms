@@ -10,5 +10,7 @@
 {# @var form \Symfony\Component\Form\FormView #}
 
 {% block ezstring_field_edit %}
+    {{ form_widget(form) }}
+{% endblock %}
 
 {% endblock %}
