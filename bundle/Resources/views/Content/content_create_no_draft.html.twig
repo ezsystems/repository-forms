@@ -1,1 +1,15 @@
-{{ form(form) }}
+<section class="ez-content-edit">
+    {{ form_start(form) }}
+
+    {% for fieldForm in form.fieldsData %}
+    <div class="{{ fieldForm.vars.data.fieldDefinition.fieldTypeIdentifier }}-field field-edit">
+        <fieldset>
+            <legend>{{- form_label(fieldForm) -}}</legend>
+            {{- form_errors(fieldForm) -}}
+            {{ ez_render_field_edit(fieldForm.vars.data, {"form": fieldForm, "contentData": form.vars.data}) }}
+        </fieldset>
+    </div>
+    {% endfor %}
+
+    {{ form_end(form) }}
+</section>

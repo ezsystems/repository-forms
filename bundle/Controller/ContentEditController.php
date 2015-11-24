@@ -72,6 +72,7 @@ class ContentEditController extends Controller
 
         return $this->render('EzSystemsRepositoryFormsBundle:Content:content_create_no_draft.html.twig', [
             'form' => $form->createView(),
+            'languageCode' => $language,
         ]);
     }
 
@@ -139,6 +140,7 @@ class ContentEditController extends Controller
 
         return $this->render('EzSystemsRepositoryFormsBundle:Content:content_create_no_draft.html.twig', [
             'form' => $form->createView(),
+            'languageCode' => $language,
         ]);
     }
 }
