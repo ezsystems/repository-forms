@@ -155,6 +155,7 @@ services:
 
     ezrepoforms.field_type.form_mapper.eztext:
         class: %ezrepoforms.field_type.form_mapper.eztext.class%
+        parent: ezrepoforms.field_type.form_mapper.abstract
         tags:
             - { name: ez.fieldType.formMapper, fieldType: eztext }
 

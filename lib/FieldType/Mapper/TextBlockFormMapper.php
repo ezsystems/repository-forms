@@ -15,7 +15,7 @@ use EzSystems\RepositoryForms\Data\FieldDefinitionData;
 use EzSystems\RepositoryForms\FieldType\FieldTypeFormMapperInterface;
 use Symfony\Component\Form\FormInterface;
 
-class TextBlockFormMapper implements FieldTypeFormMapperInterface
+class TextBlockFormMapper extends AbstractMapper
 {
     public function mapFieldDefinitionForm(FormInterface $fieldDefinitionForm, FieldDefinitionData $data)
     {
@@ -29,15 +29,15 @@ class TextBlockFormMapper implements FieldTypeFormMapperInterface
             );
     }
 
-    /**
-     * "Maps" Field form to current FieldType.
-     * Allows to add form fields for content edition.
-     *
-     * @param FormInterface $fieldForm Form for the current Field.
-     * @param FieldData $data Underlying data for current Field form.
-     */
-    public function mapFieldValueForm(FormInterface $fieldForm, FieldData $data)
+    protected function getContentFormFieldType()
     {
-        // TODO: Implement mapFieldForm() method.
+        return 'textarea';
+    }
+
+    protected function getContentFormFieldTypeOptions(FormInterface $fieldForm, FieldData $data)
+    {
+        return [
+            'attr' => ['rows' => $data->fieldDefinition->fieldSettings['textRows']]
+        ];
     }
 }
