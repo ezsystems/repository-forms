@@ -74,8 +74,12 @@ class FieldEditRenderingExtension extends Twig_Extension
         $optionsResolver = new OptionsResolver();
         $optionsResolver
             ->setDefaults(['data' => $fieldData])
-            ->setRequired(['form', 'languageCode'])
-            ->setAllowedTypes('form', '\Symfony\Component\Form\FormView');
+            ->setRequired(['form', 'contentData'])
+            ->setAllowedTypes('form', '\Symfony\Component\Form\FormView')
+            ->setAllowedTypes('contentData', [
+                '\EzSystems\RepositoryForms\Data\Content\ContentCreateData',
+                '\EzSystems\RepositoryForms\Data\Content\ContentUpdateData',
+            ]);
 
         try {
             return $this->fieldBlockRenderer->renderContentFieldEdit(
