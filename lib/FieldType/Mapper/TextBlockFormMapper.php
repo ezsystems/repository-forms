@@ -12,7 +12,6 @@ namespace EzSystems\RepositoryForms\FieldType\Mapper;
 
 use EzSystems\RepositoryForms\Data\Content\FieldData;
 use EzSystems\RepositoryForms\Data\FieldDefinitionData;
-use EzSystems\RepositoryForms\FieldType\FieldTypeFormMapperInterface;
 use Symfony\Component\Form\FormInterface;
 
 class TextBlockFormMapper extends AbstractMapper
@@ -37,7 +36,7 @@ class TextBlockFormMapper extends AbstractMapper
     protected function getContentFormFieldTypeOptions(FormInterface $fieldForm, FieldData $data)
     {
         return [
-            'attr' => ['rows' => $data->fieldDefinition->fieldSettings['textRows']]
+            'attr' => ['rows' => $data->fieldDefinition->fieldSettings['textRows']],
         ];
     }
 }
