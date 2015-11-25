@@ -22,6 +22,24 @@
                 <source>content.cancel_button</source>
                 <target>Cancel</target>
             </trans-unit>
+            
+            <!-- FieldTypes -->
+            <trans-unit id="7b0583136e2275a809b31ae90a455e59">
+                <source>content.field_type.ezuser.username</source>
+                <target>Username:</target>
+            </trans-unit>
+            <trans-unit id="8acd3d9a24e181ea0e82ad298422fdc7">
+                <source>content.field_type.ezuser.password</source>
+                <target>Password:</target>
+            </trans-unit>
+            <trans-unit id="fd2c89db5fdb5a32b85b4813a80f0c35">
+                <source>content.field_type.ezuser.password_confirm</source>
+                <target>Confirm password:</target>
+            </trans-unit>
+            <trans-unit id="94f3c48fbdb6323962103bebf6575c30">
+                <source>content.field_type.ezuser.email</source>
+                <target>E-mail:</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>
