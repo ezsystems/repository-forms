@@ -8,6 +8,7 @@
  */
 namespace EzSystems\RepositoryForms\Data\Mapper;
 
+use eZ\Publish\API\Repository\Values\Content\Field;
 use eZ\Publish\API\Repository\Values\ValueObject;
 use EzSystems\RepositoryForms\Data\Content\ContentCreateData;
 use EzSystems\RepositoryForms\Data\Content\FieldData;
@@ -35,7 +36,13 @@ class ContentCreateMapper implements FormDataMapperInterface
         $data = new ContentCreateData(['contentType' => $contentType, 'mainLanguageCode' => $params['mainLanguageCode']]);
         $data->addLocationStruct($params['parentLocation']);
         foreach ($contentType->fieldDefinitions as $fieldDef) {
-            $data->addFieldData(new FieldData(['fieldDefinition' => $fieldDef]));
+            $data->addFieldData(new FieldData([
+                'fieldDefinition' => $fieldDef,
+                'field' => new Field([
+                    'fieldDefIdentifier' => $fieldDef->identifier,
+                    'languageCode' => $params['mainLanguageCode'],
+                ])
+            ]));
         }
 
         return $data;
