@@ -41,7 +41,7 @@ class ContentCreateMapper implements FormDataMapperInterface
                 'field' => new Field([
                     'fieldDefIdentifier' => $fieldDef->identifier,
                     'languageCode' => $params['mainLanguageCode'],
-                ])
+                ]),
             ]));
         }
 
