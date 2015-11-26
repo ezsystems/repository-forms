@@ -1,0 +1,22 @@
+{% macro display_form(form) %}
+    {{ form_start(form) }}
+
+    {% for fieldForm in form.fieldsData %}
+        <div class="{{ fieldForm.vars.data.fieldDefinition.fieldTypeIdentifier }}-field field-edit">
+            <fieldset>
+                <legend>{{- form_label(fieldForm) -}}</legend>
+                {{- form_errors(fieldForm) -}}
+                {%- if fieldForm.value is defined -%}
+                    {{ form_widget(fieldForm.value, {"contentData": form.vars.data}) }}
+                {%- else -%}
+                    <p class="non-editable">
+                        {{ "content.field.non_editable"|trans({}, "ezrepoforms_content") }}
+                    </p>
+                    {%- do fieldForm.setRendered() -%}
+                {% endif %}
+            </fieldset>
+        </div>
+    {% endfor %}
+
+    {{ form_end(form) }}
+{% endmacro %}
