@@ -27,6 +27,7 @@ class ContentEditType extends AbstractType
                 'label' => 'ezrepoforms.content.fields',
                 'options' => ['languageCode' => $options['languageCode']],
             ])
+            ->add('redirectUrlAfterPublish', 'hidden', ['required' => false, 'mapped' => false])
             ->add('publish', 'submit', ['label' => 'content.publish_button']);
 
         if ($options['drafts_enabled']) {

@@ -72,12 +72,13 @@ class ContentFormProcessor implements EventSubscriberInterface
         $draft = $this->saveDraft($data, $form->getConfig()->getOption('languageCode'));
         $content = $this->contentService->publishVersion($draft->versionInfo);
 
-        $url = $this->router->generate(
+        // Redirect to the provided URL. Defaults to URLAlias of the published content.
+        $redirectUrl = $form['redirectUrlAfterPublish']->getData() ?: $this->router->generate(
             UrlAliasRouter::URL_ALIAS_ROUTE_NAME,
             ['contentId' => $content->id],
             UrlGeneratorInterface::ABSOLUTE_URL
         );
-        $event->setResponse(new RedirectResponse($url));
+        $event->setResponse(new RedirectResponse($redirectUrl));
     }
 
     public function processRemoveDraft(FormActionEvent $event)
