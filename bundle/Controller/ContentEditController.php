@@ -12,11 +12,12 @@ use eZ\Bundle\EzPublishCoreBundle\Controller;
 use eZ\Publish\API\Repository\ContentService;
 use eZ\Publish\API\Repository\ContentTypeService;
 use eZ\Publish\API\Repository\LocationService;
+use eZ\Publish\Core\MVC\Symfony\View\View;
 use EzSystems\RepositoryForms\Data\Mapper\ContentCreateMapper;
-use EzSystems\RepositoryForms\Data\Mapper\ContentUpdateMapper;
 use EzSystems\RepositoryForms\Form\ActionDispatcher\ActionDispatcherInterface;
 use EzSystems\RepositoryForms\Form\Type\Content\ContentCreateType;
 use EzSystems\RepositoryForms\Form\Type\Content\ContentEditType;
+use EzSystems\RepositoryForms\View\ContentEdit\ContentEditView;
 use Symfony\Component\HttpFoundation\Request;
 
 class ContentEditController extends Controller
@@ -117,30 +118,27 @@ class ContentEditController extends Controller
         ]);
     }
 
-    public function editAction($contentId, $version, $language, Request $request)
+    public function editAction(ContentEditView $view)
     {
-        $contentDraft = $this->contentService->loadContent($contentId, [$language], $version);
-        $contentType = $this->contentTypeService->loadContentType($contentDraft->contentInfo->contentTypeId);
-        $data = (new ContentUpdateMapper())->mapToFormData($contentDraft, [
-            'languageCode' => $language,
-            'contentType' => $contentType,
-        ]);
-        $form = $this->createForm(new ContentEditType(), $data, [
-            'languageCode' => $language,
-            'drafts_enabled' => true,
-        ]);
-        $form->handleRequest($request);
+        return $view;
+    }
 
-        if ($form->isValid()) {
-            $this->contentActionDispatcher->dispatchFormAction($form, $data, $form->getClickedButton()->getName());
-            if ($response = $this->contentActionDispatcher->getResponse()) {
-                return $response;
-            }
+    public function editSuccessAction(ContentEditSuccessView $view)
+    {
+        // Either check if $view has a Response, and return that response
+        // Or use the contentActionDispatcher right here, and do something with the response
+        //   In that case, the ContentEditSuccessView is pretty much a ContentEditView with an extra flag
+
+        // I'd go for the later, as below. It makes more sense since
+        $this->contentActionDispatcher->dispatchFormAction(
+            $view->getForm(),
+            $view->getForm()->getData(),
+            $view->getForm()->getClickedButton()->getName()
+        );
+        if ($response = $this->contentActionDispatcher->getResponse()) {
+            return $response;
+        } else {
+            return $view;
         }
-
-        return $this->render('EzSystemsRepositoryFormsBundle:Content:content_edit.html.twig', [
-            'form' => $form->createView(),
-            'languageCode' => $language,
-        ]);
     }
 }

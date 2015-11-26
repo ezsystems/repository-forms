@@ -47,6 +47,8 @@ parameters:
 
     ezrepoforms.controller.content_edit.class: EzSystems\RepositoryFormsBundle\Controller\ContentEditController
 
+    ezrepoforms.view.content_edit.form_filter.class: EzSystems\RepositoryForms\View\ContentEdit\ParameterFilter\ContentEditFormFilter
+
 services:
     ezrepoforms.field_type_form_mapper.registry:
         class: %ezrepoforms.field_type_form_mapper.registry.class%
@@ -264,3 +266,10 @@ services:
 
     ez_content_edit:
         alias: ezrepoforms.controller.content_edit
+
+    ezrepoforms.view.content_edit.form_filter:
+        class: %ezrepoforms.view.content_edit.form_filter.class%
+        arguments:
+            - @ezpublish.api.service.content
+            - @ezpublish.api.service.content_type
+            - @form.factory
