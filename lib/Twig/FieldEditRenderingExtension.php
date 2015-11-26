@@ -12,9 +12,7 @@ namespace EzSystems\RepositoryForms\Twig;
 
 use eZ\Publish\Core\MVC\Symfony\Templating\Exception\MissingFieldBlockException;
 use eZ\Publish\Core\MVC\Symfony\Templating\FieldBlockRendererInterface;
-use EzSystems\RepositoryForms\Data\Content\FieldData;
 use EzSystems\RepositoryForms\Data\FieldDefinitionData;
-use Symfony\Component\OptionsResolver\OptionsResolver;
 use Twig_Environment;
 use Twig_Extension;
 use Twig_SimpleFunction;
