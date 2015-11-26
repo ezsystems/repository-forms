@@ -49,11 +49,6 @@ class FieldEditRenderingExtension extends Twig_Extension
                 [$this, 'renderFieldDefinitionEdit'],
                 ['is_safe' => ['html']]
             ),
-            new Twig_SimpleFunction(
-                'ez_render_field_edit',
-                [$this, 'renderFieldEdit'],
-                ['is_safe' => ['html']]
-            ),
         );
     }
 
@@ -66,29 +61,6 @@ class FieldEditRenderingExtension extends Twig_Extension
             // Silently fail on purpose.
             // If there is no template block for current field definition, there might not be anything specific to add.
             return '';
-        }
-    }
-
-    public function renderFieldEdit(FieldData $fieldData, array $params = [])
-    {
-        $optionsResolver = new OptionsResolver();
-        $optionsResolver
-            ->setDefaults(['data' => $fieldData])
-            ->setRequired(['form', 'contentData'])
-            ->setAllowedTypes('form', '\Symfony\Component\Form\FormView')
-            ->setAllowedTypes('contentData', [
-                '\EzSystems\RepositoryForms\Data\Content\ContentCreateData',
-                '\EzSystems\RepositoryForms\Data\Content\ContentUpdateData',
-            ]);
-
-        try {
-            return $this->fieldBlockRenderer->renderContentFieldEdit(
-                $fieldData->field,
-                $fieldData->fieldDefinition->fieldTypeIdentifier,
-                $optionsResolver->resolve($params)
-            );
-        } catch (MissingFieldBlockException $e) {
-            return 'Not implemented';
         }
     }
 }

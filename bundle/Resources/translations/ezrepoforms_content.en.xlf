@@ -22,6 +22,10 @@
                 <source>content.cancel_button</source>
                 <target>Cancel</target>
             </trans-unit>
+            <trans-unit id="e93fea1c0536d108e24b150ac03c2677">
+                <source>content.field.non_editable</source>
+                <target>This field is not editable.</target>
+            </trans-unit>
             
             <!-- FieldTypes -->
             <trans-unit id="7b0583136e2275a809b31ae90a455e59">
