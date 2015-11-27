@@ -6,9 +6,10 @@ namespace EzSystems\RepositoryForms\View\ContentEdit;
 
 use eZ\Publish\Core\MVC\Symfony\View\BaseView;
 use eZ\Publish\Core\MVC\Symfony\View\View;
-use Symfony\Component\Form\FormView;
+use Symfony\Component\Form\FormView as SymfonyFormView;
+use EzSystems\RepositoryForms\View\FormView as EzFormView;
 
-class ContentEditView extends BaseView implements View/*, FormView */
+class ContentEditView extends BaseView implements View, EzFormView
 {
     /**
      * @var \Symfony\Component\Form\FormView
@@ -21,11 +22,11 @@ class ContentEditView extends BaseView implements View/*, FormView */
     private $language;
 
     /**
-     * @param FormView $formView
+     * @param \Symfony\Component\Form\FormView $formView
      *
-     * @return ContentEditView
+     * @return \EzSystems\RepositoryForms\View\ContentEdit\ContentEditView
      */
-    public function setFormView(FormView $formView)
+    public function setFormView(SymfonyFormView $formView)
     {
         $this->formView = $formView;
 

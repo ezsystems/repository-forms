@@ -5,11 +5,29 @@
 namespace EzSystems\RepositoryForms\View\ContentEdit;
 
 use eZ\Publish\Core\MVC\Symfony\View\Builder\ViewBuilder;
+use eZ\Publish\Core\MVC\Symfony\View\Configurator;
+use eZ\Publish\Core\MVC\Symfony\View\ParametersInjector;
 use eZ\Publish\Core\MVC\Symfony\View\View;
+use Symfony\Component\Form\Form;
 use Symfony\Component\Form\FormInterface;
+use Symfony\Component\HttpKernel\Controller\ControllerReference;
 
 class ContentEditViewBuilder implements ViewBuilder
 {
+    /** @var \eZ\Publish\Core\MVC\Symfony\View\Configurator */
+    private $viewConfigurator;
+
+    /** @var \eZ\Publish\Core\MVC\Symfony\View\ParametersInjector */
+    private $viewParametersInjector;
+
+    public function __construct(
+        Configurator $viewConfigurator,
+        ParametersInjector $viewParametersInjector
+    ) {
+        $this->viewConfigurator = $viewConfigurator;
+        $this->viewParametersInjector = $viewParametersInjector;
+    }
+
     /**
      * Tests if the builder matches the given argument.
      *
@@ -19,7 +37,7 @@ class ContentEditViewBuilder implements ViewBuilder
      */
     public function matches($argument)
     {
-        return $argument === 'ez_content_edit:editAction';
+        return $argument === 'ez_content_edit:editAction' || $argument === 'ez_content_edit:createWithoutDraftAction';
     }
 
     /**
@@ -35,16 +53,22 @@ class ContentEditViewBuilder implements ViewBuilder
             throw new \InvalidArgumentException("Missing or invalid 'form' view parameter");
         }
 
-        /** @var FormInterface $form */
+        /** @var Form $form */
         $form = $parameters['form'];
 
         if ($form->isValid()) {
-            // @lolautruche: is there an else ?
-        }
+            $view = new ContentEditSuccessView();
+            $view->setForm($form);
+            $view->setControllerReference(new ControllerReference('ez_content_edit:editSuccessAction'));
 
+            return $view;
+        }
         $view = new ContentEditView();
         $view->setFormView($form->createView());
         $view->setLanguage($parameters['language']);
+
+        $this->viewConfigurator->configure($view);
+        $this->viewParametersInjector->injectViewParameters($view, $parameters);
 
         return $view;
 //        return $this->render('EzSystemsRepositoryFormsBundle:Content:content_create_no_draft.html.twig', [

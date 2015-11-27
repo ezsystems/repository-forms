@@ -12,11 +12,9 @@ use eZ\Bundle\EzPublishCoreBundle\Controller;
 use eZ\Publish\API\Repository\ContentService;
 use eZ\Publish\API\Repository\ContentTypeService;
 use eZ\Publish\API\Repository\LocationService;
-use eZ\Publish\Core\MVC\Symfony\View\View;
-use EzSystems\RepositoryForms\Data\Mapper\ContentCreateMapper;
 use EzSystems\RepositoryForms\Form\ActionDispatcher\ActionDispatcherInterface;
 use EzSystems\RepositoryForms\Form\Type\Content\ContentCreateType;
-use EzSystems\RepositoryForms\Form\Type\Content\ContentEditType;
+use EzSystems\RepositoryForms\View\ContentEdit\ContentEditSuccessView;
 use EzSystems\RepositoryForms\View\ContentEdit\ContentEditView;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -54,27 +52,11 @@ class ContentEditController extends Controller
         $this->contentService = $contentService;
     }
 
-    public function createWithoutDraftAction($contentTypeId, $language, $parentLocationId, Request $request)
+    public function createWithoutDraftAction(ContentEditView $view)
     {
-        $contentType = $this->contentTypeService->loadContentType($contentTypeId);
-        $data = (new ContentCreateMapper())->mapToFormData($contentType, [
-            'mainLanguageCode' => $language,
-            'parentLocation' => $this->locationService->newLocationCreateStruct($parentLocationId),
-        ]);
-        $form = $this->createForm(new ContentEditType(), $data, ['languageCode' => $language]);
-        $form->handleRequest($request);
+        $view->setTemplateIdentifier('EzSystemsRepositoryFormsBundle:Content:content_edit.html.twig');
 
-        if ($form->isValid()) {
-            $this->contentActionDispatcher->dispatchFormAction($form, $data, $form->getClickedButton()->getName());
-            if ($response = $this->contentActionDispatcher->getResponse()) {
-                return $response;
-            }
-        }
-
-        return $this->render('EzSystemsRepositoryFormsBundle:Content:content_edit.html.twig', [
-            'form' => $form->createView(),
-            'languageCode' => $language,
-        ]);
+        return $view;
     }
 
     public function createAction($contentTypeId, $language, $parentLocationId)
@@ -120,6 +102,8 @@ class ContentEditController extends Controller
 
     public function editAction(ContentEditView $view)
     {
+        $view->setTemplateIdentifier('EzSystemsRepositoryFormsBundle:Content:content_edit.html.twig');
+
         return $view;
     }
 
