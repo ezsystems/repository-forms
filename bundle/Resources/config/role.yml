@@ -28,6 +28,9 @@ parameters:
     ezrepoforms.limitation.form_mapper.group.class: EzSystems\RepositoryForms\Limitation\Mapper\GroupLimitationMapper
     ezrepoforms.limitation.form_mapper.parentdepth.class: EzSystems\RepositoryForms\Limitation\Mapper\ParentDepthLimitationMapper
     ezrepoforms.limitation.form_mapper.parentdepth.maxdepth: 20
+    ezrepoforms.limitation.udw.template: "EzSystemsRepositoryFormsBundle:Limitation:udw_limitation_value.html.twig"
+    ezrepoforms.limitation.form_mapper.location.class: EzSystems\RepositoryForms\Limitation\Mapper\LocationLimitationMapper
+    ezrepoforms.limitation.form_mapper.subtree.class: EzSystems\RepositoryForms\Limitation\Mapper\SubtreeLimitationMapper
 
 services:
     # Form types
@@ -177,3 +180,18 @@ services:
         arguments: [%ezrepoforms.limitation.form_mapper.parentdepth.maxdepth%]
         tags:
             - { name: ez.limitation.formMapper, limitationType: ParentDepth }
+
+    ezrepoforms.limitation.form_mapper.location:
+        class: %ezrepoforms.limitation.form_mapper.location.class%
+        tags:
+            - { name: ez.limitation.formMapper, limitationType: Node }
+        calls:
+            - [setFormTemplate, [%ezrepoforms.limitation.udw.template%]]
+
+    ezrepoforms.limitation.form_mapper.subtree:
+        class: %ezrepoforms.limitation.form_mapper.subtree.class%
+        arguments: [@ezpublish.api.service.location]
+        tags:
+            - { name: ez.limitation.formMapper, limitationType: Subtree }
+        calls:
+            - [setFormTemplate, [%ezrepoforms.limitation.udw.template%]]
