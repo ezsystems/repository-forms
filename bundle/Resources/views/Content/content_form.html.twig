@@ -7,6 +7,7 @@
                 <legend>{{- form_label(fieldForm) -}}</legend>
                 {{- form_errors(fieldForm) -}}
                 {%- if fieldForm.value is defined -%}
+                    {{ form_errors(fieldForm.value) }}
                     {{ form_widget(fieldForm.value, {"contentData": form.vars.data}) }}
                 {%- else -%}
                     <p class="non-editable">
