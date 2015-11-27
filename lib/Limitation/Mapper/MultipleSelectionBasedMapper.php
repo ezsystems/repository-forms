@@ -29,6 +29,7 @@ abstract class MultipleSelectionBasedMapper implements LimitationFormMapperInter
         $options = $this->getChoiceFieldOptions() + [
             'multiple' => true,
             'label' => $data->getIdentifier(),
+            'required' => false,
         ];
         $choices = $this->getSelectionChoices();
         asort($choices, SORT_NATURAL | SORT_FLAG_CASE);

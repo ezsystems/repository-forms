@@ -86,6 +86,14 @@
                 <source>role.policy.limitation.not_implemented</source>
                 <target>Limitation edition for '%limitationTypeIdentifier%' is not implemented yet.</target>
             </trans-unit>
+            <trans-unit id="8274dd06c2b2c0cf113502369bbf9516">
+                <source>policy.limitation.owner.self</source>
+                <target>Self</target>
+            </trans-unit>
+            <trans-unit id="6d1269a5d06fd566a4037bf7e59866a8">
+                <source>policy.limitation.group.self</source>
+                <target>Self</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>
