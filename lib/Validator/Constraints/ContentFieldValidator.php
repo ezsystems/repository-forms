@@ -8,7 +8,6 @@
  */
 namespace EzSystems\RepositoryForms\Validator\Constraints;
 
-
 use eZ\Publish\API\Repository\Values\ValueObject;
 use EzSystems\RepositoryForms\Data\Content\FieldData;
 use Symfony\Component\Validator\Constraint;
