@@ -54,7 +54,9 @@ class ContentEditController extends Controller
 
     public function createWithoutDraftAction(ContentEditView $view)
     {
-        $view->setTemplateIdentifier('EzSystemsRepositoryFormsBundle:Content:content_edit.html.twig');
+        if ($view->getTemplateIdentifier() === null) {
+            $view->setTemplateIdentifier('EzSystemsRepositoryFormsBundle:Content:content_edit.html.twig');
+        }
 
         return $view;
     }

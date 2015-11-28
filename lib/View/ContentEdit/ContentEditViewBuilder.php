@@ -71,9 +71,5 @@ class ContentEditViewBuilder implements ViewBuilder
         $this->viewParametersInjector->injectViewParameters($view, $parameters);
 
         return $view;
-//        return $this->render('EzSystemsRepositoryFormsBundle:Content:content_create_no_draft.html.twig', [
-//            'form' => $form->createView(),
-//            'languageCode' => $language,
-//        ]);
     }
 }
