@@ -45,7 +45,7 @@ services:
 
     ezrepofoerms.view.default_provider:
         class: %ezpublish.view_provider.configured.class%
-        arguments: [@ezpublish.content_view.default_matcher_factory]
+        arguments: [@ezrepoforms.view.default_matcher_factory]
         tags:
             - {name: ezpublish.view_provider, type: 'EzSystems\RepositoryForms\View\ContentEdit\ContentEditView', priority: -1}
 
