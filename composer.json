@@ -14,14 +14,16 @@
         "symfony/validator": "~2.7"
     },
     "require-dev": {
-        "phpunit/phpunit": "~4.7"
+        "phpunit/phpunit": "~4.7",
+        "behat/behat": "^3.0"
     },
     "autoload": {
         "psr-4": {
             "EzSystems\\RepositoryFormsBundle\\": "bundle",
             "EzSystems\\RepositoryForms\\": "lib",
             "EzSystems\\RepositoryForms\\Tests\\": "tests/RepositoryForms",
-            "EzSystems\\RepositoryFormsBundle\\Tests\\": "tests/RepositoryFormsBundle"
+            "EzSystems\\RepositoryFormsBundle\\Tests\\": "tests/RepositoryFormsBundle",
+            "EzSystems\\RepositoryForms\\Features\\": "features"
         }
     },
     "extra": {
