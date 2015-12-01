@@ -12,7 +12,8 @@ use PHPUnit_Framework_Assert as Assertion;
 class ContentEdit extends MinkContext implements Context, SnippetAcceptingContext
 {
     /**
-     * The
+     * Name of the content that was created using the edit form. Used to validate that the content was created.
+     * @var string
      */
     private $createdContentName;
 
@@ -31,7 +32,7 @@ class ContentEdit extends MinkContext implements Context, SnippetAcceptingContex
     public function iAmOnTheViewOfTheContentThatWasPublished()
     {
         if (!isset($this->createdContentName)) {
-            throw new \Exception("No created content name set");
+            throw new \Exception('No created content name set');
         }
 
         $page = $this->getSession()->getPage();
@@ -45,8 +46,8 @@ class ContentEdit extends MinkContext implements Context, SnippetAcceptingContex
     public function iFillInTheFolderEditForm()
     {
         // will only work for single value fields
-        $this->createdContentName = "Behat content edit @" . microtime(true);
-        $this->fillField("ezrepoforms_content_edit_fieldsData_name_value", $this->createdContentName);
+        $this->createdContentName = 'Behat content edit @' . microtime(true);
+        $this->fillField('ezrepoforms_content_edit_fieldsData_name_value', $this->createdContentName);
     }
 
     /**
