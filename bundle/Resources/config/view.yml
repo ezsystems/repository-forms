@@ -1,0 +1,57 @@
+parameters:
+    ezrepoforms.default_view_templates.content_edit: 'EzSystemsRepositoryFormsBundle:Content:content_edit.html.twig'
+    ezrepoforms.view.content_edit.form_filter.class: EzSystems\RepositoryForms\View\ContentEdit\ContentEditFormFilter
+    ezsettings.default.content_edit_view: {}
+    ezsettings.default.content_edit_view_defaults:
+        full:
+            default:
+                template: %ezrepoforms.default_view_templates.content_edit%
+                match: []
+
+services:
+    ezrepoforms.view.content_edit.form_filter:
+        class: %ezrepoforms.view.content_edit.form_filter.class%
+        arguments:
+            - @ezpublish.api.service.content
+            - @ezpublish.api.service.content_type
+            - @ezpublish.api.service.location
+            - @form.factory
+        tags:
+            - { name: kernel.event_subscriber }
+
+    ezrepoforms.view.form_parameter_injector:
+        class: EzSystems\RepositoryForms\View\ContentEdit\FormViewParameterInjector
+        tags:
+            - { name: kernel.event_subscriber }
+
+    ezrepoforms.view.content_edit.builder:
+        class: EzSystems\RepositoryForms\View\ContentEdit\ContentEditViewBuilder
+        arguments:
+            - @ezpublish.view.configurator
+            - @ezpublish.view.view_parameters.injector.dispatcher
+
+    ezrepoforms.view.provider:
+        class: %ezpublish.view_provider.configured.class%
+        arguments: [@ezrepoforms.view.matcher_factory]
+        tags:
+            - {name: ezpublish.view_provider, type: 'EzSystems\RepositoryForms\View\ContentEdit\ContentEditView', priority: 10}
+
+    ezrepoforms.view.matcher_factory:
+        class: %ezpublish.view.matcher_factory.class%
+        arguments: [@ezpublish.api.repository, 'eZ\Publish\Core\MVC\Symfony\Matcher\ContentBased']
+        calls:
+            - [setContainer, [@service_container]]
+            - [setMatchConfig, [$content_edit_view$]]
+
+    ezrepofoerms.view.default_provider:
+        class: %ezpublish.view_provider.configured.class%
+        arguments: [@ezrepoforms.view.default_matcher_factory]
+        tags:
+            - {name: ezpublish.view_provider, type: 'EzSystems\RepositoryForms\View\ContentEdit\ContentEditView', priority: -1}
+
+    ezrepoforms.view.default_matcher_factory:
+        class: %ezpublish.view.matcher_factory.class%
+        arguments: [@ezpublish.api.repository, 'eZ\Publish\Core\MVC\Symfony\Matcher\ContentBased']
+        calls:
+            - [setContainer, [@service_container]]
+            - [setMatchConfig, [$content_edit_view_defaults$]]

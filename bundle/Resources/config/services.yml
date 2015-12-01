@@ -2,6 +2,7 @@ imports:
     - {resource: language.yml}
     - {resource: section.yml}
     - {resource: role.yml}
+    - {resource: view.yml}
 
 parameters:
     ezrepoforms.field_type_form_mapper.registry.class: EzSystems\RepositoryForms\FieldType\FieldTypeFormMapperRegistry

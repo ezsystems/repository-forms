@@ -12,11 +12,10 @@ use eZ\Bundle\EzPublishCoreBundle\Controller;
 use eZ\Publish\API\Repository\ContentService;
 use eZ\Publish\API\Repository\ContentTypeService;
 use eZ\Publish\API\Repository\LocationService;
-use EzSystems\RepositoryForms\Data\Mapper\ContentCreateMapper;
-use EzSystems\RepositoryForms\Data\Mapper\ContentUpdateMapper;
 use EzSystems\RepositoryForms\Form\ActionDispatcher\ActionDispatcherInterface;
 use EzSystems\RepositoryForms\Form\Type\Content\ContentCreateType;
-use EzSystems\RepositoryForms\Form\Type\Content\ContentEditType;
+use EzSystems\RepositoryForms\View\ContentEdit\ContentEditSuccessView;
+use EzSystems\RepositoryForms\View\ContentEdit\ContentEditView;
 use Symfony\Component\HttpFoundation\Request;
 
 class ContentEditController extends Controller
@@ -53,27 +52,13 @@ class ContentEditController extends Controller
         $this->contentService = $contentService;
     }
 
-    public function createWithoutDraftAction($contentTypeId, $language, $parentLocationId, Request $request)
+    public function createWithoutDraftAction(ContentEditView $view)
     {
-        $contentType = $this->contentTypeService->loadContentType($contentTypeId);
-        $data = (new ContentCreateMapper())->mapToFormData($contentType, [
-            'mainLanguageCode' => $language,
-            'parentLocation' => $this->locationService->newLocationCreateStruct($parentLocationId),
-        ]);
-        $form = $this->createForm(new ContentEditType(), $data, ['languageCode' => $language]);
-        $form->handleRequest($request);
-
-        if ($form->isValid()) {
-            $this->contentActionDispatcher->dispatchFormAction($form, $data, $form->getClickedButton()->getName());
-            if ($response = $this->contentActionDispatcher->getResponse()) {
-                return $response;
-            }
+        if ($view->getTemplateIdentifier() === null) {
+            $view->setTemplateIdentifier('EzSystemsRepositoryFormsBundle:Content:content_edit.html.twig');
         }
 
-        return $this->render('EzSystemsRepositoryFormsBundle:Content:content_edit.html.twig', [
-            'form' => $form->createView(),
-            'languageCode' => $language,
-        ]);
+        return $view;
     }
 
     public function createAction($contentTypeId, $language, $parentLocationId)
@@ -117,30 +102,29 @@ class ContentEditController extends Controller
         ]);
     }
 
-    public function editAction($contentId, $version, $language, Request $request)
+    public function editAction(ContentEditView $view)
     {
-        $contentDraft = $this->contentService->loadContent($contentId, [$language], $version);
-        $contentType = $this->contentTypeService->loadContentType($contentDraft->contentInfo->contentTypeId);
-        $data = (new ContentUpdateMapper())->mapToFormData($contentDraft, [
-            'languageCode' => $language,
-            'contentType' => $contentType,
-        ]);
-        $form = $this->createForm(new ContentEditType(), $data, [
-            'languageCode' => $language,
-            'drafts_enabled' => true,
-        ]);
-        $form->handleRequest($request);
+        $view->setTemplateIdentifier('EzSystemsRepositoryFormsBundle:Content:content_edit.html.twig');
 
-        if ($form->isValid()) {
-            $this->contentActionDispatcher->dispatchFormAction($form, $data, $form->getClickedButton()->getName());
-            if ($response = $this->contentActionDispatcher->getResponse()) {
-                return $response;
-            }
+        return $view;
+    }
+
+    public function editSuccessAction(ContentEditSuccessView $view)
+    {
+        // Either check if $view has a Response, and return that response
+        // Or use the contentActionDispatcher right here, and do something with the response
+        //   In that case, the ContentEditSuccessView is pretty much a ContentEditView with an extra flag
+
+        // I'd go for the later, as below. It makes more sense since
+        $this->contentActionDispatcher->dispatchFormAction(
+            $view->getForm(),
+            $view->getForm()->getData(),
+            $view->getForm()->getClickedButton()->getName()
+        );
+        if ($response = $this->contentActionDispatcher->getResponse()) {
+            return $response;
+        } else {
+            return $view;
         }
-
-        return $this->render('EzSystemsRepositoryFormsBundle:Content:content_edit.html.twig', [
-            'form' => $form->createView(),
-            'languageCode' => $language,
-        ]);
     }
 }

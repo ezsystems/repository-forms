@@ -1,0 +1,11 @@
+# This file is meant to be imported from ezplatform's behat.yml.dist.
+# All path are relative to the root ezplatform directory.
+repository-forms:
+    suites:
+        content_edit:
+            paths:
+                - vendor/ezsystems/repository-forms/features/ContentEdit
+            contexts:
+                - EzSystems\RepositoryForms\Features\Context\ContentType:
+                    contentTypeService: @ezpublish.api.service.content_type
+                - EzSystems\RepositoryForms\Features\Context\ContentEdit
