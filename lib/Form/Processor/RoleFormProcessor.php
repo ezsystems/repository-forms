@@ -37,28 +37,61 @@ class RoleFormProcessor implements EventSubscriberInterface
 
     public function processDefaultAction(FormActionEvent $event)
     {
-        // Don't update anything if we just want to cancel the draft.
-        if ($event->getClickedButton() === 'removeDraft') {
-            return;
+        if ($this->isDefaultEvent($event)) {
+            $this->processSaveRole($event);
         }
-
-        /** @var \EzSystems\RepositoryForms\Data\Role\RoleData $roleData */
-        $roleData = $event->getData();
-        $roleDraft = $roleData->roleDraft;
-        $this->roleService->updateRoleDraft($roleDraft, $roleData);
     }
 
     public function processSaveRole(FormActionEvent $event)
     {
-        /** @var RoleDraft $roleDraft */
-        $roleDraft = $event->getData()->roleDraft;
+        $roleDraft = $this->getRoleDraft($event);
+
+        $this->roleService->updateRoleDraft($roleDraft, $this->getRoleData($event));
         $this->roleService->publishRoleDraft($roleDraft);
     }
 
     public function processRemoveDraft(FormActionEvent $event)
     {
-        /** @var RoleDraft $roleDraft */
-        $roleDraft = $event->getData()->roleDraft;
-        $this->roleService->deleteRoleDraft($roleDraft);
+        $this->roleService->deleteRoleDraft($this->getRoleDraft($event));
+    }
+
+    /**
+     * Returns true if the event is the default event, meaning Enter has been pressed in the form.
+     *
+     * There's no need to process the default action (save) for explicit events (save, cancel).
+     * Saving is not needed when cancelling, and when the Save button is clicked the save action takes care of it.
+     * The default action is only needed when the form has been submitted by pressing Enter.
+     *
+     * @param FormActionEvent $event
+     *
+     * @return bool
+     */
+    protected function isDefaultEvent(FormActionEvent $event)
+    {
+        return $event->getClickedButton() === null;
+    }
+
+    /**
+     * Returns the role data for the event.
+     *
+     * @param FormActionEvent $event
+     *
+     * @return \EzSystems\RepositoryForms\Data\Role\RoleData
+     */
+    protected function getRoleData(FormActionEvent $event)
+    {
+        return $event->getData();
+    }
+
+    /**
+     * Returns the role draft for the event.
+     *
+     * @param FormActionEvent $event
+     *
+     * @return \eZ\Publish\API\Repository\Values\User\RoleDraft
+     */
+    protected function getRoleDraft(FormActionEvent $event)
+    {
+        return $this->getRoleData($event)->roleDraft;
     }
 }
