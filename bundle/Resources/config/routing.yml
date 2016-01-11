@@ -1,0 +1,19 @@
+ez_content_create_no_draft:
+    path: /content/create/nodraft/{contentTypeId}/{language}/{parentLocationId}
+    defaults:
+        _controller: ez_content_edit:createWithoutDraftAction
+
+ez_content_create:
+    path: /content/create/{contentTypeId}/{language}/{parentLocationId}
+    defaults:
+        _controller: ez_content_edit:createAction
+
+ez_content_create_draft:
+    path: /content/createdraft/{contentId}/{language}
+    defaults:
+        _controller: ez_content_edit:createDraftAction
+
+ez_content_edit:
+    path: /content/update/{contentId}/{version}/{language}
+    defaults:
+        _controller: ez_content_edit:editAction

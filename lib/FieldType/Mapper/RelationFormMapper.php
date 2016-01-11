@@ -10,6 +10,7 @@
  */
 namespace EzSystems\RepositoryForms\FieldType\Mapper;
 
+use EzSystems\RepositoryForms\Data\Content\FieldData;
 use EzSystems\RepositoryForms\Data\FieldDefinitionData;
 use EzSystems\RepositoryForms\FieldType\FieldTypeFormMapperInterface;
 use Symfony\Component\Form\FormInterface;
@@ -24,5 +25,17 @@ class RelationFormMapper implements FieldTypeFormMapperInterface
                 'property_path' => 'fieldSettings[selectionRoot]',
                 'label' => 'field_definition.ezobjectrelation.selection_root',
             ]);
+    }
+
+    /**
+     * "Maps" Field form to current FieldType.
+     * Allows to add form fields for content edition.
+     *
+     * @param FormInterface $fieldForm Form for the current Field.
+     * @param FieldData $data Underlying data for current Field form.
+     */
+    public function mapFieldValueForm(FormInterface $fieldForm, FieldData $data)
+    {
+        // TODO: Implement mapFieldForm() method.
     }
 }

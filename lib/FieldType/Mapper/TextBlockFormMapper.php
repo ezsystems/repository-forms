@@ -10,11 +10,11 @@
  */
 namespace EzSystems\RepositoryForms\FieldType\Mapper;
 
+use EzSystems\RepositoryForms\Data\Content\FieldData;
 use EzSystems\RepositoryForms\Data\FieldDefinitionData;
-use EzSystems\RepositoryForms\FieldType\FieldTypeFormMapperInterface;
 use Symfony\Component\Form\FormInterface;
 
-class TextBlockFormMapper implements FieldTypeFormMapperInterface
+class TextBlockFormMapper extends AbstractMapper
 {
     public function mapFieldDefinitionForm(FormInterface $fieldDefinitionForm, FieldDefinitionData $data)
     {
@@ -26,5 +26,17 @@ class TextBlockFormMapper implements FieldTypeFormMapperInterface
                     'label' => 'field_definition.eztext.text_rows',
                 ]
             );
+    }
+
+    protected function getContentFormFieldType()
+    {
+        return 'textarea';
+    }
+
+    protected function getContentFormFieldTypeOptions(FormInterface $fieldForm, FieldData $data)
+    {
+        return [
+            'attr' => ['rows' => $data->fieldDefinition->fieldSettings['textRows']],
+        ];
     }
 }

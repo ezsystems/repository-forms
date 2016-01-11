@@ -12,10 +12,9 @@ namespace EzSystems\RepositoryForms\FieldType\Mapper;
 
 use EzSystems\RepositoryForms\Data\FieldDefinitionData;
 use EzSystems\RepositoryForms\FieldType\DataTransformer\TextLineValueTransformer;
-use EzSystems\RepositoryForms\FieldType\FieldTypeFormMapperInterface;
 use Symfony\Component\Form\FormInterface;
 
-class TextLineFormMapper implements FieldTypeFormMapperInterface
+class TextLineFormMapper extends AbstractMapper
 {
     public function mapFieldDefinitionForm(FormInterface $fieldDefinitionForm, FieldDefinitionData $data)
     {
@@ -43,5 +42,10 @@ class TextLineFormMapper implements FieldTypeFormMapperInterface
                     // Deactivate auto-initialize as we're not on the root form.
                     ->setAutoInitialize(false)->getForm()
             );
+    }
+
+    protected function getContentFormFieldType()
+    {
+        return 'text';
     }
 }

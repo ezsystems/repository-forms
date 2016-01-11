@@ -7,6 +7,7 @@ parameters:
     ezrepoforms.field_type_form_mapper.registry.class: EzSystems\RepositoryForms\FieldType\FieldTypeFormMapperRegistry
     ezrepoforms.content_type.update.form_type.class: EzSystems\RepositoryForms\Form\Type\ContentType\ContentTypeUpdateType
     ezrepoforms.field_definition.form_type.class: EzSystems\RepositoryForms\Form\Type\FieldDefinition\FieldDefinitionType
+    ezrepoforms.field.form_type.class: EzSystems\RepositoryForms\Form\Type\Content\ContentFieldType
 
     ezrepoforms.field_type.form_mapper.ezbinaryfile.class: EzSystems\RepositoryForms\FieldType\Mapper\BinaryFileFormMapper
     ezrepoforms.field_type.form_mapper.ezcountry.class: EzSystems\RepositoryForms\FieldType\Mapper\CountryFormMapper
@@ -25,20 +26,26 @@ parameters:
     ezrepoforms.field_type.form_mapper.ezstring.class: EzSystems\RepositoryForms\FieldType\Mapper\TextLineFormMapper
     ezrepoforms.field_type.form_mapper.eztext.class: EzSystems\RepositoryForms\FieldType\Mapper\TextBlockFormMapper
     ezrepoforms.field_type.form_mapper.eztime.class: EzSystems\RepositoryForms\FieldType\Mapper\TimeFormMapper
+    ezrepoforms.field_type.form_mapper.ezuser.class: EzSystems\RepositoryForms\FieldType\Mapper\UserFormMapper
 
     ezrepoforms.validator.unique_content_type_identifier.class: EzSystems\RepositoryForms\Validator\Constraints\UniqueContentTypeIdentifierValidator
     ezrepoforms.validator.validator_configuration.class: EzSystems\RepositoryForms\Validator\Constraints\ValidatorConfigurationValidator
     ezrepoforms.validator.field_settings.class: EzSystems\RepositoryForms\Validator\Constraints\FieldSettingsValidator
     ezrepoforms.validator.default_field_value.class: EzSystems\RepositoryForms\Validator\Constraints\FieldDefinitionDefaultValueValidator
+    ezrepoforms.validator.content_field_value.class: EzSystems\RepositoryForms\Validator\Constraints\ContentFieldValidator
 
     ezrepoforms.twig.field_edit_rendering_extension.class: EzSystems\RepositoryForms\Twig\FieldEditRenderingExtension
     ezrepoforms.action_dispatcher.content_type.class: EzSystems\RepositoryForms\Form\ActionDispatcher\ContentTypeDispatcher
     ezrepoforms.action_dispatcher.content_type.group.class: EzSystems\RepositoryForms\Form\ActionDispatcher\ContentTypeGroupDispatcher
+    ezrepoforms.action_dispatcher.content.class: EzSystems\RepositoryForms\Form\ActionDispatcher\ContentDispatcher
     ezrepoforms.form_processor.content_type.class: EzSystems\RepositoryForms\Form\Processor\ContentTypeFormProcessor
     ezrepoforms.form_processor.content_type.options.redirect_route_after_publish: ~
     ezrepoforms.form_processor.content_type.options:
         redirectRouteAfterPublish: %ezrepoforms.form_processor.content_type.options.redirect_route_after_publish%
     ezrepoforms.form_processor.content_type_group.class: EzSystems\RepositoryForms\Form\Processor\ContentTypeGroupFormProcessor
+    ezrepoforms.form_processor.content.class: EzSystems\RepositoryForms\Form\Processor\ContentFormProcessor
+
+    ezrepoforms.controller.content_edit.class: EzSystems\RepositoryFormsBundle\Controller\ContentEditController
 
 services:
     ezrepoforms.field_type_form_mapper.registry:
@@ -56,7 +63,19 @@ services:
         tags:
             - { name: form.type, alias: ezrepoforms_fielddefinition_update }
 
+    ezrepoforms.field.form_type:
+        class: %ezrepoforms.field.form_type.class%
+        arguments: [@ezrepoforms.field_type_form_mapper.registry]
+        tags:
+            - { name: form.type, alias: ezrepoforms_content_field }
+
     # FieldType form mappers
+    ezrepoforms.field_type.form_mapper.abstract:
+        class: EzSystems\RepositoryForms\FieldType\Mapper\AbstractMapper
+        calls:
+            - [setFieldTypeService, [@ezpublish.api.service.field_type]]
+        abstract: true
+
     ezrepoforms.field_type.form_mapper.ezbinaryfile:
         class: %ezrepoforms.field_type.form_mapper.ezbinaryfile.class%
         tags:
@@ -132,11 +151,13 @@ services:
 
     ezrepoforms.field_type.form_mapper.ezstring:
         class: %ezrepoforms.field_type.form_mapper.ezstring.class%
+        parent: ezrepoforms.field_type.form_mapper.abstract
         tags:
             - { name: ez.fieldType.formMapper, fieldType: ezstring }
 
     ezrepoforms.field_type.form_mapper.eztext:
         class: %ezrepoforms.field_type.form_mapper.eztext.class%
+        parent: ezrepoforms.field_type.form_mapper.abstract
         tags:
             - { name: ez.fieldType.formMapper, fieldType: eztext }
 
@@ -144,6 +165,12 @@ services:
         class: %ezrepoforms.field_type.form_mapper.eztime.class%
         tags:
             - { name: ez.fieldType.formMapper, fieldType: eztime }
+
+    ezrepoforms.field_type.form_mapper.ezuser:
+        class: %ezrepoforms.field_type.form_mapper.ezuser.class%
+        parent: ezrepoforms.field_type.form_mapper.abstract
+        tags:
+            - { name: ez.fieldType.formMapper, fieldType: ezuser }
 
     # Validators
     ezrepoforms.validator.unique_content_type_identifier:
@@ -181,6 +208,12 @@ services:
         tags:
             - { name: twig.extension }
 
+    ezrepoforms.validator.content_field_value:
+        parent: ezrepoforms.validator.field_type.abstract
+        class: %ezrepoforms.validator.content_field_value.class%
+        tags:
+            - { name: validator.constraint_validator, alias: ezrepoforms.validator.content_field_value }
+
     # Action dispatchers
     ezrepoforms.action_dispatcher.base:
         class: EzSystems\RepositoryForms\Form\ActionDispatcher\AbstractActionDispatcher
@@ -196,10 +229,20 @@ services:
         class: %ezrepoforms.action_dispatcher.content_type.group.class%
         parent: ezrepoforms.action_dispatcher.base
 
+    ezrepoforms.action_dispatcher.content:
+        class: %ezrepoforms.action_dispatcher.content.class%
+        parent: ezrepoforms.action_dispatcher.base
+
     # Form processors
     ezrepoforms.form_processor.content_type:
         class: %ezrepoforms.form_processor.content_type.class%
         arguments: [@ezpublish.api.service.content_type, @router, %ezrepoforms.form_processor.content_type.options%]
+        tags:
+            - { name: kernel.event_subscriber }
+
+    ezrepoforms.form_processor.content:
+        class: %ezrepoforms.form_processor.content.class%
+        arguments: [@ezpublish.api.service.content, @router]
         tags:
             - { name: kernel.event_subscriber }
 
@@ -208,3 +251,16 @@ services:
         arguments: [@ezpublish.api.service.content_type]
         tags:
             - { name: kernel.event_subscriber }
+
+    # Controllers
+    ezrepoforms.controller.content_edit:
+        class: %ezrepoforms.controller.content_edit.class%
+        arguments:
+            - @ezpublish.api.service.content_type
+            - @ezpublish.api.service.content
+            - @ezpublish.api.service.location
+            - @ezrepoforms.action_dispatcher.content
+        parent: ezpublish.controller.base
+
+    ez_content_edit:
+        alias: ezrepoforms.controller.content_edit

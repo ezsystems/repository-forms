@@ -11,6 +11,7 @@
 namespace EzSystems\RepositoryForms\FieldType\Mapper;
 
 use eZ\Publish\Core\FieldType\Time\Type;
+use EzSystems\RepositoryForms\Data\Content\FieldData;
 use EzSystems\RepositoryForms\Data\FieldDefinitionData;
 use EzSystems\RepositoryForms\FieldType\FieldTypeFormMapperInterface;
 use Symfony\Component\Form\FormInterface;
@@ -43,5 +44,17 @@ class TimeFormMapper implements FieldTypeFormMapperInterface
                     'label' => 'field_definition.eztime.default_type',
                 ]
             );
+    }
+
+    /**
+     * "Maps" Field form to current FieldType.
+     * Allows to add form fields for content edition.
+     *
+     * @param FormInterface $fieldForm Form for the current Field.
+     * @param FieldData $data Underlying data for current Field form.
+     */
+    public function mapFieldValueForm(FormInterface $fieldForm, FieldData $data)
+    {
+        // TODO: Implement mapFieldForm() method.
     }
 }

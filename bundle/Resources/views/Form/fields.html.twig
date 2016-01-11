@@ -1,0 +1,21 @@
+{% use "form_div_layout.html.twig" %}
+
+{% block ezuser_widget %}
+    <div {{ block("widget_container_attributes") }}>
+        <div class="ezuser-username">
+            {{ form_errors(form.username) }}
+            {{ form_label(form.username) }}
+            {{ form_widget(form.username) }}
+        </div>
+        <div class="ezuser-password">
+            {{ form_errors(form.password) }}
+            {{ form_label(form.password) }}
+            {{ form_widget(form.password) }}
+        </div>
+        <div class="ezuser-email">
+            {{ form_errors(form.email) }}
+            {{ form_label(form.email) }}
+            {{ form_widget(form.email) }}
+        </div>
+    </div>
+{% endblock %}

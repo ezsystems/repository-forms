@@ -32,5 +32,10 @@ class EzSystemsRepositoryFormsExtension extends Extension implements PrependExte
         $config = Yaml::parse(file_get_contents($configFile));
         $container->prependExtensionConfig('ezpublish', $config);
         $container->addResource(new FileResource($configFile));
+
+        $twigConfigFile = __DIR__ . '/../Resources/config/twig.yml';
+        $config = Yaml::parse(file_get_contents($twigConfigFile));
+        $container->prependExtensionConfig('twig', $config);
+        $container->addResource(new FileResource($twigConfigFile));
     }
 }

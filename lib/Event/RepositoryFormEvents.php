@@ -43,6 +43,26 @@ final class RepositoryFormEvents
     const CONTENT_TYPE_GROUP_UPDATE = 'contentType.group.update';
 
     /**
+     * Base name for Content edit processing events.
+     */
+    const CONTENT_EDIT = 'content.edit';
+
+    /**
+     * Triggered when saving a content draft.
+     */
+    const CONTENT_SAVE_DRAFT = 'content.edit.saveDraft';
+
+    /**
+     * Triggered when publishing a content.
+     */
+    const CONTENT_PUBLISH = 'content.edit.publish';
+
+    /**
+     * Triggered when canceling a content edition.
+     */
+    const CONTENT_CANCEL = 'content.edit.cancel';
+
+    /**
      * Base name for Role update processing events.
      */
     const ROLE_UPDATE = 'role.update';
