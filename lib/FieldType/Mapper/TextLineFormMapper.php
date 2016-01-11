@@ -24,11 +24,13 @@ class TextLineFormMapper implements FieldTypeFormMapperInterface
                 'required' => false,
                 'property_path' => 'validatorConfiguration[StringLengthValidator][minStringLength]',
                 'label' => 'field_definition.ezstring.min_length',
+                'attr' => ['min' => 0],
             ])
             ->add('maxLength', 'integer', [
                 'required' => false,
                 'property_path' => 'validatorConfiguration[StringLengthValidator][maxStringLength]',
                 'label' => 'field_definition.ezstring.max_length',
+                'attr' => ['min' => 0],
             ])
             ->add(
                 // Creating from FormBuilder as we need to add a DataTransformer.
