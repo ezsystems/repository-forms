@@ -43,6 +43,8 @@ parameters:
     ezrepoforms.form_processor.content_type_group.class: EzSystems\RepositoryForms\Form\Processor\ContentTypeGroupFormProcessor
     ezrepoforms.form_processor.content.class: EzSystems\RepositoryForms\Form\Processor\ContentFormProcessor
 
+    ezrepoforms.controller.content_edit.class: EzSystems\RepositoryFormsBundle\Controller\ContentEditController
+
 services:
     # deprecated in 1.1, will be removed in 2.0
     ezrepoforms.field_type_form_mapper.registry:
@@ -232,3 +234,16 @@ services:
         arguments: [@ezpublish.api.service.content_type]
         tags:
             - { name: kernel.event_subscriber }
+
+    # Controllers
+    ezrepoforms.controller.content_edit:
+        class: %ezrepoforms.controller.content_edit.class%
+        arguments:
+            - @ezpublish.api.service.content_type
+            - @ezpublish.api.service.content
+            - @ezpublish.api.service.location
+            - @ezrepoforms.action_dispatcher.content
+        parent: ezpublish.controller.base
+
+    ez_content_edit:
+        alias: ezrepoforms.controller.content_edit
