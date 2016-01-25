@@ -9,9 +9,12 @@ branches:
     only:
         - master
 
+before_install:
+  - echo 'memory_limit = -1' >> ~/.phpenv/versions/$(phpenv version-name)/etc/conf.d/travis.ini
+
 before_script:
     - composer selfupdate
-    - composer install --prefer-source
+    - composer install --prefer-dist
 
 script: phpunit --coverage-text
 
