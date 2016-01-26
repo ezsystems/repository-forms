@@ -20,11 +20,11 @@
             </trans-unit>
             <trans-unit id="5">
                 <source>content_type.url_alias_schema</source>
-                <target>Gabarit de nom d'alias d'URL</target>
+                <target>Gabarit d'alias d'URL</target>
             </trans-unit>
             <trans-unit id="6">
                 <source>content_type.is_container</source>
-                <target>Container</target>
+                <target>Conteneur</target>
             </trans-unit>
             <trans-unit id="7">
                 <source>content_type.default_sort_field</source>
