@@ -16,6 +16,8 @@ use InvalidArgumentException;
 
 /**
  * Registry for FieldType form mappers.
+ *
+ * @deprecated Deprecated since version 1.1, will be removed in version 2.0. Use the FieldTypeFormMapperDispatcher.
  */
 class FieldTypeFormMapperRegistry implements FieldTypeFormMapperRegistryInterface
 {

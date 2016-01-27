@@ -12,6 +12,8 @@ namespace EzSystems\RepositoryForms\FieldType;
 
 /**
  * Interface for FieldType form mappers registry.
+ *
+ * @deprecated Deprecated since version 1.1, will be removed in version 2.0. Use the FieldTypeFormMapperDispatcher.
  */
 interface FieldTypeFormMapperRegistryInterface
 {
