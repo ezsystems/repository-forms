@@ -41,6 +41,7 @@ parameters:
     ezrepoforms.form_processor.content_type_group.class: EzSystems\RepositoryForms\Form\Processor\ContentTypeGroupFormProcessor
 
 services:
+    # deprecated in 1.1, will be removed in 2.0
     ezrepoforms.field_type_form_mapper.registry:
         class: %ezrepoforms.field_type_form_mapper.registry.class%
 
@@ -134,11 +135,15 @@ services:
         class: %ezrepoforms.field_type.form_mapper.ezstring.class%
         tags:
             - { name: ez.fieldType.formMapper, fieldType: ezstring }
+        arguments:
+            - @ezpublish.api.service.field_type
 
     ezrepoforms.field_type.form_mapper.eztext:
         class: %ezrepoforms.field_type.form_mapper.eztext.class%
         tags:
             - { name: ez.fieldType.formMapper, fieldType: eztext }
+        arguments:
+            - @ezpublish.api.service.field_type
 
     ezrepoforms.field_type.form_mapper.eztime:
         class: %ezrepoforms.field_type.form_mapper.eztime.class%
