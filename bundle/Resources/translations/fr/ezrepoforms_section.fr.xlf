@@ -20,7 +20,7 @@
             </trans-unit>
             <trans-unit id="a07809a8014c979ffe3e2256610b0ea4">
                 <source>section.error.cannot_delete_with_assigned_content</source>
-                <target>Impossible de supprimer une section avec du contenu assigné.</target>
+                <target>Impossible de supprimer une section assignée à du contenu.</target>
             </trans-unit>
             <trans-unit id="85af0dc2a9b83eb5cfc7871a73cbeab9">
                 <source>section.form.save</source>

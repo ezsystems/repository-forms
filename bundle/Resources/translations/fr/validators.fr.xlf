@@ -4,7 +4,7 @@
         <body>
             <trans-unit id="1">
                 <source>ez.content_type.identifier.pattern</source>
-                <target>Les identifiant de type de contenu ne peuvent contenir que les lettres "a" à "z", des chiffres et des underscores.</target>
+                <target>Les identifiant de type de contenu ne peuvent contenir que les lettres "a" à "z", des chiffres et des blancs soulignés.</target>
             </trans-unit>
             <trans-unit id="2">
                 <source>ez.content_type.names</source>
@@ -48,11 +48,11 @@
             </trans-unit>
             <trans-unit id="5387d26cceb54294dafe82be9b0d61d0">
                 <source>ez.section.identifier.format</source>
-                <target>Les identifiants de section ne peuvent contenir que les lettres "a" à "z", des chiffres et des underscores.</target>
+                <target>Les identifiants de section ne peuvent contenir que les lettres "a" à "z", des chiffres et des blancs soulignés.</target>
             </trans-unit>
             <trans-unit id="3782ffaac11648e8ead7248adb7a42bc">
                 <source>ez.section.identifier.unique</source>
-                <target>Une section avec cet identifiant existe déjà, merci d'en saisir un différent</target>
+                <target>Une section avec cet identifiant existe déjà, merci d'en saisir un différent.</target>
             </trans-unit>
         </body>
     </file>
