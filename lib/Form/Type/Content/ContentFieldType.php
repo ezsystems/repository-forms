@@ -8,7 +8,7 @@
  */
 namespace EzSystems\RepositoryForms\Form\Type\Content;
 
-use EzSystems\RepositoryForms\FieldType\FieldTypeFormMapperRegistryInterface;
+use EzSystems\RepositoryForms\FieldType\FieldTypeFormMapperDispatcherInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
@@ -18,13 +18,13 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 class ContentFieldType extends AbstractType
 {
     /**
-     * @var FieldTypeFormMapperRegistryInterface
+     * @var FieldTypeFormMapperDispatcherInterface
      */
-    private $fieldTypeFormMapperRegistry;
+    private $fieldTypeFormMapper;
 
-    public function __construct(FieldTypeFormMapperRegistryInterface $fieldTypeFormMapperRegistry)
+    public function __construct(FieldTypeFormMapperDispatcherInterface $fieldTypeFormMapper)
     {
-        $this->fieldTypeFormMapperRegistry = $fieldTypeFormMapperRegistry;
+        $this->fieldTypeFormMapper = $fieldTypeFormMapper;
     }
 
     public function getName()
@@ -45,14 +45,7 @@ class ContentFieldType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) {
-            /** @var \EzSystems\RepositoryForms\Data\Content\FieldData $data */
-            $data = $event->getData();
-            $form = $event->getForm();
-
-            $fieldTypeIdentifier = $data->fieldDefinition->fieldTypeIdentifier;
-            if ($this->fieldTypeFormMapperRegistry->hasValueMapper($fieldTypeIdentifier)) {
-                $this->fieldTypeFormMapperRegistry->getValueMapper($fieldTypeIdentifier)->mapFieldValueForm($form, $data);
-            }
+            $this->fieldTypeFormMapper->map($event->getForm(), $event->getData());
         });
     }
 }

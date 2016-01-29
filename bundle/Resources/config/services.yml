@@ -5,6 +5,7 @@ imports:
 
 parameters:
     ezrepoforms.field_type_form_mapper.registry.class: EzSystems\RepositoryForms\FieldType\FieldTypeFormMapperRegistry
+    ezrepoforms.field_type_form_mapper.dispatcher.class: EzSystems\RepositoryForms\FieldType\FieldTypeFormMapperDispatcher
     ezrepoforms.content_type.update.form_type.class: EzSystems\RepositoryForms\Form\Type\ContentType\ContentTypeUpdateType
     ezrepoforms.field_definition.form_type.class: EzSystems\RepositoryForms\Form\Type\FieldDefinition\FieldDefinitionType
     ezrepoforms.field.form_type.class: EzSystems\RepositoryForms\Form\Type\Content\ContentFieldType
@@ -50,6 +51,9 @@ services:
     ezrepoforms.field_type_form_mapper.registry:
         class: %ezrepoforms.field_type_form_mapper.registry.class%
 
+    ezrepoforms.field_type_form_mapper.dispatcher:
+        class: %ezrepoforms.field_type_form_mapper.dispatcher.class%
+
     ezrepoforms.content_type.update.form_type:
         class: %ezrepoforms.content_type.update.form_type.class%
         arguments: [@ezpublish.field_type_collection.factory, @translator]
@@ -64,7 +68,7 @@ services:
 
     ezrepoforms.field.form_type:
         class: %ezrepoforms.field.form_type.class%
-        arguments: [@ezrepoforms.field_type_form_mapper.registry]
+        arguments: [@ezrepoforms.field_type_form_mapper.dispatcher]
         tags:
             - { name: form.type, alias: ezrepoforms_content_field }
 

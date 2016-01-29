@@ -30,4 +30,9 @@ class FieldData extends ValueObject
      * @var mixed
      */
     public $value;
+
+    public function getFieldTypeIdentifier()
+    {
+        return $this->fieldDefinition->fieldTypeIdentifier;
+    }
 }
