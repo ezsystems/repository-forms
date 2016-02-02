@@ -86,7 +86,7 @@ class CountryValueTransformerTest extends PHPUnit_Framework_TestCase
             [42],
             ['snafu'],
             [null],
-            [[1,2,3]],
+            [[1, 2, 3]],
         ];
     }
 

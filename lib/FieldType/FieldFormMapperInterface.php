@@ -11,12 +11,8 @@
 namespace EzSystems\RepositoryForms\FieldType;
 
 /**
- * Interface for FieldType form mappers.
- *
- * It maps a FieldType's specifics to editing Forms (e.g. FieldDefinition forms).
- *
- * @deprecated since 1.1, will be removed in 2.0. Use FieldDefinitionFormMapperInterface instead.
+ * Common interface for field mappers (definition, value...).
  */
-interface FieldTypeFormMapperInterface extends FieldDefinitionFormMapperInterface
+interface FieldFormMapperInterface
 {
 }

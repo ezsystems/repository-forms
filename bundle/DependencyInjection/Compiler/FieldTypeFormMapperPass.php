@@ -17,6 +17,9 @@ use Symfony\Component\DependencyInjection\Reference;
 
 /**
  * Compiler pass to register FieldType form mappers.
+ *
+ * @deprecated Deprecated since version 1.1, will be removed in version 2.0. FieldTypeFormMapperDispatcher covers the
+ *             same service tag, but using the dispatcher instead of the registry.
  */
 class FieldTypeFormMapperPass implements CompilerPassInterface
 {
@@ -36,8 +39,34 @@ class FieldTypeFormMapperPass implements CompilerPassInterface
                     );
                 }
 
-                $registry->addMethodCall('addMapper', [new Reference($id), $attribute['fieldType']]);
+                if ($this->isFieldTypeMapper($container, $id)) {
+                    $registry->addMethodCall('addMapper', [new Reference($id), $attribute['fieldType']]);
+                }
             }
         }
+    }
+
+    /**
+     * Checks if service $id is a FieldTypeMapperInterface. The newly added FieldValueFormMapperInterface can not be
+     * given to the registry.
+     *
+     * @param \Symfony\Component\DependencyInjection\ContainerBuilder $container
+     * @param $id
+     *
+     * @return bool
+     */
+    private function isFieldTypeMapper(ContainerBuilder $container, $id)
+    {
+        $class = $container->findDefinition($id)->getClass();
+        if (preg_match('/^%(.*)%$/', $class, $m)) {
+            if ($container->hasParameter($m[1])) {
+                $class = $container->getParameter($m[1]);
+            }
+        }
+
+        return in_array(
+            'EzSystems\RepositoryForms\FieldType\FieldTypeFormMapperInterface',
+            class_implements($class)
+        );
     }
 }

@@ -61,8 +61,8 @@ class DateIntervalToArrayTransformerTest extends PHPUnit_Framework_TestCase
         return [
             [null],
             [['']],
-            [['','','']],
-            [['',null,'']],
+            [['', '', '']],
+            [['', null, '']],
         ];
     }
 

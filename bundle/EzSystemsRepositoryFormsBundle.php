@@ -10,6 +10,7 @@
  */
 namespace EzSystems\RepositoryFormsBundle;
 
+use EzSystems\RepositoryFormsBundle\DependencyInjection\Compiler\FieldTypeFormMapperDispatcherPass;
 use EzSystems\RepositoryFormsBundle\DependencyInjection\Compiler\FieldTypeFormMapperPass;
 use EzSystems\RepositoryFormsBundle\DependencyInjection\Compiler\LimitationFormMapperPass;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -21,6 +22,7 @@ class EzSystemsRepositoryFormsBundle extends Bundle
     {
         parent::build($container);
         $container->addCompilerPass(new FieldTypeFormMapperPass());
+        $container->addCompilerPass(new FieldTypeFormMapperDispatcherPass());
         $container->addCompilerPass(new LimitationFormMapperPass());
     }
 }
