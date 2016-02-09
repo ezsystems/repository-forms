@@ -63,6 +63,8 @@ services:
     ezrepoforms.field_definition.form_type:
         class: %ezrepoforms.field_definition.form_type.class%
         arguments: [@ezrepoforms.field_type_form_mapper.registry, @ezpublish.api.service.field_type]
+        calls:
+            - [setGroupsList, [@ezpublish.fields_groups.list]]
         tags:
             - { name: form.type, alias: ezrepoforms_fielddefinition_update }
 
@@ -224,6 +226,8 @@ services:
     ezrepoforms.form_processor.content_type:
         class: %ezrepoforms.form_processor.content_type.class%
         arguments: [@ezpublish.api.service.content_type, @router, %ezrepoforms.form_processor.content_type.options%]
+        calls:
+            - [setGroupsList, [@ezpublish.fields_groups.list]]
         tags:
             - { name: kernel.event_subscriber }
 

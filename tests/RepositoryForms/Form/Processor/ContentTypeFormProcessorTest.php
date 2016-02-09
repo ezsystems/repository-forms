@@ -25,12 +25,12 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 class ContentTypeFormProcessorTest extends PHPUnit_Framework_TestCase
 {
     /**
-     * @var \PHPUnit_Framework_MockObject_MockObject
+     * @var \eZ\Publish\API\Repository\ContentTypeService|\PHPUnit_Framework_MockObject_MockObject
      */
     private $contentTypeService;
 
     /**
-     * @var \PHPUnit_Framework_MockObject_MockObject
+     * @var \Symfony\Component\Routing\RouterInterface|\PHPUnit_Framework_MockObject_MockObject
      */
     private $router;
 
@@ -39,12 +39,20 @@ class ContentTypeFormProcessorTest extends PHPUnit_Framework_TestCase
      */
     private $formProcessor;
 
+    /**
+     * @var \eZ\Publish\Core\Helper\FieldsGroups\FieldsGroupsList|\PHPUnit_Framework_MockObject_MockObject
+     */
+    private $groupsList;
+
     protected function setUp()
     {
         parent::setUp();
         $this->contentTypeService = $this->getMock('\eZ\Publish\API\Repository\ContentTypeService');
         $this->router = $this->getMock('\Symfony\Component\Routing\RouterInterface');
+        $this->groupsList = $this->getMock('eZ\Publish\Core\Helper\FieldsGroups\FieldsGroupsList');
+
         $this->formProcessor = new ContentTypeFormProcessor($this->contentTypeService, $this->router);
+        $this->formProcessor->setGroupsList($this->groupsList);
     }
 
     public function testSubscribedEvents()
@@ -122,6 +130,7 @@ class ContentTypeFormProcessorTest extends PHPUnit_Framework_TestCase
             'identifier' => $expectedNewFieldDefIdentifier,
             'names' => [$languageCode => 'New FieldDefinition'],
             'position' => 1,
+            'fieldGroup' => 'content',
         ]);
         $this->contentTypeService
             ->expects($this->once())
@@ -132,6 +141,10 @@ class ContentTypeFormProcessorTest extends PHPUnit_Framework_TestCase
             ->expects($this->once())
             ->method('addFieldDefinition')
             ->with($contentTypeDraft, $this->equalTo($expectedFieldDefCreateStruct));
+        $this->groupsList
+            ->expects($this->once())
+            ->method('getDefaultGroup')
+            ->will($this->returnValue('content'));
 
         $event = new FormActionEvent(
             $mainForm,
