@@ -12,6 +12,7 @@ namespace EzSystems\RepositoryForms\Form\Processor;
 
 use eZ\Publish\API\Repository\ContentTypeService;
 use eZ\Publish\API\Repository\Values\ContentType\FieldDefinitionCreateStruct;
+use eZ\Publish\Core\Helper\FieldsGroups\FieldsGroupsList;
 use EzSystems\RepositoryForms\Event\FormActionEvent;
 use EzSystems\RepositoryForms\Event\RepositoryFormEvents;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
@@ -35,11 +36,21 @@ class ContentTypeFormProcessor implements EventSubscriberInterface
      */
     private $options;
 
+    /**
+     * @var \eZ\Publish\Core\Helper\FieldsGroups\FieldsGroupsList
+     */
+    private $groupsList;
+
     public function __construct(ContentTypeService $contentTypeService, RouterInterface $router, array $options = [])
     {
         $this->contentTypeService = $contentTypeService;
         $this->router = $router;
         $this->setOptions($options);
+    }
+
+    public function setGroupsList(FieldsGroupsList $groupsList)
+    {
+        $this->groupsList = $groupsList;
     }
 
     public function setOptions(array $options = [])
@@ -95,6 +106,11 @@ class ContentTypeFormProcessor implements EventSubscriberInterface
             'names' => [$event->getOption('languageCode') => 'New FieldDefinition'],
             'position' => $maxFieldPos + 1,
         ]);
+
+        if (isset($this->groupsList)) {
+            $fieldDefCreateStruct->fieldGroup = $this->groupsList->getDefaultGroup();
+        }
+
         $this->contentTypeService->addFieldDefinition($contentTypeDraft, $fieldDefCreateStruct);
     }
 

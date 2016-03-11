@@ -9,7 +9,7 @@
         }
     ],
     "require": {
-        "ezsystems/ezpublish-kernel": "~6.1@dev",
+        "ezsystems/ezpublish-kernel": "~6.3@dev",
         "symfony/form": "~2.7",
         "symfony/validator": "~2.7"
     },
@@ -29,7 +29,7 @@
     },
     "extra": {
         "branch-alias": {
-            "dev-master": "1.1.x-dev"
+            "dev-master": "1.2.x-dev"
         }
     }
 }

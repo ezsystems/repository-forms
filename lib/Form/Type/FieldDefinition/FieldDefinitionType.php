@@ -11,6 +11,7 @@
 namespace EzSystems\RepositoryForms\Form\Type\FieldDefinition;
 
 use eZ\Publish\API\Repository\FieldTypeService;
+use eZ\Publish\Core\Helper\FieldsGroups\FieldsGroupsList;
 use EzSystems\RepositoryForms\FieldType\FieldTypeFormMapperRegistryInterface;
 use EzSystems\RepositoryForms\Form\DataTransformer\TranslatablePropertyTransformer;
 use Symfony\Component\Form\AbstractType;
@@ -34,10 +35,20 @@ class FieldDefinitionType extends AbstractType
      */
     private $fieldTypeService;
 
+    /**
+     * @var FieldsGroupsList
+     */
+    private $groupsList;
+
     public function __construct(FieldTypeFormMapperRegistryInterface $fieldTypeMapperRegistry, FieldTypeService $fieldTypeService)
     {
         $this->fieldTypeMapperRegistry = $fieldTypeMapperRegistry;
         $this->fieldTypeService = $fieldTypeService;
+    }
+
+    public function setGroupsList(FieldsGroupsList $groupsList)
+    {
+        $this->groupsList = $groupsList;
     }
 
     public function configureOptions(OptionsResolver $resolver)
@@ -52,6 +63,11 @@ class FieldDefinitionType extends AbstractType
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $fieldsGroups = [];
+        if (isset($this->groupsList)) {
+            $fieldsGroups = array_flip($this->groupsList->getGroups());
+        }
+
         $translatablePropertyTransformer = new TranslatablePropertyTransformer($options['languageCode']);
         $builder
             ->add(
@@ -69,7 +85,15 @@ class FieldDefinitionType extends AbstractType
             )
             ->add('isRequired', 'checkbox', ['required' => false, 'label' => 'field_definition.is_required'])
             ->add('isTranslatable', 'checkbox', ['required' => false, 'label' => 'field_definition.is_translatable'])
-            ->add('fieldGroup', 'choice', ['choices' => []], ['required' => false, 'label' => 'field_definition.field_group'])
+            ->add(
+                'fieldGroup',
+                'choice', [
+                    'choices' => $fieldsGroups,
+                    'choices_as_values' => true,
+                    'required' => false,
+                    'label' => 'field_definition.field_group',
+                ]
+            )
             ->add('position', 'integer', ['label' => 'field_definition.position'])
             ->add('selected', 'checkbox', ['required' => false, 'mapped' => false]);
 
