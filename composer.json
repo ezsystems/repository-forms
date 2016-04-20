@@ -18,6 +18,9 @@
         "matthiasnoback/symfony-dependency-injection-test": "^0.7",
         "behat/behat": "^3.0"
     },
+    "conflict": {
+        "symfony/symfony": "2.7.11"
+    },
     "autoload": {
         "psr-4": {
             "EzSystems\\RepositoryFormsBundle\\": "bundle",
