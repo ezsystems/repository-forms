@@ -34,18 +34,17 @@ class FieldEditRenderingExtension extends Twig_Extension
         return 'ezrepoforms.field_edit_rendering';
     }
 
-    public function initRuntime(Twig_Environment $environment)
-    {
-        $this->fieldBlockRenderer->setTwig($environment);
-    }
-
     public function getFunctions()
     {
         return array(
             new Twig_SimpleFunction(
                 'ez_render_fielddefinition_edit',
-                [$this, 'renderFieldDefinitionEdit'],
-                ['is_safe' => ['html']]
+                function (Twig_Environment $twig, FieldDefinitionData $fieldDefinitionData, array $params = []) {
+                    $this->fieldBlockRenderer->setTwig($twig);
+
+                    return $this->renderFieldDefinitionEdit($fieldDefinitionData, $params);
+                },
+                ['is_safe' => ['html'], 'needs_environment' => true]
             ),
         );
     }

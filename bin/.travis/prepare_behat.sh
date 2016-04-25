@@ -13,4 +13,4 @@ git clone --depth 1 --single-branch --branch master https://github.com/ezsystems
 cd ezplatform
 
 # Install everything needed for behat testing, using our local branch of this repo
-./bin/.travis/setup_from_external_repo.sh $BRANCH_BUILD_DIR "ezsystems/repository-forms:dev-tmp_travis_branch as 1.0"
+./bin/.travis/setup_from_external_repo.sh $BRANCH_BUILD_DIR "ezsystems/repository-forms:dev-tmp_travis_branch as 1.2"
