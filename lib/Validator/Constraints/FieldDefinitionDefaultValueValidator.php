@@ -12,20 +12,15 @@ namespace EzSystems\RepositoryForms\Validator\Constraints;
 
 use eZ\Publish\API\Repository\Values\ValueObject;
 use EzSystems\RepositoryForms\Data\FieldDefinitionData;
-use Symfony\Component\Validator\Constraint;
 
 /**
  * Validator for default value from FieldDefinitionData.
  */
 class FieldDefinitionDefaultValueValidator extends FieldValueValidator
 {
-    public function validate($value, Constraint $constraint)
+    protected function canValidate($value)
     {
-        if (!$value instanceof FieldDefinitionData) {
-            return;
-        }
-
-        parent::validate($value, $constraint);
+        return $value instanceof FieldDefinitionData;
     }
 
     /**
@@ -40,21 +35,6 @@ class FieldDefinitionDefaultValueValidator extends FieldValueValidator
     protected function getFieldValue(ValueObject $value)
     {
         return $value->defaultValue;
-    }
-
-    /**
-     * Returns the field definition $value refers to.
-     * FieldDefinition object is needed to validate field value against field settings.
-     *
-     * @param FieldDefinitionData|ValueObject $value ValueObject holding the field value to validate, e.g. FieldDefinitionData.
-     *
-     * @throws \InvalidArgumentException If field definition cannot be retrieved.
-     *
-     * @return \eZ\Publish\SPI\FieldType\Value
-     */
-    protected function getFieldDefinition(ValueObject $value)
-    {
-        return $value->fieldDefinition;
     }
 
     /**

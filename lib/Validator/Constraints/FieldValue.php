@@ -13,7 +13,7 @@ use Symfony\Component\Validator\Constraint;
 /**
  * @Annotation
  */
-class ContentField extends Constraint
+class FieldValue extends Constraint
 {
     public $message = 'ez.field.value';
 
@@ -24,6 +24,6 @@ class ContentField extends Constraint
 
     public function validatedBy()
     {
-        return 'ezrepoforms.validator.content_field_value';
+        return 'ezrepoforms.validator.field_value';
     }
 }

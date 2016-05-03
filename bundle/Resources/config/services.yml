@@ -32,7 +32,7 @@ parameters:
     ezrepoforms.validator.validator_configuration.class: EzSystems\RepositoryForms\Validator\Constraints\ValidatorConfigurationValidator
     ezrepoforms.validator.field_settings.class: EzSystems\RepositoryForms\Validator\Constraints\FieldSettingsValidator
     ezrepoforms.validator.default_field_value.class: EzSystems\RepositoryForms\Validator\Constraints\FieldDefinitionDefaultValueValidator
-    ezrepoforms.validator.content_field_value.class: EzSystems\RepositoryForms\Validator\Constraints\ContentFieldValidator
+    ezrepoforms.validator.field_value.class: EzSystems\RepositoryForms\Validator\Constraints\FieldValueValidator
 
     ezrepoforms.twig.field_edit_rendering_extension.class: EzSystems\RepositoryForms\Twig\FieldEditRenderingExtension
     ezrepoforms.action_dispatcher.content_type.class: EzSystems\RepositoryForms\Form\ActionDispatcher\ContentTypeDispatcher
@@ -204,11 +204,11 @@ services:
         tags:
             - { name: twig.extension }
 
-    ezrepoforms.validator.content_field_value:
+    ezrepoforms.validator.field_value:
         parent: ezrepoforms.validator.field_type.abstract
-        class: %ezrepoforms.validator.content_field_value.class%
+        class: %ezrepoforms.validator.field_value.class%
         tags:
-            - { name: validator.constraint_validator, alias: ezrepoforms.validator.content_field_value }
+            - { name: validator.constraint_validator, alias: ezrepoforms.validator.field_value }
 
     # Action dispatchers
     ezrepoforms.action_dispatcher.base:

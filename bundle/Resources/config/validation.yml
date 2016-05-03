@@ -93,4 +93,4 @@ EzSystems\RepositoryForms\Data\Content\ContentUpdateData:
 
 EzSystems\RepositoryForms\Data\Content\FieldData:
     constraints:
-        - EzSystems\RepositoryForms\Validator\Constraints\ContentField: ~
+        - EzSystems\RepositoryForms\Validator\Constraints\FieldValue: ~
