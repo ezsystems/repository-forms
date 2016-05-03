@@ -7,5 +7,6 @@ repository-forms:
                 - vendor/ezsystems/repository-forms/features/ContentEdit
             contexts:
                 - EzSystems\RepositoryForms\Features\Context\ContentType:
+                    repository: @ezpublish.api.repository
                     contentTypeService: @ezpublish.api.service.content_type
                 - EzSystems\RepositoryForms\Features\Context\ContentEdit
