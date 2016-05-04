@@ -2,7 +2,7 @@
     {{ form_start(form) }}
 
     {% for fieldForm in form.fieldsData %}
-        <div class="{{ fieldForm.vars.data.fieldDefinition.fieldTypeIdentifier }}-field field-edit">
+        <div class="ezfield-type-{{ fieldForm.vars.data.fieldDefinition.fieldTypeIdentifier }} ezfield-identifier-{{ fieldForm.vars.data.fieldDefinition.identifier }}">
             <fieldset>
                 <legend>{{- form_label(fieldForm) -}}</legend>
                 {{- form_errors(fieldForm) -}}
