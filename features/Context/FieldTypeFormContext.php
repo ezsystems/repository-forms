@@ -93,7 +93,7 @@ final class FieldTypeFormContext extends MinkContext implements SnippetAccepting
     }
 
     /**
-     * @Given /^it should contain the following set of labels and input fields types:$/
+     * @Given /^it should contain the following set of labels, and input fields of the following types:$/
      */
     public function itShouldContainTheFollowingSetOfLabelsAndInputFieldsTypes(TableNode $table)
     {
