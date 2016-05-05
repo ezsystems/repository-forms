@@ -6,7 +6,11 @@ repository-forms:
             paths:
                 - vendor/ezsystems/repository-forms/features/ContentEdit
             contexts:
-                - EzSystems\RepositoryForms\Features\Context\ContentType:
-                    repository: @ezpublish.api.repository
-                    contentTypeService: @ezpublish.api.service.content_type
                 - EzSystems\RepositoryForms\Features\Context\ContentEdit
+                - EzSystems\RepositoryForms\Features\Context\ContentType
+        fieldtype_form:
+            paths:
+                - vendor/ezsystems/repository-forms/features/FieldTypeForm
+            contexts:
+                - EzSystems\RepositoryForms\Features\Context\FieldTypeFormContext
+                - EzSystems\RepositoryForms\Features\Context\ContentType
