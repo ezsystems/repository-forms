@@ -12,6 +12,7 @@ use eZ\Publish\API\Repository\ContentTypeService;
 use eZ\Publish\API\Repository\Exceptions\NotFoundException;
 use eZ\Publish\API\Repository\Repository;
 use eZ\Publish\API\Repository\Values\ContentType\ContentTypeCreateStruct;
+use eZ\Publish\API\Repository\Values\ContentType\FieldDefinitionUpdateStruct;
 use EzSystems\PlatformBehatBundle\Context\RepositoryContext;
 use PHPUnit_Framework_Assert as Assertion;
 
@@ -90,5 +91,18 @@ final class ContentType extends RawMinkContext implements Context, SnippetAccept
         return $this->contentTypeService->newContentTypeCreateStruct(
             $identifier ?: $identifier = 'content_type_' . uniqid()
         );
+    }
+
+    public function updateFieldDefinition($identifier, FieldDefinitionUpdateStruct $fieldDefinitionUpdateStruct)
+    {
+        $contentTypeDraft = $this->contentTypeService->createContentTypeDraft($this->currentContentType);
+
+        $this->contentTypeService->updateFieldDefinition(
+            $contentTypeDraft,
+            $this->currentContentType->getFieldDefinition($identifier),
+            $fieldDefinitionUpdateStruct
+        );
+
+        $this->contentTypeService->publishContentTypeDraft($contentTypeDraft);
     }
 }
