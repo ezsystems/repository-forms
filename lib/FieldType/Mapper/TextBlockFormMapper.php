@@ -53,14 +53,14 @@ class TextBlockFormMapper implements FieldTypeFormMapperInterface, FieldValueFor
                 $formConfig->getFormFactory()->createBuilder()
                     ->create(
                         'value',
-                        'text',
+                        'textarea',
                         [
                             'required' => $fieldDefinition->isRequired,
                             'label' => $label,
                             'attr' => ['rows' => $data->fieldDefinition->fieldSettings['textRows']],
                         ]
                     )
-                    ->addModelTransformer(new FieldValueTransformer($this->fieldTypeService->getFieldType($fieldDefinition)))
+                    ->addModelTransformer(new FieldValueTransformer($this->fieldTypeService->getFieldType($fieldDefinition->fieldTypeIdentifier)))
                     // Deactivate auto-initialize as we're not on the root form.
                     ->setAutoInitialize(false)
                     ->getForm()
