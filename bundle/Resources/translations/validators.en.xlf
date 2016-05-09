@@ -54,6 +54,10 @@
                 <source>ez.section.identifier.unique</source>
                 <target>A section with this identifier already exists, please enter a different one</target>
             </trans-unit>
+            <trans-unit id="89e55c873b7b7be97b6d3ad700e2e041">
+                <source>ez.field.value</source>
+                <target>Field value is invalid.</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>

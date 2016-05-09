@@ -6,16 +6,36 @@ namespace EzSystems\RepositoryForms\Features\Context;
 
 use Behat\Behat\Context\Context;
 use Behat\Behat\Context\SnippetAcceptingContext;
+use Behat\Behat\Hook\Scope\BeforeScenarioScope;
 use Behat\MinkExtension\Context\MinkContext;
-use PHPUnit_Framework_Assert as Assertion;
+use eZ\Publish\API\Repository\Values\ContentType\FieldDefinitionCreateStruct;
 
-class ContentEdit extends MinkContext implements Context, SnippetAcceptingContext
+final class ContentEdit extends MinkContext implements Context, SnippetAcceptingContext
 {
     /**
      * Name of the content that was created using the edit form. Used to validate that the content was created.
      * @var string
      */
     private $createdContentName;
+
+    /**
+     * @var \EzSystems\RepositoryForms\Features\Context\ContentType
+     */
+    private $contentTypeContext;
+
+    /**
+     * Identifier of the FieldDefinition used to cover validation.
+     * @var string
+     */
+    private static $constrainedFieldIdentifier = 'constrained_field';
+
+    /** @BeforeScenario */
+    public function gatherContexts(BeforeScenarioScope $scope)
+    {
+        $environment = $scope->getEnvironment();
+
+        $this->contentTypeContext = $environment->getContext('EzSystems\RepositoryForms\Features\Context\ContentType');
+    }
 
     /**
      * @Then /^I should see a folder content edit form$/
@@ -35,9 +55,8 @@ class ContentEdit extends MinkContext implements Context, SnippetAcceptingContex
             throw new \Exception('No created content name set');
         }
 
-        $page = $this->getSession()->getPage();
-        Assertion::assertTrue($page->has('css', 'span.ezstring-field'));
-        Assertion::assertEquals($this->createdContentName, $page->find('css', 'span.ezstring-field')->getText());
+        $this->assertElementOnPage('span.ezstring-field');
+        $this->assertElementContainsText('span.ezstring-field', $this->createdContentName);
     }
 
     /**
@@ -59,5 +78,93 @@ class ContentEdit extends MinkContext implements Context, SnippetAcceptingContex
         $this->fillField('Username', 'admin');
         $this->fillField('Password', 'publish');
         $this->pressButton('Login');
+    }
+
+    /**
+     * @Given /^that I have permission to create content of this type$/
+     */
+    public function thatIHavePermissionToCreateContentOfThisType()
+    {
+        $this->thatIHavePermissionToCreateFolders();
+    }
+
+    /**
+     * @When /^I go to the content creation page for this type$/
+     */
+    public function iGoToTheContentCreationPageForThisType()
+    {
+        $uri = sprintf(
+            '/content/create/nodraft/%s/eng-GB/2',
+            $this->contentTypeContext->getCurrentContentType()->identifier
+        );
+
+        $this->visit($uri);
+    }
+
+    /**
+     * @Given /^I fill in the constrained field with an invalid value$/
+     */
+    public function iFillInTheConstrainedFieldWithAnInvalidValue()
+    {
+        $this->fillField(
+            sprintf(
+                'ezrepoforms_content_edit_fieldsData_%s_value',
+                self::$constrainedFieldIdentifier
+            ),
+            'abc'
+        );
+    }
+
+    /**
+     * @Then /^I am shown the content creation form$/
+     */
+    public function iAmShownTheContentCreationForm()
+    {
+        $uri = sprintf(
+            '/content/create/nodraft/%s/eng-GB/2',
+            $this->contentTypeContext->getCurrentContentType()->identifier
+        );
+
+        $this->assertPageAddress($uri);
+        $this->assertElementOnPage(
+            sprintf(
+                'div.ezfield-identifier-%s input[type=text]',
+                self::$constrainedFieldIdentifier
+            )
+        );
+    }
+
+    /**
+     * @Given /^there is a relevant error message linked to the invalid field$/
+     */
+    public function thereIsARelevantErrorMessageLinkedToTheInvalidField()
+    {
+        $selector = sprintf('div.ezfield-identifier-%s ul li', self::$constrainedFieldIdentifier);
+
+        $this->assertSession()->elementExists('css', $selector);
+        $this->assertSession()->elementTextContains('css', $selector, 'The string can not be shorter than 5 characters.');
+    }
+
+    /**
+     * @Given /^that there is a Content Type with any kind of constraints on a Field Definition$/
+     */
+    public function thereIsAContentTypeWithAnyKindOfConstraintsOnAFieldDefinition()
+    {
+        $contentTypeCreateStruct = $this->contentTypeContext->newContentTypeCreateStruct();
+
+        $contentTypeCreateStruct->addFieldDefinition(
+            new FieldDefinitionCreateStruct(
+                [
+                    'identifier' => self::$constrainedFieldIdentifier,
+                    'fieldTypeIdentifier' => 'ezstring',
+                    'names' => ['eng-GB' => 'Field'],
+                    'validatorConfiguration' => [
+                        'StringLengthValidator' => ['minStringLength' => 5, 'maxStringLength' => 10],
+                    ],
+                ]
+            )
+        );
+
+        $this->contentTypeContext->createContentType($contentTypeCreateStruct);
     }
 }

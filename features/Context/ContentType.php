@@ -7,17 +7,30 @@ namespace EzSystems\RepositoryForms\Features\Context;
 use Behat\Behat\Context\Context;
 use Behat\Behat\Context\SnippetAcceptingContext;
 use Behat\MinkExtension\Context\RawMinkContext;
+use Exception;
 use eZ\Publish\API\Repository\ContentTypeService;
 use eZ\Publish\API\Repository\Exceptions\NotFoundException;
+use eZ\Publish\API\Repository\Repository;
+use eZ\Publish\API\Repository\Values\ContentType\ContentTypeCreateStruct;
+use EzSystems\PlatformBehatBundle\Context\RepositoryContext;
 use PHPUnit_Framework_Assert as Assertion;
 
-class ContentType extends RawMinkContext implements Context, SnippetAcceptingContext
+final class ContentType extends RawMinkContext implements Context, SnippetAcceptingContext
 {
+    use RepositoryContext;
+
     /** @var \eZ\Publish\API\Repository\ContentTypeService */
     private $contentTypeService;
 
-    public function __construct(ContentTypeService $contentTypeService)
+    /**
+     * Current content type within this context.
+     * @var \eZ\Publish\API\Repository\Values\ContentType\ContentType
+     */
+    private $currentContentType;
+
+    public function __construct(Repository $repository, ContentTypeService $contentTypeService)
     {
+        $this->setRepository($repository);
         $this->contentTypeService = $contentTypeService;
     }
 
@@ -32,5 +45,50 @@ class ContentType extends RawMinkContext implements Context, SnippetAcceptingCon
         } catch (NotFoundException $e) {
             Assertion::fail("No ContentType with the identifier '$contentTypeIdentifier' could be found.");
         }
+    }
+
+    /**
+     * @return \eZ\Publish\API\Repository\Values\ContentType\ContentType
+     *
+     * @throws \Exception if no current content type has been defined in the context
+     */
+    public function getCurrentContentType()
+    {
+        if ($this->currentContentType === null) {
+            throw new Exception('No current content type has been defined in the context');
+        }
+
+        return $this->currentContentType;
+    }
+
+    public function createContentType(ContentTypeCreateStruct $struct)
+    {
+        if (!isset($struct->mainLanguageCode)) {
+            $struct->mainLanguageCode = 'eng-GB';
+        };
+        if (!isset($struct->names)) {
+            $struct->names = ['eng-GB' => $struct->identifier];
+        }
+
+        $this->contentTypeService->publishContentTypeDraft(
+            $this->contentTypeService->createContentType(
+                $struct,
+                [$this->contentTypeService->loadContentTypeGroupByIdentifier('Content')]
+            )
+        );
+
+        $this->currentContentType = $this->contentTypeService->loadContentTypeByIdentifier($struct->identifier);
+    }
+
+    /**
+     * Creates a new content type create struct. If the identifier is not specified, a custom one is given.
+     *
+     * @return ContentTypeCreateStruct
+     */
+    public function newContentTypeCreateStruct($identifier = null)
+    {
+        return $this->contentTypeService->newContentTypeCreateStruct(
+            $identifier ?: $identifier = 'content_type_' . uniqid()
+        );
     }
 }

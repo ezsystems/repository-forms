@@ -80,3 +80,17 @@ eZ\Publish\API\Repository\Values\ContentType\ContentTypeGroupStruct:
     properties:
         identifier:
             - NotBlank: ~
+
+EzSystems\RepositoryForms\Data\Content\ContentCreateData:
+    properties:
+        fieldsData:
+            - Valid: ~
+
+EzSystems\RepositoryForms\Data\Content\ContentUpdateData:
+    properties:
+        fieldsData:
+            - Valid: ~
+
+EzSystems\RepositoryForms\Data\Content\FieldData:
+    constraints:
+        - EzSystems\RepositoryForms\Validator\Constraints\FieldValue: ~
