@@ -29,6 +29,10 @@ final class ContentType extends RawMinkContext implements Context, SnippetAccept
      */
     private $currentContentType;
 
+    /**
+     * @injectService $repository @ezpublish.api.repository
+     * @injectService $contentTypeService @ezpublish.api.service.content_type
+     */
     public function __construct(Repository $repository, ContentTypeService $contentTypeService)
     {
         $this->setRepository($repository);

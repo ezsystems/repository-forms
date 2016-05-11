@@ -7,14 +7,10 @@ repository-forms:
                 - vendor/ezsystems/repository-forms/features/ContentEdit
             contexts:
                 - EzSystems\RepositoryForms\Features\Context\ContentEdit
-                - EzSystems\RepositoryForms\Features\Context\ContentType:
-                    repository: @ezpublish.api.repository
-                    contentTypeService: @ezpublish.api.service.content_type
+                - EzSystems\RepositoryForms\Features\Context\ContentType
         user_field_edit:
             paths:
                 - vendor/ezsystems/repository-forms/features/FieldEdit
             contexts:
                 - EzSystems\RepositoryForms\Features\Context\UserFieldEditContext
-                - EzSystems\RepositoryForms\Features\Context\ContentType:
-                    repository: @ezpublish.api.repository
-                    contentTypeService: @ezpublish.api.service.content_type
+                - EzSystems\RepositoryForms\Features\Context\ContentType
