@@ -8,18 +8,19 @@ use Behat\Behat\Context\SnippetAcceptingContext;
 use Behat\Behat\Hook\Scope\BeforeScenarioScope;
 use Behat\Gherkin\Node\TableNode;
 use Behat\Mink\Element\NodeElement;
-use Behat\MinkExtension\Context\MinkContext;
+use Behat\MinkExtension\Context\RawMinkContext;
 use eZ\Publish\API\Repository\Values\ContentType\FieldDefinitionCreateStruct;
 use eZ\Publish\API\Repository\Values\ContentType\FieldDefinitionUpdateStruct;
 use PHPUnit_Framework_Assert as Assertion;
 
-final class FieldTypeFormContext extends MinkContext implements SnippetAcceptingContext
+final class FieldTypeFormContext extends RawMinkContext implements SnippetAcceptingContext
 {
     private static $fieldIdentifier = 'field';
 
     private static $fieldTypeIdentifierMap = [
         'user' => 'ezuser',
         'textline' => 'ezstring',
+        'selection' => 'ezselection',
     ];
 
     /** @var \EzSystems\RepositoryForms\Features\Context\ContentType */
@@ -59,7 +60,7 @@ final class FieldTypeFormContext extends MinkContext implements SnippetAccepting
      */
     public function iEditOrCreateContentOfThisType()
     {
-        $this->visit(
+        $this->visitPath(
             sprintf(
                 '/content/create/nodraft/%s/eng-GB/2',
                 $this->contentTypeContext->getCurrentContentType()->identifier
@@ -72,7 +73,8 @@ final class FieldTypeFormContext extends MinkContext implements SnippetAccepting
      */
     public function theEditFormShouldContainAFieldsetNamedAfterTheFieldDefinition()
     {
-        $this->assertElementContainsText(
+        $this->assertSession()->elementTextContains(
+            'css',
             sprintf('div.ezfield-identifier-%s fieldset legend', self::$fieldIdentifier),
             'Field'
         );
@@ -83,7 +85,8 @@ final class FieldTypeFormContext extends MinkContext implements SnippetAccepting
      */
     public function itShouldContainAGivenTypeInputField($inputType)
     {
-        $this->assertElementOnPage(
+        $this->assertSession()->elementExists(
+            'css',
             sprintf(
                 'div.ezfield-identifier-%s fieldset input[type=%s]',
                 self::$fieldIdentifier,
@@ -110,8 +113,12 @@ final class FieldTypeFormContext extends MinkContext implements SnippetAccepting
                 if ($fieldExpectation['type'] === $nodeElement->getAttribute('type')) {
                     $inputId = $nodeElement->getAttribute('id');
 
-                    $this->assertElementOnPage("label[for=$inputId]");
-                    $this->assertElementContainsText("label[for=$inputId]", $fieldExpectation['label']);
+                    $this->assertSession()->elementExists('css', "label[for=$inputId]");
+                    $this->assertSession()->elementTextContains(
+                        'css',
+                        "label[for=$inputId]",
+                        $fieldExpectation['label']
+                    );
 
                     unset($fieldsExpectations[$expectationId]);
                     reset($fieldsExpectations);
@@ -148,9 +155,7 @@ final class FieldTypeFormContext extends MinkContext implements SnippetAccepting
             'css',
             sprintf('div.ezfield-identifier-%s fieldset input', self::$fieldIdentifier)
         );
-
         Assertion::assertNotEmpty($inputNodeElements, 'The input field is not marked as required');
-
         foreach ($inputNodeElements as $inputNodeElement) {
             Assertion::assertEquals(
                 'required',
@@ -162,5 +167,19 @@ final class FieldTypeFormContext extends MinkContext implements SnippetAccepting
                 )
             );
         }
+    }
+
+    /**
+     * Set a field definition option $option to $value.
+     *
+     * @param $option string The field definition option
+     * @param $value mixed The option value
+     */
+    public function setFieldDefinitionOption($option, $value)
+    {
+        $this->contentTypeContext->updateFieldDefinition(
+            self::$fieldIdentifier,
+            new FieldDefinitionUpdateStruct(['fieldSettings' => [$option => $value]])
+        );
     }
 }
