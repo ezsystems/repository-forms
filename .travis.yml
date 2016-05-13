@@ -27,6 +27,7 @@ branches:
     - master
     - "1.2"
     - "1.1"
+    - "/^feature-/"
 
 before_install:
   - echo 'memory_limit = -1' >> ~/.phpenv/versions/$(phpenv version-name)/etc/conf.d/travis.ini
