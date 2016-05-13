@@ -192,8 +192,7 @@ services:
         class: "%ezrepoforms.field_type.form_mapper.form_type_based.class%"
         parent: ezrepoforms.field_type.form_mapper.form_type_based
         tags:
-            #- { name: ez.formMapper.fieldValue, fieldType: ezuser }
-            - { name: "ez.fieldType.formMapper", fieldType: "ezuser" }
+            - { name: ez.fieldFormMapper.value, fieldType: ezuser }
         calls:
            - [setFormType, ["ezuser"]]
 
