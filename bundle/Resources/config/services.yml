@@ -28,7 +28,7 @@ parameters:
     ezrepoforms.field_type.form_mapper.ezstring.class: EzSystems\RepositoryForms\FieldType\Mapper\TextLineFormMapper
     ezrepoforms.field_type.form_mapper.eztext.class: EzSystems\RepositoryForms\FieldType\Mapper\TextBlockFormMapper
     ezrepoforms.field_type.form_mapper.eztime.class: EzSystems\RepositoryForms\FieldType\Mapper\TimeFormMapper
-    ezrepoforms.field_type.form_mapper.ezuser.class: EzSystems\RepositoryForms\FieldType\Mapper\UserFormMapper
+    ezrepoforms.field_type.form_mapper.form_type_based.class: EzSystems\RepositoryForms\FieldType\Mapper\FormTypeBasedFieldValueFormMapper
 
     ezrepoforms.validator.unique_content_type_identifier.class: EzSystems\RepositoryForms\Validator\Constraints\UniqueContentTypeIdentifierValidator
     ezrepoforms.validator.validator_configuration.class: EzSystems\RepositoryForms\Validator\Constraints\ValidatorConfigurationValidator
@@ -182,12 +182,20 @@ services:
         tags:
             - { name: ez.fieldType.formMapper, fieldType: eztime }
 
+    ezrepoforms.field_type.form_mapper.form_type_based:
+        abstract: true
+        class: "%ezrepoforms.field_type.form_mapper.form_type_based.class%"
+        arguments:
+            - @ezpublish.api.service.field_type
+
     ezrepoforms.field_type.form_mapper.ezuser:
-         class: %ezrepoforms.field_type.form_mapper.ezuser.class%
-         tags:
-             - { name: ez.fieldType.formMapper, fieldType: ezuser }
-         arguments:
-             - @ezpublish.api.service.field_type
+        class: "%ezrepoforms.field_type.form_mapper.form_type_based.class%"
+        parent: ezrepoforms.field_type.form_mapper.form_type_based
+        tags:
+            #- { name: ez.formMapper.fieldValue, fieldType: ezuser }
+            - { name: "ez.fieldType.formMapper", fieldType: "ezuser" }
+        calls:
+           - [setFormType, ["ezuser"]]
 
     # Validators
     ezrepoforms.validator.unique_content_type_identifier:
