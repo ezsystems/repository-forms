@@ -25,9 +25,19 @@ class FieldTypeFormMapperDispatcher implements FieldTypeFormMapperDispatcherInte
     /**
      * FieldType form mappers, indexed by FieldType identifier.
      *
-     * @var FieldTypeFormMapperInterface[]
+     * @var FieldTypeFormMapperInterface[]|FieldValueFormMapperInterface[]|FieldDefinitionFormMapperInterface[]
      */
     private $mappers = [];
+
+    /**
+     * @var FieldDefinitionFormMapperInterface[]
+     */
+    private $definitionMappers = [];
+
+    /**
+     * @var FieldValueFormMapperInterface[]
+     */
+    private $valueMappers = [];
 
     public function addMapper(FieldFormMapperInterface $mapper, $fieldTypeIdentifier)
     {
@@ -38,11 +48,25 @@ class FieldTypeFormMapperDispatcher implements FieldTypeFormMapperDispatcherInte
                 'Use FieldValueFormMapperInterface and FieldDefinitionFormMapperInterface instead',
                 E_USER_DEPRECATED
             );
-        } elseif (!$mapper instanceof FieldValueFormMapperInterface && !$mapper instanceof FieldDefinitionFormMapperInterface) {
-            throw new \InvalidArgumentException('Expecting a FieldValueFormMapperInterface or FieldDefinitionFormMapperInterface');
+            $this->mappers[$fieldTypeIdentifier] = $mapper;
+            $valid = true;
         }
 
-        $this->mappers[$fieldTypeIdentifier] = $mapper;
+        if ($mapper instanceof FieldValueFormMapperInterface) {
+            $this->valueMappers[$fieldTypeIdentifier] = $mapper;
+            $valid = true;
+        }
+
+        if ($mapper instanceof FieldDefinitionFormMapperInterface) {
+            $this->definitionMappers[$fieldTypeIdentifier] = $mapper;
+            $valid = true;
+        }
+
+        if (!isset($valid)) {
+            throw new \InvalidArgumentException(
+                'Expecting a FieldValueFormMapperInterface, FieldDefinitionFormMapperInterface or FieldTypeFormMapperInterface'
+            );
+        }
     }
 
     public function map(FormInterface $fieldForm, $data)
@@ -52,12 +76,14 @@ class FieldTypeFormMapperDispatcher implements FieldTypeFormMapperDispatcherInte
         }
 
         $fieldTypeIdentifier = $data->getFieldTypeIdentifier();
-        if (!isset($this->mappers[$fieldTypeIdentifier])) {
-            return;
-        }
 
         if ($data instanceof FieldDefinitionData) {
-            if ($this->mappers[$fieldTypeIdentifier] instanceof FieldDefinitionFormMapperInterface) {
+            if (isset($this->definitionMappers[$fieldTypeIdentifier])) {
+                $this->definitionMappers[$fieldTypeIdentifier]->mapFieldDefinitionForm($fieldForm, $data);
+            } elseif (
+                isset($this->mappers[$fieldTypeIdentifier]) &&
+                $this->definitionMappers[$fieldTypeIdentifier] instanceof FieldDefinitionFormMapperInterface
+            ) {
                 $this->mappers[$fieldTypeIdentifier]->mapFieldDefinitionForm($fieldForm, $data);
             }
 
@@ -65,7 +91,12 @@ class FieldTypeFormMapperDispatcher implements FieldTypeFormMapperDispatcherInte
         }
 
         if ($data instanceof FieldData) {
-            if ($this->mappers[$fieldTypeIdentifier] instanceof FieldValueFormMapperInterface) {
+            if (isset($this->valueMappers[$fieldTypeIdentifier])) {
+                $this->valueMappers[$fieldTypeIdentifier]->mapFieldValueForm($fieldForm, $data);
+            } elseif (
+                isset($this->mappers[$fieldTypeIdentifier]) &&
+                $this->mappers[$fieldTypeIdentifier] instanceof FieldValueFormMapperInterface
+            ) {
                 $this->mappers[$fieldTypeIdentifier]->mapFieldValueForm($fieldForm, $data);
             }
 

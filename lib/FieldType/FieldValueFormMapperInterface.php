@@ -14,7 +14,7 @@ use EzSystems\RepositoryForms\Data\Content\FieldData;
 interface FieldValueFormMapperInterface extends FieldFormMapperInterface
 {
     /**
-     * "Maps" Field form to current FieldType.
+     * Maps Field form to current FieldType.
      * Allows to add form fields for content edition.
      *
      * @param FormInterface $fieldForm Form for the current Field.
