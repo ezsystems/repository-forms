@@ -11,6 +11,7 @@ parameters:
     ezrepoforms.field.form_type.class: EzSystems\RepositoryForms\Form\Type\Content\ContentFieldType
 
     ezrepoforms.field_type.form_mapper.ezbinaryfile.class: EzSystems\RepositoryForms\FieldType\Mapper\BinaryFileFormMapper
+    ezrepoforms.field_type.form_mapper.ezboolean.class: EzSystems\RepositoryForms\FieldType\Mapper\CheckboxFormMapper
     ezrepoforms.field_type.form_mapper.ezcountry.class: EzSystems\RepositoryForms\FieldType\Mapper\CountryFormMapper
     ezrepoforms.field_type.form_mapper.ezdate.class: EzSystems\RepositoryForms\FieldType\Mapper\DateFormMapper
     ezrepoforms.field_type.form_mapper.ezdatetime.class: EzSystems\RepositoryForms\FieldType\Mapper\DateTimeFormMapper
@@ -80,6 +81,13 @@ services:
         class: %ezrepoforms.field_type.form_mapper.ezbinaryfile.class%
         tags:
             - { name: ez.fieldType.formMapper, fieldType: ezbinaryfile }
+
+    ezrepoforms.field_type.form_mapper.ezboolean:
+        class: %ezrepoforms.field_type.form_mapper.ezboolean.class%
+        tags:
+            - { name: ez.fieldType.formMapper, fieldType: ezboolean }
+        arguments:
+            - @ezpublish.api.service.field_type
 
     ezrepoforms.field_type.form_mapper.ezcountry:
         class: %ezrepoforms.field_type.form_mapper.ezcountry.class%
