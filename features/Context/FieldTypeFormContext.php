@@ -33,7 +33,7 @@ final class FieldTypeFormContext extends MinkContext implements SnippetAccepting
     }
 
     /**
-     * @Given a Content Type with a :fieldTypeIdentifier field definition
+     * @Given a Content Type with a(n) :fieldTypeIdentifier field definition
      */
     public function aContentTypeWithAGivenFieldDefinition($fieldTypeIdentifier)
     {
