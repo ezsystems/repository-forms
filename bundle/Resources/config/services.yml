@@ -78,7 +78,7 @@ services:
             - { name: form.type, alias: ezrepoforms_content_field }
 
     ezrepoforms.field_value.user_type:
-        class: EzSystems\RepositoryForms\Form\Type\UserType
+        class: EzSystems\RepositoryForms\Form\Type\User\UserAccountType
         tags:
             - { name: form.type, alias: ezuser }
 
@@ -189,12 +189,11 @@ services:
             - @ezpublish.api.service.field_type
 
     ezrepoforms.field_type.form_mapper.ezuser:
-        class: "%ezrepoforms.field_type.form_mapper.form_type_based.class%"
-        parent: ezrepoforms.field_type.form_mapper.form_type_based
+        class: 'EzSystems\RepositoryForms\FieldType\Mapper\UserAccountFieldValueFormMapper'
         tags:
             - { name: ez.fieldFormMapper.value, fieldType: ezuser }
-        calls:
-           - [setFormType, ["ezuser"]]
+        arguments:
+            - '@ezpublish.api.service.field_type'
 
     # Validators
     ezrepoforms.validator.unique_content_type_identifier:
@@ -272,6 +271,15 @@ services:
         tags:
             - { name: kernel.event_subscriber }
 
+    ezrepoforms.form_processor.user_register:
+        class: 'EzSystems\RepositoryForms\Form\Processor\UserRegisterFormProcessor'
+        arguments:
+            - '@ezpublish.api.repository'
+            - '@ezpublish.api.service.user'
+            - '@router'
+        tags:
+            - { name: kernel.event_subscriber }
+
     ezrepoforms.form_processor.content_type_group:
         class: %ezrepoforms.form_processor.content_type_group.class%
         arguments: [@ezpublish.api.service.content_type]
@@ -287,6 +295,17 @@ services:
             - @ezpublish.api.service.location
             - @ezrepoforms.action_dispatcher.content
         parent: ezpublish.controller.base
+
+    ezrepoforms.controller.user_register:
+        class: 'EzSystems\RepositoryFormsBundle\Controller\UserRegisterController'
+        arguments:
+            - "@ezpublish.api.service.content_type"
+            - "@ezpublish.api.service.user"
+            - "@ezrepoforms.action_dispatcher.content"
+            - "@ezpublish.api.repository"
+        parent: ezpublish.controller.base
+        calls:
+            - [setPagelayout, ["$pagelayout$"]]
 
     ez_content_edit:
         alias: ezrepoforms.controller.content_edit
