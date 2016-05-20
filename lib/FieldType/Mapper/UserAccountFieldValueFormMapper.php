@@ -54,9 +54,9 @@ final class UserAccountFieldValueFormMapper implements FieldValueFormMapperInter
                             },
                             function($submittedData) {
                                 return new UserAccountFieldData(
-                                    $submittedData['username'],
-                                    $submittedData['password'],
-                                    $submittedData['email']
+                                    $submittedData->username,
+                                    $submittedData->password,
+                                    $submittedData->email
                                 );
 
                             }

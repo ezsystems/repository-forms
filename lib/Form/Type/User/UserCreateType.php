@@ -9,7 +9,10 @@
 namespace EzSystems\RepositoryForms\Form\Type\User;
 
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\CallbackTransformer;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
@@ -33,7 +36,23 @@ class UserCreateType extends AbstractType
                 'options' => ['languageCode' => $options['languageCode']],
             ])
             ->add('redirectUrlAfterPublish', 'hidden', ['required' => false, 'mapped' => false])
-            ->add('publish', 'submit', ['label' => 'content.publish_button']);
+            ->add('publish', 'submit', ['label' => 'content.publish_button'])
+            ->addEventListener(
+                FormEvents::POST_SUBMIT,
+                function(FormEvent $event) {
+                    $userCreateData = $event->getData();
+
+                    if (isset($userCreateData->fieldsData['user_account'])) {
+                        $userAccountFieldData = $userCreateData->fieldsData['user_account']->value;
+                        $userCreateData->login = $userAccountFieldData->username;
+                        $userCreateData->email = $userAccountFieldData->email;
+                        $userCreateData->password = $userAccountFieldData->password;
+                        //unset($userCreateData->fieldsData['user_account']);
+                    }
+
+                    return $userCreateData;
+                }
+            );
 
     }
 

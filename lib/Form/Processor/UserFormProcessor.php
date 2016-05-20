@@ -63,6 +63,7 @@ class UserFormProcessor implements EventSubscriberInterface
             UrlGeneratorInterface::ABSOLUTE_URL
         );
         $event->setResponse(new RedirectResponse($redirectUrl));
+        $event->stopPropagation();
     }
 
     /**
