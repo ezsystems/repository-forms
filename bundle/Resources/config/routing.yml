@@ -2,3 +2,8 @@ ez_content_create_no_draft:
     path: /content/create/nodraft/{contentTypeIdentifier}/{language}/{parentLocationId}
     defaults:
         _controller: ez_content_edit:createWithoutDraftAction
+
+ez_user_register:
+  path: /register
+  defaults:
+      _controller: "ezrepoforms.controller.user_register:registerAction"
