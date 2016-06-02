@@ -21,3 +21,8 @@ Scenario: Content validation errors are reported back
       And I press "Publish"
      Then I am shown the content creation form
       And there is a relevant error message linked to the invalid field
+
+Scenario: Content edit forms are rendered with the configured pagelayout
+    Given a pagelayout is configured
+     When a content creation form is displayed
+     Then it is rendered using the configured pagelayout
