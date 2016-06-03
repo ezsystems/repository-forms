@@ -7,7 +7,6 @@
  *
  * @version //autogentag//
  */
-
 namespace EzSystems\RepositoryForms\Form\Processor;
 
 use eZ\Publish\API\Repository\Repository;
@@ -57,7 +56,9 @@ class UserRegisterFormProcessor implements EventSubscriberInterface
     public function processPublish(FormActionEvent $event)
     {
         /** @var \EzSystems\RepositoryForms\Data\User\UserCreateData $data */
-        $data = $event->getData();
+        if (!($data = $event->getData()) instanceof UserCreateData) {
+            return;
+        }
         $form = $event->getForm();
 
         $this->saveDraft($data, $form->getConfig()->getOption('languageCode'));
