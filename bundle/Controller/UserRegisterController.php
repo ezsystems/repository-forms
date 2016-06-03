@@ -13,6 +13,7 @@ use eZ\Publish\API\Repository\ContentTypeService;
 use eZ\Publish\API\Repository\Repository;
 use eZ\Publish\API\Repository\UserService;
 use EzSystems\RepositoryForms\Data\Mapper\UserRegisterMapper;
+use eZ\Publish\Core\MVC\Symfony\Security\Authorization\Attribute;
 use EzSystems\RepositoryForms\Form\ActionDispatcher\ActionDispatcherInterface;
 use EzSystems\RepositoryForms\Form\Type\User\UserRegisterType;
 use Symfony\Component\HttpFoundation\Request;
@@ -73,9 +74,15 @@ class UserRegisterController extends Controller
      * @param Request $request
      *
      * @return \Symfony\Component\HttpFoundation\Response
+     *
+     * @throws \Exception if the current user isn't allowed to register an account
      */
     public function registerAction(Request $request)
     {
+        if (!$this->isGranted(new Attribute('user', 'register'))) {
+            throw new \Exception('You are not allowed to register a new account');
+        }
+
         $language = 'eng-GB';
 
         $contentType = $this->repository->sudo(
