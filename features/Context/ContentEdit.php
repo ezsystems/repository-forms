@@ -167,4 +167,12 @@ final class ContentEdit extends MinkContext implements Context, SnippetAccepting
 
         $this->contentTypeContext->createContentType($contentTypeCreateStruct);
     }
+
+    /**
+     * @When /^a content creation form is displayed$/
+     */
+    public function aContentCreationFormIsDisplayed()
+    {
+        $this->visit('/content/create/nodraft/folder/eng-GB/2');
+    }
 }

@@ -287,6 +287,8 @@ services:
             - @ezpublish.api.service.location
             - @ezrepoforms.action_dispatcher.content
         parent: ezpublish.controller.base
+        calls:
+            - [setPageLayout, [$pagelayout$]]
 
     ez_content_edit:
         alias: ezrepoforms.controller.content_edit

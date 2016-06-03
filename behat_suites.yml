@@ -8,6 +8,7 @@ repository-forms:
             contexts:
                 - EzSystems\RepositoryForms\Features\Context\ContentEdit
                 - EzSystems\RepositoryForms\Features\Context\ContentType
+                - EzSystems\RepositoryForms\Features\Context\PagelayoutContext
         fieldtype_form:
             paths:
                 - vendor/ezsystems/repository-forms/features/FieldTypeForm
