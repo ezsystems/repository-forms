@@ -17,7 +17,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 /**
  * Form data mapper for user registration / creation.
  */
-class UserCreateMapper implements FormDataMapperInterface
+class UserRegisterMapper implements FormDataMapperInterface
 {
     public function mapToFormData(ValueObject $contentType, array $params = [])
     {
