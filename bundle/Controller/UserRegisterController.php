@@ -13,7 +13,7 @@ use eZ\Publish\API\Repository\ContentTypeService;
 use eZ\Publish\API\Repository\Repository;
 use eZ\Publish\API\Repository\UserService;
 use eZ\Publish\Core\MVC\Symfony\Security\Authorization\Attribute;
-use EzSystems\RepositoryForms\Data\Mapper\UserCreateMapper;
+use EzSystems\RepositoryForms\Data\Mapper\UserRegisterMapper;
 use EzSystems\RepositoryForms\Form\ActionDispatcher\ActionDispatcherInterface;
 use EzSystems\RepositoryForms\Form\Type\User\UserRegisterType;
 use Symfony\Component\HttpFoundation\Request;
@@ -91,7 +91,7 @@ class UserRegisterController extends Controller
             }
         );
 
-        $data = (new UserCreateMapper())->mapToFormData($contentType, [
+        $data = (new UserRegisterMapper())->mapToFormData($contentType, [
             'mainLanguageCode' => $language,
             'parentGroup' => $this->repository->sudo(
                 function () {
