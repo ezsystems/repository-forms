@@ -14,13 +14,13 @@ Scenario: Registration is enabled for users who do have the "user/register" poli
      Then I can see the registration form
 
 Scenario: A new user account can be registered from "/register"
-    Given that I am not logged in
-      And that the Anonymous user has the "user/register" policy
-     When I go to "/register"
-     Then a form is displayed
+    Given I do have the user/register policy
+      And I go to "/register"
+     Then I can see the registration form
       And it matches the structure of the configured registration user Content Type
       And it has a register button
      When I fill in the form with valid values
       And I click on the register button
-     Then I get redirected to "/register-confirmation"
+     Then I am on the registration confirmation page
       And I see a registration confirmation message
+      And the user account has been created

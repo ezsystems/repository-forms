@@ -9,6 +9,7 @@ namespace EzSystems\RepositoryForms\Features\Context;
 
 use Behat\Behat\Context\Context;
 use Behat\Behat\Context\SnippetAcceptingContext;
+use Behat\Behat\Tester\Exception\PendingException;
 use Behat\MinkExtension\Context\RawMinkContext;
 use eZ\Publish\API\Repository\Repository;
 use eZ\Publish\API\Repository\Values\User\Role;
@@ -21,8 +22,12 @@ class UserRegistrationContext extends RawMinkContext implements Context, Snippet
     use RepositoryContext;
 
     private static $password = 'publish';
+
     private static $language = 'eng-GB';
+
     private static $groupId = 4;
+
+    private $registrationUsername;
 
     /**
      * @injectService $repository @ezpublish.api.repository
@@ -136,5 +141,85 @@ class UserRegistrationContext extends RawMinkContext implements Context, Snippet
     {
         $this->assertSession()->pageTextNotContains('You are not allowed to register a new account');
         $this->assertSession()->elementExists('css', 'form[name=ezrepoforms_user_register]');
+    }
+
+    /**
+     * @Given /^it matches the structure of the configured registration user Content Type$/
+     */
+    public function itMatchesTheStructureOfTheConfiguredRegistrationUserContentType()
+    {
+        $userContentType = $this->getRepository()->getContentTypeService()
+            ->loadContentTypeByIdentifier('user');
+        foreach ($userContentType->getFieldDefinitions() as $fieldDefinition) {
+            $this->assertSession()->elementExists(
+                'css',
+                sprintf(
+                    'div.ezfield-type-%s.ezfield-identifier-%s',
+                    $fieldDefinition->fieldTypeIdentifier,
+                    $fieldDefinition->identifier
+                )
+            );
+        }
+    }
+
+    /**
+     * @Given /^it has a register button$/
+     */
+    public function itHasARegisterButton()
+    {
+        $this->assertSession()->elementExists(
+            'css',
+            'form[name=ezrepoforms_user_register] button[type=submit]'
+        );
+    }
+
+    /**
+     * @When /^I fill in the form with valid values$/
+     */
+    public function iFillInTheFormWithValidValues()
+    {
+        $page = $this->getSession()->getPage();
+
+        $this->registrationUsername = uniqid('registration_username_');
+
+        $page->fillField('ezrepoforms_user_register[fieldsData][first_name][value]', 'firstname');
+        $page->fillField('ezrepoforms_user_register[fieldsData][last_name][value]', 'firstname');
+        $page->fillField('ezrepoforms_user_register[fieldsData][user_account][value][username]', $this->registrationUsername);
+        $page->fillField('ezrepoforms_user_register[fieldsData][user_account][value][email]', $this->registrationUsername . '@example.com');
+        $page->fillField('ezrepoforms_user_register[fieldsData][user_account][value][password][first]', self::$password);
+        $page->fillField('ezrepoforms_user_register[fieldsData][user_account][value][password][second]', self::$password);
+    }
+
+    /**
+     * @When /^I click on the register button$/
+     */
+    public function iClickOnTheRegisterButton()
+    {
+        $this->getSession()->getPage()->pressButton('ezrepoforms_user_register[publish]');
+        $this->assertSession()->statusCodeEquals(200);
+    }
+
+    /**
+     * @Then /^I am on the registration confirmation page$/
+     */
+    public function iAmOnTheRegistrationConfirmationPage()
+    {
+        $this->assertSession()->addressEquals('/register-confirm');
+    }
+
+    /**
+     * @Given /^I see a registration confirmation message$/
+     */
+    public function iSeeARegistrationConfirmationMessage()
+    {
+        $this->assertSession()->pageTextContains('Your account has been created');
+    }
+
+    /**
+     * @Given /^the user account has been created$/
+     */
+    public function theUserAccountHasBeenCreated()
+    {
+        $this->getRepository()->getUserService()->loadUserByLogin($this->registrationUsername);
     }
 }
