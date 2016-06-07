@@ -39,7 +39,7 @@ class UserRegistrationContext extends RawMinkContext implements Context, Snippet
     /**
      * @Given /^I do not have the user\/register policy$/
      */
-    public function iDoNotHaveTheUserRegisterPolicy()
+    public function loginAsUserWithoutRegisterPolicy()
     {
         $role = $this->createRegistrationRole(false);
         $user = $this->createUserWithRole($role);
@@ -49,7 +49,7 @@ class UserRegistrationContext extends RawMinkContext implements Context, Snippet
     /**
      * @Given /^I do have the user\/register policy$/
      */
-    public function iDoHaveTheUserRegisterPolicy()
+    public function loginAsUserWithUserRegisterPolicy()
     {
         $role = $this->createRegistrationRole(true);
         $user = $this->createUserWithRole($role);
@@ -123,7 +123,7 @@ class UserRegistrationContext extends RawMinkContext implements Context, Snippet
      * @param User $user
      * @throws \Behat\Mink\Exception\ElementNotFoundException
      */
-    public function loginAs(User $user)
+    private function loginAs(User $user)
     {
         $this->visitPath('/login');
         $page = $this->getSession()->getPage();
