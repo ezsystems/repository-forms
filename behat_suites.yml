@@ -15,3 +15,9 @@ repository-forms:
             contexts:
                 - EzSystems\RepositoryForms\Features\Context\FieldTypeFormContext
                 - EzSystems\RepositoryForms\Features\Context\ContentType
+        user_registration:
+            paths:
+                - vendor/ezsystems/repository-forms/features/User/Registration
+            contexts:
+                - EzSystems\RepositoryForms\Features\Context\UserRegistrationContext
+                - Behat\MinkExtension\Context\MinkContext
