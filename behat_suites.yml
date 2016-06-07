@@ -13,7 +13,6 @@ repository-forms:
                 - vendor/ezsystems/repository-forms/features/FieldTypeForm
             contexts:
                 - EzSystems\RepositoryForms\Features\Context\FieldTypeFormContext
-                - EzSystems\RepositoryForms\Features\Context\SelectionFieldTypeFormContext
                 - EzSystems\RepositoryForms\Features\Context\ContentType
         user_registration:
             paths:
