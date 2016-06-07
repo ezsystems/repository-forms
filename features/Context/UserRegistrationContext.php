@@ -9,12 +9,8 @@ namespace EzSystems\RepositoryForms\Features\Context;
 
 use Behat\Behat\Context\Context;
 use Behat\Behat\Context\SnippetAcceptingContext;
-use Behat\Behat\Hook\Scope\BeforeScenarioScope;
-use Behat\Behat\Tester\Exception\PendingException;
 use Behat\MinkExtension\Context\RawMinkContext;
-use eZ\Publish\API\Repository\Exceptions\NotFoundException;
 use eZ\Publish\API\Repository\Repository;
-use eZ\Publish\API\Repository\Values\User\Limitation\SectionLimitation;
 use eZ\Publish\API\Repository\Values\User\Role;
 use eZ\Publish\API\Repository\Values\User\User;
 use eZ\Publish\Core\Repository\Values\User\RoleCreateStruct;
@@ -94,7 +90,7 @@ class UserRegistrationContext extends RawMinkContext implements Context, Snippet
     private function createRegistrationRole($withUserRegisterPolicy = true)
     {
         $roleIdentifier = uniqid(
-            'anonymous_role_' . ($withUserRegisterPolicy ? 'with' : 'without'). '_register'
+            'anonymous_role_' . ($withUserRegisterPolicy ? 'with' : 'without') . '_register'
         );
 
         $roleService = $this->getRepository()->getRoleService();
