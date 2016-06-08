@@ -11,11 +11,11 @@ namespace EzSystems\RepositoryFormsBundle\Controller;
 use eZ\Bundle\EzPublishCoreBundle\Controller;
 use eZ\Publish\API\Repository\ContentTypeService;
 use eZ\Publish\API\Repository\Repository;
-use eZ\Publish\API\Repository\UserService;
 use EzSystems\RepositoryForms\Data\Mapper\UserRegisterMapper;
 use eZ\Publish\Core\MVC\Symfony\Security\Authorization\Attribute;
 use EzSystems\RepositoryForms\Form\ActionDispatcher\ActionDispatcherInterface;
 use EzSystems\RepositoryForms\Form\Type\User\UserRegisterType;
+use EzSystems\RepositoryForms\UserRegister\RegistrationGroupLoader;
 use Symfony\Component\HttpFoundation\Request;
 
 class UserRegisterController extends Controller
@@ -26,9 +26,9 @@ class UserRegisterController extends Controller
     private $contentTypeService;
 
     /**
-     * @var UserService
+     * @var RegistrationGroupLoader
      */
-    private $userService;
+    private $registrationGroupLoader;
 
     /**
      * @var ActionDispatcherInterface
@@ -47,12 +47,12 @@ class UserRegisterController extends Controller
 
     public function __construct(
         ContentTypeService $contentTypeService,
-        UserService $userService,
+        RegistrationGroupLoader $registrationGroupLoader,
         ActionDispatcherInterface $contentActionDispatcher,
         Repository $repository
     ) {
         $this->contentTypeService = $contentTypeService;
-        $this->userService = $userService;
+        $this->registrationGroupLoader = $registrationGroupLoader;
         $this->contentActionDispatcher = $contentActionDispatcher;
         $this->repository = $repository;
     }
@@ -93,12 +93,9 @@ class UserRegisterController extends Controller
 
         $data = (new UserRegisterMapper())->mapToFormData($contentType, [
             'mainLanguageCode' => $language,
-            'parentGroup' => $this->repository->sudo(
-                function () {
-                    return $this->userService->loadUserGroup(11);
-                }
-            ),
         ]);
+        $data->addParentGroup($this->registrationGroupLoader->getParentGroup($data));
+
         $form = $this->createForm(new UserRegisterType(), $data, ['languageCode' => $language]);
         $form->handleRequest($request);
 

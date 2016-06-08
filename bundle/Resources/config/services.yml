@@ -302,7 +302,7 @@ services:
         class: 'EzSystems\RepositoryFormsBundle\Controller\UserRegisterController'
         arguments:
             - "@ezpublish.api.service.content_type"
-            - "@ezpublish.api.service.user"
+            - "@ezrepoforms.user_register.registration_group_loader.configurable"
             - "@ezrepoforms.action_dispatcher.content"
             - "@ezpublish.api.repository"
         parent: ezpublish.controller.base
@@ -311,3 +311,10 @@ services:
 
     ez_content_edit:
         alias: ezrepoforms.controller.content_edit
+
+    ezrepoforms.user_register.registration_group_loader.configurable:
+        class: EzSystems\RepositoryForms\UserRegister\ConfigurableRegistrationGroupLoader
+        arguments:
+            - @ezpublish.api.repository
+        calls:
+            - [setGroupId, ["$users.registration_group$"]]
