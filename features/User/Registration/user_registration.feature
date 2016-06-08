@@ -8,11 +8,6 @@ Scenario: Registration is disabled for users who do not have the "user/register"
      When I go to "/register"
      Then I see an error message saying that I can not register
 
-Scenario: Registration is enabled for users who do have the "user/register" policy
-    Given I do have the user/register policy
-     When I go to "/register"
-     Then I can see the registration form
-
 Scenario: A new user account can be registered from "/register"
     Given I do have the user/register policy
       And I go to "/register"
