@@ -11,6 +11,7 @@ parameters:
     ezrepoforms.field.form_type.class: EzSystems\RepositoryForms\Form\Type\Content\ContentFieldType
 
     ezrepoforms.field_type.form_mapper.ezbinaryfile.class: EzSystems\RepositoryForms\FieldType\Mapper\BinaryFileFormMapper
+    ezrepoforms.field_type.form_mapper.ezboolean.class: EzSystems\RepositoryForms\FieldType\Mapper\CheckboxFormMapper
     ezrepoforms.field_type.form_mapper.ezcountry.class: EzSystems\RepositoryForms\FieldType\Mapper\CountryFormMapper
     ezrepoforms.field_type.form_mapper.ezdate.class: EzSystems\RepositoryForms\FieldType\Mapper\DateFormMapper
     ezrepoforms.field_type.form_mapper.ezdatetime.class: EzSystems\RepositoryForms\FieldType\Mapper\DateTimeFormMapper
@@ -27,6 +28,7 @@ parameters:
     ezrepoforms.field_type.form_mapper.ezstring.class: EzSystems\RepositoryForms\FieldType\Mapper\TextLineFormMapper
     ezrepoforms.field_type.form_mapper.eztext.class: EzSystems\RepositoryForms\FieldType\Mapper\TextBlockFormMapper
     ezrepoforms.field_type.form_mapper.eztime.class: EzSystems\RepositoryForms\FieldType\Mapper\TimeFormMapper
+    ezrepoforms.field_type.form_mapper.form_type_based.class: EzSystems\RepositoryForms\FieldType\Mapper\FormTypeBasedFieldValueFormMapper
 
     ezrepoforms.validator.unique_content_type_identifier.class: EzSystems\RepositoryForms\Validator\Constraints\UniqueContentTypeIdentifierValidator
     ezrepoforms.validator.validator_configuration.class: EzSystems\RepositoryForms\Validator\Constraints\ValidatorConfigurationValidator
@@ -75,11 +77,23 @@ services:
         tags:
             - { name: form.type, alias: ezrepoforms_content_field }
 
+    ezrepoforms.field_value.user_type:
+        class: EzSystems\RepositoryForms\Form\Type\UserType
+        tags:
+            - { name: form.type, alias: ezuser }
+
     # FieldType form mappers
     ezrepoforms.field_type.form_mapper.ezbinaryfile:
         class: %ezrepoforms.field_type.form_mapper.ezbinaryfile.class%
         tags:
             - { name: ez.fieldType.formMapper, fieldType: ezbinaryfile }
+
+    ezrepoforms.field_type.form_mapper.ezboolean:
+        class: %ezrepoforms.field_type.form_mapper.ezboolean.class%
+        tags:
+            - { name: ez.fieldType.formMapper, fieldType: ezboolean }
+        arguments:
+            - @ezpublish.api.service.field_type
 
     ezrepoforms.field_type.form_mapper.ezcountry:
         class: %ezrepoforms.field_type.form_mapper.ezcountry.class%
@@ -167,6 +181,20 @@ services:
         class: %ezrepoforms.field_type.form_mapper.eztime.class%
         tags:
             - { name: ez.fieldType.formMapper, fieldType: eztime }
+
+    ezrepoforms.field_type.form_mapper.form_type_based:
+        abstract: true
+        class: "%ezrepoforms.field_type.form_mapper.form_type_based.class%"
+        arguments:
+            - @ezpublish.api.service.field_type
+
+    ezrepoforms.field_type.form_mapper.ezuser:
+        class: "%ezrepoforms.field_type.form_mapper.form_type_based.class%"
+        parent: ezrepoforms.field_type.form_mapper.form_type_based
+        tags:
+            - { name: ez.fieldFormMapper.value, fieldType: ezuser }
+        calls:
+           - [setFormType, ["ezuser"]]
 
     # Validators
     ezrepoforms.validator.unique_content_type_identifier:
@@ -259,6 +287,8 @@ services:
             - @ezpublish.api.service.location
             - @ezrepoforms.action_dispatcher.content
         parent: ezpublish.controller.base
+        calls:
+            - [setPageLayout, [$pagelayout$]]
 
     ez_content_edit:
         alias: ezrepoforms.controller.content_edit

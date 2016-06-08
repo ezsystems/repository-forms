@@ -39,6 +39,11 @@ class ContentEditController extends Controller
      */
     private $contentActionDispatcher;
 
+    /**
+     * @var string
+     */
+    private $pagelayout;
+
     public function __construct(
         ContentTypeService $contentTypeService,
         ContentService $contentService,
@@ -81,6 +86,18 @@ class ContentEditController extends Controller
         return $this->render('EzSystemsRepositoryFormsBundle:Content:content_edit.html.twig', [
             'form' => $form->createView(),
             'languageCode' => $language,
+            'pagelayout' => $this->pagelayout,
         ]);
+    }
+
+    /**
+     * @param string $pagelayout
+     * @return ContentEditController
+     */
+    public function setPagelayout($pagelayout)
+    {
+        $this->pagelayout = $pagelayout;
+
+        return $this;
     }
 }
