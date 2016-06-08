@@ -26,7 +26,10 @@ class UserRegisterMapper implements FormDataMapperInterface
         $params = $resolver->resolve($params);
 
         $data = new UserCreateData(['contentType' => $contentType, 'mainLanguageCode' => $params['mainLanguageCode']]);
-        $data->addParentGroup($params['parentGroup']);
+        if (isset($params['parentGroup'])) {
+            $data->addParentGroup($params['parentGroup']);
+        }
+
         foreach ($contentType->fieldDefinitions as $fieldDef) {
             $data->addFieldData(new FieldData([
                 'fieldDefinition' => $fieldDef,
@@ -44,7 +47,8 @@ class UserRegisterMapper implements FormDataMapperInterface
     private function configureOptions(OptionsResolver $optionsResolver)
     {
         $optionsResolver
-            ->setRequired(['mainLanguageCode', 'parentGroup'])
-            ->setAllowedTypes('parentGroup', '\eZ\Publish\API\Repository\Values\User\UserGroup');
+            ->setRequired(['mainLanguageCode'])
+            ->setDefined(['parentGroup'])
+            ->addAllowedTypes('parentGroup', '\eZ\Publish\API\Repository\Values\User\UserGroup');
     }
 }

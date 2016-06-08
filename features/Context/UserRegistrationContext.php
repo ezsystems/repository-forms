@@ -9,12 +9,16 @@ namespace EzSystems\RepositoryForms\Features\Context;
 
 use Behat\Behat\Context\Context;
 use Behat\Behat\Context\SnippetAcceptingContext;
+use Behat\Gherkin\Node\PyStringNode;
 use Behat\MinkExtension\Context\RawMinkContext;
 use eZ\Publish\API\Repository\Repository;
 use eZ\Publish\API\Repository\Values\User\Role;
 use eZ\Publish\API\Repository\Values\User\User;
+use eZ\Publish\API\Repository\Values\User\UserGroup;
 use eZ\Publish\Core\Repository\Values\User\RoleCreateStruct;
 use EzSystems\PlatformBehatBundle\Context\RepositoryContext;
+use PHPUnit_Framework_Assert;
+use Symfony\Component\Yaml\Yaml;
 
 class UserRegistrationContext extends RawMinkContext implements Context, SnippetAcceptingContext
 {
@@ -27,6 +31,12 @@ class UserRegistrationContext extends RawMinkContext implements Context, Snippet
     private static $groupId = 4;
 
     private $registrationUsername;
+
+    /**
+     * Used to cover registration group customization.
+     * @var UserGroup
+     */
+    private $customUserGroup;
 
     /**
      * @injectService $repository @ezpublish.api.repository
@@ -220,5 +230,76 @@ class UserRegistrationContext extends RawMinkContext implements Context, Snippet
     public function theUserAccountHasBeenCreated()
     {
         $this->getRepository()->getUserService()->loadUserByLogin($this->registrationUsername);
+    }
+
+    /**
+     * @Given /^a User Group$/
+     */
+    public function createUserGroup()
+    {
+        $userService = $this->getRepository()->getUserService();
+
+        $groupCreateStruct = $userService->newUserGroupCreateStruct(self::$language);
+        $groupCreateStruct->setField('name', uniqid('User registration group '));
+        $this->customUserGroup = $userService->createUserGroup(
+            $groupCreateStruct,
+            $userService->loadUserGroup(self::$groupId)
+        );
+    }
+
+    /**
+     * @Given /^the following configuration:$/
+     */
+    public function theFollowingConfiguration(PyStringNode $extraConfigurationString)
+    {
+        $extraConfigurationString = str_replace(
+            '<userGroupContentId>',
+            $this->customUserGroup->id,
+            $extraConfigurationString
+        );
+
+        $extraConfig = Yaml::parse($extraConfigurationString);
+
+        $platformConfig = Yaml::parse(file_get_contents('app/config/ezplatform_behat.yml'));
+        $platformConfig['ezpublish'] = array_merge(
+            $platformConfig['ezpublish'],
+            $extraConfig['ezpublish']
+        );
+
+        file_put_contents(
+            'app/config/ezplatform_behat.yml',
+            Yaml::dump($platformConfig, 5, 4)
+        );
+
+        echo shell_exec('php app/console --env=behat cache:clear');
+    }
+
+    /**
+     * @When /^I register a user account$/
+     */
+    public function iRegisterAUserAccount()
+    {
+        $this->loginAsUserWithUserRegisterPolicy();
+        $this->visitPath('/register');
+        $this->assertSession()->statusCodeEquals(200);
+        $this->iFillInTheFormWithValidValues();
+        $this->iClickOnTheRegisterButton();
+        $this->iAmOnTheRegistrationConfirmationPage();
+        $this->iSeeARegistrationConfirmationMessage();
+    }
+
+    /**
+     * @Then /^the user is created in this user group$/
+     */
+    public function theUserIsCreatedInThisUserGroup()
+    {
+        $userService = $this->getRepository()->getUserService();
+        $user = $userService->loadUserByLogin($this->registrationUsername);
+        $userGroups = $userService->loadUserGroupsOfUser($user);
+
+        PHPUnit_Framework_Assert::assertEquals(
+            $this->customUserGroup->id,
+            $userGroups[0]->id
+        );
     }
 }
