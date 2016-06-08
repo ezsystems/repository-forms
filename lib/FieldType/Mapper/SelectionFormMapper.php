@@ -10,11 +10,15 @@
  */
 namespace EzSystems\RepositoryForms\FieldType\Mapper;
 
+use EzSystems\RepositoryForms\Data\Content\FieldData;
 use EzSystems\RepositoryForms\Data\FieldDefinitionData;
+use EzSystems\RepositoryForms\FieldType\DataTransformer\MultiSelectionValueTransformer;
+use EzSystems\RepositoryForms\FieldType\DataTransformer\SingleSelectionValueTransformer;
 use EzSystems\RepositoryForms\FieldType\FieldTypeFormMapperInterface;
+use EzSystems\RepositoryForms\FieldType\FieldValueFormMapperInterface;
 use Symfony\Component\Form\FormInterface;
 
-class SelectionFormMapper implements FieldTypeFormMapperInterface
+class SelectionFormMapper implements FieldTypeFormMapperInterface, FieldValueFormMapperInterface
 {
     /**
      * Selection items can be added and removed, the collection field type is used for this.
@@ -45,5 +49,36 @@ class SelectionFormMapper implements FieldTypeFormMapperInterface
                 'property_path' => 'fieldSettings[options]',
                 'label' => 'field_definition.ezselection.options',
             ]);
+    }
+
+    public function mapFieldValueForm(FormInterface $fieldForm, FieldData $data)
+    {
+        $fieldDefinition = $data->fieldDefinition;
+        $formConfig = $fieldForm->getConfig();
+        $label = $fieldDefinition->getName($formConfig->getOption('languageCode')) ?: reset($fieldDefinition->getNames());
+
+        $fieldForm
+            ->add(
+                $formConfig->getFormFactory()->createBuilder()
+                    ->create(
+                        'value',
+                        'choice',
+                        [
+                            'required' => $fieldDefinition->isRequired,
+                            'label' => $label,
+                            'multiple' => $fieldDefinition->fieldSettings['isMultiple'],
+                            'choices' => array_flip($fieldDefinition->fieldSettings['options']),
+                            'choices_as_values' => true,
+                        ]
+                    )
+                    ->addModelTransformer(
+                        $fieldDefinition->fieldSettings['isMultiple'] ?
+                            new MultiSelectionValueTransformer() :
+                            new SingleSelectionValueTransformer()
+                    )
+                    // Deactivate auto-initialize as we're not on the root form.
+                    ->setAutoInitialize(false)
+                    ->getForm()
+            );
     }
 }

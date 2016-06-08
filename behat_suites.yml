@@ -13,5 +13,7 @@ repository-forms:
             paths:
                 - vendor/ezsystems/repository-forms/features/FieldTypeForm
             contexts:
-                - EzSystems\RepositoryForms\Features\Context\FieldTypeFormContext
                 - EzSystems\RepositoryForms\Features\Context\ContentType
+                - EzSystems\RepositoryForms\Features\Context\FieldTypeFormContext
+                - EzSystems\RepositoryForms\Features\Context\SelectionFieldTypeFormContext
+                - Behat\MinkExtension\Context\MinkContext

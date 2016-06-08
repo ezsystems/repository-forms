@@ -108,5 +108,9 @@ final class ContentType extends RawMinkContext implements Context, SnippetAccept
         );
 
         $this->contentTypeService->publishContentTypeDraft($contentTypeDraft);
+
+        $this->currentContentType = $this->contentTypeService->loadContentTypeByIdentifier(
+            $this->currentContentType->identifier
+        );
     }
 }
