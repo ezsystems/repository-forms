@@ -19,3 +19,16 @@ Scenario: A new user account can be registered from "/register"
      Then I am on the registration confirmation page
       And I see a registration confirmation message
       And the user account has been created
+
+Scenario: The user group where registered users are created can be customized
+    Given a User Group
+      And the following configuration:
+      """
+      ezpublish:
+        system:
+          default:
+            users:
+              registration_group_id: <userGroupContentId>
+      """
+     When I register a user account
+     Then the user is created in this user group
