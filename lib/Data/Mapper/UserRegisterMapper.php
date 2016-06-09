@@ -9,9 +9,10 @@
 namespace EzSystems\RepositoryForms\Data\Mapper;
 
 use eZ\Publish\API\Repository\Values\Content\Field;
-use eZ\Publish\API\Repository\Values\ValueObject;
 use EzSystems\RepositoryForms\Data\Content\FieldData;
 use EzSystems\RepositoryForms\Data\User\UserCreateData;
+use EzSystems\RepositoryForms\UserRegister\RegistrationContentTypeLoader;
+use EzSystems\RepositoryForms\UserRegister\RegistrationGroupLoader;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
@@ -20,13 +21,24 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 class UserRegisterMapper
 {
     /**
+     * @var RegistrationContentTypeLoader
+     */
+    private $contentTypeLoader;
+
+    /**
+     * @var RegistrationGroupLoader
+     */
+    private $parentGroupLoader;
+
+    /**
      * @var array
      */
     private $params;
 
-    public function __construct(array $params = [])
+    public function __construct(RegistrationContentTypeLoader $contentTypeLoader, RegistrationGroupLoader $registrationGroupLoader)
     {
-        $this->params = $params;
+        $this->contentTypeLoader = $contentTypeLoader;
+        $this->parentGroupLoader = $registrationGroupLoader;
     }
 
     public function setParam($name, $value)
@@ -35,30 +47,28 @@ class UserRegisterMapper
     }
 
     /**
-     * @param array $params Parameters override array. See configureOptions().
-     *
      * @return UserCreateData
      */
-    public function mapToFormData(ValueObject $contentType, array $params = [])
+    public function mapToFormData()
     {
         $resolver = new OptionsResolver();
         $this->configureOptions($resolver);
-        $params = $resolver->resolve($params + $this->params);
+        $this->params = $resolver->resolve($this->params);
+
+        $contentType = $this->contentTypeLoader->loadContentType();
 
         $data = new UserCreateData([
             'contentType' => $contentType,
             'mainLanguageCode' => $this->params['language'],
         ]);
-        if (isset($params['parentGroup'])) {
-            $data->addParentGroup($params['parentGroup']);
-        }
+        $data->addParentGroup($this->parentGroupLoader->loadGroup());
 
         foreach ($contentType->fieldDefinitions as $fieldDef) {
             $data->addFieldData(new FieldData([
                 'fieldDefinition' => $fieldDef,
                 'field' => new Field([
                     'fieldDefIdentifier' => $fieldDef->identifier,
-                    'languageCode' => $params['language'],
+                    'languageCode' => $this->params['language'],
                 ]),
                 'value' => $fieldDef->defaultValue,
             ]));
@@ -69,9 +79,6 @@ class UserRegisterMapper
 
     private function configureOptions(OptionsResolver $optionsResolver)
     {
-        $optionsResolver
-            ->setDefined('parentGroup')
-            ->addAllowedTypes('parentGroup', '\eZ\Publish\API\Repository\Values\User\UserGroup')
-            ->setRequired('language');
+        $optionsResolver->setRequired('language');
     }
 }

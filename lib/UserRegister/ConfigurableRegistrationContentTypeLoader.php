@@ -12,9 +12,9 @@ use eZ\Publish\API\Repository\Repository;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
- * Loads the registration user group from a configured, injected group ID.
+ * Loads the registration content type from a configured, injected content type identifier.
  */
-class ConfigurableRegistrationGroupLoader implements RegistrationGroupLoader
+class ConfigurableRegistrationContentTypeLoader implements RegistrationContentTypeLoader
 {
     /**
      * @var Repository
@@ -39,7 +39,7 @@ class ConfigurableRegistrationGroupLoader implements RegistrationGroupLoader
         return $this;
     }
 
-    public function loadGroup()
+    public function loadContentType()
     {
         $resolver = new OptionsResolver();
         $this->configureOptions($resolver);
@@ -47,15 +47,18 @@ class ConfigurableRegistrationGroupLoader implements RegistrationGroupLoader
 
         return $this->repository->sudo(
             function () {
-                return $this->repository->getUserService()->loadUserGroup(
-                    $this->params['groupId']
-                );
+                return
+                    $this->repository
+                        ->getContentTypeService()
+                        ->loadContentTypeByIdentifier(
+                            $this->params['contentTypeIdentifier']
+                        );
             }
         );
     }
 
     private function configureOptions(OptionsResolver $optionsResolver)
     {
-        $optionsResolver->setRequired('groupId');
+        $optionsResolver->setRequired('contentTypeIdentifier');
     }
 }

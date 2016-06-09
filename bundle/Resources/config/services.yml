@@ -49,6 +49,8 @@ parameters:
 
     ezrepoforms.controller.content_edit.class: EzSystems\RepositoryFormsBundle\Controller\ContentEditController
 
+    ezrepoforms.user_content_type_identifier: "user"
+
 services:
     # deprecated in 1.1, will be removed in 2.0
     ezrepoforms.field_type_form_mapper.registry:
@@ -301,7 +303,6 @@ services:
     ezrepoforms.controller.user_register:
         class: 'EzSystems\RepositoryFormsBundle\Controller\UserRegisterController'
         arguments:
-            - "@ezpublish.api.service.content_type"
             - "@ezrepoforms.form_data_mapper.user_register"
             - "@ezrepoforms.user_register.registration_group_loader.configurable"
             - "@ezrepoforms.action_dispatcher.content"
@@ -318,9 +319,19 @@ services:
         arguments:
             - "@ezpublish.api.repository"
         calls:
-            - [setGroupId, ["$users.registration_group$"]]
+            - [setParam, ["groupId", "$users.registration_group$"]]
+
+    ezrepoforms.user_register.registration_content_type_loader.configurable:
+        class: EzSystems\RepositoryForms\UserRegister\ConfigurableRegistrationContentTypeLoader
+        arguments:
+            - "@ezpublish.api.repository"
+        calls:
+            - [setParam, ["contentTypeIdentifier", "%ezrepoforms.user_content_type_identifier%"]]
 
     ezrepoforms.form_data_mapper.user_register:
         class: EzSystems\RepositoryForms\Data\Mapper\UserRegisterMapper
+        arguments:
+            - "@ezrepoforms.user_register.registration_content_type_loader.configurable"
+            - "@ezrepoforms.user_register.registration_group_loader.configurable"
         calls:
-            - [setParam, ['language', "@=service('ezpublish.config.resolver').getParameter('languages', null, null)[0]"]]
+            - [setParam, ["language", "@=service('ezpublish.config.resolver').getParameter('languages', null, null)[0]"]]
