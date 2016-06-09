@@ -8,56 +8,30 @@
  */
 namespace EzSystems\RepositoryForms\UserRegister;
 
-use eZ\Publish\API\Repository\Repository;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
  * Loads the registration content type from a configured, injected content type identifier.
  */
-class ConfigurableRegistrationContentTypeLoader implements RegistrationContentTypeLoader
+class ConfigurableRegistrationContentTypeLoader
+    extends ConfigurableSudoRepositoryLoader
+    implements RegistrationContentTypeLoader
 {
-    /**
-     * @var Repository
-     */
-    private $repository;
-
-    /**
-     * @var array
-     */
-    private $params = [];
-
-    public function __construct(Repository $repository, $params = null)
-    {
-        $this->repository = $repository;
-        $this->params = $params;
-    }
-
-    public function setParam($name, $value)
-    {
-        $this->params[$name] = $value;
-
-        return $this;
-    }
-
     public function loadContentType()
     {
-        $resolver = new OptionsResolver();
-        $this->configureOptions($resolver);
-        $this->params = $resolver->resolve($this->params);
-
-        return $this->repository->sudo(
+        return $this->sudo(
             function () {
                 return
-                    $this->repository
+                    $this->getRepository()
                         ->getContentTypeService()
                         ->loadContentTypeByIdentifier(
-                            $this->params['contentTypeIdentifier']
+                            $this->getParam('contentTypeIdentifier')
                         );
             }
         );
     }
 
-    private function configureOptions(OptionsResolver $optionsResolver)
+    protected function configureOptions(OptionsResolver $optionsResolver)
     {
         $optionsResolver->setRequired('contentTypeIdentifier');
     }
