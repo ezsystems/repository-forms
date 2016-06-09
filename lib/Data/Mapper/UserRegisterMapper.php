@@ -17,15 +17,38 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 /**
  * Form data mapper for user registration / creation.
  */
-class UserRegisterMapper implements FormDataMapperInterface
+class UserRegisterMapper
 {
+    /**
+     * @var array
+     */
+    private $params;
+
+    public function __construct(array $params = [])
+    {
+        $this->params = $params;
+    }
+
+    public function setParam($name, $value)
+    {
+        $this->params[$name] = $value;
+    }
+
+    /**
+     * @param array $params Parameters override array. See configureOptions().
+     *
+     * @return UserCreateData
+     */
     public function mapToFormData(ValueObject $contentType, array $params = [])
     {
         $resolver = new OptionsResolver();
         $this->configureOptions($resolver);
-        $params = $resolver->resolve($params);
+        $params = $resolver->resolve($params + $this->params);
 
-        $data = new UserCreateData(['contentType' => $contentType, 'mainLanguageCode' => $params['mainLanguageCode']]);
+        $data = new UserCreateData([
+            'contentType' => $contentType,
+            'mainLanguageCode' => $this->params['language'],
+        ]);
         if (isset($params['parentGroup'])) {
             $data->addParentGroup($params['parentGroup']);
         }
@@ -35,7 +58,7 @@ class UserRegisterMapper implements FormDataMapperInterface
                 'fieldDefinition' => $fieldDef,
                 'field' => new Field([
                     'fieldDefIdentifier' => $fieldDef->identifier,
-                    'languageCode' => $params['mainLanguageCode'],
+                    'languageCode' => $params['language'],
                 ]),
                 'value' => $fieldDef->defaultValue,
             ]));
@@ -47,8 +70,8 @@ class UserRegisterMapper implements FormDataMapperInterface
     private function configureOptions(OptionsResolver $optionsResolver)
     {
         $optionsResolver
-            ->setRequired(['mainLanguageCode'])
-            ->setDefined(['parentGroup'])
-            ->addAllowedTypes('parentGroup', '\eZ\Publish\API\Repository\Values\User\UserGroup');
+            ->setDefined('parentGroup')
+            ->addAllowedTypes('parentGroup', '\eZ\Publish\API\Repository\Values\User\UserGroup')
+            ->setRequired('language');
     }
 }

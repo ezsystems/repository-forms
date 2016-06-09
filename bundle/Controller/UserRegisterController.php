@@ -26,6 +26,11 @@ class UserRegisterController extends Controller
     private $contentTypeService;
 
     /**
+     * @var UserRegisterMapper
+     */
+    private $userRegisterMapper;
+
+    /**
      * @var RegistrationGroupLoader
      */
     private $registrationGroupLoader;
@@ -47,11 +52,13 @@ class UserRegisterController extends Controller
 
     public function __construct(
         ContentTypeService $contentTypeService,
+        UserRegisterMapper $userRegisterMapper,
         RegistrationGroupLoader $registrationGroupLoader,
         ActionDispatcherInterface $contentActionDispatcher,
         Repository $repository
     ) {
         $this->contentTypeService = $contentTypeService;
+        $this->userRegisterMapper = $userRegisterMapper;
         $this->registrationGroupLoader = $registrationGroupLoader;
         $this->contentActionDispatcher = $contentActionDispatcher;
         $this->repository = $repository;
@@ -83,18 +90,16 @@ class UserRegisterController extends Controller
             throw new \Exception('You are not allowed to register a new account');
         }
 
-        $language = 'eng-GB';
-
         $contentType = $this->repository->sudo(
             function () {
                 return $this->contentTypeService->loadContentTypeByIdentifier('user');
             }
         );
 
-        $data = (new UserRegisterMapper())->mapToFormData($contentType, [
-            'mainLanguageCode' => $language,
-        ]);
+        $data = $this->userRegisterMapper->mapToFormData($contentType);
         $data->addParentGroup($this->registrationGroupLoader->getParentGroup($data));
+
+        $language = $data->mainLanguageCode;
 
         $form = $this->createForm(new UserRegisterType(), $data, ['languageCode' => $language]);
         $form->handleRequest($request);
