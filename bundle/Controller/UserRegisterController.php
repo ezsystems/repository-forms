@@ -9,7 +9,6 @@
 namespace EzSystems\RepositoryFormsBundle\Controller;
 
 use eZ\Bundle\EzPublishCoreBundle\Controller;
-use eZ\Publish\API\Repository\ContentTypeService;
 use eZ\Publish\API\Repository\Repository;
 use EzSystems\RepositoryForms\Data\Mapper\UserRegisterMapper;
 use eZ\Publish\Core\MVC\Symfony\Security\Authorization\Attribute;
@@ -21,14 +20,9 @@ use Symfony\Component\HttpFoundation\Request;
 class UserRegisterController extends Controller
 {
     /**
-     * @var ContentTypeService
+     * @var UserRegisterMapper
      */
-    private $contentTypeService;
-
-    /**
-     * @var RegistrationGroupLoader
-     */
-    private $registrationGroupLoader;
+    private $userRegisterMapper;
 
     /**
      * @var ActionDispatcherInterface
@@ -36,22 +30,17 @@ class UserRegisterController extends Controller
     private $contentActionDispatcher;
 
     /**
-     * @var Repository
-     */
-    private $repository;
-
-    /**
      * @var string
      */
     private $pagelayout;
 
     public function __construct(
-        ContentTypeService $contentTypeService,
+        UserRegisterMapper $userRegisterMapper,
         RegistrationGroupLoader $registrationGroupLoader,
         ActionDispatcherInterface $contentActionDispatcher,
         Repository $repository
     ) {
-        $this->contentTypeService = $contentTypeService;
+        $this->userRegisterMapper = $userRegisterMapper;
         $this->registrationGroupLoader = $registrationGroupLoader;
         $this->contentActionDispatcher = $contentActionDispatcher;
         $this->repository = $repository;
@@ -83,20 +72,14 @@ class UserRegisterController extends Controller
             throw new \Exception('You are not allowed to register a new account');
         }
 
-        $language = 'eng-GB';
-
-        $contentType = $this->repository->sudo(
-            function () {
-                return $this->contentTypeService->loadContentTypeByIdentifier('user');
-            }
+        $data = $this->userRegisterMapper->mapToFormData();
+        $language = $data->mainLanguageCode;
+        $form = $this->createForm(
+            new UserRegisterType(),
+            $data,
+            ['languageCode' => $language]
         );
 
-        $data = (new UserRegisterMapper())->mapToFormData($contentType, [
-            'mainLanguageCode' => $language,
-        ]);
-        $data->addParentGroup($this->registrationGroupLoader->getParentGroup($data));
-
-        $form = $this->createForm(new UserRegisterType(), $data, ['languageCode' => $language]);
         $form->handleRequest($request);
 
         if ($form->isValid()) {

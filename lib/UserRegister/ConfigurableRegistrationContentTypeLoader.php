@@ -11,27 +11,28 @@ namespace EzSystems\RepositoryForms\UserRegister;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
- * Loads the registration user group from a configured, injected group ID.
+ * Loads the registration content type from a configured, injected content type identifier.
  */
-class ConfigurableRegistrationGroupLoader
+class ConfigurableRegistrationContentTypeLoader
     extends ConfigurableSudoRepositoryLoader
-    implements RegistrationGroupLoader
+    implements RegistrationContentTypeLoader
 {
-    public function loadGroup()
+    public function loadContentType()
     {
         return $this->sudo(
             function () {
-                return $this->getRepository()
-                    ->getUserService()
-                    ->loadUserGroup(
-                        $this->getParam('groupId')
-                    );
+                return
+                    $this->getRepository()
+                        ->getContentTypeService()
+                        ->loadContentTypeByIdentifier(
+                            $this->getParam('contentTypeIdentifier')
+                        );
             }
         );
     }
 
     protected function configureOptions(OptionsResolver $optionsResolver)
     {
-        $optionsResolver->setRequired('groupId');
+        $optionsResolver->setRequired('contentTypeIdentifier');
     }
 }

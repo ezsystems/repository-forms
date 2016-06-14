@@ -8,17 +8,17 @@
  */
 namespace EzSystems\RepositoryForms\UserRegister;
 
-use eZ\Publish\API\Repository\Values\User\UserGroup;
+use eZ\Publish\API\Repository\Values\ContentType\ContentType;
 
 /**
- * Used to load a user group during registration.
+ * Loads the content type used by user registration.
  */
-interface RegistrationGroupLoader
+interface RegistrationContentTypeLoader
 {
     /**
-     * Loads a parent group.
+     * Gets the Content Type used by user registration.
      *
-     * @return UserGroup
+     * @return ContentType
      */
-    public function loadGroup();
+    public function loadContentType();
 }
