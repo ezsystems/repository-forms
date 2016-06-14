@@ -27,8 +27,48 @@ Scenario: The user group where registered users are created can be customized
       ezpublish:
         system:
           default:
-            users:
-              registration_group_id: <userGroupContentId>
+            user_registration:
+              group_id: <userGroupContentId>
       """
      When I register a user account
      Then the user is created in this user group
+
+Scenario: The user registration templates can be customized
+    Given I do have the user/register policy
+    Given the following user registration templates configuration:
+      """
+      ezpublish:
+        system:
+          default:
+            user_registration:
+              templates:
+                form: 'user/registration_form.html.twig'
+                confirmation: 'user/registration_confirmation.html.twig'
+      """
+      And the following template in "app/Resources/views/user/registration_form.html.twig":
+      """
+      {% extends noLayout is defined and noLayout == true ? viewbaseLayout : pagelayout %}
+
+      {% block content %}
+          {% import "EzSystemsRepositoryFormsBundle:Content:content_form.html.twig" as contentForms %}
+
+          <section class="ez-content-edit">
+              {{ contentForms.display_form(form) }}
+          </section>
+      {% endblock %}
+      """
+      And the following template in "app/Resources/views/user/registration_confirmation.html.twig":
+      """
+      {% extends noLayout is defined and noLayout == true ? viewbaseLayout : pagelayout %}
+
+      {% block content %}
+          <h1>Your account has been created</h1>
+          <p class="user-register-confirmation-message">
+              Thank you for registering an account. You can now <a href="{{ path('login') }}">login</a>.
+          </p>
+      {% endblock %}
+      """
+     When I go to "/register"
+     Then the form is rendered using the "user/registration_form.html.twig" template
+     When I register a user account
+     Then the confirmation page is rendered using the "user/registration_confirmation.html.twig" template

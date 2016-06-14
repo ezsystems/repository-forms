@@ -13,6 +13,8 @@ use EzSystems\RepositoryForms\Data\Mapper\UserRegisterMapper;
 use eZ\Publish\Core\MVC\Symfony\Security\Authorization\Attribute;
 use EzSystems\RepositoryForms\Form\ActionDispatcher\ActionDispatcherInterface;
 use EzSystems\RepositoryForms\Form\Type\User\UserRegisterType;
+use EzSystems\RepositoryForms\UserRegister\View\UserRegisterConfirmView;
+use EzSystems\RepositoryForms\UserRegister\View\UserRegisterFormView;
 use Symfony\Component\HttpFoundation\Request;
 
 class UserRegisterController extends Controller
@@ -27,28 +29,12 @@ class UserRegisterController extends Controller
      */
     private $contentActionDispatcher;
 
-    /**
-     * @var string
-     */
-    private $pagelayout;
-
     public function __construct(
         UserRegisterMapper $userRegisterMapper,
         ActionDispatcherInterface $contentActionDispatcher
     ) {
         $this->userRegisterMapper = $userRegisterMapper;
         $this->contentActionDispatcher = $contentActionDispatcher;
-    }
-
-    /**
-     * @param string $pagelayout
-     * @return ContentEditController
-     */
-    public function setPagelayout($pagelayout)
-    {
-        $this->pagelayout = $pagelayout;
-
-        return $this;
     }
 
     /**
@@ -83,18 +69,14 @@ class UserRegisterController extends Controller
             }
         }
 
-        return $this->render('EzSystemsRepositoryFormsBundle:Content:content_edit.html.twig', [
-            'form' => $form->createView(),
-            'languageCode' => $language,
-            'pagelayout' => $this->pagelayout,
-        ]);
+        return new UserRegisterFormView(
+            null,
+            ['form' => $form->createView()]
+        );
     }
 
     public function registerConfirmAction()
     {
-        return $this->render(
-            '@EzSystemsRepositoryForms/User/register_confirmation.html.twig',
-            ['pagelayout' => $this->pagelayout]
-        );
+        return new UserRegisterConfirmView();
     }
 }

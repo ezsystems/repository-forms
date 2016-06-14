@@ -9,8 +9,11 @@ namespace EzSystems\RepositoryForms\Features\Context;
 
 use Behat\Behat\Context\Context;
 use Behat\Behat\Context\SnippetAcceptingContext;
+use Behat\Behat\Hook\Scope\BeforeScenarioScope;
+use Behat\Behat\Tester\Exception\PendingException;
 use Behat\Gherkin\Node\PyStringNode;
 use Behat\MinkExtension\Context\RawMinkContext;
+use eZ\Bundle\EzPublishCoreBundle\Features\Context\YamlConfigurationContext;
 use eZ\Publish\API\Repository\Repository;
 use eZ\Publish\API\Repository\Values\User\Role;
 use eZ\Publish\API\Repository\Values\User\User;
@@ -18,6 +21,7 @@ use eZ\Publish\API\Repository\Values\User\UserGroup;
 use eZ\Publish\Core\Repository\Values\User\RoleCreateStruct;
 use EzSystems\PlatformBehatBundle\Context\RepositoryContext;
 use PHPUnit_Framework_Assert;
+use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Yaml\Yaml;
 
 class UserRegistrationContext extends RawMinkContext implements Context, SnippetAcceptingContext
@@ -39,11 +43,24 @@ class UserRegistrationContext extends RawMinkContext implements Context, Snippet
     private $customUserGroup;
 
     /**
+     * @var YamlConfigurationContext
+     */
+    private $yamlConfigurationContext;
+
+    /**
      * @injectService $repository @ezpublish.api.repository
      */
     public function __construct(Repository $repository)
     {
         $this->setRepository($repository);
+    }
+
+    /** @BeforeScenario */
+    public function gatherContexts(BeforeScenarioScope $scope)
+    {
+        $this->yamlConfigurationContext = $scope->getEnvironment()->getContext(
+            'eZ\Bundle\EzPublishCoreBundle\Features\Context\YamlConfigurationContext'
+        );
     }
 
     /**
@@ -300,6 +317,55 @@ class UserRegistrationContext extends RawMinkContext implements Context, Snippet
         PHPUnit_Framework_Assert::assertEquals(
             $this->customUserGroup->id,
             $userGroups[0]->id
+        );
+    }
+
+    /**
+     * @Given /^the following user registration templates configuration:$/
+     */
+    public function addRegistrationTemplatesConfiguration(PyStringNode $string)
+    {
+        $this->yamlConfigurationContext->addConfiguration(Yaml::parse($string));
+    }
+
+    /**
+     * @Given /^the following template in "([^"]*)":$/
+     */
+    public function createTemplateAt($path, PyStringNode $contents)
+    {
+        $fs = new Filesystem();
+        $fs->mkdir(dirname($path));
+        $fs->dumpFile($path, $contents);
+    }
+
+    /**
+     * @Then /^the confirmation page is rendered using the "([^"]*)" template$/
+     * @Then /^the form is rendered using the "([^"]*)" template$/
+     *
+     * @param string $template
+     *        The template path to look for.
+     *        If relative to app/Resources/views (example: user/register.html.twig),
+     *        the path is checked with the :path:file.html.twig syntax as well.
+     */
+    public function thePageIsRenderedUsingTheTemplateConfiguredIn($template)
+    {
+        $html = $this->getSession()->getPage()->getOuterHtml();
+        $found = (strpos($html, sprintf('<!-- STOP %s -->', $template)) !== false);
+
+        if (!$found && strpos($template, ':') === false) {
+            $alternativeTemplate = sprintf(
+                ':%s:%s',
+                dirname($template),
+                basename($template)
+            );
+            $found = (strpos($html, sprintf('<!-- STOP %s -->', $alternativeTemplate)) !== false);
+        }
+
+        PHPUnit_Framework_Assert::assertTrue(
+            $found,
+            "Couldn't find $template " .
+            (isset($alternativeTemplate) ? "nor $alternativeTemplate " : ' ') .
+            "in HTML:\n\n$html"
         );
     }
 }
