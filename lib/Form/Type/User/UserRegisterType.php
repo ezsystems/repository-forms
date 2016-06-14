@@ -61,7 +61,7 @@ class UserRegisterType extends AbstractType
         $resolver
             ->setDefaults([
                 'data_class' => '\eZ\Publish\API\Repository\Values\User\UserCreateStruct',
-                'translation_domain' => 'ezrepoforms_content',
+                'translation_domain' => 'ezrepoforms_user_registration',
             ])
             ->setRequired(['languageCode']);
     }
