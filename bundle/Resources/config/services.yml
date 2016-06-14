@@ -304,9 +304,7 @@ services:
         class: 'EzSystems\RepositoryFormsBundle\Controller\UserRegisterController'
         arguments:
             - "@ezrepoforms.form_data_mapper.user_register"
-            - "@ezrepoforms.user_register.registration_group_loader.configurable"
             - "@ezrepoforms.action_dispatcher.content"
-            - "@ezpublish.api.repository"
         parent: ezpublish.controller.base
         calls:
             - [setPagelayout, ["$pagelayout$"]]

@@ -9,12 +9,10 @@
 namespace EzSystems\RepositoryFormsBundle\Controller;
 
 use eZ\Bundle\EzPublishCoreBundle\Controller;
-use eZ\Publish\API\Repository\Repository;
 use EzSystems\RepositoryForms\Data\Mapper\UserRegisterMapper;
 use eZ\Publish\Core\MVC\Symfony\Security\Authorization\Attribute;
 use EzSystems\RepositoryForms\Form\ActionDispatcher\ActionDispatcherInterface;
 use EzSystems\RepositoryForms\Form\Type\User\UserRegisterType;
-use EzSystems\RepositoryForms\UserRegister\RegistrationGroupLoader;
 use Symfony\Component\HttpFoundation\Request;
 
 class UserRegisterController extends Controller
@@ -36,14 +34,10 @@ class UserRegisterController extends Controller
 
     public function __construct(
         UserRegisterMapper $userRegisterMapper,
-        RegistrationGroupLoader $registrationGroupLoader,
-        ActionDispatcherInterface $contentActionDispatcher,
-        Repository $repository
+        ActionDispatcherInterface $contentActionDispatcher
     ) {
         $this->userRegisterMapper = $userRegisterMapper;
-        $this->registrationGroupLoader = $registrationGroupLoader;
         $this->contentActionDispatcher = $contentActionDispatcher;
-        $this->repository = $repository;
     }
 
     /**
