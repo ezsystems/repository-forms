@@ -22,7 +22,7 @@ Scenario: A new user account can be registered from "/register"
 
 Scenario: The user group where registered users are created can be customized
     Given a User Group
-      And the following configuration:
+      And the following user registration group configuration:
       """
       ezpublish:
         system:
@@ -35,7 +35,7 @@ Scenario: The user group where registered users are created can be customized
 
 Scenario: The user registration templates can be customized
     Given I do have the user/register policy
-    Given the following user registration templates configuration:
+      And the following user registration templates configuration:
       """
       ezpublish:
         system:

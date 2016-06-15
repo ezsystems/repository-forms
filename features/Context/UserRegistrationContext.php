@@ -10,7 +10,6 @@ namespace EzSystems\RepositoryForms\Features\Context;
 use Behat\Behat\Context\Context;
 use Behat\Behat\Context\SnippetAcceptingContext;
 use Behat\Behat\Hook\Scope\BeforeScenarioScope;
-use Behat\Behat\Tester\Exception\PendingException;
 use Behat\Gherkin\Node\PyStringNode;
 use Behat\MinkExtension\Context\RawMinkContext;
 use eZ\Bundle\EzPublishCoreBundle\Features\Context\YamlConfigurationContext;
@@ -265,9 +264,9 @@ class UserRegistrationContext extends RawMinkContext implements Context, Snippet
     }
 
     /**
-     * @Given /^the following configuration:$/
+     * @Given /^the following user registration group configuration:$/
      */
-    public function theFollowingConfiguration(PyStringNode $extraConfigurationString)
+    public function addUserRegistrationConfiguration(PyStringNode $extraConfigurationString)
     {
         $extraConfigurationString = str_replace(
             '<userGroupContentId>',
@@ -275,20 +274,7 @@ class UserRegistrationContext extends RawMinkContext implements Context, Snippet
             $extraConfigurationString
         );
 
-        $extraConfig = Yaml::parse($extraConfigurationString);
-
-        $platformConfig = Yaml::parse(file_get_contents('app/config/ezplatform_behat.yml'));
-        $platformConfig['ezpublish'] = array_merge(
-            $platformConfig['ezpublish'],
-            $extraConfig['ezpublish']
-        );
-
-        file_put_contents(
-            'app/config/ezplatform_behat.yml',
-            Yaml::dump($platformConfig, 5, 4)
-        );
-
-        echo shell_exec('php app/console --env=behat cache:clear');
+        $this->yamlConfigurationContext->addConfiguration(Yaml::parse($extraConfigurationString));
     }
 
     /**
