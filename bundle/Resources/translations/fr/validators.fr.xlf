@@ -1,0 +1,59 @@
+<?xml version="1.0"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+    <file source-language="en" datatype="plaintext" original="file.ext">
+        <body>
+            <trans-unit id="1">
+                <source>ez.content_type.identifier.pattern</source>
+                <target>Les identifiant de type de contenu ne peuvent contenir que les lettres "a" à "z", des chiffres et des blancs soulignés.</target>
+            </trans-unit>
+            <trans-unit id="2">
+                <source>ez.content_type.names</source>
+                <target>Les noms de type de contenu ne peuvent pas être vide ni dépasser 255 caractères.</target>
+            </trans-unit>
+            <trans-unit id="3">
+                <source>ez.content_type.descriptions</source>
+                <target>Les descriptions de type de contenu ne peuvent dépasser 255 caractères.</target>
+            </trans-unit>
+            <trans-unit id="4">
+                <source>ez.content_type.identifier.unique</source>
+                <target>L'identifiant "%identifier%" existe déjà. Les identifiants de type de contenu doivent être unique.</target>
+            </trans-unit>
+            <trans-unit id="10">
+                <source>ez.field_definition.names</source>
+                <target>Les noms de définition de champ ne peuvent pas être vide ni dépasser 255 caractères.</target>
+            </trans-unit>
+            <trans-unit id="11">
+                <source>ez.field_definition.descriptions</source>
+                <target>Les descriptions de définition de champ ne peuvent pas dépasser 255 caractères.</target>
+            </trans-unit>
+            <trans-unit id="12">
+                <source>ez.field_definition.identifier.unique</source>
+                <target>L'identifiant "%identifier%" existe déjà dans le type de contenu.</target>
+            </trans-unit>
+            <trans-unit id="13">
+                <source>ez.field_definition.validator_configuration</source>
+                <target>La configuration du validateur n'est pas valide.</target>
+            </trans-unit>
+            <trans-unit id="14">
+                <source>ez.field_definition.field_settings</source>
+                <target>Les paramètres de champ ne sont pas valides.</target>
+            </trans-unit>
+            <trans-unit id="15">
+                <source>ez.field_definition.default_field_value</source>
+                <target>La valeur par défaut du champ n'est pas valide.</target>
+            </trans-unit>
+            <trans-unit id="b4bcdedc4147dd912dc0247cea16c750" resname="ez.role.identifier.unique">
+                <source>ez.role.identifier.unique</source>
+                <target>L'identifiant "%identifier%" existe déjà. L'identifiant de rôle doit être unique.</target>
+            </trans-unit>
+            <trans-unit id="5387d26cceb54294dafe82be9b0d61d0">
+                <source>ez.section.identifier.format</source>
+                <target>Les identifiants de section ne peuvent contenir que les lettres "a" à "z", des chiffres et des blancs soulignés.</target>
+            </trans-unit>
+            <trans-unit id="3782ffaac11648e8ead7248adb7a42bc">
+                <source>ez.section.identifier.unique</source>
+                <target>Une section avec cet identifiant existe déjà, merci d'en saisir un différent.</target>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>

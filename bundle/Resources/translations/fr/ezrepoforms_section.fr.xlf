@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+    <file source-language="en" datatype="plaintext" original="file.ext">
+        <body>
+            <trans-unit id="007cd5845351d36a9ec70173d2b44bb2">
+                <source>section.name.label</source>
+                <target>Nom de section:</target>
+            </trans-unit>
+            <trans-unit id="3de80c254c9555ad1347b034f93f3095">
+                <source>section.identifier.label</source>
+                <target>Identifiant de section:</target>
+            </trans-unit>
+            <trans-unit id="f066f9960df2f81907c3680c9148cef5">
+                <source>section.id.label</source>
+                <target>ID de Section:</target>
+            </trans-unit>
+            <trans-unit id="60ff6d8b447be276d65797a5244d79c3">
+                <source>section.error.id_already_exist</source>
+                <target>Une section avec cet ID existe déjà, merci d'en saisir un différent.</target>
+            </trans-unit>
+            <trans-unit id="a07809a8014c979ffe3e2256610b0ea4">
+                <source>section.error.cannot_delete_with_assigned_content</source>
+                <target>Impossible de supprimer une section assignée à du contenu.</target>
+            </trans-unit>
+            <trans-unit id="85af0dc2a9b83eb5cfc7871a73cbeab9">
+                <source>section.form.save</source>
+                <target>Sauvegarder</target>
+            </trans-unit>
+            <trans-unit id="e61b7d6232fcbd424e1a4b030475be25">
+                <source>section.form.delete</source>
+                <target>Supprimer</target>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>
