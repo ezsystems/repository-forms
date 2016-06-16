@@ -304,12 +304,8 @@ services:
         class: 'EzSystems\RepositoryFormsBundle\Controller\UserRegisterController'
         arguments:
             - "@ezrepoforms.form_data_mapper.user_register"
-            - "@ezrepoforms.user_register.registration_group_loader.configurable"
             - "@ezrepoforms.action_dispatcher.content"
-            - "@ezpublish.api.repository"
         parent: ezpublish.controller.base
-        calls:
-            - [setPagelayout, ["$pagelayout$"]]
 
     ez_content_edit:
         alias: ezrepoforms.controller.content_edit
@@ -319,7 +315,7 @@ services:
         arguments:
             - "@ezpublish.api.repository"
         calls:
-            - [setParam, ["groupId", "$users.registration_group$"]]
+            - [setParam, ["groupId", "$user_registration.group_id$"]]
 
     ezrepoforms.user_register.registration_content_type_loader.configurable:
         class: EzSystems\RepositoryForms\UserRegister\ConfigurableRegistrationContentTypeLoader
@@ -335,3 +331,12 @@ services:
             - "@ezrepoforms.user_register.registration_group_loader.configurable"
         calls:
             - [setParam, ["language", "@=service('ezpublish.config.resolver').getParameter('languages', null, null)[0]"]]
+
+    ezrepoforms.user_register.view_templates_listener:
+        class: EzSystems\RepositoryForms\EventListener\ViewTemplatesListener
+        tags:
+            - { name: kernel.event_subscriber }
+        calls:
+            - [setViewTemplate, ['EzSystems\RepositoryForms\UserRegister\View\UserRegisterFormView', "$user_registration.templates.form$"]]
+            - [setViewTemplate, ['EzSystems\RepositoryForms\UserRegister\View\UserRegisterConfirmView', "$user_registration.templates.confirmation$"]]
+            - [setPagelayout, ["$pagelayout$"]]

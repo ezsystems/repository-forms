@@ -22,3 +22,4 @@ repository-forms:
             contexts:
                 - EzSystems\RepositoryForms\Features\Context\UserRegistrationContext
                 - Behat\MinkExtension\Context\MinkContext
+                - eZ\Bundle\EzPublishCoreBundle\Features\Context\YamlConfigurationContext
