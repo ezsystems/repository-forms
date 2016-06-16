@@ -183,18 +183,34 @@
         {{- form_widget(form.isMultiple) -}}
     </div>
 
-    <div class="ezselection-settings options{% if group_class is not empty %} {{ group_class }}{% endif %}">
+    <div id="{{form.options.vars.id}}-ezselection-root-options-list"
+         class="ezselection-settings options{% if group_class is not empty %} {{ group_class }}{% endif %}"
+         data-prototype="{{ ( form_widget(form.options.vars.prototype) ~ ' ' ~
+                              '<button id="' ~ form.options.vars.id ~ '-ez-selection-delete-option-button-__prototype__"' ~
+                              '        class="pure-button ez-font-icon ez-button ez-button-delete ez-selection-delete-option-button"' ~
+                              '        data-relation-option-item-id="#' ~ form.options.vars.id ~ '-ezselection-option-list-item-__prototype__">' ~
+                                  'field_definition.ezselection.delete_option_button'|trans({}, 'ezrepoforms_content_type') ~
+                              '</button>'
+                            )|e('html_attr') }}">
         {{ form_label(form.options) }}
         {{ form_errors(form.options) }}
         {% for option in form.options %}
-            <div>
+            <div id="{{form.options.vars.id}}-ezselection-option-list-item-{{ loop.index0 }}"
+                 class="{{form.options.vars.id}}-ezselection-option-list-item ezselection-settings-option">
                 {{ form_errors(option) }}
                 {{ form_widget(option) }}
+                <button id="{{form.options.vars.id}}-ez-selection-delete-option-button-{{ loop.index0 }}"
+                        class="pure-button ez-font-icon ez-button ez-button-delete ez-selection-delete-option-button"
+                        data-relation-option-item-id="#{{form.options.vars.id}}-ezselection-option-list-item-{{ loop.index0 }}"
+                        >{{'field_definition.ezselection.delete_option_button'|trans({}, 'ezrepoforms_content_type')}}</button>
             </div>
         {% endfor %}
-        {# This field is used for adding new select items #}
-        {{ form_widget(form.options.vars.prototype) }}
     </div>
+    <button class="pure-button ez-font-icon ez-button ez-selection-add-option-button"
+            data-icon="&#xe616;"
+            data-relation-option-item-class="{{form.options.vars.id}}-ezselection-option-list-item"
+            data-relation-root-options-list-id="#{{form.options.vars.id}}-ezselection-root-options-list"
+            >{{"field_definition.ezselection.add_option_button"|trans({}, "ezrepoforms_content_type")}}</button>
 {% endblock %}
 
 {% block ezstring_field_definition_edit %}

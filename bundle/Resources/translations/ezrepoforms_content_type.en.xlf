@@ -279,6 +279,14 @@
                 <source>field_definition.ezselection.options</source>
                 <target>Options</target>
             </trans-unit>
+            <trans-unit id="57636d53a7b0446ef0d7a3ce86ed02ef">
+                <source>field_definition.ezselection.add_option_button</source>
+                <target>Add option</target>
+            </trans-unit>
+            <trans-unit id="76b96ff51fbd28b36248d6c2577ab6d4">
+                <source>field_definition.ezselection.delete_option_button</source>
+                <target>Delete option</target>
+            </trans-unit>
             <trans-unit id="140">
                 <source>field_definition.ezrichtext.num_rows</source>
                 <target>Number of text rows in the editor</target>
