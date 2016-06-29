@@ -16,6 +16,7 @@ use EzSystems\RepositoryForms\Form\Type\User\UserRegisterType;
 use EzSystems\RepositoryForms\UserRegister\View\UserRegisterConfirmView;
 use EzSystems\RepositoryForms\UserRegister\View\UserRegisterFormView;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpKernel\Exception\UnauthorizedHttpException;
 
 class UserRegisterController extends Controller
 {
@@ -49,7 +50,7 @@ class UserRegisterController extends Controller
     public function registerAction(Request $request)
     {
         if (!$this->isGranted(new Attribute('user', 'register'))) {
-            throw new \Exception('You are not allowed to register a new account');
+            throw new UnauthorizedHttpException('You are not allowed to register a new account');
         }
 
         $data = $this->userRegisterMapper->mapToFormData();
