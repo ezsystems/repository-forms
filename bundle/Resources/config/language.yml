@@ -6,7 +6,7 @@ parameters:
 services:
     ezrepoforms.validator.unique_language_code:
         class: %ezrepoforms.validator.unique_language_code.class%
-        arguments: [@ezpublish.api.service.language]
+        arguments: ["@ezpublish.api.service.language"]
         tags:
             - { name: validator.constraint_validator, alias: ezrepoforms.validator.unique_language_code }
 
@@ -16,6 +16,6 @@ services:
 
     ezrepoforms.form_processor.language:
         class: %ezrepoforms.form_processor.language.class%
-        arguments: [@ezpublish.api.service.language]
+        arguments: ["@ezpublish.api.service.language"]
         tags:
             - { name: kernel.event_subscriber }

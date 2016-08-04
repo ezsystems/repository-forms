@@ -35,20 +35,20 @@ services:
     # Form types
     ezrepoforms.policy.edit.form:
         class: %ezrepoforms.policy.edit.form.class%
-        arguments: [%ezpublish.api.role.policy_map%, @translator, @ezpublish.api.service.role]
+        arguments: [%ezpublish.api.role.policy_map%, "@translator", "@ezpublish.api.service.role"]
         tags:
             - { name: form.type, alias: ezrepoforms_policy_edit }
 
     ezrepoforms.policy.limitation.form:
         class: %ezrepoforms.policy.limitation.form.class%
-        arguments: [@ezrepoforms.limitation_form_mapper.registry, @ezrepoforms.limitation.form_mapper.null]
+        arguments: ["@ezrepoforms.limitation_form_mapper.registry", "@ezrepoforms.limitation.form_mapper.null"]
         tags:
             - { name: form.type, alias: ezrepoforms_policy_limitation_edit }
 
     # Validators
     ezrepoforms.validator.unique_role_identifier:
         class: %ezrepoforms.validator.unique_role_identifier.class%
-        arguments: [@ezpublish.api.service.role]
+        arguments: ["@ezpublish.api.service.role"]
         tags:
             - { name: validator.constraint_validator, alias: ezrepoforms.validator.unique_role_identifier }
 
@@ -64,13 +64,13 @@ services:
     # Form processors
     ezrepoforms.form_processor.role:
         class: %ezrepoforms.form_processor.role.class%
-        arguments: [@ezpublish.api.service.role]
+        arguments: ["@ezpublish.api.service.role"]
         tags:
             - { name: kernel.event_subscriber }
 
     ezrepoforms.form_processor.policy:
         class: %ezrepoforms.form_processor.policy.class%
-        arguments: [@ezpublish.api.service.role]
+        arguments: ["@ezpublish.api.service.role"]
         tags:
             - { name: kernel.event_subscriber }
 
@@ -99,77 +99,77 @@ services:
     ezrepoforms.limitation.form_mapper.contenttype:
         parent: ezrepoforms.limitation.form_mapper.multiple_selection
         class: %ezrepoforms.limitation.form_mapper.contenttype.class%
-        arguments: [@ezpublish.api.service.content_type]
+        arguments: ["@ezpublish.api.service.content_type"]
         tags:
             - { name: ez.limitation.formMapper, limitationType: Class }
 
     ezrepoforms.limitation.form_mapper.parentcontenttype:
         parent: ezrepoforms.limitation.form_mapper.multiple_selection
         class: %ezrepoforms.limitation.form_mapper.contenttype.class%
-        arguments: [@ezpublish.api.service.content_type]
+        arguments: ["@ezpublish.api.service.content_type"]
         tags:
             - { name: ez.limitation.formMapper, limitationType: ParentClass }
 
     ezrepoforms.limitation.form_mapper.section:
         parent: ezrepoforms.limitation.form_mapper.multiple_selection
         class: %ezrepoforms.limitation.form_mapper.section.class%
-        arguments: [@ezpublish.api.service.section]
+        arguments: ["@ezpublish.api.service.section"]
         tags:
             - { name: ez.limitation.formMapper, limitationType: Section }
 
     ezrepoforms.limitation.form_mapper.newsection:
         parent: ezrepoforms.limitation.form_mapper.multiple_selection
         class: %ezrepoforms.limitation.form_mapper.section.class%
-        arguments: [@ezpublish.api.service.section]
+        arguments: ["@ezpublish.api.service.section"]
         tags:
             - { name: ez.limitation.formMapper, limitationType: NewSection }
 
     ezrepoforms.limitation.form_mapper.objectstate:
         parent: ezrepoforms.limitation.form_mapper.multiple_selection
         class: %ezrepoforms.limitation.form_mapper.objectstate.class%
-        arguments: [@ezpublish.api.service.object_state]
+        arguments: ["@ezpublish.api.service.object_state"]
         tags:
             - { name: ez.limitation.formMapper, limitationType: State }
 
     ezrepoforms.limitation.form_mapper.newobjectstate:
         parent: ezrepoforms.limitation.form_mapper.multiple_selection
         class: %ezrepoforms.limitation.form_mapper.objectstate.class%
-        arguments: [@ezpublish.api.service.object_state]
+        arguments: ["@ezpublish.api.service.object_state"]
         tags:
             - { name: ez.limitation.formMapper, limitationType: NewState }
 
     ezrepoforms.limitation.form_mapper.language:
         parent: ezrepoforms.limitation.form_mapper.multiple_selection
         class: %ezrepoforms.limitation.form_mapper.language.class%
-        arguments: [@ezpublish.api.service.language]
+        arguments: ["@ezpublish.api.service.language"]
         tags:
             - { name: ez.limitation.formMapper, limitationType: Language }
 
     ezrepoforms.limitation.form_mapper.owner:
         parent: ezrepoforms.limitation.form_mapper.multiple_selection
         class: %ezrepoforms.limitation.form_mapper.owner.class%
-        arguments: [@translator]
+        arguments: ["@translator"]
         tags:
             - { name: ez.limitation.formMapper, limitationType: Owner }
 
     ezrepoforms.limitation.form_mapper.parentowner:
         parent: ezrepoforms.limitation.form_mapper.multiple_selection
         class: %ezrepoforms.limitation.form_mapper.owner.class%
-        arguments: [@translator]
+        arguments: ["@translator"]
         tags:
             - { name: ez.limitation.formMapper, limitationType: ParentOwner }
 
     ezrepoforms.limitation.form_mapper.group:
         parent: ezrepoforms.limitation.form_mapper.multiple_selection
         class: %ezrepoforms.limitation.form_mapper.group.class%
-        arguments: [@translator]
+        arguments: ["@translator"]
         tags:
             - { name: ez.limitation.formMapper, limitationType: Group }
 
     ezrepoforms.limitation.form_mapper.parentgroup:
         parent: ezrepoforms.limitation.form_mapper.multiple_selection
         class: %ezrepoforms.limitation.form_mapper.group.class%
-        arguments: [@translator]
+        arguments: ["@translator"]
         tags:
             - { name: ez.limitation.formMapper, limitationType: ParentGroup }
 
@@ -193,6 +193,6 @@ services:
     ezrepoforms.limitation.form_mapper.subtree:
         parent: ezrepoforms.limitation.form_mapper.udw_based
         class: %ezrepoforms.limitation.form_mapper.subtree.class%
-        arguments: [@ezpublish.api.service.location]
+        arguments: ["@ezpublish.api.service.location"]
         tags:
             - { name: ez.limitation.formMapper, limitationType: Subtree }
