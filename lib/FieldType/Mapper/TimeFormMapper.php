@@ -12,10 +12,10 @@ namespace EzSystems\RepositoryForms\FieldType\Mapper;
 
 use eZ\Publish\Core\FieldType\Time\Type;
 use EzSystems\RepositoryForms\Data\FieldDefinitionData;
-use EzSystems\RepositoryForms\FieldType\FieldTypeFormMapperInterface;
+use EzSystems\RepositoryForms\FieldType\FieldDefinitionFormMapperInterface;
 use Symfony\Component\Form\FormInterface;
 
-class TimeFormMapper implements FieldTypeFormMapperInterface
+class TimeFormMapper implements FieldDefinitionFormMapperInterface
 {
     public function mapFieldDefinitionForm(FormInterface $fieldDefinitionForm, FieldDefinitionData $data)
     {

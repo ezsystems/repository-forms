@@ -12,10 +12,10 @@ namespace EzSystems\RepositoryForms\FieldType\Mapper;
 
 use eZ\Publish\Core\FieldType\Date\Type;
 use EzSystems\RepositoryForms\Data\FieldDefinitionData;
-use EzSystems\RepositoryForms\FieldType\FieldTypeFormMapperInterface;
+use EzSystems\RepositoryForms\FieldType\FieldDefinitionFormMapperInterface;
 use Symfony\Component\Form\FormInterface;
 
-class DateFormMapper implements FieldTypeFormMapperInterface
+class DateFormMapper implements FieldDefinitionFormMapperInterface
 {
     public function mapFieldDefinitionForm(FormInterface $fieldDefinitionForm, FieldDefinitionData $data)
     {

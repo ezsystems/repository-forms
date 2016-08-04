@@ -11,10 +11,10 @@
 namespace EzSystems\RepositoryForms\FieldType\Mapper;
 
 use EzSystems\RepositoryForms\Data\FieldDefinitionData;
-use EzSystems\RepositoryForms\FieldType\FieldTypeFormMapperInterface;
+use EzSystems\RepositoryForms\FieldType\FieldDefinitionFormMapperInterface;
 use Symfony\Component\Form\FormInterface;
 
-class ISBNFormMapper implements FieldTypeFormMapperInterface
+class ISBNFormMapper implements FieldDefinitionFormMapperInterface
 {
     public function mapFieldDefinitionForm(FormInterface $fieldDefinitionForm, FieldDefinitionData $data)
     {

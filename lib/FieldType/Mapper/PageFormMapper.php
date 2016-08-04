@@ -12,10 +12,10 @@ namespace EzSystems\RepositoryForms\FieldType\Mapper;
 
 use eZ\Publish\Core\FieldType\Page\PageService;
 use EzSystems\RepositoryForms\Data\FieldDefinitionData;
-use EzSystems\RepositoryForms\FieldType\FieldTypeFormMapperInterface;
+use EzSystems\RepositoryForms\FieldType\FieldDefinitionFormMapperInterface;
 use Symfony\Component\Form\FormInterface;
 
-class PageFormMapper implements FieldTypeFormMapperInterface
+class PageFormMapper implements FieldDefinitionFormMapperInterface
 {
     /**
      * @var PageService Provides layout list used in form selector

@@ -14,11 +14,11 @@ use eZ\Publish\API\Repository\FieldTypeService;
 use EzSystems\RepositoryForms\Data\Content\FieldData;
 use EzSystems\RepositoryForms\Data\FieldDefinitionData;
 use EzSystems\RepositoryForms\FieldType\DataTransformer\FieldValueTransformer;
-use EzSystems\RepositoryForms\FieldType\FieldTypeFormMapperInterface;
+use EzSystems\RepositoryForms\FieldType\FieldDefinitionFormMapperInterface;
 use EzSystems\RepositoryForms\FieldType\FieldValueFormMapperInterface;
 use Symfony\Component\Form\FormInterface;
 
-class TextBlockFormMapper implements FieldTypeFormMapperInterface, FieldValueFormMapperInterface
+class TextBlockFormMapper implements FieldDefinitionFormMapperInterface, FieldValueFormMapperInterface
 {
     /**
      * @var \eZ\Publish\API\Repository\FieldTypeService

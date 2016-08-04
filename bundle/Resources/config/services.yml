@@ -79,7 +79,7 @@ services:
 
     ezrepoforms.field_definition.form_type:
         class: "%ezrepoforms.field_definition.form_type.class%"
-        arguments: ["@ezrepoforms.field_type_form_mapper.registry", "@ezpublish.api.service.field_type"]
+        arguments: ["@ezrepoforms.field_type_form_mapper.dispatcher", "@ezpublish.api.service.field_type"]
         calls:
             - [setGroupsList, ["@ezpublish.fields_groups.list"]]
         tags:

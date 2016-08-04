@@ -12,7 +12,7 @@ namespace EzSystems\RepositoryForms\Form\Type\FieldDefinition;
 
 use eZ\Publish\API\Repository\FieldTypeService;
 use eZ\Publish\Core\Helper\FieldsGroups\FieldsGroupsList;
-use EzSystems\RepositoryForms\FieldType\FieldTypeFormMapperRegistryInterface;
+use EzSystems\RepositoryForms\FieldType\FieldTypeFormMapperDispatcherInterface;
 use EzSystems\RepositoryForms\Form\DataTransformer\TranslatablePropertyTransformer;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -26,9 +26,9 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 class FieldDefinitionType extends AbstractType
 {
     /**
-     * @var FieldTypeFormMapperRegistryInterface
+     * @var \EzSystems\RepositoryForms\FieldType\FieldTypeFormMapperDispatcherInterface
      */
-    private $fieldTypeMapperRegistry;
+    private $fieldTypeMapperDispatcher;
 
     /**
      * @var FieldTypeService
@@ -40,9 +40,9 @@ class FieldDefinitionType extends AbstractType
      */
     private $groupsList;
 
-    public function __construct(FieldTypeFormMapperRegistryInterface $fieldTypeMapperRegistry, FieldTypeService $fieldTypeService)
+    public function __construct(FieldTypeFormMapperDispatcherInterface $fieldTypeMapperDispatcher, FieldTypeService $fieldTypeService)
     {
-        $this->fieldTypeMapperRegistry = $fieldTypeMapperRegistry;
+        $this->fieldTypeMapperDispatcher = $fieldTypeMapperDispatcher;
         $this->fieldTypeService = $fieldTypeService;
     }
 
@@ -112,10 +112,7 @@ class FieldDefinitionType extends AbstractType
             ]);
 
             // Let fieldType mappers do their jobs to complete the form.
-            if ($this->fieldTypeMapperRegistry->hasMapper($fieldTypeIdentifier)) {
-                $mapper = $this->fieldTypeMapperRegistry->getMapper($fieldTypeIdentifier);
-                $mapper->mapFieldDefinitionForm($form, $data);
-            }
+            $this->fieldTypeMapperDispatcher->map($form, $data);
         });
     }
 

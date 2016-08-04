@@ -12,11 +12,11 @@ namespace EzSystems\RepositoryForms\FieldType\Mapper;
 
 use EzSystems\RepositoryForms\Data\FieldDefinitionData;
 use EzSystems\RepositoryForms\FieldType\DataTransformer\CountryValueTransformer;
-use EzSystems\RepositoryForms\FieldType\FieldTypeFormMapperInterface;
+use EzSystems\RepositoryForms\FieldType\FieldDefinitionFormMapperInterface;
 use Symfony\Component\Form\Extension\Core\ChoiceList\ChoiceList;
 use Symfony\Component\Form\FormInterface;
 
-class CountryFormMapper implements FieldTypeFormMapperInterface
+class CountryFormMapper implements FieldDefinitionFormMapperInterface
 {
     /**
      * @var array Array of countries from ezpublish.fieldType.ezcountry.data

@@ -14,10 +14,10 @@ use eZ\Publish\API\Repository\ContentTypeService;
 use eZ\Publish\Core\FieldType\RelationList\Type;
 use eZ\Publish\Core\Helper\TranslationHelper;
 use EzSystems\RepositoryForms\Data\FieldDefinitionData;
-use EzSystems\RepositoryForms\FieldType\FieldTypeFormMapperInterface;
+use EzSystems\RepositoryForms\FieldType\FieldDefinitionFormMapperInterface;
 use Symfony\Component\Form\FormInterface;
 
-class RelationListFormMapper implements FieldTypeFormMapperInterface
+class RelationListFormMapper implements FieldDefinitionFormMapperInterface
 {
     /**
      * @var ContentTypeService Used to fetch list of available content types

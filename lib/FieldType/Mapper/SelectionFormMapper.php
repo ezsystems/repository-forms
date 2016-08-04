@@ -14,11 +14,11 @@ use EzSystems\RepositoryForms\Data\Content\FieldData;
 use EzSystems\RepositoryForms\Data\FieldDefinitionData;
 use EzSystems\RepositoryForms\FieldType\DataTransformer\MultiSelectionValueTransformer;
 use EzSystems\RepositoryForms\FieldType\DataTransformer\SingleSelectionValueTransformer;
-use EzSystems\RepositoryForms\FieldType\FieldTypeFormMapperInterface;
+use EzSystems\RepositoryForms\FieldType\FieldDefinitionFormMapperInterface;
 use EzSystems\RepositoryForms\FieldType\FieldValueFormMapperInterface;
 use Symfony\Component\Form\FormInterface;
 
-class SelectionFormMapper implements FieldTypeFormMapperInterface, FieldValueFormMapperInterface
+class SelectionFormMapper implements FieldDefinitionFormMapperInterface, FieldValueFormMapperInterface
 {
     /**
      * Selection items can be added and removed, the collection field type is used for this.

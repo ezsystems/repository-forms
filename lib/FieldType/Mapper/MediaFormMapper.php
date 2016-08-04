@@ -12,10 +12,10 @@ namespace EzSystems\RepositoryForms\FieldType\Mapper;
 
 use eZ\Publish\Core\FieldType\Media\Type;
 use EzSystems\RepositoryForms\Data\FieldDefinitionData;
-use EzSystems\RepositoryForms\FieldType\FieldTypeFormMapperInterface;
+use EzSystems\RepositoryForms\FieldType\FieldDefinitionFormMapperInterface;
 use Symfony\Component\Form\FormInterface;
 
-class MediaFormMapper implements FieldTypeFormMapperInterface
+class MediaFormMapper implements FieldDefinitionFormMapperInterface
 {
     public function mapFieldDefinitionForm(FormInterface $fieldDefinitionForm, FieldDefinitionData $data)
     {
