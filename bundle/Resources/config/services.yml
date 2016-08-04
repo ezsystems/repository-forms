@@ -100,12 +100,12 @@ services:
     ezrepoforms.field_type.form_mapper.ezbinaryfile:
         class: "%ezrepoforms.field_type.form_mapper.ezbinaryfile.class%"
         tags:
-            - { name: ez.fieldType.formMapper, fieldType: ezbinaryfile }
+            - { name: ez.fieldFormMapper.definition, fieldType: ezbinaryfile }
 
     ezrepoforms.field_type.form_mapper.ezboolean:
         class: "%ezrepoforms.field_type.form_mapper.ezboolean.class%"
         tags:
-            - { name: ez.fieldType.formMapper, fieldType: ezboolean }
+            - { name: ez.fieldFormMapper.value, fieldType: ezboolean }
         arguments:
             - "@ezpublish.api.service.field_type"
 
@@ -113,88 +113,91 @@ services:
         class: "%ezrepoforms.field_type.form_mapper.ezcountry.class%"
         arguments: ["%ezpublish.fieldType.ezcountry.data%"]
         tags:
-            - { name: ez.fieldType.formMapper, fieldType: ezcountry }
+            - { name: ez.fieldFormMapper.definition, fieldType: ezcountry }
 
     ezrepoforms.field_type.form_mapper.ezdate:
         class: "%ezrepoforms.field_type.form_mapper.ezdate.class%"
         tags:
-            - { name: ez.fieldType.formMapper, fieldType: ezdate }
+            - { name: ez.fieldFormMapper.definition, fieldType: ezdate }
 
     ezrepoforms.field_type.form_mapper.ezdatetime:
         class: "%ezrepoforms.field_type.form_mapper.ezdatetime.class%"
         tags:
-            - { name: ez.fieldType.formMapper, fieldType: ezdatetime }
+            - { name: ez.fieldFormMapper.definition, fieldType: ezdatetime }
 
     ezrepoforms.field_type.form_mapper.ezfloat:
         class: "%ezrepoforms.field_type.form_mapper.ezfloat.class%"
         tags:
-            - { name: ez.fieldType.formMapper, fieldType: ezfloat }
+            - { name: ez.fieldFormMapper.definition, fieldType: ezfloat }
 
     ezrepoforms.field_type.form_mapper.ezimage:
         class: "%ezrepoforms.field_type.form_mapper.ezimage.class%"
         tags:
-            - { name: ez.fieldType.formMapper, fieldType: ezimage }
+            - { name: ez.fieldFormMapper.definition, fieldType: ezimage }
 
     ezrepoforms.field_type.form_mapper.ezinteger:
         class: "%ezrepoforms.field_type.form_mapper.ezinteger.class%"
         tags:
-            - { name: ez.fieldType.formMapper, fieldType: ezinteger }
+            - { name: ez.fieldFormMapper.definition, fieldType: ezinteger }
 
     ezrepoforms.field_type.form_mapper.ezisbn:
         class: "%ezrepoforms.field_type.form_mapper.ezisbn.class%"
         tags:
-            - { name: ez.fieldType.formMapper, fieldType: ezisbn }
+            - { name: ez.fieldFormMapper.definition, fieldType: ezisbn }
 
     ezrepoforms.field_type.form_mapper.ezmedia:
         class: "%ezrepoforms.field_type.form_mapper.ezmedia.class%"
         tags:
-            - { name: ez.fieldType.formMapper, fieldType: ezmedia }
+            - { name: ez.fieldFormMapper.definition, fieldType: ezmedia }
 
     ezrepoforms.field_type.form_mapper.ezobjectrelation:
         class: "%ezrepoforms.field_type.form_mapper.ezobjectrelation.class%"
         tags:
-            - { name: ez.fieldType.formMapper, fieldType: ezobjectrelation }
+            - { name: ez.fieldFormMapper.definition, fieldType: ezobjectrelation }
 
     ezrepoforms.field_type.form_mapper.ezobjectrelationlist:
         class: "%ezrepoforms.field_type.form_mapper.ezobjectrelationlist.class%"
         arguments: ["@ezpublish.api.service.content_type", "@ezpublish.translation_helper"]
         tags:
-            - { name: ez.fieldType.formMapper, fieldType: ezobjectrelationlist }
+            - { name: ez.fieldFormMapper.definition, fieldType: ezobjectrelationlist }
 
     ezrepoforms.field_type.form_mapper.ezpage:
         class: "%ezrepoforms.field_type.form_mapper.ezpage.class%"
         arguments: ["@ezpublish.fieldType.ezpage.pageService"]
         tags:
-            - { name: ez.fieldType.formMapper, fieldType: ezpage }
+            - { name: ez.fieldFormMapper.definition, fieldType: ezpage }
 
     ezrepoforms.field_type.form_mapper.ezrichtext:
         class: "%ezrepoforms.field_type.form_mapper.ezrichtext.class%"
         tags:
-            - { name: ez.fieldType.formMapper, fieldType: ezrichtext }
+            - { name: ez.fieldFormMapper.definition, fieldType: ezrichtext }
 
     ezrepoforms.field_type.form_mapper.ezselection:
         class: "%ezrepoforms.field_type.form_mapper.ezselection.class%"
         tags:
-            - { name: ez.fieldType.formMapper, fieldType: ezselection }
+            - { name: ez.fieldFormMapper.definition, fieldType: ezselection }
+            - { name: ez.fieldFormMapper.value, fieldType: ezselection }
 
     ezrepoforms.field_type.form_mapper.ezstring:
         class: "%ezrepoforms.field_type.form_mapper.ezstring.class%"
         tags:
-            - { name: ez.fieldType.formMapper, fieldType: ezstring }
+            - { name: ez.fieldFormMapper.definition, fieldType: ezstring }
+            - { name: ez.fieldFormMapper.value, fieldType: ezstring }
         arguments:
             - "@ezpublish.api.service.field_type"
 
     ezrepoforms.field_type.form_mapper.eztext:
         class: "%ezrepoforms.field_type.form_mapper.eztext.class%"
         tags:
-            - { name: ez.fieldType.formMapper, fieldType: eztext }
+            - { name: ez.fieldFormMapper.definition, fieldType: eztext }
+            - { name: ez.fieldFormMapper.value, fieldType: eztext }
         arguments:
             - "@ezpublish.api.service.field_type"
 
     ezrepoforms.field_type.form_mapper.eztime:
         class: "%ezrepoforms.field_type.form_mapper.eztime.class%"
         tags:
-            - { name: ez.fieldType.formMapper, fieldType: eztime }
+            - { name: ez.fieldFormMapper.definition, fieldType: eztime }
 
     ezrepoforms.field_type.form_mapper.form_type_based:
         abstract: true
