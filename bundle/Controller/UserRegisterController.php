@@ -56,7 +56,7 @@ class UserRegisterController extends Controller
         $data = $this->userRegisterMapper->mapToFormData();
         $language = $data->mainLanguageCode;
         $form = $this->createForm(
-            new UserRegisterType(),
+            UserRegisterType::class,
             $data,
             ['languageCode' => $language]
         );

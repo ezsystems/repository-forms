@@ -9,6 +9,8 @@
 namespace EzSystems\RepositoryForms\Form\Type\ContentType;
 
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -22,8 +24,8 @@ class ContentTypeGroupDeleteType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('contentTypeGroupId', 'hidden')
-            ->add('delete', 'submit', ['label' => 'content_type.group.delete']);
+            ->add('contentTypeGroupId', HiddenType::class)
+            ->add('delete', SubmitType::class, ['label' => 'content_type.group.delete']);
     }
 
     public function configureOptions(OptionsResolver $resolver)

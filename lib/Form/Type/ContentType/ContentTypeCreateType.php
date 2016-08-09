@@ -11,6 +11,8 @@ namespace EzSystems\RepositoryForms\Form\Type\ContentType;
 use eZ\Publish\API\Repository\ContentTypeService;
 use eZ\Publish\API\Repository\Exceptions\NotFoundException;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\Callback;
@@ -44,7 +46,7 @@ class ContentTypeCreateType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('contentTypeGroupId', 'hidden', [
+            ->add('contentTypeGroupId', HiddenType::class, [
                 'constraints' => new Callback(
                     function ($contentTypeGroupId, ExecutionContextInterface $context) {
                         try {
@@ -58,6 +60,6 @@ class ContentTypeCreateType extends AbstractType
                     }
                 ),
             ])
-            ->add('create', 'submit', ['label' => 'content_type.create']);
+            ->add('create', SubmitType::class, ['label' => 'content_type.create']);
     }
 }

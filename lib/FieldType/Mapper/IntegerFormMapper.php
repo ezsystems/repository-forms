@@ -5,14 +5,13 @@
  *
  * @copyright Copyright (C) eZ Systems AS. All rights reserved.
  * @license For full copyright and license information view LICENSE file distributed with this source code.
- *
- * @version //autogentag//
  */
 namespace EzSystems\RepositoryForms\FieldType\Mapper;
 
 use EzSystems\RepositoryForms\Data\FieldDefinitionData;
 use EzSystems\RepositoryForms\FieldType\FieldDefinitionFormMapperInterface;
 use Symfony\Component\Form\FormInterface;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 
 class IntegerFormMapper implements FieldDefinitionFormMapperInterface
 {
@@ -20,14 +19,14 @@ class IntegerFormMapper implements FieldDefinitionFormMapperInterface
     {
         $fieldDefinitionForm
             ->add(
-                'minValue', 'integer', [
+                'minValue', IntegerType::class, [
                     'required' => false,
                     'property_path' => 'validatorConfiguration[IntegerValueValidator][minIntegerValue]',
                     'label' => 'field_definition.ezinteger.min_value',
                 ]
             )
             ->add(
-                'maxValue', 'integer', [
+                'maxValue', IntegerType::class, [
                     'required' => false,
                     'property_path' => 'validatorConfiguration[IntegerValueValidator][maxIntegerValue]',
                     'label' => 'field_definition.ezinteger.max_value',

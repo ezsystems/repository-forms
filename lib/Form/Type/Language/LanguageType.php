@@ -9,6 +9,9 @@
 namespace EzSystems\RepositoryForms\Form\Type\Language;
 
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -17,10 +20,10 @@ class LanguageType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('name', 'text')
-            ->add('languageCode', 'text')
-            ->add('enabled', 'checkbox', ['required' => false])
-            ->add('save', 'submit', ['label' => 'language.form.save']);
+            ->add('name', TextType::class)
+            ->add('languageCode', TextType::class)
+            ->add('enabled', CheckboxType::class, ['required' => false])
+            ->add('save', SubmitType::class, ['label' => 'language.form.save']);
     }
 
     public function getName()

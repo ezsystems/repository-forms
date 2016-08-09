@@ -5,14 +5,13 @@
  *
  * @copyright Copyright (C) eZ Systems AS. All rights reserved.
  * @license For full copyright and license information view LICENSE file distributed with this source code.
- *
- * @version //autogentag//
  */
 namespace EzSystems\RepositoryForms\FieldType\Mapper;
 
 use eZ\Publish\Core\FieldType\Date\Type;
 use EzSystems\RepositoryForms\Data\FieldDefinitionData;
 use EzSystems\RepositoryForms\FieldType\FieldDefinitionFormMapperInterface;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormInterface;
 
 class DateFormMapper implements FieldDefinitionFormMapperInterface
@@ -22,7 +21,7 @@ class DateFormMapper implements FieldDefinitionFormMapperInterface
         $fieldDefinitionForm
             ->add(
                 'defaultType',
-                'choice',
+                ChoiceType::class,
                 [
                     'choices' => [
                         Type::DEFAULT_EMPTY => 'field_definition.ezdate.default_type_empty',

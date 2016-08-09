@@ -5,27 +5,27 @@
  *
  * @copyright Copyright (C) eZ Systems AS. All rights reserved.
  * @license For full copyright and license information view LICENSE file distributed with this source code.
- *
- * @version //autogentag//
  */
 namespace EzSystems\RepositoryForms\FieldType\Mapper;
 
 use eZ\Publish\Core\FieldType\Media\Type;
 use EzSystems\RepositoryForms\Data\FieldDefinitionData;
 use EzSystems\RepositoryForms\FieldType\FieldDefinitionFormMapperInterface;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormInterface;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 
 class MediaFormMapper implements FieldDefinitionFormMapperInterface
 {
     public function mapFieldDefinitionForm(FormInterface $fieldDefinitionForm, FieldDefinitionData $data)
     {
         $fieldDefinitionForm
-            ->add('maxSize', 'integer', [
+            ->add('maxSize', IntegerType::class, [
                 'required' => false,
                 'property_path' => 'validatorConfiguration[FileSizeValidator][maxFileSize]',
                 'label' => 'field_definition.ezmedia.max_file_size',
             ])
-            ->add('mediaType', 'choice', [
+            ->add('mediaType', ChoiceType::class, [
                 'choices' => [
                     Type::TYPE_HTML5_VIDEO => 'field_definition.ezmedia.type_html5_video',
                     Type::TYPE_FLASH => 'field_definition.ezmedia.type_flash',

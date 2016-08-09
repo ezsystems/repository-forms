@@ -9,6 +9,7 @@
 namespace EzSystems\RepositoryForms\Form\Type\Role;
 
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -26,6 +27,6 @@ class RoleCreateType extends AbstractType
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('create', 'submit', ['label' => 'role.create']);
+        $builder->add('create', SubmitType::class, ['label' => 'role.create']);
     }
 }

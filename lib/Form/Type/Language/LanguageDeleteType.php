@@ -9,6 +9,8 @@
 namespace EzSystems\RepositoryForms\Form\Type\Language;
 
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -22,8 +24,8 @@ class LanguageDeleteType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('languageId', 'hidden')
-            ->add('delete', 'submit', ['label' => 'language.form.delete']);
+            ->add('languageId', HiddenType::class)
+            ->add('delete', SubmitType::class, ['label' => 'language.form.delete']);
     }
 
     public function configureOptions(OptionsResolver $resolver)

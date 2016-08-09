@@ -27,7 +27,7 @@ class ContentFieldType extends AbstractType
         $this->fieldTypeFormMapper = $fieldTypeFormMapper;
     }
 
-    public function getName()
+    public function getBlockPrefix()
     {
         return 'ezrepoforms_content_field';
     }

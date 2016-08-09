@@ -12,6 +12,7 @@ namespace EzSystems\RepositoryForms\Form\Type;
 
 use EzSystems\RepositoryForms\Form\DataTransformer\DateIntervalToArrayTransformer;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\FormBuilderInterface;
 
 /**
@@ -36,11 +37,11 @@ class DateTimeIntervalType extends AbstractType
     {
         $builder
             ->addViewTransformer(new DateIntervalToArrayTransformer())
-            ->add('year', 'integer')
-            ->add('month', 'integer')
-            ->add('day', 'integer')
-            ->add('hour', 'integer')
-            ->add('minute', 'integer')
-            ->add('second', 'integer');
+            ->add('year', IntegerType::class)
+            ->add('month', IntegerType::class)
+            ->add('day', IntegerType::class)
+            ->add('hour', IntegerType::class)
+            ->add('minute', IntegerType::class)
+            ->add('second', IntegerType::class);
     }
 }

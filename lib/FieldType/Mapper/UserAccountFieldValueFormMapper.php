@@ -1,11 +1,10 @@
 <?php
+
 /**
  * This file is part of the eZ RepositoryForms package.
  *
  * @copyright Copyright (C) eZ Systems AS. All rights reserved.
  * @license For full copyright and license information view LICENSE file distributed with this source code.
- *
- * @version //autogentag//
  */
 namespace EzSystems\RepositoryForms\FieldType\Mapper;
 
@@ -14,6 +13,7 @@ use eZ\Publish\Core\FieldType\User\Value as ApiUserValue;
 use EzSystems\RepositoryForms\Data\Content\FieldData;
 use EzSystems\RepositoryForms\Data\User\UserAccountFieldData;
 use EzSystems\RepositoryForms\FieldType\FieldValueFormMapperInterface;
+use EzSystems\RepositoryForms\Form\Type\User\UserAccountType;
 use Symfony\Component\Form\CallbackTransformer;
 use Symfony\Component\Form\FormInterface;
 
@@ -47,7 +47,7 @@ final class UserAccountFieldValueFormMapper implements FieldValueFormMapperInter
         $fieldForm
             ->add(
                 $formConfig->getFormFactory()->createBuilder()
-                    ->create('value', 'ezuser', ['required' => $fieldDefinition->isRequired, 'label' => $label])
+                    ->create('value', UserAccountType::class, ['required' => $fieldDefinition->isRequired, 'label' => $label])
                     ->addModelTransformer(
                         new CallbackTransformer(
                             function (ApiUserValue $data) {

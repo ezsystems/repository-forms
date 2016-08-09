@@ -5,8 +5,6 @@
  *
  * @copyright Copyright (C) eZ Systems AS. All rights reserved.
  * @license For full copyright and license information view LICENSE file distributed with this source code.
- *
- * @version //autogentag//
  */
 namespace EzSystems\RepositoryForms\FieldType\Mapper;
 
@@ -16,7 +14,9 @@ use EzSystems\RepositoryForms\Data\FieldDefinitionData;
 use EzSystems\RepositoryForms\FieldType\DataTransformer\FieldValueTransformer;
 use EzSystems\RepositoryForms\FieldType\FieldDefinitionFormMapperInterface;
 use EzSystems\RepositoryForms\FieldType\FieldValueFormMapperInterface;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormInterface;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 
 class TextBlockFormMapper implements FieldDefinitionFormMapperInterface, FieldValueFormMapperInterface
 {
@@ -34,7 +34,7 @@ class TextBlockFormMapper implements FieldDefinitionFormMapperInterface, FieldVa
     {
         $fieldDefinitionForm
             ->add(
-                'textRows', 'integer', [
+                'textRows', IntegerType::class, [
                     'required' => false,
                     'property_path' => 'fieldSettings[textRows]',
                     'label' => 'field_definition.eztext.text_rows',
@@ -53,7 +53,7 @@ class TextBlockFormMapper implements FieldDefinitionFormMapperInterface, FieldVa
                 $formConfig->getFormFactory()->createBuilder()
                     ->create(
                         'value',
-                        'textarea',
+                        TextareaType::class,
                         [
                             'required' => $fieldDefinition->isRequired,
                             'label' => $label,

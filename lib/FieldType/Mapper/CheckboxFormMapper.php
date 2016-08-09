@@ -5,8 +5,6 @@
  *
  * @copyright Copyright (C) eZ Systems AS. All rights reserved.
  * @license For full copyright and license information view LICENSE file distributed with this source code.
- *
- * @version //autogentag//
  */
 namespace EzSystems\RepositoryForms\FieldType\Mapper;
 
@@ -14,6 +12,7 @@ use eZ\Publish\API\Repository\FieldTypeService;
 use EzSystems\RepositoryForms\Data\Content\FieldData;
 use EzSystems\RepositoryForms\FieldType\DataTransformer\FieldValueTransformer;
 use EzSystems\RepositoryForms\FieldType\FieldValueFormMapperInterface;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\FormInterface;
 
 class CheckboxFormMapper implements FieldValueFormMapperInterface
@@ -39,7 +38,7 @@ class CheckboxFormMapper implements FieldValueFormMapperInterface
                 $formConfig->getFormFactory()->createBuilder()
                     ->create(
                         'value',
-                        'checkbox',
+                        CheckboxType::class,
                         ['required' => $fieldDefinition->isRequired, 'label' => $label]
                     )
                     ->addModelTransformer(new FieldValueTransformer($this->fieldTypeService->getFieldType($fieldDefinition->fieldTypeIdentifier)))

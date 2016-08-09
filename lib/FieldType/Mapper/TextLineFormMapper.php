@@ -5,8 +5,6 @@
  *
  * @copyright Copyright (C) eZ Systems AS. All rights reserved.
  * @license For full copyright and license information view LICENSE file distributed with this source code.
- *
- * @version //autogentag//
  */
 namespace EzSystems\RepositoryForms\FieldType\Mapper;
 
@@ -17,7 +15,9 @@ use EzSystems\RepositoryForms\FieldType\DataTransformer\FieldValueTransformer;
 use EzSystems\RepositoryForms\FieldType\DataTransformer\TextLineValueTransformer;
 use EzSystems\RepositoryForms\FieldType\FieldDefinitionFormMapperInterface;
 use EzSystems\RepositoryForms\FieldType\FieldValueFormMapperInterface;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormInterface;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 
 class TextLineFormMapper implements FieldDefinitionFormMapperInterface, FieldValueFormMapperInterface
 {
@@ -34,13 +34,13 @@ class TextLineFormMapper implements FieldDefinitionFormMapperInterface, FieldVal
     public function mapFieldDefinitionForm(FormInterface $fieldDefinitionForm, FieldDefinitionData $data)
     {
         $fieldDefinitionForm
-            ->add('minLength', 'integer', [
+            ->add('minLength', IntegerType::class, [
                 'required' => false,
                 'property_path' => 'validatorConfiguration[StringLengthValidator][minStringLength]',
                 'label' => 'field_definition.ezstring.min_length',
                 'attr' => ['min' => 0],
             ])
-            ->add('maxLength', 'integer', [
+            ->add('maxLength', IntegerType::class, [
                 'required' => false,
                 'property_path' => 'validatorConfiguration[StringLengthValidator][maxStringLength]',
                 'label' => 'field_definition.ezstring.max_length',
@@ -49,7 +49,7 @@ class TextLineFormMapper implements FieldDefinitionFormMapperInterface, FieldVal
             ->add(
                 // Creating from FormBuilder as we need to add a DataTransformer.
                 $fieldDefinitionForm->getConfig()->getFormFactory()->createBuilder()
-                    ->create('defaultValue', 'text', [
+                    ->create('defaultValue', TextType::class, [
                         'required' => false,
                         'label' => 'field_definition.ezstring.default_value',
                     ])
@@ -70,7 +70,7 @@ class TextLineFormMapper implements FieldDefinitionFormMapperInterface, FieldVal
                 $formConfig->getFormFactory()->createBuilder()
                     ->create(
                         'value',
-                        'text',
+                        TextType::class,
                         ['required' => $fieldDefinition->isRequired, 'label' => $label]
                     )
                     ->addModelTransformer(new FieldValueTransformer($this->fieldTypeService->getFieldType($fieldDefinition->fieldTypeIdentifier)))

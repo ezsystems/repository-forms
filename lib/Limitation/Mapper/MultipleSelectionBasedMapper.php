@@ -10,6 +10,7 @@ namespace EzSystems\RepositoryForms\Limitation\Mapper;
 
 use eZ\Publish\API\Repository\Values\User\Limitation;
 use EzSystems\RepositoryForms\Limitation\LimitationFormMapperInterface;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormInterface;
 
 /**
@@ -34,7 +35,7 @@ abstract class MultipleSelectionBasedMapper implements LimitationFormMapperInter
         $choices = $this->getSelectionChoices();
         asort($choices, SORT_NATURAL | SORT_FLAG_CASE);
         $options += ['choices' => $choices];
-        $form->add('limitationValues', 'choice', $options);
+        $form->add('limitationValues', ChoiceType::class, $options);
     }
 
     /**
