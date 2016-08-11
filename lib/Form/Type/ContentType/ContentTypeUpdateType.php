@@ -47,6 +47,11 @@ class ContentTypeUpdateType extends AbstractType
 
     public function getName()
     {
+        return $this->getBlockPrefix();
+    }
+
+    public function getBlockPrefix()
+    {
         return 'ezrepoforms_contenttype_update';
     }
 

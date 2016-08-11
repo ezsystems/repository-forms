@@ -4,7 +4,6 @@
  *
  * @copyright Copyright (C) eZ Systems AS. All rights reserved.
  * @license For full copyright and license information view LICENSE file distributed with this source code.
- * @version //autogentag//
  */
 namespace EzSystems\RepositoryForms\Form\Type\User;
 
@@ -19,6 +18,11 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 class UserAccountType extends AbstractType
 {
     public function getName()
+    {
+        return $this->getBlockPrefix();
+    }
+
+    public function getBlockPrefix()
     {
         return 'ezuser';
     }
