@@ -96,7 +96,7 @@ class ValidatorConfigurationValidatorTest extends PHPUnit_Framework_TestCase
             ->expects($this->once())
             ->method('validateValidatorConfiguration')
             ->with($validatorConfiguration)
-            ->willReturn([new ValidationError($errorMessage, null, ['foo' => $errorParameter])]);
+            ->willReturn([new ValidationError($errorMessage, null, ['%foo%' => $errorParameter])]);
 
         $constraintViolationBuilder = $this->getMock('\Symfony\Component\Validator\Violation\ConstraintViolationBuilderInterface');
         $this->executionContext

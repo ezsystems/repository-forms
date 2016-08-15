@@ -96,7 +96,7 @@ class FieldSettingsValidatorTest extends PHPUnit_Framework_TestCase
             ->expects($this->once())
             ->method('validateFieldSettings')
             ->with($fieldSettings)
-            ->willReturn([new ValidationError($errorMessage, null, ['foo' => $errorParameter])]);
+            ->willReturn([new ValidationError($errorMessage, null, ['%foo%' => $errorParameter])]);
 
         $constraintViolationBuilder = $this->getMock('\Symfony\Component\Validator\Violation\ConstraintViolationBuilderInterface');
         $this->executionContext
