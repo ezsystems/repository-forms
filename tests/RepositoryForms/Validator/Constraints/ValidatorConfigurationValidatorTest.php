@@ -110,8 +110,8 @@ class ValidatorConfigurationValidatorTest extends PHPUnit_Framework_TestCase
             ->willReturn($constraintViolationBuilder);
         $constraintViolationBuilder
             ->expects($this->once())
-            ->method('setParameter')
-            ->with('%foo%', $errorParameter)
+            ->method('setParameters')
+            ->with(['%foo%' => $errorParameter])
             ->willReturn($constraintViolationBuilder);
         $constraintViolationBuilder
             ->expects($this->once())
