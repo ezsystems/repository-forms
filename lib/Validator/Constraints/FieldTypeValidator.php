@@ -39,9 +39,7 @@ abstract class FieldTypeValidator extends ConstraintValidator
             $message = $error->getTranslatableMessage();
             /** @var \Symfony\Component\Validator\Violation\ConstraintViolationBuilderInterface $violationBuilder */
             $violationBuilder = $this->context->buildViolation($message instanceof Plural ? $message->plural : $message->message);
-            foreach ($message->values as $parameter => $parameterValue) {
-                $violationBuilder->setParameter("%$parameter%", $parameterValue);
-            }
+            $violationBuilder->setParameters($message->values);
 
             $propertyPath = $this->generatePropertyPath($i, $error->getTarget());
             if ($propertyPath) {

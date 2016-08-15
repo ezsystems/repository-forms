@@ -81,7 +81,7 @@ class FieldSettingsValidatorTest extends PHPUnit_Framework_TestCase
     {
         $fieldTypeIdentifier = 'ezstring';
         $fieldDefinition = new FieldDefinition(['fieldTypeIdentifier' => $fieldTypeIdentifier]);
-        $fieldSettings = ['foo' => 'bar'];
+        $fieldSettings = ['%foo%' => 'bar'];
         $fieldDefData = new FieldDefinitionData(['identifier' => 'foo', 'fieldDefinition' => $fieldDefinition, 'fieldSettings' => $fieldSettings]);
         $fieldType = $this->getMock('\eZ\Publish\API\Repository\FieldType');
         $this->fieldTypeService
@@ -96,7 +96,7 @@ class FieldSettingsValidatorTest extends PHPUnit_Framework_TestCase
             ->expects($this->once())
             ->method('validateFieldSettings')
             ->with($fieldSettings)
-            ->willReturn([new ValidationError($errorMessage, null, ['foo' => $errorParameter])]);
+            ->willReturn([new ValidationError($errorMessage, null, ['%foo%' => $errorParameter])]);
 
         $constraintViolationBuilder = $this->getMock('\Symfony\Component\Validator\Violation\ConstraintViolationBuilderInterface');
         $this->executionContext
@@ -110,8 +110,8 @@ class FieldSettingsValidatorTest extends PHPUnit_Framework_TestCase
             ->willReturn($constraintViolationBuilder);
         $constraintViolationBuilder
             ->expects($this->once())
-            ->method('setParameter')
-            ->with('%foo%', $errorParameter)
+            ->method('setParameters')
+            ->with(['%foo%' => $errorParameter])
             ->willReturn($constraintViolationBuilder);
         $constraintViolationBuilder
             ->expects($this->once())
