@@ -81,7 +81,7 @@ class ValidatorConfigurationValidatorTest extends PHPUnit_Framework_TestCase
     {
         $fieldTypeIdentifier = 'ezstring';
         $fieldDefinition = new FieldDefinition(['fieldTypeIdentifier' => $fieldTypeIdentifier]);
-        $validatorConfiguration = ['foo' => 'bar'];
+        $validatorConfiguration = ['%foo%' => 'bar'];
         $fieldDefData = new FieldDefinitionData(['identifier' => 'foo', 'fieldDefinition' => $fieldDefinition, 'validatorConfiguration' => $validatorConfiguration]);
         $fieldType = $this->getMock('\eZ\Publish\API\Repository\FieldType');
         $this->fieldTypeService
