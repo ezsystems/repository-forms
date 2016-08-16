@@ -5,17 +5,17 @@ parameters:
 
 services:
     ezrepoforms.validator.unique_language_code:
-        class: %ezrepoforms.validator.unique_language_code.class%
-        arguments: [@ezpublish.api.service.language]
+        class: "%ezrepoforms.validator.unique_language_code.class%"
+        arguments: ["@ezpublish.api.service.language"]
         tags:
             - { name: validator.constraint_validator, alias: ezrepoforms.validator.unique_language_code }
 
     ezrepoforms.action_dispatcher.language:
-        class: %ezrepoforms.action_dispatcher.language.class%
+        class: "%ezrepoforms.action_dispatcher.language.class%"
         parent: ezrepoforms.action_dispatcher.base
 
     ezrepoforms.form_processor.language:
-        class: %ezrepoforms.form_processor.language.class%
-        arguments: [@ezpublish.api.service.language]
+        class: "%ezrepoforms.form_processor.language.class%"
+        arguments: ["@ezpublish.api.service.language"]
         tags:
             - { name: kernel.event_subscriber }

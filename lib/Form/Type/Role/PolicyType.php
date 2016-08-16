@@ -4,12 +4,14 @@
  *
  * @copyright Copyright (C) eZ Systems AS. All rights reserved.
  * @license For full copyright and license information view LICENSE file distributed with this source code.
- * @version //autogentag//
  */
 namespace EzSystems\RepositoryForms\Form\Type\Role;
 
 use eZ\Publish\API\Repository\RoleService;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
@@ -86,13 +88,13 @@ class PolicyType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('moduleFunction', 'choice', [
+            ->add('moduleFunction', ChoiceType::class, [
                 'choices' => $this->policyChoices,
                 'label' => 'role.policy.type',
                 'placeholder' => 'role.policy.type.choose',
             ])
-            ->add('removeDraft', 'submit', ['label' => 'role.cancel', 'validation_groups' => false])
-            ->add('savePolicy', 'submit', ['label' => 'role.policy.save']);
+            ->add('removeDraft', SubmitType::class, ['label' => 'role.cancel', 'validation_groups' => false])
+            ->add('savePolicy', SubmitType::class, ['label' => 'role.policy.save']);
 
         $builder->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) {
             /** @var \EzSystems\RepositoryForms\Data\Role\PolicyCreateData|\EzSystems\RepositoryForms\Data\Role\PolicyUpdateData $data */
@@ -101,17 +103,22 @@ class PolicyType extends AbstractType
 
             if ($module = $data->getModule()) {
                 $form
-                    ->add('limitationsData', 'collection', [
+                    ->add('limitationsData', CollectionType::class, [
                         'type' => 'ezrepoforms_policy_limitation_edit',
                         'label' => 'role.policy.available_limitations',
                     ]);
             } else {
-                $form->add('saveAndAddLimitation', 'submit', ['label' => 'role.policy.save_and_add_limitation']);
+                $form->add('saveAndAddLimitation', SubmitType::class, ['label' => 'role.policy.save_and_add_limitation']);
             }
         });
     }
 
     public function getName()
+    {
+        return $this->getBlockPrefix();
+    }
+
+    public function getBlockPrefix()
     {
         return 'ezrepoforms_policy_edit';
     }

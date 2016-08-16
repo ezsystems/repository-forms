@@ -73,7 +73,7 @@ class ContentEditController extends Controller
             'mainLanguageCode' => $language,
             'parentLocation' => $this->locationService->newLocationCreateStruct($parentLocationId),
         ]);
-        $form = $this->createForm(new ContentEditType(), $data, ['languageCode' => $language]);
+        $form = $this->createForm(ContentEditType::class, $data, ['languageCode' => $language]);
         $form->handleRequest($request);
 
         if ($form->isValid()) {

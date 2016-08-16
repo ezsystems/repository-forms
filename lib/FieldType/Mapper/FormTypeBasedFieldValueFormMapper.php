@@ -1,10 +1,10 @@
 <?php
+
 /**
  * This file is part of the eZ RepositoryForms package.
  *
  * @copyright Copyright (C) eZ Systems AS. All rights reserved.
  * @license For full copyright and license information view LICENSE file distributed with this source code.
- * @version //autogentag//
  */
 namespace EzSystems\RepositoryForms\FieldType\Mapper;
 
@@ -33,7 +33,7 @@ use Symfony\Component\Form\FormInterface;
 final class FormTypeBasedFieldValueFormMapper implements FieldValueFormMapperInterface
 {
     /**
-     * The FormType used by the mapper. Example: 'text'.
+     * The FormType used by the mapper. Example: '\Symfony\Component\Form\Extension\Core\Type\TextType'.
      * @var string
      */
     private $formType;

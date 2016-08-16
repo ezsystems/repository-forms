@@ -5,28 +5,28 @@
  *
  * @copyright Copyright (C) eZ Systems AS. All rights reserved.
  * @license For full copyright and license information view LICENSE file distributed with this source code.
- *
- * @version //autogentag//
  */
 namespace EzSystems\RepositoryForms\FieldType\Mapper;
 
 use eZ\Publish\Core\FieldType\DateAndTime\Type;
 use EzSystems\RepositoryForms\Data\FieldDefinitionData;
-use EzSystems\RepositoryForms\FieldType\FieldTypeFormMapperInterface;
+use EzSystems\RepositoryForms\FieldType\FieldDefinitionFormMapperInterface;
 use EzSystems\RepositoryForms\Form\Type\DateTimeIntervalType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormInterface;
 
-class DateTimeFormMapper implements FieldTypeFormMapperInterface
+class DateTimeFormMapper implements FieldDefinitionFormMapperInterface
 {
     public function mapFieldDefinitionForm(FormInterface $fieldDefinitionForm, FieldDefinitionData $data)
     {
         $fieldDefinitionForm
-            ->add('useSeconds', 'checkbox', [
+            ->add('useSeconds', CheckboxType::class, [
                 'required' => false,
                 'property_path' => 'fieldSettings[useSeconds]',
                 'label' => 'field_definition.ezdatetime.use_seconds',
             ])
-            ->add('defaultType', 'choice', [
+            ->add('defaultType', ChoiceType::class, [
                 'choices' => [
                     Type::DEFAULT_EMPTY => 'field_definition.ezdatetime.default_type_empty',
                     Type::DEFAULT_CURRENT_DATE => 'field_definition.ezdatetime.default_type_current',
@@ -37,7 +37,7 @@ class DateTimeFormMapper implements FieldTypeFormMapperInterface
                 'property_path' => 'fieldSettings[defaultType]',
                 'label' => 'field_definition.ezdatetime.default_type',
             ])
-            ->add('dateInterval', new DateTimeIntervalType(), [
+            ->add('dateInterval', DateTimeIntervalType::class, [
                 'required' => false,
                 'property_path' => 'fieldSettings[dateInterval]',
                 'label' => 'field_definition.ezdatetime.date_interval',

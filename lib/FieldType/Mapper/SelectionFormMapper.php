@@ -5,8 +5,6 @@
  *
  * @copyright Copyright (C) eZ Systems AS. All rights reserved.
  * @license For full copyright and license information view LICENSE file distributed with this source code.
- *
- * @version //autogentag//
  */
 namespace EzSystems\RepositoryForms\FieldType\Mapper;
 
@@ -14,11 +12,15 @@ use EzSystems\RepositoryForms\Data\Content\FieldData;
 use EzSystems\RepositoryForms\Data\FieldDefinitionData;
 use EzSystems\RepositoryForms\FieldType\DataTransformer\MultiSelectionValueTransformer;
 use EzSystems\RepositoryForms\FieldType\DataTransformer\SingleSelectionValueTransformer;
-use EzSystems\RepositoryForms\FieldType\FieldTypeFormMapperInterface;
+use EzSystems\RepositoryForms\FieldType\FieldDefinitionFormMapperInterface;
 use EzSystems\RepositoryForms\FieldType\FieldValueFormMapperInterface;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormInterface;
 
-class SelectionFormMapper implements FieldTypeFormMapperInterface, FieldValueFormMapperInterface
+class SelectionFormMapper implements FieldDefinitionFormMapperInterface, FieldValueFormMapperInterface
 {
     /**
      * Selection items can be added and removed, the collection field type is used for this.
@@ -32,14 +34,14 @@ class SelectionFormMapper implements FieldTypeFormMapperInterface, FieldValueFor
     public function mapFieldDefinitionForm(FormInterface $fieldDefinitionForm, FieldDefinitionData $data)
     {
         $fieldDefinitionForm
-            ->add('isMultiple', 'checkbox', [
+            ->add('isMultiple', CheckboxType::class, [
                 'required' => false,
                 'property_path' => 'fieldSettings[isMultiple]',
                 'label' => 'field_definition.ezselection.is_multiple',
             ])
-            ->add('options', 'collection', [
-                'type' => 'text',
-                'options' => ['required' => false],
+            ->add('options', CollectionType::class, [
+                'entry_type' => TextType::class,
+                'entry_options' => ['required' => false],
                 'allow_add' => true,
                 'allow_delete' => true,
                 'delete_empty' => true,
@@ -62,7 +64,7 @@ class SelectionFormMapper implements FieldTypeFormMapperInterface, FieldValueFor
                 $formConfig->getFormFactory()->createBuilder()
                     ->create(
                         'value',
-                        'choice',
+                        ChoiceType::class,
                         [
                             'required' => $fieldDefinition->isRequired,
                             'label' => $label,

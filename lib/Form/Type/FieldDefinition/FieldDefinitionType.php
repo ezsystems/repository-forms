@@ -5,16 +5,18 @@
  *
  * @copyright Copyright (C) eZ Systems AS. All rights reserved.
  * @license For full copyright and license information view LICENSE file distributed with this source code.
- *
- * @version //autogentag//
  */
 namespace EzSystems\RepositoryForms\Form\Type\FieldDefinition;
 
 use eZ\Publish\API\Repository\FieldTypeService;
 use eZ\Publish\Core\Helper\FieldsGroups\FieldsGroupsList;
-use EzSystems\RepositoryForms\FieldType\FieldTypeFormMapperRegistryInterface;
+use EzSystems\RepositoryForms\FieldType\FieldTypeFormMapperDispatcherInterface;
 use EzSystems\RepositoryForms\Form\DataTransformer\TranslatablePropertyTransformer;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
@@ -26,9 +28,9 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 class FieldDefinitionType extends AbstractType
 {
     /**
-     * @var FieldTypeFormMapperRegistryInterface
+     * @var \EzSystems\RepositoryForms\FieldType\FieldTypeFormMapperDispatcherInterface
      */
-    private $fieldTypeMapperRegistry;
+    private $fieldTypeMapperDispatcher;
 
     /**
      * @var FieldTypeService
@@ -40,9 +42,9 @@ class FieldDefinitionType extends AbstractType
      */
     private $groupsList;
 
-    public function __construct(FieldTypeFormMapperRegistryInterface $fieldTypeMapperRegistry, FieldTypeService $fieldTypeService)
+    public function __construct(FieldTypeFormMapperDispatcherInterface $fieldTypeMapperDispatcher, FieldTypeService $fieldTypeService)
     {
-        $this->fieldTypeMapperRegistry = $fieldTypeMapperRegistry;
+        $this->fieldTypeMapperDispatcher = $fieldTypeMapperDispatcher;
         $this->fieldTypeService = $fieldTypeService;
     }
 
@@ -71,31 +73,31 @@ class FieldDefinitionType extends AbstractType
         $translatablePropertyTransformer = new TranslatablePropertyTransformer($options['languageCode']);
         $builder
             ->add(
-                $builder->create('name', 'text', ['property_path' => 'names', 'label' => 'field_definition.name'])
+                $builder->create('name', TextType::class, ['property_path' => 'names', 'label' => 'field_definition.name'])
                     ->addModelTransformer($translatablePropertyTransformer)
             )
-            ->add('identifier', 'text', ['label' => 'field_definition.identifier'])
+            ->add('identifier', TextType::class, ['label' => 'field_definition.identifier'])
             ->add(
-                $builder->create('description', 'text', [
+                $builder->create('description', TextType::class, [
                     'property_path' => 'descriptions',
                     'required' => false,
                     'label' => 'field_definition.description',
                 ])
                     ->addModelTransformer($translatablePropertyTransformer)
             )
-            ->add('isRequired', 'checkbox', ['required' => false, 'label' => 'field_definition.is_required'])
-            ->add('isTranslatable', 'checkbox', ['required' => false, 'label' => 'field_definition.is_translatable'])
+            ->add('isRequired', CheckboxType::class, ['required' => false, 'label' => 'field_definition.is_required'])
+            ->add('isTranslatable', CheckboxType::class, ['required' => false, 'label' => 'field_definition.is_translatable'])
             ->add(
                 'fieldGroup',
-                'choice', [
+                ChoiceType::class, [
                     'choices' => $fieldsGroups,
                     'choices_as_values' => true,
                     'required' => false,
                     'label' => 'field_definition.field_group',
                 ]
             )
-            ->add('position', 'integer', ['label' => 'field_definition.position'])
-            ->add('selected', 'checkbox', ['required' => false, 'mapped' => false]);
+            ->add('position', IntegerType::class, ['label' => 'field_definition.position'])
+            ->add('selected', CheckboxType::class, ['required' => false, 'mapped' => false]);
 
         // Hook on form generation for specific FieldType needs
         $builder->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) {
@@ -105,21 +107,23 @@ class FieldDefinitionType extends AbstractType
             $fieldTypeIdentifier = $data->getFieldTypeIdentifier();
             $fieldType = $this->fieldTypeService->getFieldType($fieldTypeIdentifier);
             // isSearchable field should be present only if the FieldType allows it.
-            $form->add('isSearchable', 'checkbox', [
+            $form->add('isSearchable', CheckboxType::class, [
                 'required' => false,
                 'disabled' => !$fieldType->isSearchable(),
                 'label' => 'field_definition.is_searchable',
             ]);
 
             // Let fieldType mappers do their jobs to complete the form.
-            if ($this->fieldTypeMapperRegistry->hasMapper($fieldTypeIdentifier)) {
-                $mapper = $this->fieldTypeMapperRegistry->getMapper($fieldTypeIdentifier);
-                $mapper->mapFieldDefinitionForm($form, $data);
-            }
+            $this->fieldTypeMapperDispatcher->map($form, $data);
         });
     }
 
     public function getName()
+    {
+        return $this->getBlockPrefix();
+    }
+
+    public function getBlockPrefix()
     {
         return 'ezrepoforms_fielddefinition_update';
     }

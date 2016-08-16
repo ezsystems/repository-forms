@@ -4,11 +4,13 @@
  *
  * @copyright Copyright (C) eZ Systems AS. All rights reserved.
  * @license For full copyright and license information view LICENSE file distributed with this source code.
- * @version //autogentag//
  */
 namespace EzSystems\RepositoryForms\Form\Type\Content;
 
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -21,24 +23,29 @@ class ContentEditType extends AbstractType
 {
     public function getName()
     {
+        return $this->getBlockPrefix();
+    }
+
+    public function getBlockPrefix()
+    {
         return 'ezrepoforms_content_edit';
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('fieldsData', 'collection', [
-                'type' => 'ezrepoforms_content_field',
+            ->add('fieldsData', CollectionType::class, [
+                'entry_type' => ContentFieldType::class,
                 'label' => 'ezrepoforms.content.fields',
-                'options' => ['languageCode' => $options['languageCode']],
+                'entry_options' => ['languageCode' => $options['languageCode']],
             ])
-            ->add('redirectUrlAfterPublish', 'hidden', ['required' => false, 'mapped' => false])
-            ->add('publish', 'submit', ['label' => 'content.publish_button']);
+            ->add('redirectUrlAfterPublish', HiddenType::class, ['required' => false, 'mapped' => false])
+            ->add('publish', SubmitType::class, ['label' => 'content.publish_button']);
 
         if ($options['drafts_enabled']) {
             $builder
-                ->add('saveDraft', 'submit', ['label' => 'content.save_button'])
-                ->add('cancel', 'submit', [
+                ->add('saveDraft', SubmitType::class, ['label' => 'content.save_button'])
+                ->add('cancel', SubmitType::class, [
                     'label' => 'content.cancel_button',
                     'attr' => ['formnovalidate' => 'formnovalidate'],
                 ]);

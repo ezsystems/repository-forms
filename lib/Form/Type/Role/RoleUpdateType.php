@@ -5,12 +5,12 @@
  *
  * @copyright Copyright (C) eZ Systems AS. All rights reserved.
  * @license For full copyright and license information view LICENSE file distributed with this source code.
- *
- * @version //autogentag//
  */
 namespace EzSystems\RepositoryForms\Form\Type\Role;
 
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -20,6 +20,11 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 class RoleUpdateType extends AbstractType
 {
     public function getName()
+    {
+        return $this->getBlockPrefix();
+    }
+
+    public function getBlockPrefix()
     {
         return 'ezrepoforms_role_update';
     }
@@ -36,8 +41,8 @@ class RoleUpdateType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('identifier', 'text', ['label' => 'role.identifier'])
-            ->add('saveRole', 'submit', ['label' => 'role.save'])
-            ->add('removeDraft', 'submit', ['label' => 'role.remove_draft', 'validation_groups' => false]);
+            ->add('identifier', TextType::class, ['label' => 'role.identifier'])
+            ->add('saveRole', SubmitType::class, ['label' => 'role.save'])
+            ->add('removeDraft', SubmitType::class, ['label' => 'role.remove_draft', 'validation_groups' => false]);
     }
 }

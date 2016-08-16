@@ -5,17 +5,16 @@
  *
  * @copyright Copyright (C) eZ Systems AS. All rights reserved.
  * @license For full copyright and license information view LICENSE file distributed with this source code.
- *
- * @version //autogentag//
  */
 namespace EzSystems\RepositoryForms\FieldType\Mapper;
 
 use eZ\Publish\Core\FieldType\Page\PageService;
 use EzSystems\RepositoryForms\Data\FieldDefinitionData;
-use EzSystems\RepositoryForms\FieldType\FieldTypeFormMapperInterface;
+use EzSystems\RepositoryForms\FieldType\FieldDefinitionFormMapperInterface;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormInterface;
 
-class PageFormMapper implements FieldTypeFormMapperInterface
+class PageFormMapper implements FieldDefinitionFormMapperInterface
 {
     /**
      * @var PageService Provides layout list used in form selector
@@ -35,7 +34,7 @@ class PageFormMapper implements FieldTypeFormMapperInterface
         $availableLayouts = $this->pageService->getAvailableZoneLayouts();
 
         $fieldDefinitionForm
-            ->add('defaultLayout', 'choice', [
+            ->add('defaultLayout', ChoiceType::class, [
                 'choices' => array_combine($availableLayouts, $availableLayouts),
                 'multiple' => false,
                 'expanded' => false,

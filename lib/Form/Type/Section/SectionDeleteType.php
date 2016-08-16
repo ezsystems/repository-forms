@@ -4,12 +4,13 @@
  *
  * @copyright Copyright (C) eZ Systems AS. All rights reserved.
  * @license For full copyright and license information view LICENSE file distributed with this source code.
- * @version //autogentag//
  */
 namespace EzSystems\RepositoryForms\Form\Type\Section;
 
 use eZ\Publish\API\Repository\SectionService;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\Callback;
@@ -29,13 +30,18 @@ class SectionDeleteType extends AbstractType
 
     public function getName()
     {
+        return $this->getBlockPrefix();
+    }
+
+    public function getBlockPrefix()
+    {
         return 'ezrepoforms_section_delete';
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('sectionId', 'hidden', [
+            ->add('sectionId', HiddenType::class, [
                 'constraints' => new Callback(
                     function ($sectionId, ExecutionContextInterface $context) {
                         $contentCount = $this->sectionService->countAssignedContents(
@@ -50,7 +56,7 @@ class SectionDeleteType extends AbstractType
                     }
                 ),
             ])
-            ->add('delete', 'submit', ['label' => 'section.form.delete']);
+            ->add('delete', SubmitType::class, ['label' => 'section.form.delete']);
     }
 
     public function configureOptions(OptionsResolver $resolver)

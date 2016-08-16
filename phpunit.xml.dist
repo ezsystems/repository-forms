@@ -6,6 +6,9 @@
          convertNoticesToExceptions="true"
          convertWarningsToExceptions="true"
          syntaxCheck="true">
+    <php>
+        <ini name="error_reporting" value="-1" />
+    </php>
     <testsuites>
         <testsuite name="RepositoryForms tests">
             <directory suffix="Test.php">./tests/</directory>

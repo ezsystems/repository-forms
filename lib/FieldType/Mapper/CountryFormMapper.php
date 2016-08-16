@@ -5,18 +5,18 @@
  *
  * @copyright Copyright (C) eZ Systems AS. All rights reserved.
  * @license For full copyright and license information view LICENSE file distributed with this source code.
- *
- * @version //autogentag//
  */
 namespace EzSystems\RepositoryForms\FieldType\Mapper;
 
 use EzSystems\RepositoryForms\Data\FieldDefinitionData;
 use EzSystems\RepositoryForms\FieldType\DataTransformer\CountryValueTransformer;
-use EzSystems\RepositoryForms\FieldType\FieldTypeFormMapperInterface;
+use EzSystems\RepositoryForms\FieldType\FieldDefinitionFormMapperInterface;
 use Symfony\Component\Form\Extension\Core\ChoiceList\ChoiceList;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormInterface;
 
-class CountryFormMapper implements FieldTypeFormMapperInterface
+class CountryFormMapper implements FieldDefinitionFormMapperInterface
 {
     /**
      * @var array Array of countries from ezpublish.fieldType.ezcountry.data
@@ -36,7 +36,7 @@ class CountryFormMapper implements FieldTypeFormMapperInterface
         $fieldDefinitionForm
             ->add(
                 'isMultiple',
-                'checkbox', [
+                CheckboxType::class, [
                     'required' => false,
                     'property_path' => 'fieldSettings[isMultiple]',
                     'label' => 'field_definition.ezcountry.is_multiple',
@@ -47,7 +47,7 @@ class CountryFormMapper implements FieldTypeFormMapperInterface
                 $fieldDefinitionForm->getConfig()->getFormFactory()->createBuilder()
                     ->create(
                         'defaultValue',
-                        'choice', [
+                        ChoiceType::class, [
                             'choice_list' => new ChoiceList(
                                 array_map(
                                     function ($country) {

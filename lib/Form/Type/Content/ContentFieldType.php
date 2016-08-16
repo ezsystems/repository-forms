@@ -4,7 +4,6 @@
  *
  * @copyright Copyright (C) eZ Systems AS. All rights reserved.
  * @license For full copyright and license information view LICENSE file distributed with this source code.
- * @version //autogentag//
  */
 namespace EzSystems\RepositoryForms\Form\Type\Content;
 
@@ -28,6 +27,11 @@ class ContentFieldType extends AbstractType
     }
 
     public function getName()
+    {
+        return $this->getBlockPrefix();
+    }
+
+    public function getBlockPrefix()
     {
         return 'ezrepoforms_content_field';
     }

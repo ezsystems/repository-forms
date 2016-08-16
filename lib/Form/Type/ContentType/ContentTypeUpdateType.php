@@ -13,7 +13,13 @@ namespace EzSystems\RepositoryForms\Form\Type\ContentType;
 use eZ\Publish\API\Repository\Values\Content\Location;
 use eZ\Publish\Core\Base\Container\ApiLoader\FieldTypeCollectionFactory;
 use EzSystems\RepositoryForms\Form\DataTransformer\TranslatablePropertyTransformer;
+use EzSystems\RepositoryForms\Form\Type\FieldDefinition\FieldDefinitionType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Translation\TranslatorInterface;
@@ -41,6 +47,11 @@ class ContentTypeUpdateType extends AbstractType
 
     public function getName()
     {
+        return $this->getBlockPrefix();
+    }
+
+    public function getBlockPrefix()
+    {
         return 'ezrepoforms_contenttype_update';
     }
 
@@ -60,23 +71,23 @@ class ContentTypeUpdateType extends AbstractType
         $builder
             ->add(
                 $builder
-                    ->create('name', 'text', ['property_path' => 'names', 'label' => 'content_type.name'])
+                    ->create('name', TextType::class, ['property_path' => 'names', 'label' => 'content_type.name'])
                     ->addModelTransformer($translatablePropertyTransformer)
             )
-            ->add('identifier', 'text', ['label' => 'content_type.identifier'])
+            ->add('identifier', TextType::class, ['label' => 'content_type.identifier'])
             ->add(
                 $builder
-                    ->create('description', 'text', [
+                    ->create('description', TextType::class, [
                         'property_path' => 'descriptions',
                         'required' => false,
                         'label' => 'content_type.description',
                     ])
                     ->addModelTransformer($translatablePropertyTransformer)
             )
-            ->add('nameSchema', 'text', ['required' => false, 'label' => 'content_type.name_schema'])
-            ->add('urlAliasSchema', 'text', ['required' => false, 'label' => 'content_type.url_alias_schema'])
-            ->add('isContainer', 'checkbox', ['required' => false, 'label' => 'content_type.is_container'])
-            ->add('defaultSortField', 'choice', [
+            ->add('nameSchema', TextType::class, ['required' => false, 'label' => 'content_type.name_schema'])
+            ->add('urlAliasSchema', TextType::class, ['required' => false, 'label' => 'content_type.url_alias_schema'])
+            ->add('isContainer', CheckboxType::class, ['required' => false, 'label' => 'content_type.is_container'])
+            ->add('defaultSortField', ChoiceType::class, [
                 'choices' => [
                     Location::SORT_FIELD_NAME => $this->translator->trans('content_type.sort_field.' . Location::SORT_FIELD_NAME, [], 'ezrepoforms_content_type'),
                     Location::SORT_FIELD_CLASS_NAME => $this->translator->trans('content_type.sort_field.' . Location::SORT_FIELD_CLASS_NAME, [], 'ezrepoforms_content_type'),
@@ -90,32 +101,32 @@ class ContentTypeUpdateType extends AbstractType
                 ],
                 'label' => 'content_type.default_sort_field',
             ])
-            ->add('defaultSortOrder', 'choice', [
+            ->add('defaultSortOrder', ChoiceType::class, [
                 'choices' => [
                     Location::SORT_ORDER_ASC => $this->translator->trans('content_type.sort_order.' . Location::SORT_ORDER_ASC, [], 'ezrepoforms_content_type'),
                     Location::SORT_ORDER_DESC => $this->translator->trans('content_type.sort_order.' . Location::SORT_ORDER_DESC, [], 'ezrepoforms_content_type'),
                 ],
                 'label' => 'content_type.default_sort_order',
             ])
-            ->add('defaultAlwaysAvailable', 'checkbox', [
+            ->add('defaultAlwaysAvailable', CheckboxType::class, [
                 'required' => false,
                 'label' => 'content_type.default_always_available',
             ])
-            ->add('fieldDefinitionsData', 'collection', [
-                'type' => 'ezrepoforms_fielddefinition_update',
-                'options' => ['languageCode' => $options['languageCode']],
+            ->add('fieldDefinitionsData', CollectionType::class, [
+                'entry_type' => FieldDefinitionType::class,
+                'entry_options' => ['languageCode' => $options['languageCode']],
                 'label' => 'content_type.field_definitions_data',
             ])
-            ->add('fieldTypeSelection', 'choice', [
+            ->add('fieldTypeSelection', ChoiceType::class, [
                 'choices' => $this->getFieldTypeList(),
                 'mapped' => false,
                 'label' => 'content_type.field_type_selection',
             ])
-            ->add('addFieldDefinition', 'submit', ['label' => 'content_type.add_field_definition'])
-            ->add('removeFieldDefinition', 'submit', ['label' => 'content_type.remove_field_definitions'])
-            ->add('saveContentType', 'submit', ['label' => 'content_type.save'])
-            ->add('removeDraft', 'submit', ['label' => 'content_type.remove_draft', 'validation_groups' => false])
-            ->add('publishContentType', 'submit', ['label' => 'content_type.publish']);
+            ->add('addFieldDefinition', SubmitType::class, ['label' => 'content_type.add_field_definition'])
+            ->add('removeFieldDefinition', SubmitType::class, ['label' => 'content_type.remove_field_definitions'])
+            ->add('saveContentType', SubmitType::class, ['label' => 'content_type.save'])
+            ->add('removeDraft', SubmitType::class, ['label' => 'content_type.remove_draft', 'validation_groups' => false])
+            ->add('publishContentType', SubmitType::class, ['label' => 'content_type.publish']);
     }
 
     /**
