@@ -11,7 +11,6 @@ namespace EzSystems\RepositoryForms\FieldType\Mapper;
 use EzSystems\RepositoryForms\Data\FieldDefinitionData;
 use EzSystems\RepositoryForms\FieldType\DataTransformer\CountryValueTransformer;
 use EzSystems\RepositoryForms\FieldType\FieldDefinitionFormMapperInterface;
-use Symfony\Component\Form\Extension\Core\ChoiceList\ChoiceList;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormInterface;
@@ -48,20 +47,8 @@ class CountryFormMapper implements FieldDefinitionFormMapperInterface
                     ->create(
                         'defaultValue',
                         ChoiceType::class, [
-                            'choice_list' => new ChoiceList(
-                                array_map(
-                                    function ($country) {
-                                        return $country['Alpha2'];
-                                    },
-                                    $this->countriesInfo
-                                ),
-                                array_map(
-                                    function ($country) {
-                                        return $country['Name'];
-                                    },
-                                    $this->countriesInfo
-                                )
-                            ),
+                            'choices' => $this->getCountryChoices($this->countriesInfo),
+                            'choices_as_values' => true,
                             'multiple' => true,
                             'expanded' => false,
                             'required' => false,
@@ -72,5 +59,15 @@ class CountryFormMapper implements FieldDefinitionFormMapperInterface
                     // Deactivate auto-initialize as we're not on the root form.
                     ->setAutoInitialize(false)->getForm()
             );
+    }
+
+    private function getCountryChoices(array $countriesInfo)
+    {
+        $choices = [];
+        foreach ($countriesInfo as $country) {
+            $choices[$country['Name']] = $country['Alpha2'];
+        }
+
+        return $choices;
     }
 }

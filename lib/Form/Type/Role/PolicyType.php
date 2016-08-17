@@ -51,16 +51,16 @@ class PolicyType extends AbstractType
      */
     private function buildPolicyChoicesFromMap($policyMap)
     {
-        $policyChoices = ['role.policy.all_modules' => ['*|*' => 'role.policy.all_modules_all_functions']];
+        $policyChoices = ['role.policy.all_modules' => ['role.policy.all_modules_all_functions' => '*|*']];
         foreach ($policyMap as $module => $functionList) {
             $humanizedModule = $this->humanize($module);
             // For each module, add possibility to grant access to all functions.
             $policyChoices[$humanizedModule] = [
-                "$module|*" => "$humanizedModule / " . $this->translator->trans('role.policy.all_functions', [], 'ezrepoforms_role'),
+                "$humanizedModule / " . $this->translator->trans('role.policy.all_functions', [], 'ezrepoforms_role') => "$module|*",
             ];
 
             foreach ($functionList as $function => $limitationList) {
-                $policyChoices[$humanizedModule]["$module|$function"] = $humanizedModule . ' / ' . $this->humanize($function);
+                $policyChoices[$humanizedModule][$humanizedModule . ' / ' . $this->humanize($function)] = "$module|$function";
             }
         }
 
@@ -90,6 +90,7 @@ class PolicyType extends AbstractType
         $builder
             ->add('moduleFunction', ChoiceType::class, [
                 'choices' => $this->policyChoices,
+                'choices_as_values' => true,
                 'label' => 'role.policy.type',
                 'placeholder' => 'role.policy.type.choose',
             ])
@@ -104,7 +105,7 @@ class PolicyType extends AbstractType
             if ($module = $data->getModule()) {
                 $form
                     ->add('limitationsData', CollectionType::class, [
-                        'type' => 'ezrepoforms_policy_limitation_edit',
+                        'entry_type' => LimitationType::class,
                         'label' => 'role.policy.available_limitations',
                     ]);
             } else {

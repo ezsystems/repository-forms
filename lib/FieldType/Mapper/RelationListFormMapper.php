@@ -45,10 +45,10 @@ class RelationListFormMapper implements FieldDefinitionFormMapperInterface
         $contentTypeHash = [];
         foreach ($this->contentTypeService->loadContentTypeGroups() as $contentTypeGroup) {
             foreach ($this->contentTypeService->loadContentTypes($contentTypeGroup) as $contentType) {
-                $contentTypeHash[$contentType->identifier] = $this->translationHelper->getTranslatedByProperty($contentType, 'names');
+                $contentTypeHash[$this->translationHelper->getTranslatedByProperty($contentType, 'names')] = $contentType->identifier;
             }
         }
-        asort($contentTypeHash);
+        ksort($contentTypeHash);
 
         $fieldDefinitionForm
             ->add('selectionDefaultLocation', HiddenType::class, [
@@ -58,6 +58,7 @@ class RelationListFormMapper implements FieldDefinitionFormMapperInterface
             ])
             ->add('selectionContentTypes', ChoiceType::class, [
                 'choices' => $contentTypeHash,
+                'choices_as_values' => true,
                 'expanded' => false,
                 'multiple' => true,
                 'required' => false,
