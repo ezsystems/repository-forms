@@ -10,6 +10,7 @@ namespace EzSystems\RepositoryForms\Form\Type;
 
 use EzSystems\RepositoryForms\Form\DataTransformer\DateIntervalToArrayTransformer;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\FormType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\FormBuilderInterface;
 
@@ -20,7 +21,7 @@ class DateTimeIntervalType extends AbstractType
 {
     public function getParent()
     {
-        return 'form';
+        return FormType::class;
     }
 
     public function getName()

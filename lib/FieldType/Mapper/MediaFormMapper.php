@@ -27,14 +27,15 @@ class MediaFormMapper implements FieldDefinitionFormMapperInterface
             ])
             ->add('mediaType', ChoiceType::class, [
                 'choices' => [
-                    Type::TYPE_HTML5_VIDEO => 'field_definition.ezmedia.type_html5_video',
-                    Type::TYPE_FLASH => 'field_definition.ezmedia.type_flash',
-                    Type::TYPE_QUICKTIME => 'field_definition.ezmedia.type_quick_time',
-                    Type::TYPE_REALPLAYER => 'field_definition.ezmedia.type_real_player',
-                    Type::TYPE_SILVERLIGHT => 'field_definition.ezmedia.type_silverlight',
-                    Type::TYPE_WINDOWSMEDIA => 'field_definition.ezmedia.type_windows_media_player',
-                    Type::TYPE_HTML5_AUDIO => 'field_definition.ezmedia.type_html5_audio',
+                    'field_definition.ezmedia.type_html5_video' => Type::TYPE_HTML5_VIDEO,
+                    'field_definition.ezmedia.type_flash' => Type::TYPE_FLASH,
+                    'field_definition.ezmedia.type_quick_time' => Type::TYPE_QUICKTIME,
+                    'field_definition.ezmedia.type_real_player' => Type::TYPE_REALPLAYER,
+                    'field_definition.ezmedia.type_silverlight' => Type::TYPE_SILVERLIGHT,
+                    'field_definition.ezmedia.type_windows_media_player' => Type::TYPE_WINDOWSMEDIA,
+                    'field_definition.ezmedia.type_html5_audio' => Type::TYPE_HTML5_AUDIO,
                 ],
+                'choices_as_values' => true,
                 'required' => true,
                 'property_path' => 'fieldSettings[mediaType]',
                 'label' => 'field_definition.ezmedia.media_type',

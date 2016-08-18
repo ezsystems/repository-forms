@@ -28,10 +28,11 @@ class DateTimeFormMapper implements FieldDefinitionFormMapperInterface
             ])
             ->add('defaultType', ChoiceType::class, [
                 'choices' => [
-                    Type::DEFAULT_EMPTY => 'field_definition.ezdatetime.default_type_empty',
-                    Type::DEFAULT_CURRENT_DATE => 'field_definition.ezdatetime.default_type_current',
-                    Type::DEFAULT_CURRENT_DATE_ADJUSTED => 'field_definition.ezdatetime.default_type_adjusted',
+                    'field_definition.ezdatetime.default_type_empty' => Type::DEFAULT_EMPTY,
+                    'field_definition.ezdatetime.default_type_current' => Type::DEFAULT_CURRENT_DATE,
+                    'field_definition.ezdatetime.default_type_adjusted' => Type::DEFAULT_CURRENT_DATE_ADJUSTED,
                 ],
+                'choices_as_values' => true,
                 'expanded' => true,
                 'required' => true,
                 'property_path' => 'fieldSettings[defaultType]',

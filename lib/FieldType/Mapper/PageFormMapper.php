@@ -36,6 +36,7 @@ class PageFormMapper implements FieldDefinitionFormMapperInterface
         $fieldDefinitionForm
             ->add('defaultLayout', ChoiceType::class, [
                 'choices' => array_combine($availableLayouts, $availableLayouts),
+                'choices_as_values' => true,
                 'multiple' => false,
                 'expanded' => false,
                 'required' => false,
