@@ -10,7 +10,7 @@
     ],
     "require": {
         "php": "~5.5|~7.0",
-        "ezsystems/ezpublish-kernel": "^6.4@dev",
+        "ezsystems/ezpublish-kernel": "^6.4@beta",
         "symfony/form": "~2.8",
         "symfony/validator": "~2.8"
     },
