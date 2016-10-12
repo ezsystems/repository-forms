@@ -79,7 +79,6 @@ class CheckboxFormMapperTest extends \PHPUnit_Framework_TestCase
         $mapper->mapFieldValueForm($fieldForm, $data);
     }
 
-
     public function testMapFieldValueFormWithLanguageCode()
     {
         $mapper = new CheckboxFormMapper($this->fieldTypeService);

@@ -76,7 +76,7 @@ class FormTypeBasedFieldValueFormMapperTest extends \PHPUnit_Framework_TestCase
             ->will(
                 $this->returnValueMap([
                     ['isRequired', false],
-                    ['fieldSettings', ['isMultiple' => false, 'options' => []]]
+                    ['fieldSettings', ['isMultiple' => false, 'options' => []]],
                 ])
             );
 
@@ -141,7 +141,7 @@ class FormTypeBasedFieldValueFormMapperTest extends \PHPUnit_Framework_TestCase
             ->will(
                 $this->returnValueMap([
                     ['isRequired', false],
-                    ['fieldSettings', ['isMultiple' => false, 'options' => []]]
+                    ['fieldSettings', ['isMultiple' => false, 'options' => []]],
                 ])
             );
         $data->expects($this->atLeastOnce())
