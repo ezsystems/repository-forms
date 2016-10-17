@@ -7,155 +7,43 @@
  */
 namespace EzSystems\RepositoryForms\Tests\FieldType\Mapper;
 
-use eZ\Publish\API\Repository\FieldType;
-use eZ\Publish\API\Repository\FieldTypeService;
-use eZ\Publish\API\Repository\Values\ContentType\FieldDefinition;
-use EzSystems\RepositoryForms\Data\Content\FieldData;
+use eZ\Publish\Core\Repository\Values\ContentType\FieldDefinition;
 use EzSystems\RepositoryForms\FieldType\Mapper\SelectionFormMapper;
-use Symfony\Component\Form\FormConfigInterface;
-use Symfony\Component\Form\FormFactoryInterface;
-use Symfony\Component\Form\FormInterface;
 
-class SelectionFormMapperTest extends \PHPUnit_Framework_TestCase
+class SelectionFormMapperTest extends BaseMapperTest
 {
-    private $fieldTypeService;
-
-    protected function setUp()
-    {
-        $this->fieldTypeService = $this->getMockBuilder(FieldTypeService::class)
-            ->getMock();
-        $this->fieldTypeService
-            ->expects($this->any())
-            ->method('getFieldType')
-            ->willReturn($this->getMockBuilder(FieldType::class)->getMock());
-    }
-
     public function testMapFieldValueFormNoLanguageCode()
     {
         $mapper = new SelectionFormMapper($this->fieldTypeService);
 
-        $config = $this->getMockBuilder(FormConfigInterface::class)->getMock();
-        $config->expects($this->once())
-            ->method('getOption')
-            ->with('languageCode')
-            ->willReturn(false);
+        $fieldDefinition = new FieldDefinition([
+            'names' => [],
+            'isRequired' => false,
+            'fieldSettings' => ['isMultiple' => false, 'options' => []]
+        ]);
 
-        $formFactory = $this->getMockBuilder(FormFactoryInterface::class)
-            ->setMethods(['addModelTransformer', 'setAutoInitialize', 'getForm'])
-            ->getMockForAbstractClass();
-        $formFactory->expects($this->once())
-            ->method('createBuilder')
-            ->willReturn($formFactory);
-        $formFactory->expects($this->once())
-            ->method('create')
-            ->willReturn($formFactory);
-        $formFactory->expects($this->once())
-            ->method('addModelTransformer')
-            ->willReturn($formFactory);
-        $formFactory->expects($this->once())
-            ->method('setAutoInitialize')
-            ->willReturn($formFactory);
-
-        $config->expects($this->once())
-            ->method('getFormFactory')
-            ->willReturn($formFactory);
-
-        $fieldForm = $this->getMockBuilder(FormInterface::class)->getMock();
-        $fieldForm->expects($this->once())
-            ->method('getConfig')
-            ->willReturn($config);
-
-        $data = $this->getMockBuilder(FieldData::class)
-            ->disableOriginalConstructor()
-            ->getMock();
-
-        $fieldDefinition = $this->getMockBuilder(FieldDefinition::class)
-            ->getMock();
-        $fieldDefinition->expects($this->once())
-            ->method('getName')
-            ->willReturn(false);
-        $fieldDefinition->expects($this->once())
-            ->method('getNames')
-            ->willReturn(['foo']);
-        $fieldDefinition
-            ->expects($this->any())
-            ->method('__get')
-            ->will(
-                $this->returnValueMap([
-                    ['isRequired', false],
-                    ['fieldSettings', ['isMultiple' => false, 'options' => []]],
-                ])
-            );
-
-        $data->expects($this->atLeastOnce())
+        $this->data->expects($this->once())
             ->method('__get')
             ->with('fieldDefinition')
             ->willReturn($fieldDefinition);
 
-        $mapper->mapFieldValueForm($fieldForm, $data);
+        $mapper->mapFieldValueForm($this->fieldForm, $this->data);
     }
 
     public function testMapFieldValueFormWithLanguageCode()
     {
         $mapper = new SelectionFormMapper($this->fieldTypeService);
 
-        $config = $this->getMockBuilder(FormConfigInterface::class)->getMock();
-        $config->expects($this->once())
-            ->method('getOption')
-            ->with('languageCode')
-            ->willReturn('eng-GB');
-
-        $formFactory = $this->getMockBuilder(FormFactoryInterface::class)
-            ->setMethods(['addModelTransformer', 'setAutoInitialize', 'getForm'])
-            ->getMockForAbstractClass();
-        $formFactory->expects($this->once())
-            ->method('createBuilder')
-            ->willReturn($formFactory);
-        $formFactory->expects($this->once())
-            ->method('create')
-            ->willReturn($formFactory);
-        $formFactory->expects($this->once())
-            ->method('addModelTransformer')
-            ->willReturn($formFactory);
-        $formFactory->expects($this->once())
-            ->method('setAutoInitialize')
-            ->willReturn($formFactory);
-
-        $config->expects($this->once())
-            ->method('getFormFactory')
-            ->willReturn($formFactory);
-
-        $fieldForm = $this->getMockBuilder(FormInterface::class)->getMock();
-        $fieldForm->expects($this->once())
-            ->method('getConfig')
-            ->willReturn($config);
-
-        $data = $this->getMockBuilder(FieldData::class)
-            ->disableOriginalConstructor()
-            ->getMock();
-
-        $fieldDefinition = $this->getMockBuilder(FieldDefinition::class)
-            ->getMock();
-        $fieldDefinition->expects($this->once())
-            ->method('getName')
-            ->willReturn('bar');
-        $fieldDefinition->expects($this->once())
-            ->method('getNames')
-            ->willReturn(['foo']);
-        $fieldDefinition
-            ->expects($this->any())
-            ->method('__get')
-            ->will(
-                $this->returnValueMap([
-                    ['isRequired', false],
-                    ['fieldSettings', ['isMultiple' => false, 'options' => []]],
-                ])
-            );
-        $data->expects($this->atLeastOnce())
+        $fieldDefinition = new FieldDefinition([
+            'names' => ['eng-GB' => 'foo'],
+            'isRequired' => false,
+            'fieldSettings' => ['isMultiple' => false, 'options' => []]
+        ]);
+        $this->data->expects($this->once())
             ->method('__get')
             ->with('fieldDefinition')
             ->willReturn($fieldDefinition);
 
-        $mapper->mapFieldValueForm($fieldForm, $data);
+        $mapper->mapFieldValueForm($this->fieldForm, $this->data);
     }
 }
