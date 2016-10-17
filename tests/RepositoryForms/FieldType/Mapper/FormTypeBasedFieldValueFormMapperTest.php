@@ -7,14 +7,8 @@
  */
 namespace EzSystems\RepositoryForms\Tests\FieldType\Mapper;
 
-use eZ\Publish\API\Repository\FieldType;
-use eZ\Publish\API\Repository\FieldTypeService;
 use eZ\Publish\Core\Repository\Values\ContentType\FieldDefinition;
-use EzSystems\RepositoryForms\Data\Content\FieldData;
 use EzSystems\RepositoryForms\FieldType\Mapper\FormTypeBasedFieldValueFormMapper;
-use Symfony\Component\Form\FormConfigInterface;
-use Symfony\Component\Form\FormFactoryInterface;
-use Symfony\Component\Form\FormInterface;
 
 class FormTypeBasedFieldValueFormMapperTest extends BaseMapperTest
 {
@@ -25,7 +19,7 @@ class FormTypeBasedFieldValueFormMapperTest extends BaseMapperTest
         $fieldDefinition = new FieldDefinition([
             'names' => [],
             'isRequired' => false,
-            'fieldSettings' => ['isMultiple' => false, 'options' => []]
+            'fieldSettings' => ['isMultiple' => false, 'options' => []],
         ]);
 
         $this->data->expects($this->once())
@@ -43,7 +37,7 @@ class FormTypeBasedFieldValueFormMapperTest extends BaseMapperTest
         $fieldDefinition = new FieldDefinition([
             'names' => ['eng-GB' => 'foo'],
             'isRequired' => false,
-            'fieldSettings' => ['isMultiple' => false, 'options' => []]
+            'fieldSettings' => ['isMultiple' => false, 'options' => []],
         ]);
         $this->data->expects($this->once())
             ->method('__get')

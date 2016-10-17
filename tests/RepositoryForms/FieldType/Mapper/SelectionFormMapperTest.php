@@ -19,7 +19,7 @@ class SelectionFormMapperTest extends BaseMapperTest
         $fieldDefinition = new FieldDefinition([
             'names' => [],
             'isRequired' => false,
-            'fieldSettings' => ['isMultiple' => false, 'options' => []]
+            'fieldSettings' => ['isMultiple' => false, 'options' => []],
         ]);
 
         $this->data->expects($this->once())
@@ -37,7 +37,7 @@ class SelectionFormMapperTest extends BaseMapperTest
         $fieldDefinition = new FieldDefinition([
             'names' => ['eng-GB' => 'foo'],
             'isRequired' => false,
-            'fieldSettings' => ['isMultiple' => false, 'options' => []]
+            'fieldSettings' => ['isMultiple' => false, 'options' => []],
         ]);
         $this->data->expects($this->once())
             ->method('__get')
