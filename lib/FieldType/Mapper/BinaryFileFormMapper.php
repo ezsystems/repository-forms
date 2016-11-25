@@ -22,6 +22,7 @@ class BinaryFileFormMapper implements FieldDefinitionFormMapperInterface
                 'required' => false,
                 'property_path' => 'validatorConfiguration[FileSizeValidator][maxFileSize]',
                 'label' => 'field_definition.ezbinaryfile.max_file_size',
+                'translation_domain' => 'ezrepoforms_content_type',
             ]);
     }
 }

@@ -16,6 +16,7 @@ use EzSystems\RepositoryForms\FieldType\FieldDefinitionFormMapperInterface;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\FormInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class RelationListFormMapper implements FieldDefinitionFormMapperInterface
 {
@@ -64,6 +65,17 @@ class RelationListFormMapper implements FieldDefinitionFormMapperInterface
                 'required' => false,
                 'property_path' => 'fieldSettings[selectionContentTypes]',
                 'label' => 'field_definition.ezobjectrelationlist.selection_content_types',
+            ]);
+    }
+
+    /**
+     * Fake method to set the translation domain for the extractor.
+     */
+    public function configureOptions(OptionsResolver $resolver)
+    {
+        $resolver
+            ->setDefaults([
+                'translation_domain' => 'ezrepoforms_content_type',
             ]);
     }
 }

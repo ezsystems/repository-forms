@@ -13,6 +13,7 @@ use EzSystems\RepositoryForms\Data\FieldDefinitionData;
 use EzSystems\RepositoryForms\FieldType\FieldDefinitionFormMapperInterface;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class PageFormMapper implements FieldDefinitionFormMapperInterface
 {
@@ -42,6 +43,17 @@ class PageFormMapper implements FieldDefinitionFormMapperInterface
                 'required' => false,
                 'property_path' => 'fieldSettings[defaultLayout]',
                 'label' => 'field_definition.ezpage.default_layout',
+            ]);
+    }
+
+    /**
+     * Fake method to set the translation domain for the extractor.
+     */
+    public function configureOptions(OptionsResolver $resolver)
+    {
+        $resolver
+            ->setDefaults([
+                'translation_domain' => 'ezrepoforms_content_type',
             ]);
     }
 }

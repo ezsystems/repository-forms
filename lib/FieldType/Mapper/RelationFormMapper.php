@@ -12,6 +12,7 @@ use EzSystems\RepositoryForms\Data\FieldDefinitionData;
 use EzSystems\RepositoryForms\FieldType\FieldDefinitionFormMapperInterface;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\FormInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class RelationFormMapper implements FieldDefinitionFormMapperInterface
 {
@@ -22,6 +23,17 @@ class RelationFormMapper implements FieldDefinitionFormMapperInterface
                 'required' => false,
                 'property_path' => 'fieldSettings[selectionRoot]',
                 'label' => 'field_definition.ezobjectrelation.selection_root',
+            ]);
+    }
+
+    /**
+     * Fake method to set the translation domain for the extractor.
+     */
+    public function configureOptions(OptionsResolver $resolver)
+    {
+        $resolver
+            ->setDefaults([
+                'translation_domain' => 'ezrepoforms_content_type',
             ]);
     }
 }

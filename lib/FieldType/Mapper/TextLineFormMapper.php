@@ -18,6 +18,7 @@ use EzSystems\RepositoryForms\FieldType\FieldValueFormMapperInterface;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class TextLineFormMapper implements FieldDefinitionFormMapperInterface, FieldValueFormMapperInterface
 {
@@ -79,5 +80,16 @@ class TextLineFormMapper implements FieldDefinitionFormMapperInterface, FieldVal
                     ->setAutoInitialize(false)
                     ->getForm()
             );
+    }
+
+    /**
+     * Fake method to set the translation domain for the extractor.
+     */
+    public function configureOptions(OptionsResolver $resolver)
+    {
+        $resolver
+            ->setDefaults([
+                'translation_domain' => 'ezrepoforms_content_type',
+            ]);
     }
 }

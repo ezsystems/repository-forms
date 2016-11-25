@@ -17,6 +17,7 @@ use EzSystems\RepositoryForms\FieldType\FieldValueFormMapperInterface;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class TextBlockFormMapper implements FieldDefinitionFormMapperInterface, FieldValueFormMapperInterface
 {
@@ -66,5 +67,16 @@ class TextBlockFormMapper implements FieldDefinitionFormMapperInterface, FieldVa
                     ->setAutoInitialize(false)
                     ->getForm()
             );
+    }
+
+    /**
+     * Fake method to set the translation domain for the extractor.
+     */
+    public function configureOptions(OptionsResolver $resolver)
+    {
+        $resolver
+            ->setDefaults([
+                'translation_domain' => 'ezrepoforms_content_type',
+            ]);
     }
 }

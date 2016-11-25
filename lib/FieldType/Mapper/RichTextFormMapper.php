@@ -12,6 +12,7 @@ use EzSystems\RepositoryForms\Data\FieldDefinitionData;
 use EzSystems\RepositoryForms\FieldType\FieldDefinitionFormMapperInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class RichTextFormMapper implements FieldDefinitionFormMapperInterface
 {
@@ -23,6 +24,17 @@ class RichTextFormMapper implements FieldDefinitionFormMapperInterface
                 'required' => true,
                 'property_path' => 'fieldSettings[numRows]',
                 'label' => 'field_definition.ezrichtext.num_rows',
+            ]);
+    }
+
+    /**
+     * Fake method to set the translation domain for the extractor.
+     */
+    public function configureOptions(OptionsResolver $resolver)
+    {
+        $resolver
+            ->setDefaults([
+                'translation_domain' => 'ezrepoforms_content_type',
             ]);
     }
 }

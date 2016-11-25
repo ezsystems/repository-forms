@@ -12,6 +12,7 @@ use EzSystems\RepositoryForms\Data\FieldDefinitionData;
 use EzSystems\RepositoryForms\FieldType\FieldDefinitionFormMapperInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class IntegerFormMapper implements FieldDefinitionFormMapperInterface
 {
@@ -32,5 +33,16 @@ class IntegerFormMapper implements FieldDefinitionFormMapperInterface
                     'label' => 'field_definition.ezinteger.max_value',
                 ]
             );
+    }
+
+    /**
+     * Fake method to set the translation domain for the extractor.
+     */
+    public function configureOptions(OptionsResolver $resolver)
+    {
+        $resolver
+            ->setDefaults([
+                'translation_domain' => 'ezrepoforms_content_type',
+            ]);
     }
 }
