@@ -40,7 +40,7 @@ class CheckboxFormMapper implements FieldValueFormMapperInterface
                     ->create(
                         'value',
                         CheckboxType::class,
-                        ['required' => $fieldDefinition->isRequired, 'label' => $label]
+                        ['required' => $fieldDefinition->isRequired, /** @Ignore */'label' => $label]
                     )
                     ->addModelTransformer(new FieldValueTransformer($this->fieldTypeService->getFieldType($fieldDefinition->fieldTypeIdentifier)))
                     // Deactivate auto-initialize as we're not on the root form.

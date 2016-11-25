@@ -15,6 +15,7 @@ use EzSystems\RepositoryForms\Form\Type\DateTimeIntervalType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class DateTimeFormMapper implements FieldDefinitionFormMapperInterface
 {
@@ -42,6 +43,17 @@ class DateTimeFormMapper implements FieldDefinitionFormMapperInterface
                 'required' => false,
                 'property_path' => 'fieldSettings[dateInterval]',
                 'label' => 'field_definition.ezdatetime.date_interval',
+            ]);
+    }
+
+    /**
+     * Fake method to set the translation domain for the extractor.
+     */
+    public function configureOptions(OptionsResolver $resolver)
+    {
+        $resolver
+            ->setDefaults([
+                'translation_domain' => 'ezrepoforms_content_type',
             ]);
     }
 }

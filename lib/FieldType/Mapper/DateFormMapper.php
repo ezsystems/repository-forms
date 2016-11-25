@@ -32,6 +32,7 @@ class DateFormMapper implements FieldDefinitionFormMapperInterface
                     'required' => true,
                     'property_path' => 'fieldSettings[defaultType]',
                     'label' => 'field_definition.ezdate.default_type',
+                    'translation_domain' => 'ezrepoforms_content_type',
                 ]
             );
     }
