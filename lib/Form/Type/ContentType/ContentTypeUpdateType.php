@@ -141,8 +141,7 @@ class ContentTypeUpdateType extends AbstractType
     {
         $list = [];
         foreach ($this->fieldTypeCollectionFactory->getConcreteFieldTypesIdentifiers() as $fieldTypeIdentifier) {
-            // @todo this should use a custom extractor, based on the container for instance
-            $list[$fieldTypeIdentifier] = $this->translator->trans("$fieldTypeIdentifier.name", [], 'fieldtypes');
+            $list[$fieldTypeIdentifier] = $this->translator->trans(/** @Ignore */"$fieldTypeIdentifier.name", [], 'fieldtypes');
         }
 
         asort($list, SORT_NATURAL);
