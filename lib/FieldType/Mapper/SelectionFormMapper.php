@@ -47,7 +47,7 @@ class SelectionFormMapper implements FieldDefinitionFormMapperInterface, FieldVa
                 'allow_delete' => true,
                 'delete_empty' => true,
                 'prototype' => true,
-                'prototype_name' => count($data->fieldDefinition->fieldSettings['options']),
+                'prototype_name' => '__number__',
                 'required' => false,
                 'property_path' => 'fieldSettings[options]',
                 'label' => 'field_definition.ezselection.options',
