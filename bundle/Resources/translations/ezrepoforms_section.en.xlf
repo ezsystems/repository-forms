@@ -1,35 +1,23 @@
-<?xml version="1.0"?>
-<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
-    <file source-language="en" datatype="plaintext" original="file.ext">
-        <body>
-            <trans-unit id="007cd5845351d36a9ec70173d2b44bb2">
-                <source>section.name.label</source>
-                <target>Section name:</target>
-            </trans-unit>
-            <trans-unit id="3de80c254c9555ad1347b034f93f3095">
-                <source>section.identifier.label</source>
-                <target>Section identifier:</target>
-            </trans-unit>
-            <trans-unit id="f066f9960df2f81907c3680c9148cef5">
-                <source>section.id.label</source>
-                <target>Section ID:</target>
-            </trans-unit>
-            <trans-unit id="60ff6d8b447be276d65797a5244d79c3">
-                <source>section.error.id_already_exist</source>
-                <target>A section with this identifier already exists, please enter a different one.</target>
-            </trans-unit>
-            <trans-unit id="a07809a8014c979ffe3e2256610b0ea4">
-                <source>section.error.cannot_delete_with_assigned_content</source>
-                <target>Cannot delete a section with assigned content.</target>
-            </trans-unit>
-            <trans-unit id="85af0dc2a9b83eb5cfc7871a73cbeab9">
-                <source>section.form.save</source>
-                <target>Save</target>
-            </trans-unit>
-            <trans-unit id="e61b7d6232fcbd424e1a4b030475be25">
-                <source>section.form.delete</source>
-                <target>Delete</target>
-            </trans-unit>
-        </body>
-    </file>
+<?xml version="1.0" encoding="utf-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:jms="urn:jms:translation" version="1.2">
+  <file date="2016-11-29T13:00:27Z" source-language="en" target-language="en" datatype="plaintext" original="not.available">
+    <header>
+      <tool tool-id="JMSTranslationBundle" tool-name="JMSTranslationBundle" tool-version="1.1.0-DEV"/>
+      <note>The source node in most cases contains the sample message as written by the developer. If it looks like a dot-delimitted string such as "form.label.firstname", then the developer has not provided a default message.</note>
+    </header>
+    <body>
+      <trans-unit id="201c1849abe46fd6ea7013ec4bb1bc2630e46e0a" resname="section.form.delete">
+        <source>Delete</source>
+        <target>Delete</target>
+        <note>key: section.form.delete</note>
+        <jms:reference-file line="59">/../../../../.././lib/Form/Type/Section/SectionDeleteType.php</jms:reference-file>
+      </trans-unit>
+      <trans-unit id="982207646b00655df737a8ac395ab5e0a8f8ede2" resname="section.form.save">
+        <source>Save</source>
+        <target>Save</target>
+        <note>key: section.form.save</note>
+        <jms:reference-file line="23">/../../../../.././lib/Form/Type/Section/SectionType.php</jms:reference-file>
+      </trans-unit>
+    </body>
+  </file>
 </xliff>
