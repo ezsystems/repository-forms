@@ -1,31 +1,23 @@
-<?xml version="1.0"?>
-<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
-    <file source-language="en" datatype="plaintext" original="file.ext">
-        <body>
-            <trans-unit id="007cd5845351d36a9ec70173d2b44bb2">
-                <source>language.name.label</source>
-                <target>Language name:</target>
-            </trans-unit>
-            <trans-unit id="3de80c254c9555ad1347b034f93f3095">
-                <source>language.code.label</source>
-                <target>Language Code:</target>
-            </trans-unit>
-            <trans-unit id="f066f9960df2f81907c3680c9148cef5">
-                <source>language.id.label</source>
-                <target>Language ID:</target>
-            </trans-unit>
-            <trans-unit id="60ff6d8b447be276d65797a5244d79c3">
-                <source>language.error.code_already_exist</source>
-                <target>A language with this language code already exists, please enter a different one.</target>
-            </trans-unit>
-            <trans-unit id="85af0dc2a9b83eb5cfc7871a73cbeab9">
-                <source>language.form.save</source>
-                <target>Save</target>
-            </trans-unit>
-            <trans-unit id="e61b7d6232fcbd424e1a4b030475be25">
-                <source>language.form.delete</source>
-                <target>Delete</target>
-            </trans-unit>
-        </body>
-    </file>
+<?xml version="1.0" encoding="utf-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:jms="urn:jms:translation" version="1.2">
+  <file date="2016-11-29T13:00:27Z" source-language="en" target-language="en" datatype="plaintext" original="not.available">
+    <header>
+      <tool tool-id="JMSTranslationBundle" tool-name="JMSTranslationBundle" tool-version="1.1.0-DEV"/>
+      <note>The source node in most cases contains the sample message as written by the developer. If it looks like a dot-delimitted string such as "form.label.firstname", then the developer has not provided a default message.</note>
+    </header>
+    <body>
+      <trans-unit id="06869c8162f8a2914b5a5b10af189b8b0a532e7d" resname="language.form.delete">
+        <source>Delete</source>
+        <target>Delete</target>
+        <note>key: language.form.delete</note>
+        <jms:reference-file line="32">/../../../../.././lib/Form/Type/Language/LanguageDeleteType.php</jms:reference-file>
+      </trans-unit>
+      <trans-unit id="f471f1ba7a9fddf9bcaf869218b35fe26147a4ab" resname="language.form.save">
+        <source>Save</source>
+        <target>Save</target>
+        <note>key: language.form.save</note>
+        <jms:reference-file line="25">/../../../../.././lib/Form/Type/Language/LanguageType.php</jms:reference-file>
+      </trans-unit>
+    </body>
+  </file>
 </xliff>
