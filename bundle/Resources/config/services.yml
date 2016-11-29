@@ -363,9 +363,7 @@ services:
             - [setViewTemplate, ['EzSystems\RepositoryForms\UserRegister\View\UserRegisterConfirmView', "$user_registration.templates.confirmation$"]]
             - [setPagelayout, ["$pagelayout$"]]
 
-    ezrepoforms.translation.extractor.fieldtypes:
-        class: EzSystems\RepositoryForms\Translation\FieldTypesTranslationExtractor
-        arguments:
-            - "@ezpublish.field_type_collection.factory"
+    ezrepoforms.translation.extractor.sorting:
+        class: EzSystems\RepositoryForms\Translation\SortingTranslationExtractor
         tags:
-            - { name: jms_translation.extractor, alias: ez_fieldtypes }
+            - { name: jms_translation.extractor, alias: ez_location_sorting }
