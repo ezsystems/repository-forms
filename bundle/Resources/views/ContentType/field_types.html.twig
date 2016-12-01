@@ -195,7 +195,7 @@
             </li>
         {% endfor %}
         </ul>
-        <script type="text/template" class="ezselection-settings-option-value-prototype">
+        <script type="text/template" class="ezselection-settings-option-value-prototype" data-ezselection-option-input-name="{{ form.options.vars.prototype.vars.full_name }}" data-ezselection-option-input-id="{{ form.options.vars.prototype.vars.id }}">
             <li class="ezselection-settings-option-value ez-selection-table-row">
                 <input type="checkbox" class="ezselection-settings-option-checkbox ez-selection-table-checkbox">
                 {{ form_widget(form.options.vars.prototype) }}
