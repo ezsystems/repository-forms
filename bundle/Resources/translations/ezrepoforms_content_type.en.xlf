@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:jms="urn:jms:translation" version="1.2">
-  <file date="2016-11-29T13:00:27Z" source-language="en" target-language="en" datatype="plaintext" original="not.available">
+  <file date="2016-12-05T12:57:18Z" source-language="en" target-language="en" datatype="plaintext" original="not.available">
     <header>
       <tool tool-id="JMSTranslationBundle" tool-name="JMSTranslationBundle" tool-version="1.1.0-DEV"/>
       <note>The source node in most cases contains the sample message as written by the developer. If it looks like a dot-delimitted string such as "form.label.firstname", then the developer has not provided a default message.</note>
@@ -127,136 +127,70 @@
         <jms:reference-file line="130">/../../../../.././lib/Form/Type/ContentType/ContentTypeUpdateType.php</jms:reference-file>
       </trans-unit>
       <trans-unit id="c625b80940dd9f13842e38446a97391248d0f709" resname="content_type.sort_field.1">
-        <source>content_type.sort_field.1</source>
+        <source>Location path</source>
         <target>Location path</target>
         <note>key: content_type.sort_field.1</note>
         <jms:reference-file>eZ\Publish\API\Repository\Values\Content\Location</jms:reference-file>
       </trans-unit>
       <trans-unit id="4cdfd30bdc30f263b30713d22f714ad46beb120b" resname="content_type.sort_field.2">
-        <source>content_type.sort_field.2</source>
+        <source>Publication date</source>
         <target>Publication date</target>
         <note>key: content_type.sort_field.2</note>
         <jms:reference-file>eZ\Publish\API\Repository\Values\Content\Location</jms:reference-file>
       </trans-unit>
       <trans-unit id="3b367aa1610d6332d66b2113a1b1ed287e0310a6" resname="content_type.sort_field.3">
-        <source>content_type.sort_field.3</source>
+        <source>Modification date</source>
         <target>Modification date</target>
         <note>key: content_type.sort_field.3</note>
         <jms:reference-file>eZ\Publish\API\Repository\Values\Content\Location</jms:reference-file>
       </trans-unit>
       <trans-unit id="f0dba52962ff2fceb7ab0de72427b4deb55ffbbc" resname="content_type.sort_field.4">
-        <source>content_type.sort_field.4</source>
+        <source>Section</source>
         <target>Section</target>
         <note>key: content_type.sort_field.4</note>
         <jms:reference-file>eZ\Publish\API\Repository\Values\Content\Location</jms:reference-file>
       </trans-unit>
       <trans-unit id="08c573b0f90eddd499911819f24a58632ceec79b" resname="content_type.sort_field.5">
-        <source>content_type.sort_field.5</source>
+        <source>Location depth</source>
         <target>Location depth</target>
         <note>key: content_type.sort_field.5</note>
         <jms:reference-file>eZ\Publish\API\Repository\Values\Content\Location</jms:reference-file>
       </trans-unit>
       <trans-unit id="f75919a228809d6de255e3fd535c4eaaf8789241" resname="content_type.sort_field.6">
-        <source>content_type.sort_field.6</source>
+        <source>ContentType identifier</source>
         <target>ContentType identifier</target>
         <note>key: content_type.sort_field.6</note>
         <jms:reference-file>eZ\Publish\API\Repository\Values\Content\Location</jms:reference-file>
       </trans-unit>
       <trans-unit id="f4bd88a45172f3cf7e268c40cfc27b0c5336bc9b" resname="content_type.sort_field.7">
-        <source>content_type.sort_field.7</source>
+        <source>ContentType name</source>
         <target>ContentType name</target>
         <note>key: content_type.sort_field.7</note>
         <jms:reference-file>eZ\Publish\API\Repository\Values\Content\Location</jms:reference-file>
       </trans-unit>
       <trans-unit id="d605ada5b53c58b7d08df3379cdc8c9ffc619a3f" resname="content_type.sort_field.8">
-        <source>content_type.sort_field.8</source>
+        <source>Location priority</source>
         <target>Location priority</target>
         <note>key: content_type.sort_field.8</note>
         <jms:reference-file>eZ\Publish\API\Repository\Values\Content\Location</jms:reference-file>
       </trans-unit>
       <trans-unit id="d24f4fdc1a193e1526c297e5e30b61bdb396b3bb" resname="content_type.sort_field.9">
-        <source>content_type.sort_field.9</source>
+        <source>Content name</source>
         <target>Content name</target>
         <note>key: content_type.sort_field.9</note>
         <jms:reference-file>eZ\Publish\API\Repository\Values\Content\Location</jms:reference-file>
       </trans-unit>
-      <trans-unit id="c300429484d21873cc0f1ef016def9c21ce5b593" resname="content_type.sort_field.content_type_identifier">
-        <source>content_type.sort_field.content_type_identifier</source>
-        <target>content_type.sort_field.content_type_identifier</target>
-        <note>key: content_type.sort_field.content_type_identifier</note>
-        <jms:reference-file line="94">/../../../../.././lib/Form/Type/ContentType/ContentTypeUpdateType.php</jms:reference-file>
-      </trans-unit>
-      <trans-unit id="6a5ff0e51a62d5f362eb39cf5338a3bb59ff0014" resname="content_type.sort_field.content_type_name">
-        <source>content_type.sort_field.content_type_name</source>
-        <target>content_type.sort_field.content_type_name</target>
-        <note>key: content_type.sort_field.content_type_name</note>
-        <jms:reference-file line="93">/../../../../.././lib/Form/Type/ContentType/ContentTypeUpdateType.php</jms:reference-file>
-      </trans-unit>
-      <trans-unit id="5149e0146059487622a9f1ebf3c843b8a020db33" resname="content_type.sort_field.depth">
-        <source>content_type.sort_field.depth</source>
-        <target>content_type.sort_field.depth</target>
-        <note>key: content_type.sort_field.depth</note>
-        <jms:reference-file line="95">/../../../../.././lib/Form/Type/ContentType/ContentTypeUpdateType.php</jms:reference-file>
-      </trans-unit>
-      <trans-unit id="8acac47605156b70e1d654c98b3b65b982e00db7" resname="content_type.sort_field.modified">
-        <source>content_type.sort_field.modified</source>
-        <target>content_type.sort_field.modified</target>
-        <note>key: content_type.sort_field.modified</note>
-        <jms:reference-file line="98">/../../../../.././lib/Form/Type/ContentType/ContentTypeUpdateType.php</jms:reference-file>
-      </trans-unit>
-      <trans-unit id="3fd95b45be04d6ae42d3eb82114c65e474f1d4ce" resname="content_type.sort_field.name">
-        <source>content_type.sort_field.name</source>
-        <target>content_type.sort_field.name</target>
-        <note>key: content_type.sort_field.name</note>
-        <jms:reference-file line="92">/../../../../.././lib/Form/Type/ContentType/ContentTypeUpdateType.php</jms:reference-file>
-      </trans-unit>
-      <trans-unit id="7b1c052f1013503faec80cc0231db8569669bf5c" resname="content_type.sort_field.path">
-        <source>content_type.sort_field.path</source>
-        <target>content_type.sort_field.path</target>
-        <note>key: content_type.sort_field.path</note>
-        <jms:reference-file line="96">/../../../../.././lib/Form/Type/ContentType/ContentTypeUpdateType.php</jms:reference-file>
-      </trans-unit>
-      <trans-unit id="ac2b24b167723165d67f63e17b0d4fa9faf081c0" resname="content_type.sort_field.priority">
-        <source>content_type.sort_field.priority</source>
-        <target>content_type.sort_field.priority</target>
-        <note>key: content_type.sort_field.priority</note>
-        <jms:reference-file line="97">/../../../../.././lib/Form/Type/ContentType/ContentTypeUpdateType.php</jms:reference-file>
-      </trans-unit>
-      <trans-unit id="c51d29f35f4f8eb46b61904f4ab198a234b30dfc" resname="content_type.sort_field.published">
-        <source>content_type.sort_field.published</source>
-        <target>content_type.sort_field.published</target>
-        <note>key: content_type.sort_field.published</note>
-        <jms:reference-file line="99">/../../../../.././lib/Form/Type/ContentType/ContentTypeUpdateType.php</jms:reference-file>
-      </trans-unit>
-      <trans-unit id="8992691c018856e6ca6d0b3ca0cd2a4e652e4fb5" resname="content_type.sort_field.section">
-        <source>content_type.sort_field.section</source>
-        <target>content_type.sort_field.section</target>
-        <note>key: content_type.sort_field.section</note>
-        <jms:reference-file line="100">/../../../../.././lib/Form/Type/ContentType/ContentTypeUpdateType.php</jms:reference-file>
-      </trans-unit>
       <trans-unit id="18f4f0dcdd6a1f1a9f7a5c301cc378167f403836" resname="content_type.sort_order.0">
-        <source>content_type.sort_order.0</source>
+        <source>Descending</source>
         <target>Descending</target>
         <note>key: content_type.sort_order.0</note>
         <jms:reference-file>eZ\Publish\API\Repository\Values\Content\Location</jms:reference-file>
       </trans-unit>
       <trans-unit id="b411f25ded028ccb2ef56a55d69bd2e3f1da4cd5" resname="content_type.sort_order.1">
-        <source>content_type.sort_order.1</source>
+        <source>Ascending</source>
         <target>Ascending</target>
         <note>key: content_type.sort_order.1</note>
         <jms:reference-file>eZ\Publish\API\Repository\Values\Content\Location</jms:reference-file>
-      </trans-unit>
-      <trans-unit id="a1718708d4bb688a877cd773f078fa44b4cbbb0d" resname="content_type.sort_order.asc">
-        <source>content_type.sort_order.asc</source>
-        <target>content_type.sort_order.asc</target>
-        <note>key: content_type.sort_order.asc</note>
-        <jms:reference-file line="107">/../../../../.././lib/Form/Type/ContentType/ContentTypeUpdateType.php</jms:reference-file>
-      </trans-unit>
-      <trans-unit id="2b365d7ac236dce07260e74a56b6877ed8455311" resname="content_type.sort_order.desc">
-        <source>content_type.sort_order.desc</source>
-        <target>content_type.sort_order.desc</target>
-        <note>key: content_type.sort_order.desc</note>
-        <jms:reference-file line="108">/../../../../.././lib/Form/Type/ContentType/ContentTypeUpdateType.php</jms:reference-file>
       </trans-unit>
       <trans-unit id="6ab7362c77b22ff8bc0d14eeaae8514b0a683473" resname="content_type.url_alias_schema">
         <source>URL alias name pattern</source>
