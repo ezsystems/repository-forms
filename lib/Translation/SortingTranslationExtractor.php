@@ -37,10 +37,10 @@ class SortingTranslationExtractor implements ExtractorInterface
 
         $sortConstants = array_filter(
             $locationClass->getConstants(),
-            function ($key) {
-                return (strtolower(substr($key, 0, 5)) === 'sort_');
+            function ($value, $key) {
+                return is_scalar($value) && strtolower(substr($key, 0, 11)) === 'sort_field_';
             },
-            ARRAY_FILTER_USE_KEY
+            ARRAY_FILTER_USE_BOTH
         );
 
         foreach ($sortConstants as $sortId) {
