@@ -1,23 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xliff xmlns:jms="urn:jms:translation" xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
-  <file date="2016-11-25T13:08:02Z" source-language="en" target-language="fr" datatype="plaintext" original="not.available">
+  <file date="2016-11-29T13:00:27Z" source-language="en" target-language="fr" datatype="plaintext" original="not.available">
     <header>
       <tool tool-id="JMSTranslationBundle" tool-name="JMSTranslationBundle" tool-version="1.1.0-DEV"/>
       <note>The source node in most cases contains the sample message as written by the developer. If it looks like a dot-delimitted string such as "form.label.firstname", then the developer has not provided a default message.</note>
     </header>
     <body>
-      <trans-unit id="06869c8162f8a2914b5a5b10af189b8b0a532e7d" resname="language.form.delete">
+      <trans-unit id="06869c8162f8a2914b5a5b10af189b8b0a532e7d" resname="language.form.delete" approved="yes">
         <source>Delete</source>
-        <target xml:lang="fr" state="translated">Supprimer</target>
+        <target xml:lang="fr">Supprimer</target>
+        <note>key: language.form.delete</note>
         <jms:reference-file line="32">/../../../../.././lib/Form/Type/Language/LanguageDeleteType.php</jms:reference-file>
       </trans-unit>
-      <trans-unit id="f471f1ba7a9fddf9bcaf869218b35fe26147a4ab" resname="language.form.save">
+      <trans-unit id="f471f1ba7a9fddf9bcaf869218b35fe26147a4ab" resname="language.form.save" approved="yes">
         <source>Save</source>
-        <target xml:lang="fr" state="translated">Enregistrer</target>
+        <target xml:lang="fr">Enregistrer</target>
+        <note>key: language.form.save</note>
         <jms:reference-file line="25">/../../../../.././lib/Form/Type/Language/LanguageType.php</jms:reference-file>
-        <alt-trans>
-          <target xml:lang="fr">Sauver</target>
-        </alt-trans>
       </trans-unit>
     </body>
   </file>
