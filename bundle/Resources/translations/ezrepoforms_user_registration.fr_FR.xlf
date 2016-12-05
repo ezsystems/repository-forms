@@ -6,8 +6,12 @@
       <note>The source node in most cases contains the sample message as written by the developer. If it looks like a dot-delimitted string such as "form.label.firstname", then the developer has not provided a default message.</note>
     </header>
     <body>
-      
-      
+      <trans-unit id="745ed48e9eaf1a1a896e411a17317ccbda571d35" resname="user.register_button" approved="yes">
+        <source>Register</source>
+        <target xml:lang="fr">Créer un compte</target>
+        <note>key: user.register_button</note>
+        <jms:reference-file line="47">/../../../../.././lib/Form/Type/User/UserRegisterType.php</jms:reference-file>
+      </trans-unit>
     </body>
   </file>
 </xliff>
