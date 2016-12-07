@@ -89,23 +89,23 @@ class ContentTypeUpdateType extends AbstractType
             ->add('isContainer', CheckboxType::class, ['required' => false, 'label' => 'content_type.is_container'])
             ->add('defaultSortField', ChoiceType::class, [
                 'choices' => [
-                    'content_type.sort_field.name' => Location::SORT_FIELD_NAME,
-                    'content_type.sort_field.content_type_name' => Location::SORT_FIELD_CLASS_NAME,
-                    'content_type.sort_field.content_type_identifier' => Location::SORT_FIELD_CLASS_IDENTIFIER,
-                    'content_type.sort_field.depth' => Location::SORT_FIELD_DEPTH,
-                    'content_type.sort_field.path' => Location::SORT_FIELD_PATH,
-                    'content_type.sort_field.priority' => Location::SORT_FIELD_PRIORITY,
-                    'content_type.sort_field.modified' => Location::SORT_FIELD_MODIFIED,
-                    'content_type.sort_field.published' => Location::SORT_FIELD_PUBLISHED,
-                    'content_type.sort_field.section' => Location::SORT_FIELD_SECTION,
+                    $this->translator->trans(/** @Ignore */'content_type.sort_field.' . Location::SORT_FIELD_NAME, [], 'ezrepoforms_content_type') => Location::SORT_FIELD_NAME,
+                    $this->translator->trans(/** @Ignore */'content_type.sort_field.' . Location::SORT_FIELD_CLASS_NAME, [], 'ezrepoforms_content_type') => Location::SORT_FIELD_CLASS_NAME,
+                    $this->translator->trans(/** @Ignore */'content_type.sort_field.' . Location::SORT_FIELD_CLASS_IDENTIFIER, [], 'ezrepoforms_content_type') => Location::SORT_FIELD_CLASS_IDENTIFIER,
+                    $this->translator->trans(/** @Ignore */'content_type.sort_field.' . Location::SORT_FIELD_DEPTH, [], 'ezrepoforms_content_type') => Location::SORT_FIELD_DEPTH,
+                    $this->translator->trans(/** @Ignore */'content_type.sort_field.' . Location::SORT_FIELD_PATH, [], 'ezrepoforms_content_type') => Location::SORT_FIELD_PATH,
+                    $this->translator->trans(/** @Ignore */'content_type.sort_field.' . Location::SORT_FIELD_PRIORITY, [], 'ezrepoforms_content_type') => Location::SORT_FIELD_PRIORITY,
+                    $this->translator->trans(/** @Ignore */'content_type.sort_field.' . Location::SORT_FIELD_MODIFIED, [], 'ezrepoforms_content_type') => Location::SORT_FIELD_MODIFIED,
+                    $this->translator->trans(/** @Ignore */'content_type.sort_field.' . Location::SORT_FIELD_PUBLISHED, [], 'ezrepoforms_content_type') => Location::SORT_FIELD_PUBLISHED,
+                    $this->translator->trans(/** @Ignore */'content_type.sort_field.' . Location::SORT_FIELD_SECTION, [], 'ezrepoforms_content_type') => Location::SORT_FIELD_SECTION,
                 ],
                 'choices_as_values' => true,
                 'label' => 'content_type.default_sort_field',
             ])
             ->add('defaultSortOrder', ChoiceType::class, [
                 'choices' => [
-                    'content_type.sort_order.asc' => Location::SORT_ORDER_ASC,
-                    'content_type.sort_order.desc' => Location::SORT_ORDER_DESC,
+                    $this->translator->trans(/** @Ignore */'content_type.sort_order.' . Location::SORT_ORDER_ASC, [], 'ezrepoforms_content_type') => Location::SORT_ORDER_ASC,
+                    $this->translator->trans(/** @Ignore */'content_type.sort_order.' . Location::SORT_ORDER_DESC, [], 'ezrepoforms_content_type') => Location::SORT_ORDER_DESC,
                 ],
                 'choices_as_values' => true,
                 'label' => 'content_type.default_sort_order',

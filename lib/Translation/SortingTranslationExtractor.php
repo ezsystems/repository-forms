@@ -37,10 +37,10 @@ class SortingTranslationExtractor implements ExtractorInterface
 
         $sortConstants = array_filter(
             $locationClass->getConstants(),
-            function ($key) {
-                return (strtolower(substr($key, 0, 5)) === 'sort_');
+            function ($value, $key) {
+                return is_scalar($value) && strtolower(substr($key, 0, 11)) === 'sort_field_';
             },
-            ARRAY_FILTER_USE_KEY
+            ARRAY_FILTER_USE_BOTH
         );
 
         foreach ($sortConstants as $sortId) {
@@ -63,13 +63,17 @@ class SortingTranslationExtractor implements ExtractorInterface
     }
 
     /**
-     * @return \JMS\TranslationBundle\Model\Message\XliffMessage
+     * @param string $id The translation key
+     * @param string $desc Human readable translation / hint
+     * @param string $source The translation's source
+     *
+     * @return Message
      */
     private function createMessage($id, $desc, $source)
     {
         $message = new Message\XliffMessage($id, $this->domain);
         $message->addSource(new FileSource($source));
-        $message->setDesc($desc);
+        $message->setMeaning($desc);
         $message->setLocaleString($desc);
         $message->addNote('key: ' . $id);
 
