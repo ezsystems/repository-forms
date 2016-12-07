@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xliff xmlns:jms="urn:jms:translation" xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+  <file date="2016-11-29T13:00:27Z" source-language="en" target-language="ach" datatype="plaintext" original="not.available">
+    <header>
+      <tool tool-id="JMSTranslationBundle" tool-name="JMSTranslationBundle" tool-version="1.1.0-DEV"/>
+      <note>The source node in most cases contains the sample message as written by the developer. If it looks like a dot-delimitted string such as "form.label.firstname", then the developer has not provided a default message.</note>
+    </header>
+    <body>
+      <trans-unit id="201c1849abe46fd6ea7013ec4bb1bc2630e46e0a" resname="section.form.delete">
+        <source>Delete</source>
+        <target xml:lang="ach">crwdns207068:0crwdne207068:0</target>
+        <note>key: section.form.delete</note>
+        <jms:reference-file line="59">/../../../../.././lib/Form/Type/Section/SectionDeleteType.php</jms:reference-file>
+      </trans-unit>
+      <trans-unit id="982207646b00655df737a8ac395ab5e0a8f8ede2" resname="section.form.save">
+        <source>Save</source>
+        <target xml:lang="ach">crwdns207069:0crwdne207069:0</target>
+        <note>key: section.form.save</note>
+        <jms:reference-file line="23">/../../../../.././lib/Form/Type/Section/SectionType.php</jms:reference-file>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>
