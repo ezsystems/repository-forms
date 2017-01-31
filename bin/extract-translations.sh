@@ -13,6 +13,7 @@ echo '# Extract RepositoryForms';
   "$@"
 
 echo '# Clean file references';
-sed -i "s|/../../../../.././vendor/ezsystems/repository-forms/|/|g" ./vendor/ezsystems/repository-forms/bundle/Resources/translations/*.xlf
+sed -i "s|>.*/vendor/ezsystems/repository-forms/|>|g" ./vendor/ezsystems/repository-forms/bundle/Resources/translations/*.xlf
 
+cd vendor/ezsystems/repository-forms;
 echo 'Translation extraction done';
