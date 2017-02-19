@@ -12,8 +12,10 @@ use eZ\Bundle\EzPublishCoreBundle\Controller;
 use eZ\Publish\API\Repository\ContentService;
 use eZ\Publish\API\Repository\ContentTypeService;
 use eZ\Publish\API\Repository\LocationService;
+use EzSystems\RepositoryForms\Data\Content\CreateContentDraftData;
 use EzSystems\RepositoryForms\Data\Mapper\ContentCreateMapper;
 use EzSystems\RepositoryForms\Form\ActionDispatcher\ActionDispatcherInterface;
+use EzSystems\RepositoryForms\Form\Type\Content\ContentDraftCreateType;
 use EzSystems\RepositoryForms\Form\Type\Content\ContentEditType;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -86,6 +88,53 @@ class ContentEditController extends Controller
         return $this->render('EzSystemsRepositoryFormsBundle:Content:content_edit.html.twig', [
             'form' => $form->createView(),
             'languageCode' => $language,
+            'pagelayout' => $this->pagelayout,
+        ]);
+    }
+
+    /**
+     * Displays a draft creation form that creates a content draft from an existing content.
+     *
+     * @param mixed $contentId
+     * @param int $fromVersionNo
+     * @param string $fromLanguage
+     * @param string $toLanguage
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function createContentDraftAction($contentId, $fromVersionNo = null, $fromLanguage = null, $toLanguage = null, Request $request)
+    {
+        $createContentDraft = new CreateContentDraftData();
+
+        if ($contentId !== null) {
+            $createContentDraft->contentId = $contentId;
+
+            $contentInfo = $this->contentService->loadContentInfo($contentId);
+            $createContentDraft->fromVersionNo = $fromVersionNo ?: $contentInfo->currentVersionNo;
+            $createContentDraft->fromLanguage = $fromLanguage ?: $contentInfo->mainLanguageCode;
+        }
+
+        $form = $this->createForm(
+            ContentDraftCreateType::class,
+            $createContentDraft,
+            [
+                'action' => $this->generateUrl('ez_content_draft_create'),
+            ]
+        );
+
+        $form->handleRequest($request);
+
+        if ($form->isValid()) {
+            $this->contentService->createContentDraft(
+                $contentInfo,
+                $this->contentService->loadVersionInfo($contentInfo, $fromVersionNo)
+            );
+        }
+
+        return $this->render('@EzSystemsRepositoryForms/Content/content_create_draft.html.twig', [
+            'form' => $form->createView(),
+            //'languageCode' => $language,
             'pagelayout' => $this->pagelayout,
         ]);
     }
