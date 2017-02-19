@@ -12,8 +12,11 @@ use eZ\Bundle\EzPublishCoreBundle\Controller;
 use eZ\Publish\API\Repository\ContentService;
 use eZ\Publish\API\Repository\ContentTypeService;
 use eZ\Publish\API\Repository\LocationService;
+use eZ\Publish\API\Repository\Values\Content\VersionInfo;
+use eZ\Publish\Core\Base\Exceptions\BadStateException;
 use EzSystems\RepositoryForms\Data\Content\CreateContentDraftData;
 use EzSystems\RepositoryForms\Data\Mapper\ContentCreateMapper;
+use EzSystems\RepositoryForms\Data\Mapper\ContentUpdateMapper;
 use EzSystems\RepositoryForms\Form\ActionDispatcher\ActionDispatcherInterface;
 use EzSystems\RepositoryForms\Form\Type\Content\ContentDraftCreateType;
 use EzSystems\RepositoryForms\Form\Type\Content\ContentEditType;
@@ -126,15 +129,56 @@ class ContentEditController extends Controller
         $form->handleRequest($request);
 
         if ($form->isValid()) {
-            $this->contentService->createContentDraft(
-                $contentInfo,
-                $this->contentService->loadVersionInfo($contentInfo, $fromVersionNo)
-            );
+            $this->contentActionDispatcher->dispatchFormAction($form, $createContentDraft, $form->getClickedButton()->getName());
+            if ($response = $this->contentActionDispatcher->getResponse()) {
+                return $response;
+            }
         }
 
         return $this->render('@EzSystemsRepositoryForms/Content/content_create_draft.html.twig', [
             'form' => $form->createView(),
-            //'languageCode' => $language,
+            'pagelayout' => $this->pagelayout,
+        ]);
+    }
+
+    /**
+     * Shows a content draft editing form.
+     *
+     * @param int $contentId ContentType id to create
+     * @param int $versionNo Version number the version should be created from. Defaults to the currently published one.
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     * @param string $language Language code to create the version in (eng-GB, ger-DE, ...))
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
+     * @throws \eZ\Publish\Core\Base\Exceptions\BadStateException If the version isn't editable, or if there is no editable version.
+     */
+    public function editContentDraftAction($contentId, $versionNo = null, Request $request, $language = null)
+    {
+        $draft = $this->contentService->loadContent($contentId, [$language], $versionNo);
+        if ($draft->getVersionInfo()->status !== VersionInfo::STATUS_DRAFT) {
+            throw new BadStateException('Version status', 'status is not draft');
+        }
+
+        $contentUpdate = (new ContentUpdateMapper())->mapToFormData(
+            $draft,
+            [
+                'languageCode' => $language,
+                'contentType' => $this->contentTypeService->loadContentType($draft->contentInfo->contentTypeId),
+            ]
+        );
+        $form = $this->createForm(ContentEditType::class, $contentUpdate, ['languageCode' => $language]);
+        $form->handleRequest($request);
+
+        if ($form->isValid()) {
+            $this->contentActionDispatcher->dispatchFormAction($form, $contentUpdate, $form->getClickedButton()->getName());
+            if ($response = $this->contentActionDispatcher->getResponse()) {
+                return $response;
+            }
+        }
+
+        return $this->render('EzSystemsRepositoryFormsBundle:Content:content_edit.html.twig', [
+            'form' => $form->createView(),
+            'languageCode' => $language,
             'pagelayout' => $this->pagelayout,
         ]);
     }
