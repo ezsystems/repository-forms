@@ -414,12 +414,6 @@
         <note>key: field_definition.ezpage.default_layout</note>
         <jms:reference-file line="45">lib/FieldType/Mapper/PageFormMapper.php</jms:reference-file>
       </trans-unit>
-      <trans-unit id="5f4e08d826e58f0be9e678f7c7a60068fd63b567" resname="field_definition.ezrichtext.num_rows">
-        <source>Number of text rows in the editor</source>
-        <target>Number of text rows in the editor</target>
-        <note>key: field_definition.ezrichtext.num_rows</note>
-        <jms:reference-file line="26">lib/FieldType/Mapper/RichTextFormMapper.php</jms:reference-file>
-      </trans-unit>
       <trans-unit id="e9e5a43d734719bf6ca42940c1cf5bc78b234e2b" resname="field_definition.ezselection.is_multiple">
         <source>Multiple choice</source>
         <target>Multiple choice</target>

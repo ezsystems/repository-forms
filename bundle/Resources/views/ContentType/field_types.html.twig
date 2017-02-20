@@ -168,14 +168,6 @@
     </div>
 {% endblock %}
 
-{% block ezrichtext_field_definition_edit %}
-    <div class="ezrichtext-settings num-rows{% if group_class is not empty %} {{ group_class }}{% endif %}">
-        {{- form_label(form.numRows) -}}
-        {{- form_errors(form.numRows) -}}
-        {{- form_widget(form.numRows) -}}
-    </div>
-{% endblock %}
-
 {% block ezselection_field_definition_edit %}
     <div class="ezselection-settings is-multiple{% if group_class is not empty %} {{ group_class }}{% endif %}">
         {{- form_label(form.isMultiple) -}}
