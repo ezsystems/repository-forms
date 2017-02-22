@@ -188,7 +188,7 @@ also applies for textBlock - JSON schema doesn't provide information about if it
 },
 ```
 
-### Selection (single selection):
+### Selection/Country (single selection):
 
 #### Properties:
 - "type": "string" -> defines the field type
@@ -204,7 +204,7 @@ also applies for textBlock - JSON schema doesn't provide information about if it
 },
 ```
 
-### Selection (multiple choices):
+### Selection/Country (multiple choices):
 
 #### Properties:
 - "type": "array" -> defines the field type
@@ -226,4 +226,86 @@ also applies for textBlock - JSON schema doesn't provide information about if it
     },
     "uniqueItems": true
 },
+```
+
+### MapLocation:
+
+#### Properties:
+- "type": "object" -> defines the field type
+- "title": "A Map Location" -> the label for the input
+- "required": ["latitude", "longitude", "address"] -> the required properties for the field
+- "properties": {
+      "latitude": {
+          "type": "number"
+      },
+      "longtitude": {
+          "type": "number"
+      },
+      "address": {
+          "type": "string"
+      }
+  }
+
+#### Example
+```json
+"mapLocation": {
+    "title": "A localisation form",
+    "type": "object",
+    "required": [
+        "latitude",
+        "longitude",
+        "address"
+    ],
+    "properties": {
+        "latitude": {
+            "type": "number"
+        },
+        "longtitude": {
+            "type": "number"
+        },
+        "address": {
+            "type": "string"
+        }
+    }
+}
+```
+
+### BinaryFile/Media (Single file):
+The JSON schema standard doesn't provide information about maxFileSize, this has to be added by custom option.
+
+#### Properties:
+- "type": "string" -> defines the field type
+- "format": "data-url" -> the field format
+- "title": "Single file" -> the label for the input
+
+#### Example
+```json
+"file": {
+    "type": "string",
+    "format": "data-url",
+    "title": "Single file"
+}
+```
+
+### BinaryFile/Media (Multiple files):
+The JSON schema standard doesn't provide information about maxFileSize, this has to be added by custom option.
+
+#### Properties:
+- "type": "array" -> defines the field type
+- "title": "Multiple files" -> the label for the input
+- "items": {
+      "type": "string",
+      "format": "data-url"
+  }
+
+#### Example
+```json
+"files": {
+    "type": "array",
+    "title": "Multiple files",
+    "items": {
+        "type": "string",
+        "format": "data-url"
+    }
+}
 ```
