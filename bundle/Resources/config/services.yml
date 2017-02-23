@@ -19,6 +19,7 @@ parameters:
     ezrepoforms.field_type.form_mapper.ezdate.class: EzSystems\RepositoryForms\FieldType\Mapper\DateFormMapper
     ezrepoforms.field_type.form_mapper.ezdatetime.class: EzSystems\RepositoryForms\FieldType\Mapper\DateTimeFormMapper
     ezrepoforms.field_type.form_mapper.ezfloat.class: EzSystems\RepositoryForms\FieldType\Mapper\FloatFormMapper
+    ezrepoforms.field_type.form_mapper.ezgmaplocation.class: EzSystems\RepositoryForms\FieldType\Mapper\MapLocationFormMapper
     ezrepoforms.field_type.form_mapper.ezimage.class: EzSystems\RepositoryForms\FieldType\Mapper\ImageFormMapper
     ezrepoforms.field_type.form_mapper.ezinteger.class: EzSystems\RepositoryForms\FieldType\Mapper\IntegerFormMapper
     ezrepoforms.field_type.form_mapper.ezisbn.class: EzSystems\RepositoryForms\FieldType\Mapper\ISBNFormMapper
@@ -136,6 +137,11 @@ services:
         class: "%ezrepoforms.field_type.form_mapper.ezfloat.class%"
         tags:
             - { name: ez.fieldFormMapper.definition, fieldType: ezfloat }
+
+    ezrepoforms.field_type.form_mapper.ezgmaplocation:
+        class: "%ezrepoforms.field_type.form_mapper.ezgmaplocation.class%"
+        tags:
+            - { name: ez.fieldFormMapper.definition, fieldType: ezgmaplocation }
 
     ezrepoforms.field_type.form_mapper.ezimage:
         class: "%ezrepoforms.field_type.form_mapper.ezimage.class%"
