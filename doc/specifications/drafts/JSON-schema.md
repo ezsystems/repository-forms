@@ -309,3 +309,54 @@ The JSON schema standard doesn't provide information about maxFileSize, this has
     }
 }
 ```
+
+### Landing Page:
+
+#### Properties:
+- "type": "object" -> defines the field type
+- "format": "ez-landing-page" -> not defined by the JSON schema standard, we have to have to defined it in the custom option
+- "properties": {
+      "page": {
+          "title": "Page",
+          "type": "Object",
+          "properties": {
+              "layout": {
+                  "title": "layout",
+                  "type": "string"
+              },
+              "title": {
+                  "title": "The page title",
+                  "type": "string"
+              },
+              "zones": {
+                  "type": "array",
+                  "title": "Zones",
+                  "items": {
+                      "zone-1": {
+                          "type": "object",
+                          "title": "Zone 1",
+                          "properties": {
+                              "id": {
+                                  "title": "first",
+                                  "type": "string"
+                              },
+                              "name": {
+                                  "title": "First zone",
+                                  "type": "string"
+                              },
+                              "blocks": {
+                                  "type": "array",
+                                  "items": {
+                                      ... // may vary depend on a block type
+                                  }
+                              }
+                          }
+                      },
+                      "zone-2": {
+                          ...
+                      }
+                  }
+              }
+          }
+      }
+  }
