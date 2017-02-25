@@ -62,6 +62,26 @@ Uses the same exact form than the content edit one.
 
 #### Architecture
 The Form, `ContentEditType`, uses a `ContentUpdateData` object.
+
+## Additional topics
+
+### Form rendering customization
+In order to benefit from the save level of flexibility legacy provided, the first thing that comes
+to mind is views: if we have a ContentEditView, we can easily override the template and customize
+the form using [form theming](https://symfony.com/doc/current/form/form_customization.html#form-theming-in-twig).
+
+See https://github.com/ezsystems/ezplatform-demo/blob/master/app/Resources/views/user/registration_content_form.html.twig
+for an example of a content form customization.
+
+This involves:
+- ViewBuilders
+- ViewProviders + configuration
+- Default templates
+- Practical examples (anything in `ez*-demo` ?)
+
+> Very down-to-earth idea: if `fieldsData` was indexed by field def identifier, it would simplify
+> the template code a lot.
+
 ## Background research
 
 ### How repository forms does it for content types 
