@@ -1,7 +1,17 @@
+ez_jsonschema_content_create_form:
+    path: /content/create/nodraft/{contentTypeIdentifier}/{language}/{parentLocationId}.{_format}
+    defaults:
+        _controller: EzSystemsRepositoryFormsBundle:JsonSchema:createContentTypeForm
+    requirements:
+        _format: json
+
 ez_content_create_no_draft:
     path: /content/create/nodraft/{contentTypeIdentifier}/{language}/{parentLocationId}
     defaults:
+        _format: html
         _controller: ez_content_edit:createWithoutDraftAction
+    requirements:
+        _format: html
 
 ez_user_register:
   path: /register
@@ -12,3 +22,4 @@ ez_user_register_confirmation:
   path: /register-confirm
   defaults:
       _controller: "ezrepoforms.controller.user_register:registerConfirmAction"
+

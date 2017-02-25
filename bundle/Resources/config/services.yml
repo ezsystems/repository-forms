@@ -367,3 +367,6 @@ services:
         class: EzSystems\RepositoryForms\Translation\SortingTranslationExtractor
         tags:
             - { name: jms_translation.extractor, alias: ez_location_sorting }
+
+    liform.transformer.null:
+        class: EzSystems\RepositoryForms\LiForm\NullTransformer
