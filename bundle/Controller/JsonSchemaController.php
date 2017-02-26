@@ -7,6 +7,7 @@ namespace EzSystems\RepositoryFormsBundle\Controller;
 
 use EzSystems\RepositoryForms\Data\Mapper\ContentCreateMapper;
 use EzSystems\RepositoryForms\Form\Type\Content\ContentEditType;
+use EzSystems\RepositoryForms\Form\Type\Content\ContentFormType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
@@ -17,18 +18,22 @@ class JsonSchemaController extends Controller
 {
     public function createContentTypeFormAction($contentTypeIdentifier, $parentLocationId, $language = 'eng-GB')
     {
-        $contentTypeService = $this->getContentTypeService();
-        $locationService = $this->getLocationService();
+        $contentType = $this->getContentTypeService()->loadContentTypeByIdentifier($contentTypeIdentifier);
+        $contentCreateStruct = $this->getContentService()->newContentCreateStruct(
+            $contentType,
+            $language
+        );
 
-        $contentType = $contentTypeService->loadContentTypeByIdentifier($contentTypeIdentifier);
-        $data = (new ContentCreateMapper())->mapToFormData($contentType, [
-            'mainLanguageCode' => $language,
-            'parentLocation' => $locationService->newLocationCreateStruct($parentLocationId),
-        ]);
         $form = $this->createForm(
-            ContentEditType::class,
-            $data,
-            ['languageCode' => $language, 'csrf_protection' => false, 'controls_enabled' => false]
+            ContentFormType::class,
+            $contentCreateStruct,
+            [
+                'languageCode' => $language,
+                'csrf_protection' => false,
+                'controls_enabled' => false,
+                'parentLocationId' => $parentLocationId,
+                'label' => "New " . $contentType->getName($language)
+            ]
         );
 
 //        $builder = $this->getFormBuilder();
@@ -54,15 +59,7 @@ class JsonSchemaController extends Controller
     }
 
     /**
-     * @return \Symfony\Component\Form\FormBuilderInterface
-     */
-    private function getFormBuilder()
-    {
-        return $this->container->get('form.factory')->createBuilder();
-    }
-
-    /**
-     * @return mixed
+     * @return \eZ\Publish\API\Repository\ContentTypeService
      */
     protected function getContentTypeService()
     {
@@ -70,11 +67,19 @@ class JsonSchemaController extends Controller
     }
 
     /**
-     * @return mixed
+     * @return \eZ\Publish\API\Repository\LocationService
      */
     protected function getLocationService()
     {
         return $this->container->get('ezpublish.api.service.location');
+    }
+
+    /**
+     * @return \eZ\Publish\API\Repository\ContentService
+     */
+    protected function getContentService()
+    {
+        return $this->container->get('ezpublish.api.service.content');
     }
 
     private function configureResolver()
