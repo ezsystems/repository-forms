@@ -9,6 +9,8 @@
 namespace EzSystems\RepositoryForms\Form\Processor;
 
 use eZ\Publish\API\Repository\ContentService;
+use eZ\Publish\API\Repository\LocationService;
+use eZ\Publish\API\Repository\Values\Content\ContentCreateStruct;
 use eZ\Publish\API\Repository\Values\Content\ContentStruct;
 use eZ\Publish\Core\MVC\Symfony\Routing\UrlAliasRouter;
 use EzSystems\RepositoryForms\Event\FormActionEvent;
@@ -29,13 +31,19 @@ class ContentFormProcessor implements EventSubscriberInterface
     private $contentService;
 
     /**
+     * @var \eZ\Publish\API\Repository\LocationService
+     */
+    private $locationService;
+
+    /**
      * @var \Symfony\Component\Routing\RouterInterface
      */
     private $router;
 
-    public function __construct(ContentService $contentService, RouterInterface $router)
+    public function __construct(ContentService $contentService, RouterInterface $router, LocationService $locationService)
     {
         $this->contentService = $contentService;
+        $this->locationService = $locationService;
         $this->router = $router;
     }
 
@@ -68,11 +76,16 @@ class ContentFormProcessor implements EventSubscriberInterface
 
     public function processPublish(FormActionEvent $event)
     {
-        /** @var \EzSystems\RepositoryForms\Data\Content\ContentCreateData|\EzSystems\RepositoryForms\Data\Content\ContentUpdateData $data */
+        /** @var \eZ\Publish\API\Repository\Values\Content\ContentCreateStruct $data */
         $data = $event->getData();
         $form = $event->getForm();
+        $formConfig = $form->getConfig();
 
-        $draft = $this->saveDraft($data, $form->getConfig()->getOption('languageCode'));
+        $draft = $this->contentService->createContent(
+            $data,
+            [$this->locationService->newLocationCreateStruct($formConfig->getOption('parentLocationId'))]
+        );
+        $this->saveDraft($data, $formConfig->getOption('languageCode'));
         $content = $this->contentService->publishVersion($draft->versionInfo);
 
         // Redirect to the provided URL. Defaults to URLAlias of the published content.

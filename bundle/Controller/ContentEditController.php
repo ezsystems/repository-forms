@@ -15,6 +15,7 @@ use eZ\Publish\API\Repository\LocationService;
 use EzSystems\RepositoryForms\Data\Mapper\ContentCreateMapper;
 use EzSystems\RepositoryForms\Form\ActionDispatcher\ActionDispatcherInterface;
 use EzSystems\RepositoryForms\Form\Type\Content\ContentEditType;
+use EzSystems\RepositoryForms\Form\Type\Content\ContentFormType;
 use Symfony\Component\HttpFoundation\Request;
 
 class ContentEditController extends Controller
@@ -68,16 +69,24 @@ class ContentEditController extends Controller
      */
     public function createWithoutDraftAction($contentTypeIdentifier, $language, $parentLocationId, Request $request)
     {
-        $contentType = $this->contentTypeService->loadContentTypeByIdentifier($contentTypeIdentifier);
-        $data = (new ContentCreateMapper())->mapToFormData($contentType, [
-            'mainLanguageCode' => $language,
-            'parentLocation' => $this->locationService->newLocationCreateStruct($parentLocationId),
-        ]);
-        $form = $this->createForm(ContentEditType::class, $data, ['languageCode' => $language]);
+        $contentCreateStruct = $this->contentService->newContentCreateStruct(
+            $this->contentTypeService->loadContentTypeByIdentifier($contentTypeIdentifier),
+            $language
+        );
+        $form = $this->createForm(
+            ContentFormType::class,
+            $contentCreateStruct,
+            ['languageCode' => $language, 'parentLocationId' => $parentLocationId]
+        );
         $form->handleRequest($request);
 
         if ($form->isValid()) {
-            $this->contentActionDispatcher->dispatchFormAction($form, $data, $form->getClickedButton()->getName());
+            $this->contentActionDispatcher->dispatchFormAction(
+                $form,
+                $contentCreateStruct,
+                $form->getClickedButton()->getName()
+            );
+
             if ($response = $this->contentActionDispatcher->getResponse()) {
                 return $response;
             }

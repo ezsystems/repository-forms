@@ -297,7 +297,7 @@ services:
 
     ezrepoforms.form_processor.content:
         class: "%ezrepoforms.form_processor.content.class%"
-        arguments: ["@ezpublish.api.service.content", "@router"]
+        arguments: ["@ezpublish.api.service.content", "@router", "@ezpublish.api.service.location"]
         tags:
             - { name: kernel.event_subscriber }
 
@@ -376,3 +376,25 @@ services:
 
     liform.transformer.null:
         class: EzSystems\RepositoryForms\LiForm\NullTransformer
+
+    ezrepoforms.content.form_type:
+        class: 'EzSystems\RepositoryForms\Form\Type\Content\ContentFormType'
+        arguments:
+            - '@ezpublish.api.service.field_type'
+        tags:
+            - {name: form.type, alias: ezrepoforms_content}
+
+    ezrepoforms.content.form_type.textline_field_type:
+        class: EzSystems\RepositoryForms\Form\Type\FieldValue\TextFieldType
+        tags:
+            - {name: form.type, alias: ezrepoforms_content_textline_field_type}
+
+    ezrepoforms.content.form_type.checkbox_field_type:
+        class: EzSystems\RepositoryForms\Form\Type\FieldValue\CheckboxFieldType
+        tags:
+            - {name: form.type, alias: ezrepoforms_content_checkbox_field_type}
+
+    ezrepoforms.content.form_type.image_field_type:
+        class: EzSystems\RepositoryForms\Form\Type\FieldValue\ImageFieldType
+        tags:
+            - {name: form.type, alias: ezrepoforms_content_image_field_type}
