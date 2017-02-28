@@ -12,9 +12,7 @@ use eZ\Bundle\EzPublishCoreBundle\Controller;
 use eZ\Publish\API\Repository\ContentService;
 use eZ\Publish\API\Repository\ContentTypeService;
 use eZ\Publish\API\Repository\LocationService;
-use EzSystems\RepositoryForms\Data\Mapper\ContentCreateMapper;
 use EzSystems\RepositoryForms\Form\ActionDispatcher\ActionDispatcherInterface;
-use EzSystems\RepositoryForms\Form\Type\Content\ContentEditType;
 use EzSystems\RepositoryForms\Form\Type\Content\ContentFormType;
 use Symfony\Component\HttpFoundation\Request;
 
