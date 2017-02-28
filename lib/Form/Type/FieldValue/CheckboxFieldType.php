@@ -6,24 +6,17 @@
 
 namespace EzSystems\RepositoryForms\Form\Type\FieldValue;
 
-use eZ\Publish\Core\FieldType\Checkbox\Value;
-use Symfony\Component\Form\CallbackTransformer;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\FormBuilderInterface;
 
-class CheckboxFieldType extends CheckboxType
+class CheckboxFieldType extends AbstractFieldType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->addModelTransformer(
-            new CallbackTransformer(
-                function (Value $checkbox) {
-                    return $checkbox->bool;
-                },
-                function ($bool) {
-                    return new Value($bool);
-                }
-            )
+        $builder->add(
+            'bool',
+            CheckboxType::class,
+            ['label' => $options['field_definition']->getName('eng-GB')]
         );
     }
 }

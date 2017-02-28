@@ -12,7 +12,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class MapLocationType extends AbstractType
+class MapLocationFieldType extends AbstractFieldType
 {
     public function getName()
     {
@@ -41,10 +41,9 @@ class MapLocationType extends AbstractType
                 ['label' => 'Address', 'empty_data' => '', 'property_path' => 'address', 'required' => $options['required']]);
     }
 
-    public function configureOptions(OptionsResolver $optionsResolver)
+    public function configureOptions(OptionsResolver $resolver)
     {
-        $optionsResolver->setDefaults([
-            'required' => false,
-        ]);
+        parent::configureOptions($resolver);
+        $resolver->setDefaults(['required' => false]);
     }
 }

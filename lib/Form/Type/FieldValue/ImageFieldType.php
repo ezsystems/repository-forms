@@ -7,14 +7,13 @@
 namespace EzSystems\RepositoryForms\Form\Type\FieldValue;
 
 use eZ\Publish\Core\FieldType\Image\Value as ImageValue;
-use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\CallbackTransformer;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
-class ImageFieldType extends AbstractType
+class ImageFieldType extends AbstractFieldType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -49,5 +48,4 @@ class ImageFieldType extends AbstractType
             )
         );
     }
-
 }
