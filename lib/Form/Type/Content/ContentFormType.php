@@ -3,25 +3,21 @@
  * @copyright Copyright (C) eZ Systems AS. All rights reserved.
  * @license For full copyright and license information view LICENSE file distributed with this source code.
  */
-
 namespace EzSystems\RepositoryForms\Form\Type\Content;
 
 use eZ\Publish\API\Repository\FieldTypeService;
 use eZ\Publish\API\Repository\Values\ContentType\FieldDefinition;
 use eZ\Publish\Core\Base\Exceptions\NotFound\FieldTypeNotFoundException;
-use eZ\Publish\Core\Repository\Values\Content\ContentCreateStruct;
 use eZ\Publish\Core\Repository\Values\Content\ContentCreateStruct as APIContentCreateStruct;
 use eZ\Publish\API\Repository\Values\Content\Field;
+use EzSystems\RepositoryForms\Form\Type\FieldValue\AuthorCollectionFieldType;
 use EzSystems\RepositoryForms\Form\Type\FieldValue\CheckboxFieldType;
 use EzSystems\RepositoryForms\Form\Type\FieldValue\ImageFieldType;
-use EzSystems\RepositoryForms\Form\Type\FieldValue\MapLocationType;
+use EzSystems\RepositoryForms\Form\Type\FieldValue\MapLocationFieldType;
 use EzSystems\RepositoryForms\Form\Type\FieldValue\TextFieldType;
-use Overblog\GraphQLBundle\__DEFINITIONS__\ImageFieldValueType;
-use Overblog\GraphQLBundle\__DEFINITIONS__\ISBNFieldValueType;
+use EzSystems\RepositoryForms\Form\Type\FieldValue\UrlFieldType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\CallbackTransformer;
-use Symfony\Component\Form\Exception\TransformationFailedException;
-use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
@@ -32,6 +28,8 @@ use Symfony\Component\Form\Extension\Core\Type\TimeType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
+use Symfony\Component\Form\FormInterface;
+use Symfony\Component\Form\FormView;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class ContentFormType extends AbstractType
@@ -61,40 +59,43 @@ class ContentFormType extends AbstractType
         $builder->addEventListener(FormEvents::PRE_SET_DATA, [$this, 'addFields']);
         $builder->addModelTransformer(
             new CallbackTransformer(
-                function(APIContentCreateStruct $struct) {
+                /**
+                 * Converts to the provided to the one understood by the Form.
+                 * Changes numerically indexed fields in ContentStruct::fields items to field def identifier.
+                 *
+                 * Updates the ContentCreateStruct so that fields in the struct's language code:
+                 * - contain FieldValue objects instead of Field
+                 * - are indexed on the FieldDefinition identifier
+                 */
+                function (APIContentCreateStruct $struct) {
+                    $fields = $struct->fields;
+                    $struct->fields = [];
+                    foreach ($fields as $key => $field) {
+                        $value = $field->value;
+                        if (!is_object($value)) {
+                            // Find the field definition's FieldType
+                            foreach ($struct->contentType->getFieldDefinitions() as $fieldDefinition) {
+                                if ($fieldDefinition->identifier === $field->fieldDefIdentifier) {
+                                    $fieldType = $this->fieldTypeService->getFieldType($fieldDefinition->fieldTypeIdentifier);
+                                }
+                            }
+
+                            if (!isset($fieldType)) {
+                                throw new \Exception('Field definition identifier not found in the FieldType');
+                            }
+                            $valueClass = get_class($fieldType->getEmptyValue());
+                            $value = new $valueClass($value);
+                        }
+                        $struct->fields[$field->fieldDefIdentifier] = $value;
+                    }
+
                     return $struct;
                 },
-                function(APIContentCreateStruct $struct) {
-                    $fixUpRequired = false;
-
-                    foreach (array_keys($struct->fields) as $key) {
-                        if (!is_numeric($key)) {
-                            $fixUpRequired = true;
-                        }
-                    }
-
-                    if (!$fixUpRequired) {
-                        return $struct;
-                    }
-
-                    $expectedFieldDefinitions = array_filter(
-                        $struct->contentType->getFieldDefinitions(),
-                        function (FieldDefinition $fieldDefinition) {
-                            try {
-                                $this->getFormTypeClass($fieldDefinition->fieldTypeIdentifier);
-                            } catch (FieldTypeNotFoundException $e) {
-                                // We ignore fieldtypes that are  not found
-                                return false;
-                            }
-                            return true;
-                        },
-                        ARRAY_FILTER_USE_BOTH
-                    );
-
-                    if (count($struct->fields) != count($expectedFieldDefinitions)) {
-                        throw new TransformationFailedException("Fields count mismatch");
-                    }
-
+                /**
+                 * Converts from the Form data back to a format understood by eZ Platform.
+                 * - must set all Values to Fields.
+                 */
+                function (APIContentCreateStruct $struct) {
                     $inputFields = $struct->fields;
                     $struct->fields = [];
 
@@ -109,17 +110,30 @@ class ContentFormType extends AbstractType
             )
         );
 
-        if (!$options['controls_enabled']) {
+        if ($options['enable_remote_id']) {
+            $builder->add('remoteId', TextType::class, ['label' => 'Content remote id']);
+        }
+
+        if (!$options['enable_controls']) {
             return;
         }
 
         $builder->addEventListener(FormEvents::PRE_SET_DATA, [$this, 'addControls']);
 
-        if (!$options['drafts_enabled']) {
+        if (!$options['enable_drafts']) {
             return;
         }
 
         $builder->addEventListener(FormEvents::PRE_SET_DATA, [$this, 'addDraftControls']);
+    }
+
+    public function finishView(FormView $view, FormInterface $form, array $options)
+    {
+        foreach ($view->children as $fieldDefIdentifier => $fieldForm) {
+            if (count($fieldForm->children) === 1) {
+                $view->children[$fieldDefIdentifier]->vars['label'] = false;
+            }
+        }
     }
 
     public function addFields(FormEvent $event)
@@ -131,32 +145,38 @@ class ContentFormType extends AbstractType
         foreach ($contentCreateStruct->contentType->getFieldDefinitions() as $fieldDefinition) {
             $fieldType = $this->fieldTypeService->getFieldType($fieldDefinition->fieldTypeIdentifier);
 
-            unset($field);
-            foreach ($contentCreateStruct->fields as $field) {
-                if ($field->fieldDefIdentifier === $fieldDefinition->identifier) {
+            foreach ($contentCreateStruct->fields as $fieldIndex => $field) {
+                if ($field->fieldDefIdentifier === $fieldDefinition->identifier && $field->languageCode === $contentCreateStruct->mainLanguageCode) {
                     continue;
+                } else {
+                    unset($field);
                 }
             }
 
             if (!isset($field)) {
-                $field = new Field([
-                    'fieldDefIdentifier' => $fieldDefinition->identifier,
-                    'value' => $fieldType->getEmptyValue(),
-                    'languageCode' => 'eng-GB',
-                ]);
+                $contentCreateStruct->setField(
+                    $fieldDefinition->identifier,
+                    $fieldType->getEmptyValue()
+                );
+
+                $fieldIndex = count($contentCreateStruct->fields) - 1;
+                $field = $contentCreateStruct->fields[$fieldIndex];
             }
 
             try {
+                $options = [
+                    'property_path' => "fields[$fieldDefinition->identifier]",
+                    'required' => $fieldDefinition->isRequired,
+                    'data_class' => get_class($fieldType->getEmptyValue()),
+                    'field_definition' => $fieldDefinition,
+                ];
+
+                $options['properties_constraints'] = $fieldType->getConstraints($fieldDefinition);
+
                 $form->add(
                     $fieldDefinition->identifier,
                     $this->getFormTypeClass($fieldDefinition->fieldTypeIdentifier),
-                    [
-                        'property_path' => "fields[{$fieldDefinition->identifier}]",
-                        'required' => $fieldDefinition->isRequired,
-                        'label' => $fieldDefinition->getName('eng-GB'),
-                        'data' => $field->value,
-                        'data_class' => get_class($field->value),
-                    ]
+                    $options
                 );
             } catch (FieldTypeNotFoundException $e) {
                 continue;
@@ -167,15 +187,15 @@ class ContentFormType extends AbstractType
     private function getFormTypeClass($fieldTypeIdentifier)
     {
         $map = [
-            // 'ezauthor' => AuthorFieldType::class,
+            'ezauthor' => AuthorCollectionFieldType::class,
             // 'ezbinaryfile' => BinaryFileFieldType::class,
             'ezboolean' => CheckboxFieldType::class,
-            'ezdate' => DateType::class,
-            'ezdatetime' => DateTimeType::class,
-            'ezfloat' => NumberType::class,
-            'ezgmaplocation' => MapLocationType::class,
+            //'ezdate' => DateFieldType::class,
+            //'ezdatetime' => DateTimeType::class,
+            // 'ezfloat' => FloatFieldType::class,
+            'ezgmaplocation' => MapLocationFieldType::class,
             'ezimage' => ImageFieldType::class,
-            'ezisbn' => TextType::class,
+            // 'ezisbn' => ISBNFieldType::class,
             // 'ezmedia' => MediaFieldType::class,
             'ezinteger' => NumberType::class,
             // 'ezprice' => PriceFieldType::class,
@@ -183,10 +203,10 @@ class ContentFormType extends AbstractType
             // 'ezobjectrelations' => RelationListFieldType::class,
             // 'ezrichtext' => RichTextFieldType::class,
             // 'ezselection' => SelectionFieldType::class,
-            'ezstring' => TextType::class,
-            'eztext' => TextType::class,
+            'ezstring' => TextFieldType::class,
+            'eztext' => TextFieldType::class,
             'eztime' => TimeType::class,
-            // 'ezurl' => UrlType::class,
+            'ezurl' => UrlFieldType::class,
         ];
 
         if (isset($map[$fieldTypeIdentifier])) {
@@ -200,12 +220,14 @@ class ContentFormType extends AbstractType
     {
         $resolver
             ->setDefaults([
-                'controls_enabled' => true,
-                'drafts_enabled' => false,
-                'data_class' => '\eZ\Publish\API\Repository\Values\Content\ContentCreateStruct',
+                'enable_controls' => true,
+                'enable_drafts' => false,
+                'enable_remote_id' => false,
+                'data_class' => 'eZ\Publish\API\Repository\Values\Content\ContentCreateStruct',
                 'translation_domain' => 'ezrepoforms_content',
+
             ])
-            ->setRequired(['languageCode']);
+            ->setRequired(['languageCode', 'parentLocationId']);
     }
 
     /**

@@ -30,7 +30,7 @@ class JsonSchemaController extends Controller
             [
                 'languageCode' => $language,
                 'csrf_protection' => false,
-                'controls_enabled' => false,
+                'enable_controls' => false,
                 'parentLocationId' => $parentLocationId,
                 'label' => "New " . $contentType->getName($language)
             ]

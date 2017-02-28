@@ -10,7 +10,7 @@ namespace EzSystems\RepositoryForms\FieldType\Mapper;
 
 use EzSystems\RepositoryForms\Data\Content\FieldData;
 use EzSystems\RepositoryForms\FieldType\FieldValueFormMapperInterface;
-use EzSystems\RepositoryForms\Form\Type\FieldValue\MapLocationType;
+use EzSystems\RepositoryForms\Form\Type\FieldValue\MapLocationFieldType;
 use Symfony\Component\Form\FormInterface;
 
 class MapLocationFormMapper implements FieldValueFormMapperInterface
@@ -26,7 +26,7 @@ class MapLocationFormMapper implements FieldValueFormMapperInterface
     {
         $form->add(
             'value',
-            MapLocationType::class,
+            MapLocationFieldType::class,
             ['required' => $data->fieldDefinition->isRequired]
         );
     }
