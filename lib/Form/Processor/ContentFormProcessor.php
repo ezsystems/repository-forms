@@ -85,7 +85,6 @@ class ContentFormProcessor implements EventSubscriberInterface
             $data,
             [$this->locationService->newLocationCreateStruct($formConfig->getOption('parentLocationId'))]
         );
-        $this->saveDraft($data, $formConfig->getOption('languageCode'));
         $content = $this->contentService->publishVersion($draft->versionInfo);
 
         // Redirect to the provided URL. Defaults to URLAlias of the published content.
