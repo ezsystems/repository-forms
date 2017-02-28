@@ -384,3 +384,5 @@ services:
         tags:
             - {name: form.type, alias: ezrepoforms_content}
 
+    ezrepoforms.liform.validation_extension:
+        class: EzSystems\RepositoryForms\LiForm\ValidationExtension

@@ -13,6 +13,7 @@ namespace EzSystems\RepositoryFormsBundle;
 use EzSystems\RepositoryForms\Security\UserRegisterPolicyProvider;
 use EzSystems\RepositoryFormsBundle\DependencyInjection\Compiler\FieldTypeFormMapperDispatcherPass;
 use EzSystems\RepositoryFormsBundle\DependencyInjection\Compiler\FieldTypeFormMapperPass;
+use EzSystems\RepositoryFormsBundle\DependencyInjection\Compiler\LiformPass;
 use EzSystems\RepositoryFormsBundle\DependencyInjection\Compiler\LimitationFormMapperPass;
 use EzSystems\RepositoryFormsBundle\DependencyInjection\Configuration\Parser\UserRegistration;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -26,6 +27,7 @@ class EzSystemsRepositoryFormsBundle extends Bundle
         $container->addCompilerPass(new FieldTypeFormMapperPass());
         $container->addCompilerPass(new FieldTypeFormMapperDispatcherPass());
         $container->addCompilerPass(new LimitationFormMapperPass());
+        $container->addCompilerPass(new LiformPass());
 
         $eZExtension = $container->getExtension('ezpublish');
         $eZExtension->addPolicyProvider(new UserRegisterPolicyProvider());

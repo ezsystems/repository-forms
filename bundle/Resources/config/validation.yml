@@ -94,3 +94,21 @@ EzSystems\RepositoryForms\Data\Content\ContentUpdateData:
 EzSystems\RepositoryForms\Data\Content\FieldData:
     constraints:
         - EzSystems\RepositoryForms\Validator\Constraints\FieldValue: ~
+
+eZ\Publish\Core\FieldType\TextLine\Value:
+    properties:
+        text:
+            - Length:
+                min: config[StringLengthValidator][minStringLength]
+                minMessage: "The string can not be shorter than {{ limit }} characters."
+                max: config[StringLengthValidator][maxStringLength]
+                maxMessage: "The string can not exceed {{ limit }} character."
+
+eZ\Publish\Core\FieldType\Integer\Value:
+    properties:
+        value:
+            - Range:
+                min: config[IntegerValueValidator][minIntegerValue]
+                minMessage: "The value can not be lower than {{ limit }}."
+                max: config[IntegerValueValidator][minIntegerValue]
+                maxMessage: "The value can not be higher than {{ limit }}."
