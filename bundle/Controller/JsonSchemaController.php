@@ -24,7 +24,7 @@ class JsonSchemaController extends Controller
      */
     private $contentActionDispatcher;
 
-    public function createContentTypeFormAction(Request $request, $contentTypeIdentifier, $parentLocationId, $language = 'eng-GB')
+    public function createContentFormAction(Request $request, $contentTypeIdentifier, $parentLocationId, $language = 'eng-GB')
     {
         $contentType = $this->getContentTypeService()->loadContentTypeByIdentifier($contentTypeIdentifier);
         $contentCreateStruct = $this->getContentService()->newContentCreateStruct(
