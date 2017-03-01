@@ -1,3 +1,11 @@
+ez_jsonschema_content_create_from_json_form:
+    path: /content/create/nodraft/{contentTypeIdentifier}/{language}/{parentLocationId}.{_format}
+    defaults:
+        _controller: EzSystemsRepositoryFormsBundle:JsonSchema:createContentFromJson
+    requirements:
+        _format: json
+    methods: [POST]
+
 ez_jsonschema_content_create_form:
     path: /content/create/nodraft/{contentTypeIdentifier}/{language}/{parentLocationId}.{_format}
     defaults:

@@ -5,18 +5,26 @@
  */
 namespace EzSystems\RepositoryFormsBundle\Controller;
 
-use EzSystems\RepositoryForms\Data\Mapper\ContentCreateMapper;
-use EzSystems\RepositoryForms\Form\Type\Content\ContentEditType;
+use eZ\Publish\Core\MVC\Symfony\Routing\UrlAliasRouter;
+use EzSystems\RepositoryForms\Form\ActionDispatcher\ActionDispatcherInterface;
 use EzSystems\RepositoryForms\Form\Type\Content\ContentFormType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 /**
  * @property \Symfony\Component\DependencyInjection\ContainerInterface $container
  */
 class JsonSchemaController extends Controller
 {
-    public function createContentTypeFormAction($contentTypeIdentifier, $parentLocationId, $language = 'eng-GB')
+    /**
+     * @var ActionDispatcherInterface
+     */
+    private $contentActionDispatcher;
+
+    public function createContentTypeFormAction(Request $request, $contentTypeIdentifier, $parentLocationId, $language = 'eng-GB')
     {
         $contentType = $this->getContentTypeService()->loadContentTypeByIdentifier($contentTypeIdentifier);
         $contentCreateStruct = $this->getContentService()->newContentCreateStruct(
@@ -36,15 +44,19 @@ class JsonSchemaController extends Controller
             ]
         );
 
-//        $builder = $this->getFormBuilder();
-//        /**
-//         * @var $field \Symfony\Component\Form\Form
-//         */
-//        foreach ( $form->get('fieldsData') as $field) {
-//            echo get_class($field->getConfig()->getFormFactory()->);
-//            $value = $field->get('value');
-//            //$builder->add($field->);
-//        }
+        $form->handleRequest($request);
+
+        if ($form->isValid()) {
+            $this->contentActionDispatcher->dispatchFormAction(
+                $form,
+                $contentCreateStruct,
+                $form->getClickedButton()->getName()
+            );
+
+            if ($response = $this->contentActionDispatcher->getResponse()) {
+                return $response;
+            }
+        }
 
         $this->configureResolver();
 
@@ -56,6 +68,54 @@ class JsonSchemaController extends Controller
         $response->setEncodingOptions($response->getEncodingOptions() | JSON_PRETTY_PRINT);
 
         return $response;
+    }
+
+        public function createContentFromJsonAction(Request $request, $contentTypeIdentifier, $parentLocationId, $language = 'eng-GB')
+    {
+        $contentType = $this->getContentTypeService()->loadContentTypeByIdentifier($contentTypeIdentifier);
+        $contentCreateStruct = $this->getContentService()->newContentCreateStruct(
+            $contentType,
+            $language
+        );
+
+        $payload = json_decode($request->getContent(), true);
+        foreach ($contentCreateStruct->contentType->getFieldDefinitions() as $fieldDefinition) {
+            if (!isset($payload[$fieldDefinition->identifier])) {
+                continue;
+            }
+
+            $fieldType = $this->getFieldType($fieldDefinition->fieldTypeIdentifier);
+            $value = $fieldType->getEmptyValue();
+            foreach ($payload[$fieldDefinition->identifier] as $propertyName => $propertyValue) {
+                $value->$propertyName = $propertyValue;
+            }
+            $contentCreateStruct->setField($fieldDefinition->identifier, $value);
+        }
+
+        try {
+            $draft = $this->getContentService()->createContent(
+                $contentCreateStruct,
+                [$this->getLocationService()->newLocationCreateStruct($parentLocationId)]
+            );
+
+            $content = $this->getContentService()->publishVersion(
+                $draft->versionInfo
+            );
+        // } catch (ContentValidationException $e) {
+        // } catch (ContentFieldValidationException $e) {
+        } catch (\Exception $e) {
+            return new JsonResponse(
+                ['error' => $e->getMessage(), 'trace' => $e->getTrace()],
+                500
+            );
+        }
+
+        $redirectUrl = $this->container->get('router')->generate(
+            UrlAliasRouter::URL_ALIAS_ROUTE_NAME,
+            ['contentId' => $content->id],
+            UrlGeneratorInterface::ABSOLUTE_URL
+        );
+        return new RedirectResponse($redirectUrl);
     }
 
     /**
@@ -80,6 +140,22 @@ class JsonSchemaController extends Controller
     protected function getContentService()
     {
         return $this->container->get('ezpublish.api.service.content');
+    }
+
+    /**
+     * @param $fieldTypeIdentifier
+     *
+     * @return \eZ\Publish\API\Repository\FieldType
+     */
+    protected function getFieldType($fieldTypeIdentifier)
+    {
+        static $fieldTypeService;
+
+        if (!isset($fieldTypeService)) {
+            $fieldTypeService = $this->container->get('ezpublish.api.service.field_type');
+        }
+
+        return $fieldTypeService->getFieldType($fieldTypeIdentifier);
     }
 
     private function configureResolver()
