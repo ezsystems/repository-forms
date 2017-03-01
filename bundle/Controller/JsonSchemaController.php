@@ -83,10 +83,13 @@ class JsonSchemaController extends Controller
             if (!isset($payload[$fieldDefinition->identifier])) {
                 continue;
             }
+            $fieldData = $payload[$fieldDefinition->identifier];
 
             $fieldType = $this->getFieldType($fieldDefinition->fieldTypeIdentifier);
             $value = $fieldType->getEmptyValue();
-            foreach ($payload[$fieldDefinition->identifier] as $propertyName => $propertyValue) {
+
+            $this->applyPreProcessor($fieldData, $fieldDefinition->fieldTypeIdentifier);
+            foreach ($fieldData as $propertyName => $propertyValue) {
                 $value->$propertyName = $propertyValue;
             }
             $contentCreateStruct->setField($fieldDefinition->identifier, $value);
@@ -163,5 +166,26 @@ class JsonSchemaController extends Controller
         $resolver = $this->container->get('liform.resolver');
         $resolver->setTransformer('hidden', $this->container->get('liform.transformer.null'));
         $resolver->setTransformer('submit', $this->container->get('liform.transformer.null'));
+    }
+
+    /**
+     * Applies the FieldValue pre-processor, if there is one.
+     *
+     * @param array $fieldValueHash
+     * @param string $fieldTypeIdentifier
+     */
+    private function applyPreProcessor(&$fieldValueHash, $fieldTypeIdentifier)
+    {
+        // This one doesn't expect a hash, skip it
+        if ($fieldTypeIdentifier === 'ezstring') {
+            return;
+        }
+        $registry = $this->container->get('ezpublish_rest.field_type_processor_registry');
+        if (!$registry->hasProcessor($fieldTypeIdentifier)) {
+            return;
+        }
+
+        $processor = $registry->getProcessor($fieldTypeIdentifier);
+        $fieldValueHash = $processor->preProcessValueHash($fieldValueHash);
     }
 }
