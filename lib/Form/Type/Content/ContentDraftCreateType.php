@@ -60,7 +60,7 @@ class ContentDraftCreateType extends AbstractType
             ->add(
                 'createDraft',
                 SubmitType::class,
-                ['label' => 'content.create_content_draft.create_button']
+                ['label' => 'Create and edit draft']
             );
     }
 }
