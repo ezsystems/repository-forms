@@ -2,6 +2,7 @@
     "name": "ezsystems/repository-forms",
     "description": "Use Symfony forms with eZ Platform repository objects",
     "license": "GPL-2.0",
+    "type": "ezplatform-bundle",
     "authors": [
         {
             "name": "Jérôme Vieilledent",
