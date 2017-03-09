@@ -11,6 +11,7 @@
 namespace EzSystems\RepositoryForms\Validator\Constraints;
 
 use eZ\Publish\API\Repository\Values\ValueObject;
+use eZ\Publish\Core\FieldType\ValidationError;
 use EzSystems\RepositoryForms\Data\Content\FieldData;
 use Symfony\Component\Validator\Constraint;
 
@@ -33,7 +34,24 @@ class FieldValueValidator extends FieldTypeValidator
         $fieldTypeIdentifier = $this->getFieldTypeIdentifier($value);
         $fieldDefinition = $this->getFieldDefinition($value);
         $fieldType = $this->fieldTypeService->getFieldType($fieldTypeIdentifier);
-        $this->processValidationErrors($fieldType->validateValue($fieldDefinition, $fieldValue));
+
+        $validationErrors = [];
+        if ($fieldType->isEmptyValue($fieldValue)) {
+            if ($fieldDefinition->isRequired) {
+                $validationErrors = [
+                    new ValidationError(
+                        "Value for required field definition '%identifier%' with language '%languageCode%' is empty",
+                        null,
+                        ['%identifier%' => $fieldDefinition->identifier, '%languageCode%' => $value->field->languageCode],
+                        'empty'
+                    )
+                ];
+            } else {
+                $validationErrors = $fieldType->validateValue($fieldDefinition, $fieldValue);
+            }
+        }
+
+        $this->processValidationErrors($validationErrors);
     }
 
     /**
