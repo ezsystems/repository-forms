@@ -29,11 +29,11 @@ class MapLocationType extends AbstractType
             ->add(
                 'latitude',
                 NumberType::class,
-                ['label' => 'Latitude', 'scale' => 5, 'property_path' => 'latitude', 'required' => false])
+                ['label' => 'Latitude', 'scale' => 5, 'property_path' => 'latitude', 'required' => $options['required']])
             ->add(
                 'longitude',
                 NumberType::class,
-                ['label' => 'Longitude', 'scale' => 5, 'property_path' => 'longitude', 'required' => false])
+                ['label' => 'Longitude', 'scale' => 5, 'property_path' => 'longitude', 'required' => $options['required']])
             ->add(
                 'address',
                 TextType::class,
