@@ -45,6 +45,7 @@ class ContentFormProcessor implements EventSubscriberInterface
             RepositoryFormEvents::CONTENT_PUBLISH => ['processPublish', 10],
             RepositoryFormEvents::CONTENT_CANCEL => ['processRemoveDraft', 10],
             RepositoryFormEvents::CONTENT_SAVE_DRAFT => ['processSaveDraft', 10],
+            RepositoryFormEvents::CONTENT_CREATE_DRAFT => ['processCreateDraft', 10],
         ];
     }
 
@@ -103,6 +104,22 @@ class ContentFormProcessor implements EventSubscriberInterface
         $event->setResponse(new RedirectResponse($url));
     }
 
+    public function processCreateDraft(FormActionEvent $event)
+    {
+        /** @var $createContentDraft \EzSystems\RepositoryForms\Data\Content\CreateContentDraftData */
+        $createContentDraft = $event->getData();
+
+        $contentInfo = $this->contentService->loadContentInfo($createContentDraft->contentId);
+        $versionInfo = $this->contentService->loadVersionInfo($contentInfo, $createContentDraft->fromVersionNo);
+        $contentDraft = $this->contentService->createContentDraft($contentInfo, $versionInfo);
+
+        $contentEditUrl = $this->router->generate('ez_content_edit', [
+            'contentId' => $contentDraft->id,
+            'versionNo' => $contentDraft->getVersionInfo()->versionNo,
+            'language' => $contentDraft->contentInfo->mainLanguageCode,
+        ]);
+        $event->setResponse(new RedirectResponse($contentEditUrl));
+    }
     /**
      * Saves content draft corresponding to $data.
      * Depending on the nature of $data (create or update data), the draft will either be created or simply updated.
