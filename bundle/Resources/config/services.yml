@@ -185,6 +185,10 @@ services:
         class: "%ezrepoforms.field_type.form_mapper.ezrichtext.class%"
         tags:
             - { name: ez.fieldFormMapper.definition, fieldType: ezrichtext }
+            - { name: ez.fieldFormMapper.value, fieldType: ezrichtext }
+        arguments:
+            - "@ezpublish.api.service.field_type"
+            - "@ezpublish.fieldtype.ezrichtext.converter.edit.xhtml5"
 
     ezrepoforms.field_type.form_mapper.ezselection:
         class: "%ezrepoforms.field_type.form_mapper.ezselection.class%"
