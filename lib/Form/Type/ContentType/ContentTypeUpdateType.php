@@ -86,7 +86,7 @@ class ContentTypeUpdateType extends AbstractType
                     ->addModelTransformer($translatablePropertyTransformer)
             )
             ->add('nameSchema', TextType::class, ['required' => false, 'label' => 'content_type.name_schema'])
-            ->add('urlAliasSchema', TextType::class, ['required' => false, 'label' => 'content_type.url_alias_schema'])
+            ->add('urlAliasSchema', TextType::class, ['required' => false, 'label' => 'content_type.url_alias_schema', 'empty_data' => false])
             ->add('isContainer', CheckboxType::class, ['required' => false, 'label' => 'content_type.is_container'])
             ->add('defaultSortField', ChoiceType::class, [
                 'choices' => [
