@@ -45,7 +45,7 @@ class SelectionFormMapper implements FieldDefinitionFormMapperInterface, FieldVa
                 'entry_options' => ['required' => false],
                 'allow_add' => true,
                 'allow_delete' => true,
-                'delete_empty' => true,
+                'delete_empty' => false,
                 'prototype' => true,
                 'prototype_name' => '__number__',
                 'required' => false,
