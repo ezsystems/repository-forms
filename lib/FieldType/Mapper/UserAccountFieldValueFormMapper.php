@@ -61,7 +61,6 @@ final class UserAccountFieldValueFormMapper implements FieldValueFormMapperInter
                                     $submittedData->password,
                                     $submittedData->email
                                 );
-
                             }
                         )
                     )

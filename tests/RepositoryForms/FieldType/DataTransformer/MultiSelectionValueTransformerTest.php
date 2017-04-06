@@ -21,7 +21,7 @@ class MultiSelectionValueTransformerTest extends PHPUnit_Framework_TestCase
         return [
             [[0]],
             [['null']],
-            [[1,2]],
+            [[1, 2]],
             [['forty', 'two']],
             [[1, 4, 1, 5, 9, 2, 6]],
         ];
