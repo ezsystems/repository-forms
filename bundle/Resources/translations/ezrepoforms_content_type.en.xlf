@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:jms="urn:jms:translation" version="1.2">
-  <file date="2017-01-26T15:03:32Z" source-language="en" target-language="en" datatype="plaintext" original="not.available">
+  <file date="2017-04-06T15:44:11Z" source-language="en" target-language="en" datatype="plaintext" original="not.available">
     <header>
       <tool tool-id="JMSTranslationBundle" tool-name="JMSTranslationBundle" tool-version="1.1.0-DEV"/>
       <note>The source node in most cases contains the sample message as written by the developer. If it looks like a dot-delimitted string such as "form.label.firstname", then the developer has not provided a default message.</note>
@@ -414,6 +414,12 @@
         <note>key: field_definition.ezpage.default_layout</note>
         <jms:reference-file line="45">lib/FieldType/Mapper/PageFormMapper.php</jms:reference-file>
       </trans-unit>
+      <trans-unit id="14a95e986cd6b94301e0f44fd5ef2d5e7cdf90a4" resname="field_definition.ezselection.add_option">
+        <source>Add an option</source>
+        <target>Add an option</target>
+        <note>key: field_definition.ezselection.add_option</note>
+        <jms:reference-file line="206">bundle/Resources/views/ContentType/field_types.html.twig</jms:reference-file>
+      </trans-unit>
       <trans-unit id="e9e5a43d734719bf6ca42940c1cf5bc78b234e2b" resname="field_definition.ezselection.is_multiple">
         <source>Multiple choice</source>
         <target>Multiple choice</target>
@@ -425,6 +431,12 @@
         <target>Options</target>
         <note>key: field_definition.ezselection.options</note>
         <jms:reference-file line="53">lib/FieldType/Mapper/SelectionFormMapper.php</jms:reference-file>
+      </trans-unit>
+      <trans-unit id="c8017c71074191e0e6ebe4eb1a3a278eecbcc874" resname="field_definition.ezselection.remove_selected_options">
+        <source>Remove selected options</source>
+        <target>Remove selected options</target>
+        <note>key: field_definition.ezselection.remove_selected_options</note>
+        <jms:reference-file line="207">bundle/Resources/views/ContentType/field_types.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="e8ede1605bfed09023397f8662ca28c40e7c460a" resname="field_definition.ezstring.default_value">
         <source>Default value</source>
