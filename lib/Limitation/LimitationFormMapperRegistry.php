@@ -37,7 +37,7 @@ class LimitationFormMapperRegistry implements LimitationFormMapperRegistryInterf
 
     /**
      * Returns mapper corresponding to given Limitation identifier.
-     * 
+     *
      * @param string $limitationIdentifier
      *
      * @throws \InvalidArgumentException If no mapper exists for $fieldTypeIdentifier.
