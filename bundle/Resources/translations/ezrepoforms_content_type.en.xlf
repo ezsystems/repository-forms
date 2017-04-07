@@ -379,8 +379,8 @@
         <jms:reference-file line="129">bundle/Resources/views/ContentType/field_types.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="d892163a41d816c03db3c4a04e35550f02169c11" resname="field_definition.ezobjectrelation.selection_root_udw_title">
-        <source>Select a start location for browsing for relations</source>
-        <target>Select a start location for browsing for relations</target>
+        <source>Select a start location for browsing for relation</source>
+        <target>Select a start location for browsing for relation</target>
         <note>key: field_definition.ezobjectrelation.selection_root_udw_title</note>
         <jms:reference-file line="125">bundle/Resources/views/ContentType/field_types.html.twig</jms:reference-file>
       </trans-unit>
