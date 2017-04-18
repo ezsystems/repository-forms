@@ -52,6 +52,7 @@ class TextLineFormMapper implements FieldDefinitionFormMapperInterface, FieldVal
                 $fieldDefinitionForm->getConfig()->getFormFactory()->createBuilder()
                     ->create('defaultValue', TextType::class, [
                         'required' => false,
+                        'property_path' => 'validatorConfiguration[StringLengthValidator][defaultValue]',
                         'label' => 'field_definition.ezstring.default_value',
                     ])
                     ->addModelTransformer(new TextLineValueTransformer())
