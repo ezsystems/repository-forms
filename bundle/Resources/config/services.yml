@@ -112,6 +112,7 @@ services:
     ezrepoforms.field_type.form_mapper.ezboolean:
         class: "%ezrepoforms.field_type.form_mapper.ezboolean.class%"
         tags:
+            - { name: ez.fieldFormMapper.definition, fieldType: ezboolean }
             - { name: ez.fieldFormMapper.value, fieldType: ezboolean }
         arguments:
             - "@ezpublish.api.service.field_type"
@@ -134,21 +135,29 @@ services:
 
     ezrepoforms.field_type.form_mapper.ezfloat:
         class: "%ezrepoforms.field_type.form_mapper.ezfloat.class%"
+        arguments:
+            - "@ezpublish.api.service.field_type"
         tags:
             - { name: ez.fieldFormMapper.definition, fieldType: ezfloat }
 
     ezrepoforms.field_type.form_mapper.ezimage:
         class: "%ezrepoforms.field_type.form_mapper.ezimage.class%"
+        arguments:
+            - "@ezpublish.api.service.field_type"
         tags:
             - { name: ez.fieldFormMapper.definition, fieldType: ezimage }
 
     ezrepoforms.field_type.form_mapper.ezinteger:
         class: "%ezrepoforms.field_type.form_mapper.ezinteger.class%"
+        arguments:
+            - "@ezpublish.api.service.field_type"
         tags:
             - { name: ez.fieldFormMapper.definition, fieldType: ezinteger }
 
     ezrepoforms.field_type.form_mapper.ezisbn:
         class: "%ezrepoforms.field_type.form_mapper.ezisbn.class%"
+        arguments:
+            - "@ezpublish.api.service.field_type"
         tags:
             - { name: ez.fieldFormMapper.definition, fieldType: ezisbn }
 
