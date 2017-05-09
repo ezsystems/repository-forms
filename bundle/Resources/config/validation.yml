@@ -60,9 +60,14 @@ EzSystems\RepositoryForms\Data\FieldDefinitionData:
             - Type:
                 type: integer
 
-EzSystems\RepositoryForms\Data\RoleData:
+EzSystems\RepositoryForms\Data\Role\RoleData:
     constraints:
         - EzSystems\RepositoryForms\Validator\Constraints\UniqueRoleIdentifier: ~
+    properties:
+        identifier:
+            - NotBlank: ~
+            - Length:
+                max: 255
 
 eZ\Publish\API\Repository\Values\Content\SectionStruct:
     constraints:
