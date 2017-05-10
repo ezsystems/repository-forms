@@ -13,9 +13,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 /**
  * Loads the registration user group from a configured, injected group ID.
  */
-class ConfigurableRegistrationGroupLoader
-    extends ConfigurableSudoRepositoryLoader
-    implements RegistrationGroupLoader
+class ConfigurableRegistrationGroupLoader extends ConfigurableSudoRepositoryLoader implements RegistrationGroupLoader
 {
     public function loadGroup()
     {
