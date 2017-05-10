@@ -36,6 +36,11 @@
         <target>Section identifier may only contain letters from "a" to "z", numbers and underscores.</target>
         <note>key: ez.section.identifier.format</note>
       </trans-unit>
+      <trans-unit id="963a415cd08151ecf8726e651a7a36140e05f4b5" resname="ez.role.identifier.unique">
+        <source>The role identifier "%identifier%" is used by another role. You must enter a unique identifier.</source>
+        <target>The role identifier "%identifier%" is used by another role. You must enter a unique identifier.</target>
+        <note>key: ez.role.identifier.unique</note>
+      </trans-unit>
     </body>
   </file>
 </xliff>
