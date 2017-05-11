@@ -33,22 +33,27 @@ class ContentEditType extends AbstractType
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder
-            ->add('fieldsData', CollectionType::class, [
+        $builder->add(
+            'fieldsData', CollectionType::class, [
                 'entry_type' => ContentFieldType::class,
                 'label' => 'ezrepoforms.content.fields',
                 'entry_options' => ['languageCode' => $options['languageCode']],
-            ])
-            ->add('redirectUrlAfterPublish', HiddenType::class, ['required' => false, 'mapped' => false])
-            ->add('publish', SubmitType::class, ['label' => 'content.publish_button']);
+            ]
+        );
 
-        if ($options['drafts_enabled']) {
+        if ($options['controls_enabled']) {
             $builder
-                ->add('saveDraft', SubmitType::class, ['label' => 'content.save_button'])
-                ->add('cancel', SubmitType::class, [
-                    'label' => 'content.cancel_button',
-                    'attr' => ['formnovalidate' => 'formnovalidate'],
-                ]);
+                ->add('redirectUrlAfterPublish', HiddenType::class, ['required' => false, 'mapped' => false])
+                ->add('publish', SubmitType::class, ['label' => 'content.publish_button']);
+
+            if ($options['drafts_enabled']) {
+                $builder
+                    ->add('saveDraft', SubmitType::class, ['label' => 'content.save_button'])
+                    ->add('cancel', SubmitType::class, [
+                        'label' => 'content.cancel_button',
+                        'attr' => ['formnovalidate' => 'formnovalidate'],
+                    ]);
+            }
         }
     }
 
@@ -56,6 +61,7 @@ class ContentEditType extends AbstractType
     {
         $resolver
             ->setDefaults([
+                'controls_enabled' => true,
                 'drafts_enabled' => false,
                 'data_class' => '\eZ\Publish\API\Repository\Values\Content\ContentStruct',
                 'translation_domain' => 'ezrepoforms_content',
