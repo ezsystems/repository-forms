@@ -99,3 +99,29 @@ EzSystems\RepositoryForms\Data\Content\ContentUpdateData:
 EzSystems\RepositoryForms\Data\Content\FieldData:
     constraints:
         - EzSystems\RepositoryForms\Validator\Constraints\FieldValue: ~
+
+EzSystems\RepositoryForms\Data\Language\LanguageCreateData:
+    constraints:
+        - EzSystems\RepositoryForms\Validator\Constraints\UniqueLanguageCode: ~
+    properties:
+        languageCode:
+            - NotBlank: ~
+            - Length:
+                max: 20
+        name:
+            - NotBlank: ~
+            - Length:
+                max: 255
+
+EzSystems\RepositoryForms\Data\Language\LanguageUpdateData:
+    constraints:
+        - EzSystems\RepositoryForms\Validator\Constraints\UniqueLanguageCode: ~
+    properties:
+        languageCode:
+            - NotBlank: ~
+            - Length:
+                max: 20
+        name:
+            - NotBlank: ~
+            - Length:
+                max: 255
