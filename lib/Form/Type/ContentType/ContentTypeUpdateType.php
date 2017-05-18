@@ -67,6 +67,7 @@ class ContentTypeUpdateType extends AbstractType
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $hasFieldDefinition = count($options['data']->fieldDefinitionsData) > 0;
         $translatablePropertyTransformer = new TranslatablePropertyTransformer($options['languageCode']);
         $builder
             ->add(
@@ -126,10 +127,16 @@ class ContentTypeUpdateType extends AbstractType
                 'label' => 'content_type.field_type_selection',
             ])
             ->add('addFieldDefinition', SubmitType::class, ['label' => 'content_type.add_field_definition'])
-            ->add('removeFieldDefinition', SubmitType::class, ['label' => 'content_type.remove_field_definitions'])
+            ->add('removeFieldDefinition', SubmitType::class, [
+                'label' => 'content_type.remove_field_definitions',
+                'disabled' => !$hasFieldDefinition,
+            ])
             ->add('saveContentType', SubmitType::class, ['label' => 'content_type.save'])
             ->add('removeDraft', SubmitType::class, ['label' => 'content_type.remove_draft', 'validation_groups' => false])
-            ->add('publishContentType', SubmitType::class, ['label' => 'content_type.publish']);
+            ->add('publishContentType', SubmitType::class, [
+                'label' => 'content_type.publish',
+                'disabled' => !$hasFieldDefinition,
+            ]);
     }
 
     /**
