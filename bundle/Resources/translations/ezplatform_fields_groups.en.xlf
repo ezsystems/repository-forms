@@ -11,6 +11,11 @@
         <target>Content</target>
         <note>key: content</note>
       </trans-unit>
+      <trans-unit id="4c24b2612e94e2ae622e54397663f2b7bf0a2e17" resname="metadata">
+        <source>Metadata</source>
+        <target>Metadata</target>
+        <note>key: metadata</note>
+      </trans-unit>
     </body>
   </file>
 </xliff>

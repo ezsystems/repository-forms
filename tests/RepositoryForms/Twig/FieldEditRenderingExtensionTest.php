@@ -42,7 +42,7 @@ class FieldEditRenderingExtensionTest extends FileSystemTwigIntegrationTestCase
 
     public function getFixturesDir()
     {
-        return dirname(__FILE__) . '/_fixtures/field_edit_rendering_functions/';
+        return __DIR__ . '/_fixtures/field_edit_rendering_functions/';
     }
 
     public function getFieldDefinitionData($typeIdentifier, $id = null, $settings = array())
