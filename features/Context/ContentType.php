@@ -71,6 +71,7 @@ final class ContentType extends RawMinkContext implements Context, SnippetAccept
         if (!isset($struct->mainLanguageCode)) {
             $struct->mainLanguageCode = 'eng-GB';
         }
+
         if (!isset($struct->names)) {
             $struct->names = ['eng-GB' => $struct->identifier];
         }
