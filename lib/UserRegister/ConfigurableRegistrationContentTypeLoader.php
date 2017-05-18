@@ -13,9 +13,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 /**
  * Loads the registration content type from a configured, injected content type identifier.
  */
-class ConfigurableRegistrationContentTypeLoader
-    extends ConfigurableSudoRepositoryLoader
-    implements RegistrationContentTypeLoader
+class ConfigurableRegistrationContentTypeLoader extends ConfigurableSudoRepositoryLoader implements RegistrationContentTypeLoader
 {
     public function loadContentType()
     {
