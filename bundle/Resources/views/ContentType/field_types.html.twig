@@ -16,6 +16,14 @@
     </div>
 {% endblock %}
 
+{% block ezboolean_field_definition_edit %}
+    <div class="ezboolean-default-value{% if group_class is not empty %} {{ group_class }}{% endif %}">
+        {{- form_label(form.defaultValue) -}}
+        {{- form_errors(form.defaultValue) -}}
+        {{- form_widget(form.defaultValue) -}}
+    </div>
+{% endblock %}
+
 {% block ezcountry_field_definition_edit %}
     <div class="ezcountry-settings is-multiple{% if group_class is not empty %} {{ group_class }}{% endif %}">
         {{- form_label(form.isMultiple) -}}
@@ -70,6 +78,12 @@
         {{- form_errors(form.maxValue) -}}
         {{- form_widget(form.maxValue) -}}
     </div>
+
+    <div class="ezfloat-default-value{% if group_class is not empty %} {{ group_class }}{% endif %}">
+        {{- form_label(form.defaultValue) -}}
+        {{- form_errors(form.defaultValue) -}}
+        {{- form_widget(form.defaultValue) -}}
+    </div>
 {% endblock %}
 
 {% block ezimage_field_definition_edit %}
@@ -92,6 +106,12 @@
         {{- form_errors(form.maxValue) -}}
         {{- form_widget(form.maxValue) -}}
     </div>
+
+    <div class="ezinteger-default-value{% if group_class is not empty %} {{ group_class }}{% endif %}">
+        {{- form_label(form.defaultValue) -}}
+        {{- form_errors(form.defaultValue) -}}
+        {{- form_widget(form.defaultValue) -}}
+    </div>
 {% endblock %}
 
 {% block ezisbn_field_definition_edit %}
@@ -99,6 +119,12 @@
         {{- form_label(form.isISBN13) -}}
         {{- form_errors(form.isISBN13) -}}
         {{- form_widget(form.isISBN13) -}}
+    </div>
+
+    <div class="ezisbn-default-value{% if group_class is not empty %} {{ group_class }}{% endif %}">
+        {{- form_label(form.defaultValue) -}}
+        {{- form_errors(form.defaultValue) -}}
+        {{- form_widget(form.defaultValue) -}}
     </div>
 {% endblock %}
 

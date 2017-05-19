@@ -10,12 +10,14 @@ namespace EzSystems\RepositoryForms\FieldType\Mapper;
 
 use eZ\Publish\API\Repository\FieldTypeService;
 use EzSystems\RepositoryForms\Data\Content\FieldData;
+use EzSystems\RepositoryForms\Data\FieldDefinitionData;
 use EzSystems\RepositoryForms\FieldType\DataTransformer\FieldValueTransformer;
+use EzSystems\RepositoryForms\FieldType\FieldDefinitionFormMapperInterface;
 use EzSystems\RepositoryForms\FieldType\FieldValueFormMapperInterface;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\FormInterface;
 
-class CheckboxFormMapper implements FieldValueFormMapperInterface
+class CheckboxFormMapper implements FieldDefinitionFormMapperInterface, FieldValueFormMapperInterface
 {
     /**
      * @var \eZ\Publish\API\Repository\FieldTypeService
@@ -25,6 +27,23 @@ class CheckboxFormMapper implements FieldValueFormMapperInterface
     public function __construct(FieldTypeService $fieldTypeService)
     {
         $this->fieldTypeService = $fieldTypeService;
+    }
+
+    public function mapFieldDefinitionForm(FormInterface $fieldDefinitionForm, FieldDefinitionData $fieldDefinition)
+    {
+        $defaultValueForm = $fieldDefinitionForm
+            ->getConfig()
+            ->getFormFactory()
+            ->createBuilder()
+            ->create('defaultValue', CheckboxType::class, [
+                'required' => false,
+                'label' => 'field_definition.ezboolean.default_value',
+            ])
+            ->addModelTransformer(new FieldValueTransformer($this->fieldTypeService->getFieldType($fieldDefinition->getFieldTypeIdentifier())))
+            ->setAutoInitialize(false)
+            ->getForm();
+
+        $fieldDefinitionForm->add($defaultValueForm);
     }
 
     public function mapFieldValueForm(FormInterface $fieldForm, FieldData $data)
