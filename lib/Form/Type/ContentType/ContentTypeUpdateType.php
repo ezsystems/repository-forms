@@ -10,41 +10,21 @@
  */
 namespace EzSystems\RepositoryForms\Form\Type\ContentType;
 
-use eZ\Publish\API\Repository\Values\Content\Location;
-use eZ\Publish\Core\Base\Container\ApiLoader\FieldTypeCollectionFactory;
 use EzSystems\RepositoryForms\Form\DataTransformer\TranslatablePropertyTransformer;
 use EzSystems\RepositoryForms\Form\Type\FieldDefinition\FieldDefinitionType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Translation\TranslatorInterface;
 
 /**
  * Form type for ContentType update.
  */
 class ContentTypeUpdateType extends AbstractType
 {
-    /**
-     * @var FieldTypeCollectionFactory
-     */
-    private $fieldTypeCollectionFactory;
-
-    /**
-     * @var TranslatorInterface
-     */
-    private $translator;
-
-    public function __construct(FieldTypeCollectionFactory $fieldTypeCollectionFactory, TranslatorInterface $translator)
-    {
-        $this->fieldTypeCollectionFactory = $fieldTypeCollectionFactory;
-        $this->translator = $translator;
-    }
-
     public function getName()
     {
         return $this->getBlockPrefix();
@@ -88,27 +68,10 @@ class ContentTypeUpdateType extends AbstractType
             ->add('nameSchema', TextType::class, ['required' => false, 'label' => 'content_type.name_schema'])
             ->add('urlAliasSchema', TextType::class, ['required' => false, 'label' => 'content_type.url_alias_schema', 'empty_data' => false])
             ->add('isContainer', CheckboxType::class, ['required' => false, 'label' => 'content_type.is_container'])
-            ->add('defaultSortField', ChoiceType::class, [
-                'choices' => [
-                    $this->translator->trans(/** @Ignore */'content_type.sort_field.' . Location::SORT_FIELD_NAME, [], 'ezrepoforms_content_type') => Location::SORT_FIELD_NAME,
-                    $this->translator->trans(/** @Ignore */'content_type.sort_field.' . Location::SORT_FIELD_CLASS_NAME, [], 'ezrepoforms_content_type') => Location::SORT_FIELD_CLASS_NAME,
-                    $this->translator->trans(/** @Ignore */'content_type.sort_field.' . Location::SORT_FIELD_CLASS_IDENTIFIER, [], 'ezrepoforms_content_type') => Location::SORT_FIELD_CLASS_IDENTIFIER,
-                    $this->translator->trans(/** @Ignore */'content_type.sort_field.' . Location::SORT_FIELD_DEPTH, [], 'ezrepoforms_content_type') => Location::SORT_FIELD_DEPTH,
-                    $this->translator->trans(/** @Ignore */'content_type.sort_field.' . Location::SORT_FIELD_PATH, [], 'ezrepoforms_content_type') => Location::SORT_FIELD_PATH,
-                    $this->translator->trans(/** @Ignore */'content_type.sort_field.' . Location::SORT_FIELD_PRIORITY, [], 'ezrepoforms_content_type') => Location::SORT_FIELD_PRIORITY,
-                    $this->translator->trans(/** @Ignore */'content_type.sort_field.' . Location::SORT_FIELD_MODIFIED, [], 'ezrepoforms_content_type') => Location::SORT_FIELD_MODIFIED,
-                    $this->translator->trans(/** @Ignore */'content_type.sort_field.' . Location::SORT_FIELD_PUBLISHED, [], 'ezrepoforms_content_type') => Location::SORT_FIELD_PUBLISHED,
-                    $this->translator->trans(/** @Ignore */'content_type.sort_field.' . Location::SORT_FIELD_SECTION, [], 'ezrepoforms_content_type') => Location::SORT_FIELD_SECTION,
-                ],
-                'choices_as_values' => true,
+            ->add('defaultSortField', SortFieldChoiceType::class, [
                 'label' => 'content_type.default_sort_field',
             ])
-            ->add('defaultSortOrder', ChoiceType::class, [
-                'choices' => [
-                    $this->translator->trans(/** @Ignore */'content_type.sort_order.' . Location::SORT_ORDER_ASC, [], 'ezrepoforms_content_type') => Location::SORT_ORDER_ASC,
-                    $this->translator->trans(/** @Ignore */'content_type.sort_order.' . Location::SORT_ORDER_DESC, [], 'ezrepoforms_content_type') => Location::SORT_ORDER_DESC,
-                ],
-                'choices_as_values' => true,
+            ->add('defaultSortOrder', SortOrderChoiceType::class, [
                 'label' => 'content_type.default_sort_order',
             ])
             ->add('defaultAlwaysAvailable', CheckboxType::class, [
@@ -120,9 +83,7 @@ class ContentTypeUpdateType extends AbstractType
                 'entry_options' => ['languageCode' => $options['languageCode']],
                 'label' => 'content_type.field_definitions_data',
             ])
-            ->add('fieldTypeSelection', ChoiceType::class, [
-                'choices' => array_flip($this->getFieldTypeList()),
-                'choices_as_values' => true,
+            ->add('fieldTypeSelection', FieldTypeChoiceType::class, [
                 'mapped' => false,
                 'label' => 'content_type.field_type_selection',
             ])
@@ -137,22 +98,5 @@ class ContentTypeUpdateType extends AbstractType
                 'label' => 'content_type.publish',
                 'disabled' => !$hasFieldDefinition,
             ]);
-    }
-
-    /**
-     * Returns a hash, with fieldType identifiers as keys and human readable names as values.
-     *
-     * @return array
-     */
-    private function getFieldTypeList()
-    {
-        $list = [];
-        foreach ($this->fieldTypeCollectionFactory->getConcreteFieldTypesIdentifiers() as $fieldTypeIdentifier) {
-            $list[$fieldTypeIdentifier] = $this->translator->trans(/** @Ignore */"$fieldTypeIdentifier.name", [], 'fieldtypes');
-        }
-
-        asort($list, SORT_NATURAL);
-
-        return $list;
     }
 }

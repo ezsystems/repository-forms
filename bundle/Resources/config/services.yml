@@ -8,6 +8,9 @@ parameters:
     ezrepoforms.field_type_form_mapper.dispatcher.class: EzSystems\RepositoryForms\FieldType\FieldTypeFormMapperDispatcher
     ezrepoforms.content_type.create.form_type.class: EzSystems\RepositoryForms\Form\Type\ContentType\ContentTypeCreateType
     ezrepoforms.content_type.update.form_type.class: EzSystems\RepositoryForms\Form\Type\ContentType\ContentTypeUpdateType
+    ezrepoforms.content_type.field_type_choice.form_type.class: EzSystems\RepositoryForms\Form\Type\ContentType\FieldTypeChoiceType
+    ezrepoforms.content_type.sort_field_choice.form_type.class: EzSystems\RepositoryForms\Form\Type\ContentType\SortFieldChoiceType
+    ezrepoforms.content_type.sort_order_choice.form_type.class: EzSystems\RepositoryForms\Form\Type\ContentType\SortOrderChoiceType
     ezrepoforms.field_definition.form_type.class: EzSystems\RepositoryForms\Form\Type\FieldDefinition\FieldDefinitionType
     ezrepoforms.field.form_type.class: EzSystems\RepositoryForms\Form\Type\Content\ContentFieldType
 
@@ -80,9 +83,26 @@ services:
 
     ezrepoforms.content_type.update.form_type:
         class: "%ezrepoforms.content_type.update.form_type.class%"
-        arguments: ["@ezpublish.field_type_collection.factory", "@translator"]
         tags:
             - {name: form.type, alias: ezrepoforms_contenttype_update}
+
+    ezrepoforms.content_type.field_type_choice.form_type:
+        class: "%ezrepoforms.content_type.field_type_choice.form_type.class%"
+        arguments: ["@ezpublish.field_type_collection.factory", "@translator"]
+        tags:
+            - { name: form.type, alias: ezrepoforms_contenttype_field_type_choice }
+
+    ezrepoforms.content_type.sort_field_choice.form_type:
+        class: "%ezrepoforms.content_type.sort_field_choice.form_type.class%"
+        arguments: ["@translator"]
+        tags:
+            - { name: form.type, alias: ezrepoforms_contenttype_sort_field_choice }
+
+    ezrepoforms.content_type.sort_order_choice.form_type:
+        class: "%ezrepoforms.content_type.sort_order_choice.form_type.class%"
+        arguments: ["@translator"]
+        tags:
+            - { name: form.type, alias: ezrepoforms_contenttype_sort_order_choice }
 
     ezrepoforms.field_definition.form_type:
         class: "%ezrepoforms.field_definition.form_type.class%"
