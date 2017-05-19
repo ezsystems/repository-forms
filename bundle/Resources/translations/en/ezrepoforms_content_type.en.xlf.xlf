@@ -1,0 +1,527 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xliff xmlns:jms="urn:jms:translation" xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+  <file date="2016-11-29T13:00:27Z" source-language="en" target-language="en" datatype="plaintext" original="not.available">
+    <header>
+      <tool tool-id="JMSTranslationBundle" tool-name="JMSTranslationBundle" tool-version="1.1.0-DEV"/>
+      <note>The source node in most cases contains the sample message as written by the developer. If it looks like a dot-delimitted string such as "form.label.firstname", then the developer has not provided a default message.</note>
+    </header>
+    <body>
+      <trans-unit id="0b5b303097790cd7cf1dde918d885439e60ecbd2" resname="content_type.add_field_definition" approved="yes">
+        <source>Add field definition</source>
+        <target xml:lang="en">Add field definition</target>
+        <note>key: content_type.add_field_definition</note>
+        <jms:reference-file line="128">/../../../../.././lib/Form/Type/ContentType/ContentTypeUpdateType.php</jms:reference-file>
+      </trans-unit>
+      <trans-unit id="529a1012c7fe5ca6fafdb5d070ac8ececfe94af6" resname="content_type.create" approved="yes">
+        <source>Create a content type</source>
+        <target xml:lang="en">Create a content type</target>
+        <note>key: content_type.create</note>
+        <jms:reference-file line="67">/../../../../.././lib/Form/Type/ContentType/ContentTypeCreateType.php</jms:reference-file>
+      </trans-unit>
+      <trans-unit id="7b64ebcf792d888de957eaee1c3734c97c80db98" resname="content_type.default_always_available" approved="yes">
+        <source>Default content availability</source>
+        <target xml:lang="en">Default content availability</target>
+        <note>key: content_type.default_always_available</note>
+        <jms:reference-file line="115">/../../../../.././lib/Form/Type/ContentType/ContentTypeUpdateType.php</jms:reference-file>
+      </trans-unit>
+      <trans-unit id="b29f5d9c32e10776ec9fd36c35c4aefc96732cb2" resname="content_type.default_sort_field" approved="yes">
+        <source>Default field for sorting children</source>
+        <target xml:lang="en">Default field for sorting children</target>
+        <note>key: content_type.default_sort_field</note>
+        <jms:reference-file line="103">/../../../../.././lib/Form/Type/ContentType/ContentTypeUpdateType.php</jms:reference-file>
+      </trans-unit>
+      <trans-unit id="7a67ffefca1339a9e4c5224d773378c2e5f6f378" resname="content_type.default_sort_order" approved="yes">
+        <source>Default sort order</source>
+        <target xml:lang="en">Default sort order</target>
+        <note>key: content_type.default_sort_order</note>
+        <jms:reference-file line="111">/../../../../.././lib/Form/Type/ContentType/ContentTypeUpdateType.php</jms:reference-file>
+      </trans-unit>
+      <trans-unit id="be2f64eb4557a3af16a2f32f5e0185c591d3ca8f" resname="content_type.delete" approved="yes">
+        <source>Delete</source>
+        <target xml:lang="en">Delete</target>
+        <note>key: content_type.delete</note>
+        <jms:reference-file line="40">/../../../../.././lib/Form/Type/ContentType/ContentTypeDeleteType.php</jms:reference-file>
+      </trans-unit>
+      <trans-unit id="f2a3cc77cdadcff8883b0022e006e24918307687" resname="content_type.description" approved="yes">
+        <source>Description</source>
+        <target xml:lang="en">Description</target>
+        <note>key: content_type.description</note>
+        <jms:reference-file line="83">/../../../../.././lib/Form/Type/ContentType/ContentTypeUpdateType.php</jms:reference-file>
+      </trans-unit>
+      <trans-unit id="2aecf6f88fd1ee89037907b8743d5873879a0590" resname="content_type.field_definitions_data" approved="yes">
+        <source>Content field definitions</source>
+        <target xml:lang="en">Content field definitions</target>
+        <note>key: content_type.field_definitions_data</note>
+        <jms:reference-file line="120">/../../../../.././lib/Form/Type/ContentType/ContentTypeUpdateType.php</jms:reference-file>
+      </trans-unit>
+      <trans-unit id="a43bfd2651eb1f3357e3398286afd5b6e17c101e" resname="content_type.field_type_selection" approved="yes">
+        <source>Field type selection</source>
+        <target xml:lang="en">Field type selection</target>
+        <note>key: content_type.field_type_selection</note>
+        <jms:reference-file line="126">/../../../../.././lib/Form/Type/ContentType/ContentTypeUpdateType.php</jms:reference-file>
+      </trans-unit>
+      <trans-unit id="368a6ffa173a2e9605371392e99e565d9b247382" resname="content_type.group.delete" approved="yes">
+        <source>Delete</source>
+        <target xml:lang="en">Delete</target>
+        <note>key: content_type.group.delete</note>
+        <jms:reference-file line="32">/../../../../.././lib/Form/Type/ContentType/ContentTypeGroupDeleteType.php</jms:reference-file>
+      </trans-unit>
+      <trans-unit id="043e7766417bd9d21fe58de76fcaee35eb7d2fb0" resname="content_type.group.identifier" approved="yes">
+        <source>Name</source>
+        <target xml:lang="en">Name</target>
+        <note>key: content_type.group.identifier</note>
+        <jms:reference-file line="21">/../../../../.././lib/Form/Type/ContentType/ContentTypeGroupType.php</jms:reference-file>
+      </trans-unit>
+      <trans-unit id="c657344d0bf6b6203b1b9eaf4e44f7a6261dfe1d" resname="content_type.group.save" approved="yes">
+        <source>Save</source>
+        <target xml:lang="en">Save</target>
+        <note>key: content_type.group.save</note>
+        <jms:reference-file line="22">/../../../../.././lib/Form/Type/ContentType/ContentTypeGroupType.php</jms:reference-file>
+      </trans-unit>
+      <trans-unit id="238db0c5dee8ec13199b073f7cc78728f53ffa36" resname="content_type.identifier" approved="yes">
+        <source>Identifier</source>
+        <target xml:lang="en">Identifier</target>
+        <note>key: content_type.identifier</note>
+        <jms:reference-file line="77">/../../../../.././lib/Form/Type/ContentType/ContentTypeUpdateType.php</jms:reference-file>
+      </trans-unit>
+      <trans-unit id="338e462a91906d03e5e6b8c00528a38d482a3c9e" resname="content_type.is_container" approved="yes">
+        <source>Container</source>
+        <target xml:lang="en">Container</target>
+        <note>key: content_type.is_container</note>
+        <jms:reference-file line="89">/../../../../.././lib/Form/Type/ContentType/ContentTypeUpdateType.php</jms:reference-file>
+      </trans-unit>
+      <trans-unit id="7fddd251857df821bd536dd680e1edbc921790a2" resname="content_type.name" approved="yes">
+        <source>Name</source>
+        <target xml:lang="en">Name</target>
+        <note>key: content_type.name</note>
+        <jms:reference-file line="74">/../../../../.././lib/Form/Type/ContentType/ContentTypeUpdateType.php</jms:reference-file>
+      </trans-unit>
+      <trans-unit id="9e9628fc59643f3167ebe81dfed3e40eecd281c9" resname="content_type.name_schema" approved="yes">
+        <source>Content name pattern</source>
+        <target xml:lang="en">Content name pattern</target>
+        <note>key: content_type.name_schema</note>
+        <jms:reference-file line="87">/../../../../.././lib/Form/Type/ContentType/ContentTypeUpdateType.php</jms:reference-file>
+      </trans-unit>
+      <trans-unit id="49e5f320e6e37cbd53a5d290e3ffd48788226852" resname="content_type.publish" approved="yes">
+        <source>OK</source>
+        <target xml:lang="en">OK</target>
+        <note>key: content_type.publish</note>
+        <jms:reference-file line="132">/../../../../.././lib/Form/Type/ContentType/ContentTypeUpdateType.php</jms:reference-file>
+      </trans-unit>
+      <trans-unit id="701cbaa7ea48016d7b0eb5940e810cacd16c19b3" resname="content_type.remove_draft" approved="yes">
+        <source>Cancel</source>
+        <target xml:lang="en">Cancel</target>
+        <note>key: content_type.remove_draft</note>
+        <jms:reference-file line="131">/../../../../.././lib/Form/Type/ContentType/ContentTypeUpdateType.php</jms:reference-file>
+      </trans-unit>
+      <trans-unit id="5fa42f2a0ef1fee12efaa4cdb1c35bbed35e9b7e" resname="content_type.remove_field_definitions" approved="yes">
+        <source>Remove selected field definitions</source>
+        <target xml:lang="en">Remove selected field definitions</target>
+        <note>key: content_type.remove_field_definitions</note>
+        <jms:reference-file line="129">/../../../../.././lib/Form/Type/ContentType/ContentTypeUpdateType.php</jms:reference-file>
+      </trans-unit>
+      <trans-unit id="946ba9e49beabdacd143e10e343f852736c081d8" resname="content_type.save" approved="yes">
+        <source>Apply</source>
+        <target xml:lang="en">Apply</target>
+        <note>key: content_type.save</note>
+        <jms:reference-file line="130">/../../../../.././lib/Form/Type/ContentType/ContentTypeUpdateType.php</jms:reference-file>
+      </trans-unit>
+      <trans-unit id="c300429484d21873cc0f1ef016def9c21ce5b593" resname="content_type.sort_field.content_type_identifier" approved="yes">
+        <source>content_type.sort_field.content_type_identifier</source>
+        <target xml:lang="en">content_type.sort_field.content_type_identifier</target>
+        <note>key: content_type.sort_field.content_type_identifier</note>
+        <jms:reference-file line="94">/../../../../.././lib/Form/Type/ContentType/ContentTypeUpdateType.php</jms:reference-file>
+      </trans-unit>
+      <trans-unit id="6a5ff0e51a62d5f362eb39cf5338a3bb59ff0014" resname="content_type.sort_field.content_type_name" approved="yes">
+        <source>content_type.sort_field.content_type_name</source>
+        <target xml:lang="en">content_type.sort_field.content_type_name</target>
+        <note>key: content_type.sort_field.content_type_name</note>
+        <jms:reference-file line="93">/../../../../.././lib/Form/Type/ContentType/ContentTypeUpdateType.php</jms:reference-file>
+      </trans-unit>
+      <trans-unit id="5149e0146059487622a9f1ebf3c843b8a020db33" resname="content_type.sort_field.depth" approved="yes">
+        <source>content_type.sort_field.depth</source>
+        <target xml:lang="en">content_type.sort_field.depth</target>
+        <note>key: content_type.sort_field.depth</note>
+        <jms:reference-file line="95">/../../../../.././lib/Form/Type/ContentType/ContentTypeUpdateType.php</jms:reference-file>
+      </trans-unit>
+      <trans-unit id="8acac47605156b70e1d654c98b3b65b982e00db7" resname="content_type.sort_field.modified" approved="yes">
+        <source>content_type.sort_field.modified</source>
+        <target xml:lang="en">content_type.sort_field.modified</target>
+        <note>key: content_type.sort_field.modified</note>
+        <jms:reference-file line="98">/../../../../.././lib/Form/Type/ContentType/ContentTypeUpdateType.php</jms:reference-file>
+      </trans-unit>
+      <trans-unit id="3fd95b45be04d6ae42d3eb82114c65e474f1d4ce" resname="content_type.sort_field.name" approved="yes">
+        <source>content_type.sort_field.name</source>
+        <target xml:lang="en">content_type.sort_field.name</target>
+        <note>key: content_type.sort_field.name</note>
+        <jms:reference-file line="92">/../../../../.././lib/Form/Type/ContentType/ContentTypeUpdateType.php</jms:reference-file>
+      </trans-unit>
+      <trans-unit id="7b1c052f1013503faec80cc0231db8569669bf5c" resname="content_type.sort_field.path" approved="yes">
+        <source>content_type.sort_field.path</source>
+        <target xml:lang="en">content_type.sort_field.path</target>
+        <note>key: content_type.sort_field.path</note>
+        <jms:reference-file line="96">/../../../../.././lib/Form/Type/ContentType/ContentTypeUpdateType.php</jms:reference-file>
+      </trans-unit>
+      <trans-unit id="ac2b24b167723165d67f63e17b0d4fa9faf081c0" resname="content_type.sort_field.priority" approved="yes">
+        <source>content_type.sort_field.priority</source>
+        <target xml:lang="en">content_type.sort_field.priority</target>
+        <note>key: content_type.sort_field.priority</note>
+        <jms:reference-file line="97">/../../../../.././lib/Form/Type/ContentType/ContentTypeUpdateType.php</jms:reference-file>
+      </trans-unit>
+      <trans-unit id="c51d29f35f4f8eb46b61904f4ab198a234b30dfc" resname="content_type.sort_field.published" approved="yes">
+        <source>content_type.sort_field.published</source>
+        <target xml:lang="en">content_type.sort_field.published</target>
+        <note>key: content_type.sort_field.published</note>
+        <jms:reference-file line="99">/../../../../.././lib/Form/Type/ContentType/ContentTypeUpdateType.php</jms:reference-file>
+      </trans-unit>
+      <trans-unit id="8992691c018856e6ca6d0b3ca0cd2a4e652e4fb5" resname="content_type.sort_field.section" approved="yes">
+        <source>content_type.sort_field.section</source>
+        <target xml:lang="en">content_type.sort_field.section</target>
+        <note>key: content_type.sort_field.section</note>
+        <jms:reference-file line="100">/../../../../.././lib/Form/Type/ContentType/ContentTypeUpdateType.php</jms:reference-file>
+      </trans-unit>
+      <trans-unit id="a1718708d4bb688a877cd773f078fa44b4cbbb0d" resname="content_type.sort_order.asc" approved="yes">
+        <source>content_type.sort_order.asc</source>
+        <target xml:lang="en">content_type.sort_order.asc</target>
+        <note>key: content_type.sort_order.asc</note>
+        <jms:reference-file line="107">/../../../../.././lib/Form/Type/ContentType/ContentTypeUpdateType.php</jms:reference-file>
+      </trans-unit>
+      <trans-unit id="2b365d7ac236dce07260e74a56b6877ed8455311" resname="content_type.sort_order.desc" approved="yes">
+        <source>content_type.sort_order.desc</source>
+        <target xml:lang="en">content_type.sort_order.desc</target>
+        <note>key: content_type.sort_order.desc</note>
+        <jms:reference-file line="108">/../../../../.././lib/Form/Type/ContentType/ContentTypeUpdateType.php</jms:reference-file>
+      </trans-unit>
+      <trans-unit id="6ab7362c77b22ff8bc0d14eeaae8514b0a683473" resname="content_type.url_alias_schema" approved="yes">
+        <source>URL alias name pattern</source>
+        <target xml:lang="en">URL alias name pattern</target>
+        <note>key: content_type.url_alias_schema</note>
+        <jms:reference-file line="88">/../../../../.././lib/Form/Type/ContentType/ContentTypeUpdateType.php</jms:reference-file>
+      </trans-unit>
+      <trans-unit id="f99cc628dc4d82c5ee69eae79039a2f449eec064" resname="field_definition.description" approved="yes">
+        <source>Description</source>
+        <target xml:lang="en">Description</target>
+        <note>key: field_definition.description</note>
+        <jms:reference-file line="84">/../../../../.././lib/Form/Type/FieldDefinition/FieldDefinitionType.php</jms:reference-file>
+      </trans-unit>
+      <trans-unit id="41f781284e4bae2abbb6cfdf1126cc90b48dd35b" resname="field_definition.ezbinaryfile.max_file_size" approved="yes">
+        <source>Maximum file size (MB)</source>
+        <target xml:lang="en">Maximum file size (MB)</target>
+        <note>key: field_definition.ezbinaryfile.max_file_size</note>
+        <jms:reference-file line="24">/../../../../.././lib/FieldType/Mapper/BinaryFileFormMapper.php</jms:reference-file>
+      </trans-unit>
+      <trans-unit id="3ef6598f8cd7d60095784845bb24852ac531e47c" resname="field_definition.ezcountry.default_value" approved="yes">
+        <source>Select which countries by default</source>
+        <target xml:lang="en">Select which countries by default</target>
+        <note>key: field_definition.ezcountry.default_value</note>
+        <jms:reference-file line="56">/../../../../.././lib/FieldType/Mapper/CountryFormMapper.php</jms:reference-file>
+      </trans-unit>
+      <trans-unit id="027f35cf66e5ea571cc7b600dad0ab5ceea20cd6" resname="field_definition.ezcountry.is_multiple" approved="yes">
+        <source>Multiple choice</source>
+        <target xml:lang="en">Multiple choice</target>
+        <note>key: field_definition.ezcountry.is_multiple</note>
+        <jms:reference-file line="42">/../../../../.././lib/FieldType/Mapper/CountryFormMapper.php</jms:reference-file>
+      </trans-unit>
+      <trans-unit id="18a5846deb7a3d7dcc9fbd0a2de28d609c2a55c2" resname="field_definition.ezdate.default_type" approved="yes">
+        <source>Default value</source>
+        <target xml:lang="en">Default value</target>
+        <note>key: field_definition.ezdate.default_type</note>
+        <jms:reference-file line="34">/../../../../.././lib/FieldType/Mapper/DateFormMapper.php</jms:reference-file>
+      </trans-unit>
+      <trans-unit id="eb97ae8058956f1babf75555dbdba76c8e409bf1" resname="field_definition.ezdate.default_type_current" approved="yes">
+        <source>Current date</source>
+        <target xml:lang="en">Current date</target>
+        <note>key: field_definition.ezdate.default_type_current</note>
+        <jms:reference-file line="28">/../../../../.././lib/FieldType/Mapper/DateFormMapper.php</jms:reference-file>
+      </trans-unit>
+      <trans-unit id="df532a4ad5878fd0bc3f7842fb6907078efe76f9" resname="field_definition.ezdate.default_type_empty" approved="yes">
+        <source>Empty</source>
+        <target xml:lang="en">Empty</target>
+        <note>key: field_definition.ezdate.default_type_empty</note>
+        <jms:reference-file line="27">/../../../../.././lib/FieldType/Mapper/DateFormMapper.php</jms:reference-file>
+      </trans-unit>
+      <trans-unit id="dbbf37dee75d40448b725aea9c893a4ea84c8ab6" resname="field_definition.ezdatetime.date_interval" approved="yes">
+        <source>Current date and time adjusted by</source>
+        <target xml:lang="en">Current date and time adjusted by</target>
+        <note>key: field_definition.ezdatetime.date_interval</note>
+        <jms:reference-file line="45">/../../../../.././lib/FieldType/Mapper/DateTimeFormMapper.php</jms:reference-file>
+      </trans-unit>
+      <trans-unit id="7b4f4729ec64de6f20356ad40f768c98c27590fb" resname="field_definition.ezdatetime.default_type" approved="yes">
+        <source>Default value</source>
+        <target xml:lang="en">Default value</target>
+        <note>key: field_definition.ezdatetime.default_type</note>
+        <jms:reference-file line="40">/../../../../.././lib/FieldType/Mapper/DateTimeFormMapper.php</jms:reference-file>
+      </trans-unit>
+      <trans-unit id="e37e68ecadab17cf7132cd1d5163a4f13d0f759c" resname="field_definition.ezdatetime.default_type_adjusted" approved="yes">
+        <source>Adjusted current datetime</source>
+        <target xml:lang="en">Adjusted current datetime</target>
+        <note>key: field_definition.ezdatetime.default_type_adjusted</note>
+        <jms:reference-file line="34">/../../../../.././lib/FieldType/Mapper/DateTimeFormMapper.php</jms:reference-file>
+      </trans-unit>
+      <trans-unit id="24ac7fa5478172475d86a2d16829ece8a5e5f59f" resname="field_definition.ezdatetime.default_type_current" approved="yes">
+        <source>Current datetime</source>
+        <target xml:lang="en">Current datetime</target>
+        <note>key: field_definition.ezdatetime.default_type_current</note>
+        <jms:reference-file line="33">/../../../../.././lib/FieldType/Mapper/DateTimeFormMapper.php</jms:reference-file>
+      </trans-unit>
+      <trans-unit id="0119e6a5f0c829a61263c3a8a37dda53b9da8dce" resname="field_definition.ezdatetime.default_type_empty" approved="yes">
+        <source>Empty</source>
+        <target xml:lang="en">Empty</target>
+        <note>key: field_definition.ezdatetime.default_type_empty</note>
+        <jms:reference-file line="32">/../../../../.././lib/FieldType/Mapper/DateTimeFormMapper.php</jms:reference-file>
+      </trans-unit>
+      <trans-unit id="a2fbf20071bc00616d6c927dadd484ad75fbcd4c" resname="field_definition.ezdatetime.use_seconds" approved="yes">
+        <source>Use seconds</source>
+        <target xml:lang="en">Use seconds</target>
+        <note>key: field_definition.ezdatetime.use_seconds</note>
+        <jms:reference-file line="28">/../../../../.././lib/FieldType/Mapper/DateTimeFormMapper.php</jms:reference-file>
+      </trans-unit>
+      <trans-unit id="8f6ec24986ca862e96867edc18aa490ff6035e56" resname="field_definition.ezfloat.max_value" approved="yes">
+        <source>Maximum value</source>
+        <target xml:lang="en">Maximum value</target>
+        <note>key: field_definition.ezfloat.max_value</note>
+        <jms:reference-file line="33">/../../../../.././lib/FieldType/Mapper/FloatFormMapper.php</jms:reference-file>
+      </trans-unit>
+      <trans-unit id="a8eb20f50022f5aa6c623f3f870297f2ee034606" resname="field_definition.ezfloat.min_value" approved="yes">
+        <source>Minimum value</source>
+        <target xml:lang="en">Minimum value</target>
+        <note>key: field_definition.ezfloat.min_value</note>
+        <jms:reference-file line="26">/../../../../.././lib/FieldType/Mapper/FloatFormMapper.php</jms:reference-file>
+      </trans-unit>
+      <trans-unit id="5b275c762831def3c6ea393e3e0c25762e0844b3" resname="field_definition.ezimage.max_file_size" approved="yes">
+        <source>Maximum file size (byte)</source>
+        <target xml:lang="en">Maximum file size (byte)</target>
+        <note>key: field_definition.ezimage.max_file_size</note>
+        <jms:reference-file line="25">/../../../../.././lib/FieldType/Mapper/ImageFormMapper.php</jms:reference-file>
+      </trans-unit>
+      <trans-unit id="7529d0af266c6893ae1886faf5578cf4d6d768aa" resname="field_definition.ezinteger.max_value" approved="yes">
+        <source>Maximum value</source>
+        <target xml:lang="en">Maximum value</target>
+        <note>key: field_definition.ezinteger.max_value</note>
+        <jms:reference-file line="33">/../../../../.././lib/FieldType/Mapper/IntegerFormMapper.php</jms:reference-file>
+      </trans-unit>
+      <trans-unit id="9b1e51f5ebbb28c403c7707252c6ca47e6a0a82c" resname="field_definition.ezinteger.min_value" approved="yes">
+        <source>Minimum value</source>
+        <target xml:lang="en">Minimum value</target>
+        <note>key: field_definition.ezinteger.min_value</note>
+        <jms:reference-file line="26">/../../../../.././lib/FieldType/Mapper/IntegerFormMapper.php</jms:reference-file>
+      </trans-unit>
+      <trans-unit id="461c05cd80b29eb37dc4f7e1f9e1d2454b380332" resname="field_definition.ezisbn.is_isbn13" approved="yes">
+        <source>ISBN-13 format</source>
+        <target xml:lang="en">ISBN-13 format</target>
+        <note>key: field_definition.ezisbn.is_isbn13</note>
+        <jms:reference-file line="26">/../../../../.././lib/FieldType/Mapper/ISBNFormMapper.php</jms:reference-file>
+      </trans-unit>
+      <trans-unit id="fd243acf201f0150bda1c01399850c7ad9fc0c2d" resname="field_definition.ezmedia.max_file_size" approved="yes">
+        <source>Maximum file size (MB)</source>
+        <target xml:lang="en">Maximum file size (MB)</target>
+        <note>key: field_definition.ezmedia.max_file_size</note>
+        <jms:reference-file line="27">/../../../../.././lib/FieldType/Mapper/MediaFormMapper.php</jms:reference-file>
+      </trans-unit>
+      <trans-unit id="1ae04670268864a185efbed749015b7ea14f079b" resname="field_definition.ezmedia.media_type" approved="yes">
+        <source>Media type</source>
+        <target xml:lang="en">Media type</target>
+        <note>key: field_definition.ezmedia.media_type</note>
+        <jms:reference-file line="42">/../../../../.././lib/FieldType/Mapper/MediaFormMapper.php</jms:reference-file>
+      </trans-unit>
+      <trans-unit id="adfb7d8a234a1500c70ea82dac5f6d8bebff4234" resname="field_definition.ezmedia.type_flash" approved="yes">
+        <source>Flash</source>
+        <target xml:lang="en">Flash</target>
+        <note>key: field_definition.ezmedia.type_flash</note>
+        <jms:reference-file line="32">/../../../../.././lib/FieldType/Mapper/MediaFormMapper.php</jms:reference-file>
+      </trans-unit>
+      <trans-unit id="fb4e0e47312060617df5c281c7fc5a537929369f" resname="field_definition.ezmedia.type_html5_audio" approved="yes">
+        <source>HTML5 audio</source>
+        <target xml:lang="en">HTML5 audio</target>
+        <note>key: field_definition.ezmedia.type_html5_audio</note>
+        <jms:reference-file line="37">/../../../../.././lib/FieldType/Mapper/MediaFormMapper.php</jms:reference-file>
+      </trans-unit>
+      <trans-unit id="2039c43bb8832c53f19d0a027c64e40e51f22899" resname="field_definition.ezmedia.type_html5_video" approved="yes">
+        <source>HTML5 video</source>
+        <target xml:lang="en">HTML5 video</target>
+        <note>key: field_definition.ezmedia.type_html5_video</note>
+        <jms:reference-file line="31">/../../../../.././lib/FieldType/Mapper/MediaFormMapper.php</jms:reference-file>
+      </trans-unit>
+      <trans-unit id="e78eb62bcd9c8b47ff51f38c4a828cf91749d38b" resname="field_definition.ezmedia.type_quick_time" approved="yes">
+        <source>QuickTime</source>
+        <target xml:lang="en">QuickTime</target>
+        <note>key: field_definition.ezmedia.type_quick_time</note>
+        <jms:reference-file line="33">/../../../../.././lib/FieldType/Mapper/MediaFormMapper.php</jms:reference-file>
+      </trans-unit>
+      <trans-unit id="a44f707a9ede4f970de7833a2ca29e281fe695d8" resname="field_definition.ezmedia.type_real_player" approved="yes">
+        <source>RealPlayer</source>
+        <target xml:lang="en">RealPlayer</target>
+        <note>key: field_definition.ezmedia.type_real_player</note>
+        <jms:reference-file line="34">/../../../../.././lib/FieldType/Mapper/MediaFormMapper.php</jms:reference-file>
+      </trans-unit>
+      <trans-unit id="efa6e36c8ec4e2d5c258e780cbefeb54d77f6bc9" resname="field_definition.ezmedia.type_silverlight" approved="yes">
+        <source>Silverlight</source>
+        <target xml:lang="en">Silverlight</target>
+        <note>key: field_definition.ezmedia.type_silverlight</note>
+        <jms:reference-file line="35">/../../../../.././lib/FieldType/Mapper/MediaFormMapper.php</jms:reference-file>
+      </trans-unit>
+      <trans-unit id="57951280ffe27b8afe3f6c65f8cda4696267d64a" resname="field_definition.ezmedia.type_windows_media_player" approved="yes">
+        <source>Windows Media Player</source>
+        <target xml:lang="en">Windows Media Player</target>
+        <note>key: field_definition.ezmedia.type_windows_media_player</note>
+        <jms:reference-file line="36">/../../../../.././lib/FieldType/Mapper/MediaFormMapper.php</jms:reference-file>
+      </trans-unit>
+      <trans-unit id="440d8fe80bb8a07b62f17d843721285b2cf8a4d5" resname="field_definition.ezobjectrelation.selection_root" approved="yes">
+        <source>Default selection item</source>
+        <target xml:lang="en">Default selection item</target>
+        <note>key: field_definition.ezobjectrelation.selection_root</note>
+        <jms:reference-file line="25">/../../../../.././lib/FieldType/Mapper/RelationFormMapper.php</jms:reference-file>
+      </trans-unit>
+      <trans-unit id="e03e262fad0802fdee49aac136644b35450e1eab" resname="field_definition.ezobjectrelation.selection_root_udw_button" approved="yes">
+        <source>Select item</source>
+        <target xml:lang="en">Select item</target>
+        <note>key: field_definition.ezobjectrelation.selection_root_udw_button</note>
+        <jms:reference-file line="129">/../../../../.././bundle/Resources/views/ContentType/field_types.html.twig</jms:reference-file>
+      </trans-unit>
+      <trans-unit id="d892163a41d816c03db3c4a04e35550f02169c11" resname="field_definition.ezobjectrelation.selection_root_udw_title" approved="yes">
+        <source>Select a start location for browsing for relations</source>
+        <target xml:lang="en">Select a start location for browsing for relations</target>
+        <note>key: field_definition.ezobjectrelation.selection_root_udw_title</note>
+        <jms:reference-file line="125">/../../../../.././bundle/Resources/views/ContentType/field_types.html.twig</jms:reference-file>
+      </trans-unit>
+      <trans-unit id="7e061dc7c88fe38c11714695d4034f935788efb3" resname="field_definition.ezobjectrelationlist.selection_content_types" approved="yes">
+        <source>Allowed content types</source>
+        <target xml:lang="en">Allowed content types</target>
+        <note>key: field_definition.ezobjectrelationlist.selection_content_types</note>
+        <jms:reference-file line="67">/../../../../.././lib/FieldType/Mapper/RelationListFormMapper.php</jms:reference-file>
+      </trans-unit>
+      <trans-unit id="b08d97ea9175eef7352c7e9c5c8ee0516798bdfa" resname="field_definition.ezobjectrelationlist.selection_default_location" approved="yes">
+        <source>Default location</source>
+        <target xml:lang="en">Default location</target>
+        <note>key: field_definition.ezobjectrelationlist.selection_default_location</note>
+        <jms:reference-file line="58">/../../../../.././lib/FieldType/Mapper/RelationListFormMapper.php</jms:reference-file>
+      </trans-unit>
+      <trans-unit id="1592c36df8d445c3154d1f639027f97a90739856" resname="field_definition.ezobjectrelationlist.selection_root_udw_button" approved="yes">
+        <source>Select location</source>
+        <target xml:lang="en">Select location</target>
+        <note>key: field_definition.ezobjectrelationlist.selection_root_udw_button</note>
+        <jms:reference-file line="148">/../../../../.././bundle/Resources/views/ContentType/field_types.html.twig</jms:reference-file>
+      </trans-unit>
+      <trans-unit id="17d8f3e8bbd5b5f0f5b4b02ddaeaf2af82b0d222" resname="field_definition.ezobjectrelationlist.selection_root_udw_title" approved="yes">
+        <source>Select a start location for browsing for relations</source>
+        <target xml:lang="en">Select a start location for browsing for relations</target>
+        <note>key: field_definition.ezobjectrelationlist.selection_root_udw_title</note>
+        <jms:reference-file line="144">/../../../../.././bundle/Resources/views/ContentType/field_types.html.twig</jms:reference-file>
+      </trans-unit>
+      <trans-unit id="8c89d231e7f1b33a8e0b84ad81fc964785a59cbd" resname="field_definition.ezpage.default_layout" approved="yes">
+        <source>Default layout</source>
+        <target xml:lang="en">Default layout</target>
+        <note>key: field_definition.ezpage.default_layout</note>
+        <jms:reference-file line="45">/../../../../.././lib/FieldType/Mapper/PageFormMapper.php</jms:reference-file>
+      </trans-unit>
+      <trans-unit id="5f4e08d826e58f0be9e678f7c7a60068fd63b567" resname="field_definition.ezrichtext.num_rows" approved="yes">
+        <source>Number of text rows in the editor</source>
+        <target xml:lang="en">Number of text rows in the editor</target>
+        <note>key: field_definition.ezrichtext.num_rows</note>
+        <jms:reference-file line="26">/../../../../.././lib/FieldType/Mapper/RichTextFormMapper.php</jms:reference-file>
+      </trans-unit>
+      <trans-unit id="e9e5a43d734719bf6ca42940c1cf5bc78b234e2b" resname="field_definition.ezselection.is_multiple" approved="yes">
+        <source>Multiple choice</source>
+        <target xml:lang="en">Multiple choice</target>
+        <note>key: field_definition.ezselection.is_multiple</note>
+        <jms:reference-file line="41">/../../../../.././lib/FieldType/Mapper/SelectionFormMapper.php</jms:reference-file>
+      </trans-unit>
+      <trans-unit id="ac85420bb89c319433f4d0e8e988b6fa8363e8b9" resname="field_definition.ezselection.options" approved="yes">
+        <source>Options</source>
+        <target xml:lang="en">Options</target>
+        <note>key: field_definition.ezselection.options</note>
+        <jms:reference-file line="53">/../../../../.././lib/FieldType/Mapper/SelectionFormMapper.php</jms:reference-file>
+      </trans-unit>
+      <trans-unit id="e8ede1605bfed09023397f8662ca28c40e7c460a" resname="field_definition.ezstring.default_value" approved="yes">
+        <source>Default value</source>
+        <target xml:lang="en">Default value</target>
+        <note>key: field_definition.ezstring.default_value</note>
+        <jms:reference-file line="55">/../../../../.././lib/FieldType/Mapper/TextLineFormMapper.php</jms:reference-file>
+      </trans-unit>
+      <trans-unit id="aeb5a467102cac589770bb08efe1ae15c2845cca" resname="field_definition.ezstring.max_length" approved="yes">
+        <source>Maximum length</source>
+        <target xml:lang="en">Maximum length</target>
+        <note>key: field_definition.ezstring.max_length</note>
+        <jms:reference-file line="47">/../../../../.././lib/FieldType/Mapper/TextLineFormMapper.php</jms:reference-file>
+      </trans-unit>
+      <trans-unit id="b3ccbbb1d949cd2ce5971857c15d8c972ee82691" resname="field_definition.ezstring.min_length" approved="yes">
+        <source>Minimum length</source>
+        <target xml:lang="en">Minimum length</target>
+        <note>key: field_definition.ezstring.min_length</note>
+        <jms:reference-file line="41">/../../../../.././lib/FieldType/Mapper/TextLineFormMapper.php</jms:reference-file>
+      </trans-unit>
+      <trans-unit id="0a5ed21a62aec2cda555012922b97975d97bc95c" resname="field_definition.eztext.text_rows" approved="yes">
+        <source>Number of text rows</source>
+        <target xml:lang="en">Number of text rows</target>
+        <note>key: field_definition.eztext.text_rows</note>
+        <jms:reference-file line="41">/../../../../.././lib/FieldType/Mapper/TextBlockFormMapper.php</jms:reference-file>
+      </trans-unit>
+      <trans-unit id="0f8aa615d0ec1b242535348fecb702d9b75ca2eb" resname="field_definition.eztime.default_type" approved="yes">
+        <source>Default value</source>
+        <target xml:lang="en">Default value</target>
+        <note>key: field_definition.eztime.default_type</note>
+        <jms:reference-file line="45">/../../../../.././lib/FieldType/Mapper/TimeFormMapper.php</jms:reference-file>
+      </trans-unit>
+      <trans-unit id="95dc4af57dce875f9140238d276ed77f0236746f" resname="field_definition.eztime.default_type_current" approved="yes">
+        <source>Current time</source>
+        <target xml:lang="en">Current time</target>
+        <note>key: field_definition.eztime.default_type_current</note>
+        <jms:reference-file line="39">/../../../../.././lib/FieldType/Mapper/TimeFormMapper.php</jms:reference-file>
+      </trans-unit>
+      <trans-unit id="0a0e3e8eb5d13b0e9e8ca8348615a5c00e2e51c1" resname="field_definition.eztime.default_type_empty" approved="yes">
+        <source>Empty</source>
+        <target xml:lang="en">Empty</target>
+        <note>key: field_definition.eztime.default_type_empty</note>
+        <jms:reference-file line="38">/../../../../.././lib/FieldType/Mapper/TimeFormMapper.php</jms:reference-file>
+      </trans-unit>
+      <trans-unit id="3095005d6d92b499602347e3692b69346a35a845" resname="field_definition.eztime.use_seconds" approved="yes">
+        <source>Use seconds</source>
+        <target xml:lang="en">Use seconds</target>
+        <note>key: field_definition.eztime.use_seconds</note>
+        <jms:reference-file line="30">/../../../../.././lib/FieldType/Mapper/TimeFormMapper.php</jms:reference-file>
+      </trans-unit>
+      <trans-unit id="92d9243bb9fac540233dc376b41a3bcd41615ccc" resname="field_definition.field_group" approved="yes">
+        <source>Category</source>
+        <target xml:lang="en">Category</target>
+        <note>key: field_definition.field_group</note>
+        <jms:reference-file line="96">/../../../../.././lib/Form/Type/FieldDefinition/FieldDefinitionType.php</jms:reference-file>
+      </trans-unit>
+      <trans-unit id="8b863a9c7cd91565182ad0a3a5e30ca8090f84c7" resname="field_definition.identifier" approved="yes">
+        <source>Identifier</source>
+        <target xml:lang="en">Identifier</target>
+        <note>key: field_definition.identifier</note>
+        <jms:reference-file line="79">/../../../../.././lib/Form/Type/FieldDefinition/FieldDefinitionType.php</jms:reference-file>
+      </trans-unit>
+      <trans-unit id="6e91f443eb0cd4ab99331950f20cdbcc03f0b88c" resname="field_definition.is_required" approved="yes">
+        <source>Required</source>
+        <target xml:lang="en">Required</target>
+        <note>key: field_definition.is_required</note>
+        <jms:reference-file line="88">/../../../../.././lib/Form/Type/FieldDefinition/FieldDefinitionType.php</jms:reference-file>
+      </trans-unit>
+      <trans-unit id="a0267d640a8276b546263c23a5dfdf8e99cc3468" resname="field_definition.is_searchable" approved="yes">
+        <source>Searchable</source>
+        <target xml:lang="en">Searchable</target>
+        <note>key: field_definition.is_searchable</note>
+        <jms:reference-file line="113">/../../../../.././lib/Form/Type/FieldDefinition/FieldDefinitionType.php</jms:reference-file>
+      </trans-unit>
+      <trans-unit id="83aba8c0c4c654d481c4520feb76e789fbc64c22" resname="field_definition.is_translatable" approved="yes">
+        <source>Translatable</source>
+        <target xml:lang="en">Translatable</target>
+        <note>key: field_definition.is_translatable</note>
+        <jms:reference-file line="89">/../../../../.././lib/Form/Type/FieldDefinition/FieldDefinitionType.php</jms:reference-file>
+      </trans-unit>
+      <trans-unit id="9a02e329edf4c1e41c97c8be922137c284c249c4" resname="field_definition.name" approved="yes">
+        <source>Name</source>
+        <target xml:lang="en">Name</target>
+        <note>key: field_definition.name</note>
+        <jms:reference-file line="76">/../../../../.././lib/Form/Type/FieldDefinition/FieldDefinitionType.php</jms:reference-file>
+      </trans-unit>
+      <trans-unit id="f6d7350ade5162400b0848796720fe586392fa46" resname="field_definition.position" approved="yes">
+        <source>Position</source>
+        <target xml:lang="en">Position</target>
+        <note>key: field_definition.position</note>
+        <jms:reference-file line="99">/../../../../.././lib/Form/Type/FieldDefinition/FieldDefinitionType.php</jms:reference-file>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>
