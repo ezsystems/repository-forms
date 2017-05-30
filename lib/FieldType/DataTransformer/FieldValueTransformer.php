@@ -55,7 +55,7 @@ class FieldValueTransformer implements DataTransformerInterface
      */
     public function reverseTransform($value)
     {
-        if (!$value) {
+        if ($value === null) {
             return $this->fieldType->getEmptyValue();
         }
 
