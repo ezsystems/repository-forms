@@ -27,7 +27,7 @@ class ObjectStateLimitationMapper extends MultipleSelectionBasedMapper
         $choices = [];
         foreach ($this->objectStateService->loadObjectStateGroups() as $group) {
             foreach ($this->objectStateService->loadObjectStates($group) as $state) {
-                $choices[$state->id] = $state->getName($state->defaultLanguageCode);
+                $choices[$state->id] = $state->getObjectStateGroup()->getName($state->defaultLanguageCode) . ':' . $state->getName($state->defaultLanguageCode);
             }
         }
 
