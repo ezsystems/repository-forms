@@ -19,7 +19,7 @@ use Symfony\Component\Form\DataTransformerInterface;
 class FieldValueTransformer implements DataTransformerInterface
 {
     /**
-     * @var FieldType
+     * @var eZ\Publish\API\Repository\FieldType
      */
     private $fieldType;
 
@@ -32,7 +32,7 @@ class FieldValueTransformer implements DataTransformerInterface
      * Transforms a FieldType Value into a hash using `FieldTpe::toHash()`.
      * This hash is compatible with `reverseTransform()`.
      *
-     * @param \eZ\Publish\SPI\FieldType\Value $value
+     * @param mixed $value
      *
      * @return array|null the value's hash, or null if $value was not a FieldType Value
      */
@@ -49,13 +49,13 @@ class FieldValueTransformer implements DataTransformerInterface
      * Transforms a hash into a FieldType Value using `FieldType::fromHash()`.
      * The FieldValue is compatible with `transform()`.
      *
-     * @param array $value
+     * @param mixed $value
      *
      * @return \eZ\Publish\SPI\FieldType\Value
      */
     public function reverseTransform($value)
     {
-        if (!$value) {
+        if ($value === null) {
             return $this->fieldType->getEmptyValue();
         }
 
