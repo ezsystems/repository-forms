@@ -11,9 +11,9 @@
 namespace EzSystems\RepositoryForms\tests\RepositoryForms\Data;
 
 use EzSystems\RepositoryForms\Data\FieldDefinitionData;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 
-class FieldDefinitionDataTest extends PHPUnit_Framework_TestCase
+class FieldDefinitionDataTest extends TestCase
 {
     public function testFieldDefinition()
     {

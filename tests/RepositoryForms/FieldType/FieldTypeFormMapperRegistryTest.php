@@ -11,9 +11,9 @@
 namespace EzSystems\RepositoryForms\Tests\FieldType;
 
 use EzSystems\RepositoryForms\FieldType\FieldTypeFormMapperRegistry;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 
-class FieldTypeFormMapperRegistryTest extends PHPUnit_Framework_TestCase
+class FieldTypeFormMapperRegistryTest extends TestCase
 {
     public function testGetAddMappers()
     {

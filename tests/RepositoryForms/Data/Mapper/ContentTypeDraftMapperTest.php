@@ -17,9 +17,9 @@ use eZ\Publish\Core\Repository\Values\ContentType\FieldDefinition;
 use EzSystems\RepositoryForms\Data\ContentTypeData;
 use EzSystems\RepositoryForms\Data\FieldDefinitionData;
 use EzSystems\RepositoryForms\Data\Mapper\ContentTypeDraftMapper;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 
-class ContentTypeDraftMapperTest extends PHPUnit_Framework_TestCase
+class ContentTypeDraftMapperTest extends TestCase
 {
     public function testMapToFormData()
     {

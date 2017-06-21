@@ -8,8 +8,9 @@ use EzSystems\RepositoryForms\Data\Content\FieldData;
 use Symfony\Component\Form\FormConfigInterface;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\Form\FormInterface;
+use PHPUnit\Framework\TestCase;
 
-abstract class BaseMapperTest extends \PHPUnit_Framework_TestCase
+abstract class BaseMapperTest extends TestCase
 {
     protected $fieldTypeService;
     protected $config;

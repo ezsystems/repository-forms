@@ -11,11 +11,11 @@
 namespace EzSystems\RepositoryForms\Tests\Event;
 
 use EzSystems\RepositoryForms\Event\FormActionEvent;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 use stdClass;
 use Symfony\Component\HttpFoundation\Response;
 
-class FormActionEventTest extends PHPUnit_Framework_TestCase
+class FormActionEventTest extends TestCase
 {
     public function testConstruct()
     {

@@ -13,10 +13,10 @@ namespace EzSystems\RepositoryForms\Tests\FieldType\DataTransformer;
 use eZ\Publish\API\Repository\FieldType;
 use eZ\Publish\SPI\FieldType\Value;
 use EzSystems\RepositoryForms\FieldType\DataTransformer\FieldValueTransformer;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 use stdClass;
 
-class FieldValueTransformerTest extends PHPUnit_Framework_TestCase
+class FieldValueTransformerTest extends TestCase
 {
     public function testTransformNull()
     {

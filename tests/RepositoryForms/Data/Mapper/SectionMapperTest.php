@@ -10,9 +10,9 @@ namespace EzSystems\RepositoryForms\Tests\Data\Mapper;
 
 use eZ\Publish\API\Repository\Values\Content\Section;
 use EzSystems\RepositoryForms\Data\Mapper\SectionMapper;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 
-class SectionMapperTest extends PHPUnit_Framework_TestCase
+class SectionMapperTest extends TestCase
 {
     public function testMapToSectionCreateData()
     {

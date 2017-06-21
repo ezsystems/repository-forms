@@ -15,9 +15,9 @@ use EzSystems\RepositoryForms\Data\Role\RoleData;
 use EzSystems\RepositoryForms\Event\FormActionEvent;
 use EzSystems\RepositoryForms\Event\RepositoryFormEvents;
 use EzSystems\RepositoryForms\Form\Processor\RoleFormProcessor;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 
-class RoleFormProcessorTest extends PHPUnit_Framework_TestCase
+class RoleFormProcessorTest extends TestCase
 {
     /**
      * @var \PHPUnit_Framework_MockObject_MockObject

@@ -12,9 +12,9 @@ namespace EzSystems\RepositoryForms\Tests\Data;
 
 use EzSystems\RepositoryForms\Data\ContentTypeData;
 use EzSystems\RepositoryForms\Data\FieldDefinitionData;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 
-class ContentTypeDataTest extends PHPUnit_Framework_TestCase
+class ContentTypeDataTest extends TestCase
 {
     public function testContentTypeDraft()
     {

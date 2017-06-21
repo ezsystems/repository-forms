@@ -19,10 +19,10 @@ use EzSystems\RepositoryForms\Validator\Constraints\UniqueRoleIdentifier;
 use EzSystems\RepositoryForms\Validator\Constraints\UniqueRoleIdentifierValidator;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
 use Symfony\Component\Validator\Violation\ConstraintViolationBuilderInterface;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 use stdClass;
 
-class UniqueRoleIdentifierValidatorTest extends PHPUnit_Framework_TestCase
+class UniqueRoleIdentifierValidatorTest extends TestCase
 {
     /**
      * @var \PHPUnit_Framework_MockObject_MockObject

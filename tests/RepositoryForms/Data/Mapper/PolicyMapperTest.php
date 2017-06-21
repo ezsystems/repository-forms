@@ -13,9 +13,9 @@ use eZ\Publish\Core\Repository\Values\User\PolicyDraft;
 use eZ\Publish\Core\Repository\Values\User\Role;
 use eZ\Publish\Core\Repository\Values\User\RoleDraft;
 use EzSystems\RepositoryForms\Data\Mapper\PolicyMapper;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 
-class PolicyMapperTest extends PHPUnit_Framework_TestCase
+class PolicyMapperTest extends TestCase
 {
     /**
      * @expectedException \Symfony\Component\OptionsResolver\Exception\MissingOptionsException

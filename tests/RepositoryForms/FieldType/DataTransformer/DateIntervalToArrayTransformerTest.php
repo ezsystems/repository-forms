@@ -12,9 +12,9 @@ namespace EzSystems\RepositoryForms\Tests\FieldType\DataTransformer;
 
 use DateInterval;
 use EzSystems\RepositoryForms\Form\DataTransformer\DateIntervalToArrayTransformer;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 
-class DateIntervalToArrayTransformerTest extends PHPUnit_Framework_TestCase
+class DateIntervalToArrayTransformerTest extends TestCase
 {
     public function transformProvider()
     {

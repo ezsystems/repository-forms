@@ -14,10 +14,10 @@ use eZ\Publish\Core\Base\Exceptions\NotFoundException;
 use EzSystems\RepositoryForms\Data\ContentTypeData;
 use EzSystems\RepositoryForms\Validator\Constraints\UniqueContentTypeIdentifier;
 use EzSystems\RepositoryForms\Validator\Constraints\UniqueContentTypeIdentifierValidator;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 use stdClass;
 
-class UniqueContentTypeIdentifierValidatorTest extends PHPUnit_Framework_TestCase
+class UniqueContentTypeIdentifierValidatorTest extends TestCase
 {
     /**
      * @var \PHPUnit_Framework_MockObject_MockObject

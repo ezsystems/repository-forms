@@ -16,9 +16,9 @@ use EzSystems\RepositoryForms\Data\Mapper\PolicyMapper;
 use EzSystems\RepositoryForms\Event\FormActionEvent;
 use EzSystems\RepositoryForms\Event\RepositoryFormEvents;
 use EzSystems\RepositoryForms\Form\Processor\PolicyFormProcessor;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 
-class PolicyFormProcessorTest extends PHPUnit_Framework_TestCase
+class PolicyFormProcessorTest extends TestCase
 {
     /**
      * @var \PHPUnit_Framework_MockObject_MockObject

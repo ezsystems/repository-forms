@@ -10,9 +10,9 @@ namespace EzSystems\RepositoryForms\Tests\Data\Mapper;
 
 use eZ\Publish\Core\Repository\Values\ContentType\ContentTypeGroup;
 use EzSystems\RepositoryForms\Data\Mapper\ContentTypeGroupMapper;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 
-class ContentTypeGroupMapperTest extends PHPUnit_Framework_TestCase
+class ContentTypeGroupMapperTest extends TestCase
 {
     public function testMapToCreateData()
     {
