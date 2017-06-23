@@ -133,6 +133,12 @@
             {% endif %}
         </div>
     </div>
+
+    <div class="ezobjectrelationlist-settings selection-content-types">
+        {{- form_label(form.selectionContentTypes) -}}
+        {{- form_errors(form.selectionContentTypes) -}}
+        {{- form_widget(form.selectionContentTypes) -}}
+    </div>
 {% endblock %}
 
 {% block ezobjectrelationlist_field_definition_edit %}

@@ -23,6 +23,7 @@ parameters:
     ezrepoforms.field_type.form_mapper.ezinteger.class: EzSystems\RepositoryForms\FieldType\Mapper\IntegerFormMapper
     ezrepoforms.field_type.form_mapper.ezisbn.class: EzSystems\RepositoryForms\FieldType\Mapper\ISBNFormMapper
     ezrepoforms.field_type.form_mapper.ezmedia.class: EzSystems\RepositoryForms\FieldType\Mapper\MediaFormMapper
+    ezrepoforms.field_type.form_mapper.abstractrelation.class: EzSystems\RepositoryForms\FieldType\Mapper\AbstractRelationFormMapper
     ezrepoforms.field_type.form_mapper.ezobjectrelation.class: EzSystems\RepositoryForms\FieldType\Mapper\RelationFormMapper
     ezrepoforms.field_type.form_mapper.ezobjectrelationlist.class: EzSystems\RepositoryForms\FieldType\Mapper\RelationListFormMapper
     ezrepoforms.field_type.form_mapper.ezpage.class: EzSystems\RepositoryForms\FieldType\Mapper\PageFormMapper
@@ -157,14 +158,20 @@ services:
         tags:
             - { name: ez.fieldFormMapper.definition, fieldType: ezmedia }
 
+    ezrepoforms.field_type.form_mapper.abstractrelation:
+        class: "%ezrepoforms.field_type.form_mapper.abstractrelation.class%"
+        abstract: true
+        arguments: ["@ezpublish.api.service.content_type", "@ezpublish.translation_helper"]
+
     ezrepoforms.field_type.form_mapper.ezobjectrelation:
         class: "%ezrepoforms.field_type.form_mapper.ezobjectrelation.class%"
+        parent: ezrepoforms.field_type.form_mapper.abstractrelation
         tags:
             - { name: ez.fieldFormMapper.definition, fieldType: ezobjectrelation }
 
     ezrepoforms.field_type.form_mapper.ezobjectrelationlist:
         class: "%ezrepoforms.field_type.form_mapper.ezobjectrelationlist.class%"
-        arguments: ["@ezpublish.api.service.content_type", "@ezpublish.translation_helper"]
+        parent: ezrepoforms.field_type.form_mapper.abstractrelation
         tags:
             - { name: ez.fieldFormMapper.definition, fieldType: ezobjectrelationlist }
 
