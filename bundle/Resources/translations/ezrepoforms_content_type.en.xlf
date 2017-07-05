@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:jms="urn:jms:translation" version="1.2">
-  <file date="2017-01-26T15:03:32Z" source-language="en" target-language="en" datatype="plaintext" original="not.available">
+  <file date="2017-04-06T15:44:11Z" source-language="en" target-language="en" datatype="plaintext" original="not.available">
     <header>
       <tool tool-id="JMSTranslationBundle" tool-name="JMSTranslationBundle" tool-version="1.1.0-DEV"/>
       <note>The source node in most cases contains the sample message as written by the developer. If it looks like a dot-delimitted string such as "form.label.firstname", then the developer has not provided a default message.</note>
@@ -204,6 +204,12 @@
         <note>key: field_definition.description</note>
         <jms:reference-file line="84">lib/Form/Type/FieldDefinition/FieldDefinitionType.php</jms:reference-file>
       </trans-unit>
+      <trans-unit id="5ae9eea988dc249d137d285ec360214b238efc26" resname="field_definition.ezboolean.default_value">
+        <source>Default value</source>
+        <target>Default value</target>
+        <note>key: field_definition.ezboolean.default_value</note>
+        <jms:reference-file line="43">lib/FieldType/Mapper/CheckboxFormMapper.php</jms:reference-file>
+      </trans-unit>
       <trans-unit id="41f781284e4bae2abbb6cfdf1126cc90b48dd35b" resname="field_definition.ezbinaryfile.max_file_size">
         <source>Maximum file size (MB)</source>
         <target>Maximum file size (MB)</target>
@@ -276,6 +282,12 @@
         <note>key: field_definition.ezdatetime.use_seconds</note>
         <jms:reference-file line="28">lib/FieldType/Mapper/DateTimeFormMapper.php</jms:reference-file>
       </trans-unit>
+      <trans-unit id="ed0d3cb0a19dd96c1708957f17e15204465c69b6" resname="field_definition.ezfloat.default_value">
+        <source>Default value</source>
+        <target>Default value</target>
+        <note>key: field_definition.ezfloat.default_value</note>
+        <jms:reference-file line="44">lib/FieldType/Mapper/FloatFormMapper.php</jms:reference-file>
+      </trans-unit>
       <trans-unit id="8f6ec24986ca862e96867edc18aa490ff6035e56" resname="field_definition.ezfloat.max_value">
         <source>Maximum value</source>
         <target>Maximum value</target>
@@ -294,6 +306,12 @@
         <note>key: field_definition.ezimage.max_file_size</note>
         <jms:reference-file line="25">lib/FieldType/Mapper/ImageFormMapper.php</jms:reference-file>
       </trans-unit>
+      <trans-unit id="8a95f664895f9c72e5ca52ea43908ad3d54c8966" resname="field_definition.ezinteger.default_value">
+        <source>Default value</source>
+        <target>Default value</target>
+        <note>key: field_definition.ezinteger.default_value</note>
+        <jms:reference-file line="44">lib/FieldType/Mapper/IntegerFormMapper.php</jms:reference-file>
+      </trans-unit>
       <trans-unit id="7529d0af266c6893ae1886faf5578cf4d6d768aa" resname="field_definition.ezinteger.max_value">
         <source>Maximum value</source>
         <target>Maximum value</target>
@@ -305,6 +323,12 @@
         <target>Minimum value</target>
         <note>key: field_definition.ezinteger.min_value</note>
         <jms:reference-file line="26">lib/FieldType/Mapper/IntegerFormMapper.php</jms:reference-file>
+      </trans-unit>
+      <trans-unit id="4afaf19544597331fbc0eb01e75556a312d657ec" resname="field_definition.ezisbn.default_value">
+        <source>Default value</source>
+        <target>Default value</target>
+        <note>key: field_definition.ezisbn.default_value</note>
+        <jms:reference-file line="38">lib/FieldType/Mapper/ISBNFormMapper.php</jms:reference-file>
       </trans-unit>
       <trans-unit id="461c05cd80b29eb37dc4f7e1f9e1d2454b380332" resname="field_definition.ezisbn.is_isbn13">
         <source>ISBN-13 format</source>
@@ -379,8 +403,8 @@
         <jms:reference-file line="129">bundle/Resources/views/ContentType/field_types.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="d892163a41d816c03db3c4a04e35550f02169c11" resname="field_definition.ezobjectrelation.selection_root_udw_title">
-        <source>Select a start location for browsing for relations</source>
-        <target>Select a start location for browsing for relations</target>
+        <source>Select a start location for browsing for relation</source>
+        <target>Select a start location for browsing for relation</target>
         <note>key: field_definition.ezobjectrelation.selection_root_udw_title</note>
         <jms:reference-file line="125">bundle/Resources/views/ContentType/field_types.html.twig</jms:reference-file>
       </trans-unit>
@@ -414,11 +438,11 @@
         <note>key: field_definition.ezpage.default_layout</note>
         <jms:reference-file line="45">lib/FieldType/Mapper/PageFormMapper.php</jms:reference-file>
       </trans-unit>
-      <trans-unit id="5f4e08d826e58f0be9e678f7c7a60068fd63b567" resname="field_definition.ezrichtext.num_rows">
-        <source>Number of text rows in the editor</source>
-        <target>Number of text rows in the editor</target>
-        <note>key: field_definition.ezrichtext.num_rows</note>
-        <jms:reference-file line="26">lib/FieldType/Mapper/RichTextFormMapper.php</jms:reference-file>
+      <trans-unit id="14a95e986cd6b94301e0f44fd5ef2d5e7cdf90a4" resname="field_definition.ezselection.add_option">
+        <source>Add an option</source>
+        <target>Add an option</target>
+        <note>key: field_definition.ezselection.add_option</note>
+        <jms:reference-file line="206">bundle/Resources/views/ContentType/field_types.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="e9e5a43d734719bf6ca42940c1cf5bc78b234e2b" resname="field_definition.ezselection.is_multiple">
         <source>Multiple choice</source>
@@ -431,6 +455,12 @@
         <target>Options</target>
         <note>key: field_definition.ezselection.options</note>
         <jms:reference-file line="53">lib/FieldType/Mapper/SelectionFormMapper.php</jms:reference-file>
+      </trans-unit>
+      <trans-unit id="c8017c71074191e0e6ebe4eb1a3a278eecbcc874" resname="field_definition.ezselection.remove_selected_options">
+        <source>Remove selected options</source>
+        <target>Remove selected options</target>
+        <note>key: field_definition.ezselection.remove_selected_options</note>
+        <jms:reference-file line="207">bundle/Resources/views/ContentType/field_types.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="e8ede1605bfed09023397f8662ca28c40e7c460a" resname="field_definition.ezstring.default_value">
         <source>Default value</source>

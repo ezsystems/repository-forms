@@ -16,6 +16,14 @@
     </div>
 {% endblock %}
 
+{% block ezboolean_field_definition_edit %}
+    <div class="ezboolean-default-value{% if group_class is not empty %} {{ group_class }}{% endif %}">
+        {{- form_label(form.defaultValue) -}}
+        {{- form_errors(form.defaultValue) -}}
+        {{- form_widget(form.defaultValue) -}}
+    </div>
+{% endblock %}
+
 {% block ezcountry_field_definition_edit %}
     <div class="ezcountry-settings is-multiple{% if group_class is not empty %} {{ group_class }}{% endif %}">
         {{- form_label(form.isMultiple) -}}
@@ -70,6 +78,12 @@
         {{- form_errors(form.maxValue) -}}
         {{- form_widget(form.maxValue) -}}
     </div>
+
+    <div class="ezfloat-default-value{% if group_class is not empty %} {{ group_class }}{% endif %}">
+        {{- form_label(form.defaultValue) -}}
+        {{- form_errors(form.defaultValue) -}}
+        {{- form_widget(form.defaultValue) -}}
+    </div>
 {% endblock %}
 
 {% block ezimage_field_definition_edit %}
@@ -92,6 +106,12 @@
         {{- form_errors(form.maxValue) -}}
         {{- form_widget(form.maxValue) -}}
     </div>
+
+    <div class="ezinteger-default-value{% if group_class is not empty %} {{ group_class }}{% endif %}">
+        {{- form_label(form.defaultValue) -}}
+        {{- form_errors(form.defaultValue) -}}
+        {{- form_widget(form.defaultValue) -}}
+    </div>
 {% endblock %}
 
 {% block ezisbn_field_definition_edit %}
@@ -99,6 +119,12 @@
         {{- form_label(form.isISBN13) -}}
         {{- form_errors(form.isISBN13) -}}
         {{- form_widget(form.isISBN13) -}}
+    </div>
+
+    <div class="ezisbn-default-value{% if group_class is not empty %} {{ group_class }}{% endif %}">
+        {{- form_label(form.defaultValue) -}}
+        {{- form_errors(form.defaultValue) -}}
+        {{- form_widget(form.defaultValue) -}}
     </div>
 {% endblock %}
 
@@ -168,14 +194,6 @@
     </div>
 {% endblock %}
 
-{% block ezrichtext_field_definition_edit %}
-    <div class="ezrichtext-settings num-rows{% if group_class is not empty %} {{ group_class }}{% endif %}">
-        {{- form_label(form.numRows) -}}
-        {{- form_errors(form.numRows) -}}
-        {{- form_widget(form.numRows) -}}
-    </div>
-{% endblock %}
-
 {% block ezselection_field_definition_edit %}
     <div class="ezselection-settings is-multiple{% if group_class is not empty %} {{ group_class }}{% endif %}">
         {{- form_label(form.isMultiple) -}}
@@ -186,14 +204,26 @@
     <div class="ezselection-settings options{% if group_class is not empty %} {{ group_class }}{% endif %}">
         {{ form_label(form.options) }}
         {{ form_errors(form.options) }}
+        <ul class="ezselection-settings-option-list ez-selection-table" data-selection-buttons=".ezselection-settings-option-remove">
         {% for option in form.options %}
-            <div>
+            <li class="ezselection-settings-option-value ez-selection-table-row">
+                <input type="checkbox" class="ezselection-settings-option-checkbox ez-selection-table-checkbox">
                 {{ form_errors(option) }}
                 {{ form_widget(option) }}
-            </div>
+            </li>
         {% endfor %}
-        {# This field is used for adding new select items #}
-        {{ form_widget(form.options.vars.prototype) }}
+        </ul>
+        <script type="text/template" class="ezselection-settings-option-value-prototype" data-ezselection-option-input-name="{{ form.options.vars.prototype.vars.full_name }}" data-ezselection-option-input-id="{{ form.options.vars.prototype.vars.id }}">
+            <li class="ezselection-settings-option-value ez-selection-table-row">
+                <input type="checkbox" class="ezselection-settings-option-checkbox ez-selection-table-checkbox">
+                {{ form_widget(form.options.vars.prototype) }}
+            </li>
+        </script>
+
+        <div class="ezselection-settings-toolbar">
+            <button type="button" class="ezselection-settings-option-add ez-font-icon ez-button ez-button-add pure-button">{{"field_definition.ezselection.add_option"|trans({}, "ezrepoforms_content_type")}}</button>
+            <button type="button" class="ezselection-settings-option-remove ez-font-icon ez-button ez-button-delete pure-button" disabled>{{"field_definition.ezselection.remove_selected_options"|trans({}, "ezrepoforms_content_type")}}</button>
+        </div>
     </div>
 {% endblock %}
 

@@ -12,7 +12,6 @@ use eZ\Publish\API\Repository\FieldTypeService;
 use EzSystems\RepositoryForms\Data\Content\FieldData;
 use EzSystems\RepositoryForms\Data\FieldDefinitionData;
 use EzSystems\RepositoryForms\FieldType\DataTransformer\FieldValueTransformer;
-use EzSystems\RepositoryForms\FieldType\DataTransformer\TextLineValueTransformer;
 use EzSystems\RepositoryForms\FieldType\FieldDefinitionFormMapperInterface;
 use EzSystems\RepositoryForms\FieldType\FieldValueFormMapperInterface;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -54,7 +53,7 @@ class TextLineFormMapper implements FieldDefinitionFormMapperInterface, FieldVal
                         'required' => false,
                         'label' => 'field_definition.ezstring.default_value',
                     ])
-                    ->addModelTransformer(new TextLineValueTransformer())
+                    ->addModelTransformer(new FieldValueTransformer($this->fieldTypeService->getFieldType($data->getFieldTypeIdentifier())))
                     // Deactivate auto-initialize as we're not on the root form.
                     ->setAutoInitialize(false)->getForm()
             );

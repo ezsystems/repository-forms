@@ -16,7 +16,6 @@ use EzSystems\RepositoryForms\FieldType\FieldDefinitionFormMapperInterface;
 use EzSystems\RepositoryForms\FieldType\FieldValueFormMapperInterface;
 use Symfony\Component\Form\CallbackTransformer;
 use Symfony\Component\Form\FormInterface;
-use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -35,13 +34,6 @@ class RichTextFormMapper implements FieldDefinitionFormMapperInterface, FieldVal
 
     public function mapFieldDefinitionForm(FormInterface $fieldDefinitionForm, FieldDefinitionData $data)
     {
-        $fieldDefinitionForm
-            ->add('numRows', IntegerType::class, [
-                'empty_data' => 10,
-                'required' => true,
-                'property_path' => 'fieldSettings[numRows]',
-                'label' => 'field_definition.ezrichtext.num_rows',
-            ]);
     }
 
     public function mapFieldValueForm(FormInterface $fieldForm, FieldData $data)

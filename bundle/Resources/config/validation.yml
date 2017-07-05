@@ -60,9 +60,14 @@ EzSystems\RepositoryForms\Data\FieldDefinitionData:
             - Type:
                 type: integer
 
-EzSystems\RepositoryForms\Data\RoleData:
+EzSystems\RepositoryForms\Data\Role\RoleData:
     constraints:
         - EzSystems\RepositoryForms\Validator\Constraints\UniqueRoleIdentifier: ~
+    properties:
+        identifier:
+            - NotBlank: ~
+            - Length:
+                max: 255
 
 eZ\Publish\API\Repository\Values\Content\SectionStruct:
     constraints:
@@ -94,3 +99,29 @@ EzSystems\RepositoryForms\Data\Content\ContentUpdateData:
 EzSystems\RepositoryForms\Data\Content\FieldData:
     constraints:
         - EzSystems\RepositoryForms\Validator\Constraints\FieldValue: ~
+
+EzSystems\RepositoryForms\Data\Language\LanguageCreateData:
+    constraints:
+        - EzSystems\RepositoryForms\Validator\Constraints\UniqueLanguageCode: ~
+    properties:
+        languageCode:
+            - NotBlank: ~
+            - Length:
+                max: 20
+        name:
+            - NotBlank: ~
+            - Length:
+                max: 255
+
+EzSystems\RepositoryForms\Data\Language\LanguageUpdateData:
+    constraints:
+        - EzSystems\RepositoryForms\Validator\Constraints\UniqueLanguageCode: ~
+    properties:
+        languageCode:
+            - NotBlank: ~
+            - Length:
+                max: 20
+        name:
+            - NotBlank: ~
+            - Length:
+                max: 255

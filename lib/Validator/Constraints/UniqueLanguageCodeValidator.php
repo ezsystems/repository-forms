@@ -11,6 +11,7 @@ namespace EzSystems\RepositoryForms\Validator\Constraints;
 use eZ\Publish\API\Repository\Exceptions\NotFoundException;
 use eZ\Publish\API\Repository\LanguageService;
 use eZ\Publish\API\Repository\Values\Content\LanguageCreateStruct;
+use eZ\Publish\Core\Base\Exceptions\InvalidArgumentException;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
 
@@ -54,6 +55,8 @@ class UniqueLanguageCodeValidator extends ConstraintValidator
                 ->setParameter('%language_code%', $value->languageCode)
                 ->addViolation();
         } catch (NotFoundException $e) {
+            // Do nothing
+        } catch (InvalidArgumentException $e) {
             // Do nothing
         }
     }
