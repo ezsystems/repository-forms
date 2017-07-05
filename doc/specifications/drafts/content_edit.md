@@ -66,7 +66,7 @@ The Form, `ContentEditType`, uses a `ContentUpdateData` object.
 ## Additional topics
 
 ### Form rendering customization
-In order to benefit from the save level of flexibility legacy provided, the first thing that comes
+In order to benefit from the same level of flexibility legacy provided, the first thing that comes
 to mind is views: if we have a ContentEditView, we can easily override the template and customize
 the form using [form theming](https://symfony.com/doc/current/form/form_customization.html#form-theming-in-twig).
 
@@ -86,7 +86,7 @@ This involves:
 
 ### How repository forms does it for content types 
 To provide edition of ContentTypes, `\EzSystems\PlatformUIBundle\Controller\ContentTypeController::updateContentTypeAction`
-will attempt to load a draft for the cotnent, and create one if there isn't. But this only works because
+will attempt to load a draft for the content, and create one if there is none. But this only works because
 ContentTypes have a unique draft mechanism. Content drafts have a different approach, where versions
 _belong_ to a user and a user may have several drafts of the same content at a given time.
 
