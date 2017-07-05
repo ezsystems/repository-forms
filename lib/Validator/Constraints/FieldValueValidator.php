@@ -44,7 +44,7 @@ class FieldValueValidator extends FieldTypeValidator
                         null,
                         ['%identifier%' => $fieldDefinition->identifier, '%languageCode%' => $value->field->languageCode],
                         'empty'
-                    )
+                    ),
                 ];
             } else {
                 $validationErrors = $fieldType->validateValue($fieldDefinition, $fieldValue);

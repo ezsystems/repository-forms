@@ -120,6 +120,7 @@ class ContentFormProcessor implements EventSubscriberInterface
         ]);
         $event->setResponse(new RedirectResponse($contentEditUrl));
     }
+
     /**
      * Saves content draft corresponding to $data.
      * Depending on the nature of $data (create or update data), the draft will either be created or simply updated.
