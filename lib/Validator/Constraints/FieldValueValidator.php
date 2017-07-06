@@ -46,9 +46,9 @@ class FieldValueValidator extends FieldTypeValidator
                         'empty'
                     ),
                 ];
-            } else {
-                $validationErrors = $fieldType->validateValue($fieldDefinition, $fieldValue);
             }
+        } else {
+            $validationErrors = $fieldType->validateValue($fieldDefinition, $fieldValue);
         }
 
         $this->processValidationErrors($validationErrors);
