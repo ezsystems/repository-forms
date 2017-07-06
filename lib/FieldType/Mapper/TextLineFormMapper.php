@@ -71,8 +71,14 @@ class TextLineFormMapper implements FieldDefinitionFormMapperInterface, FieldVal
                 $formConfig->getFormFactory()->createBuilder()
                     ->create(
                         'value',
-                        TextType::class,
-                        ['required' => $fieldDefinition->isRequired, 'label' => $label]
+                        TextType::class, [
+                            'required' => $fieldDefinition->isRequired,
+                            'attr' => [
+                                'minlength' => $fieldDefinition->validatorConfiguration['StringLengthValidator']['minStringLength'],
+                                'maxlength' => $fieldDefinition->validatorConfiguration['StringLengthValidator']['maxStringLength'],
+                            ],
+                            'label' => $label,
+                        ]
                     )
                     ->addModelTransformer(new FieldValueTransformer($this->fieldTypeService->getFieldType($fieldDefinition->fieldTypeIdentifier)))
                     // Deactivate auto-initialize as we're not on the root form.

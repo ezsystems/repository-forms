@@ -22,6 +22,7 @@ parameters:
     ezrepoforms.field_type.form_mapper.ezdate.class: EzSystems\RepositoryForms\FieldType\Mapper\DateFormMapper
     ezrepoforms.field_type.form_mapper.ezdatetime.class: EzSystems\RepositoryForms\FieldType\Mapper\DateTimeFormMapper
     ezrepoforms.field_type.form_mapper.ezfloat.class: EzSystems\RepositoryForms\FieldType\Mapper\FloatFormMapper
+    ezrepoforms.field_type.form_mapper.ezgmaplocation.class: EzSystems\RepositoryForms\FieldType\Mapper\MapLocationFormMapper
     ezrepoforms.field_type.form_mapper.ezimage.class: EzSystems\RepositoryForms\FieldType\Mapper\ImageFormMapper
     ezrepoforms.field_type.form_mapper.ezinteger.class: EzSystems\RepositoryForms\FieldType\Mapper\IntegerFormMapper
     ezrepoforms.field_type.form_mapper.ezisbn.class: EzSystems\RepositoryForms\FieldType\Mapper\ISBNFormMapper
@@ -34,6 +35,7 @@ parameters:
     ezrepoforms.field_type.form_mapper.ezstring.class: EzSystems\RepositoryForms\FieldType\Mapper\TextLineFormMapper
     ezrepoforms.field_type.form_mapper.eztext.class: EzSystems\RepositoryForms\FieldType\Mapper\TextBlockFormMapper
     ezrepoforms.field_type.form_mapper.eztime.class: EzSystems\RepositoryForms\FieldType\Mapper\TimeFormMapper
+    ezrepoforms.field_type.form_mapper.ezurl.class: EzSystems\RepositoryForms\FieldType\Mapper\UrlFormMapper
     ezrepoforms.field_type.form_mapper.form_type_based.class: EzSystems\RepositoryForms\FieldType\Mapper\FormTypeBasedFieldValueFormMapper
     ezrepoforms.field_type.form_mapper.ezuser.class: EzSystems\RepositoryForms\FieldType\Mapper\UserAccountFieldValueFormMapper
 
@@ -160,6 +162,11 @@ services:
         tags:
             - { name: ez.fieldFormMapper.definition, fieldType: ezfloat }
 
+    ezrepoforms.field_type.form_mapper.ezgmaplocation:
+        class: "%ezrepoforms.field_type.form_mapper.ezgmaplocation.class%"
+        tags:
+            - { name: ez.fieldFormMapper.definition, fieldType: ezgmaplocation }
+
     ezrepoforms.field_type.form_mapper.ezimage:
         class: "%ezrepoforms.field_type.form_mapper.ezimage.class%"
         arguments:
@@ -207,6 +214,10 @@ services:
         class: "%ezrepoforms.field_type.form_mapper.ezrichtext.class%"
         tags:
             - { name: ez.fieldFormMapper.definition, fieldType: ezrichtext }
+            - { name: ez.fieldFormMapper.value, fieldType: ezrichtext }
+        arguments:
+            - "@ezpublish.api.service.field_type"
+            - "@ezpublish.fieldtype.ezrichtext.converter.edit.xhtml5"
 
     ezrepoforms.field_type.form_mapper.ezselection:
         class: "%ezrepoforms.field_type.form_mapper.ezselection.class%"
@@ -234,6 +245,11 @@ services:
         class: "%ezrepoforms.field_type.form_mapper.eztime.class%"
         tags:
             - { name: ez.fieldFormMapper.definition, fieldType: eztime }
+
+    ezrepoforms.field_type.form_mapper.ezurl:
+        class: "%ezrepoforms.field_type.form_mapper.ezurl.class%"
+        tags:
+            - { name: ez.fieldFormMapper.definition, fieldType: ezurl }
 
     ezrepoforms.field_type.form_mapper.form_type_based:
         abstract: true
