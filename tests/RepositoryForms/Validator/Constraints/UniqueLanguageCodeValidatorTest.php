@@ -20,9 +20,9 @@ use EzSystems\RepositoryForms\Validator\Constraints\UniqueLanguageCodeValidator;
 use stdClass;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
 use Symfony\Component\Validator\Violation\ConstraintViolationBuilderInterface;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 
-class UniqueLanguageCodeValidatorTest extends PHPUnit_Framework_TestCase
+class UniqueLanguageCodeValidatorTest extends TestCase
 {
     /**
      * @var \PHPUnit_Framework_MockObject_MockObject

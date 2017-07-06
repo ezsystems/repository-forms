@@ -14,9 +14,9 @@ use EzSystems\RepositoryForms\Data\ContentTypeData;
 use EzSystems\RepositoryForms\Data\FieldDefinitionData;
 use EzSystems\RepositoryForms\Validator\Constraints\UniqueFieldDefinitionIdentifier;
 use EzSystems\RepositoryForms\Validator\Constraints\UniqueFieldDefinitionIdentifierValidator;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 
-class UniqueFieldDefinitionIdentifierValidatorTest extends PHPUnit_Framework_TestCase
+class UniqueFieldDefinitionIdentifierValidatorTest extends TestCase
 {
     /**
      * @var \PHPUnit_Framework_MockObject_MockObject

@@ -15,9 +15,9 @@ use EzSystems\RepositoryForms\Data\ContentTypeData;
 use EzSystems\RepositoryForms\Data\FieldDefinitionData;
 use EzSystems\RepositoryForms\FieldType\FieldTypeFormMapperDispatcher;
 use EzSystems\RepositoryForms\FieldType\FieldTypeFormMapperDispatcherInterface;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 
-class FieldTypeFormMapperDispatcherTest extends PHPUnit_Framework_TestCase
+class FieldTypeFormMapperDispatcherTest extends TestCase
 {
     /**
      * @var FieldTypeFormMapperDispatcherInterface

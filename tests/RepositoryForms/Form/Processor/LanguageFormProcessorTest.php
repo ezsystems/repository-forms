@@ -14,9 +14,9 @@ use EzSystems\RepositoryForms\Data\Language\LanguageUpdateData;
 use EzSystems\RepositoryForms\Event\FormActionEvent;
 use EzSystems\RepositoryForms\Event\RepositoryFormEvents;
 use EzSystems\RepositoryForms\Form\Processor\LanguageFormProcessor;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 
-class LanguageFormProcessorTest extends PHPUnit_Framework_TestCase
+class LanguageFormProcessorTest extends TestCase
 {
     /**
      * @var \PHPUnit_Framework_MockObject_MockObject|\eZ\Publish\API\Repository\LanguageService

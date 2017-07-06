@@ -14,9 +14,9 @@ use EzSystems\RepositoryForms\Data\ContentTypeGroup\ContentTypeGroupUpdateData;
 use EzSystems\RepositoryForms\Event\FormActionEvent;
 use EzSystems\RepositoryForms\Event\RepositoryFormEvents;
 use EzSystems\RepositoryForms\Form\Processor\ContentTypeGroupFormProcessor;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 
-class ContentTypeGroupFormProcessorTest extends PHPUnit_Framework_TestCase
+class ContentTypeGroupFormProcessorTest extends TestCase
 {
     /**
      * @var \PHPUnit_Framework_MockObject_MockObject

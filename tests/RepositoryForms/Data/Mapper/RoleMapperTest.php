@@ -12,9 +12,9 @@ use eZ\Publish\Core\Repository\Values\User\Role;
 use eZ\Publish\Core\Repository\Values\User\RoleDraft;
 use EzSystems\RepositoryForms\Data\Mapper\RoleMapper;
 use EzSystems\RepositoryForms\Data\Role\RoleData;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 
-class RoleMapperTest extends PHPUnit_Framework_TestCase
+class RoleMapperTest extends TestCase
 {
     public function testMapToFormData()
     {

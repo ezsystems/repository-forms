@@ -15,9 +15,9 @@ use eZ\Publish\Core\Repository\Values\ContentType\FieldDefinition;
 use EzSystems\RepositoryForms\Data\FieldDefinitionData;
 use EzSystems\RepositoryForms\Validator\Constraints\ValidatorConfiguration;
 use EzSystems\RepositoryForms\Validator\Constraints\ValidatorConfigurationValidator;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 
-class ValidatorConfigurationValidatorTest extends PHPUnit_Framework_TestCase
+class ValidatorConfigurationValidatorTest extends TestCase
 {
     /**
      * @var \PHPUnit_Framework_MockObject_MockObject

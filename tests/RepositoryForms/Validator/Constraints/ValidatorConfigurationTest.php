@@ -11,10 +11,10 @@
 namespace EzSystems\RepositoryForms\Tests\Validator\Constraints;
 
 use EzSystems\RepositoryForms\Validator\Constraints\ValidatorConfiguration;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 use Symfony\Component\Validator\Constraint;
 
-class ValidatorConfigurationTest extends PHPUnit_Framework_TestCase
+class ValidatorConfigurationTest extends TestCase
 {
     public function testConstruct()
     {

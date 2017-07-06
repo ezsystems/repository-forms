@@ -14,9 +14,9 @@ use EzSystems\RepositoryForms\Data\Section\SectionUpdateData;
 use EzSystems\RepositoryForms\Event\FormActionEvent;
 use EzSystems\RepositoryForms\Event\RepositoryFormEvents;
 use EzSystems\RepositoryForms\Form\Processor\SectionFormProcessor;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 
-class SectionFormProcessorTest extends PHPUnit_Framework_TestCase
+class SectionFormProcessorTest extends TestCase
 {
     /**
      * @var \PHPUnit_Framework_MockObject_MockObject|\eZ\Publish\API\Repository\SectionService
