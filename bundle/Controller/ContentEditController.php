@@ -166,7 +166,14 @@ class ContentEditController extends Controller
                 'contentType' => $this->contentTypeService->loadContentType($draft->contentInfo->contentTypeId),
             ]
         );
-        $form = $this->createForm(ContentEditType::class, $contentUpdate, ['languageCode' => $language]);
+        $form = $this->createForm(
+            ContentEditType::class,
+            $contentUpdate,
+            [
+                'languageCode' => $language,
+                'drafts_enabled' => true,
+            ]
+        );
         $form->handleRequest($request);
 
         if ($form->isValid()) {
