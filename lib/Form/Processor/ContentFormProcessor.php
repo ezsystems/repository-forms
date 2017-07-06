@@ -61,7 +61,7 @@ class ContentFormProcessor implements EventSubscriberInterface
 
         $defaultUrl = $this->router->generate('ez_content_edit', [
             'contentId' => $draft->id,
-            'version' => $draft->getVersionInfo()->versionNo,
+            'versionNo' => $draft->getVersionInfo()->versionNo,
             'language' => $languageCode,
         ]);
         $event->setResponse(new RedirectResponse($formConfig->getAction() ?: $defaultUrl));
