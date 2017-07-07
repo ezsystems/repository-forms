@@ -9,18 +9,22 @@
 namespace EzSystems\RepositoryForms\FieldType\Mapper;
 
 use eZ\Publish\API\Repository\FieldTypeService;
+use eZ\Publish\API\Repository\Values\ContentType\FieldDefinition;
+use EzSystems\RepositoryForms\Data\Content\FieldData;
 use EzSystems\RepositoryForms\Data\FieldDefinitionData;
 use EzSystems\RepositoryForms\FieldType\DataTransformer\FieldValueTransformer;
 use EzSystems\RepositoryForms\FieldType\FieldDefinitionFormMapperInterface;
+use EzSystems\RepositoryForms\FieldType\FieldValueFormMapperInterface;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class FloatFormMapper implements FieldDefinitionFormMapperInterface
+/**
+ * FormMapper for ezfloat FieldType.
+ */
+class FloatFormMapper implements FieldDefinitionFormMapperInterface, FieldValueFormMapperInterface
 {
-    /**
-     * @var \eZ\Publish\API\Repository\FieldTypeService
-     */
+    /** @var FieldTypeService */
     private $fieldTypeService;
 
     public function __construct(FieldTypeService $fieldTypeService)
@@ -60,14 +64,50 @@ class FloatFormMapper implements FieldDefinitionFormMapperInterface
             ->add($defaultValueForm);
     }
 
-    /**
-     * Fake method to set the translation domain for the extractor.
-     */
+    public function mapFieldValueForm(FormInterface $fieldForm, FieldData $data)
+    {
+        $fieldDefinition = $data->fieldDefinition;
+        $formConfig = $fieldForm->getConfig();
+
+        $fieldForm
+            ->add(
+                $formConfig->getFormFactory()->createBuilder()
+                    ->create(
+                        'value',
+                        NumberType::class,
+                        [
+                            'required' => $fieldDefinition->isRequired,
+                            'label' => $fieldDefinition->getName($formConfig->getOption('languageCode')),
+                            'attr' => $this->getAttributes($fieldDefinition),
+                        ]
+                    )
+                    ->addModelTransformer(new FieldValueTransformer($this->fieldTypeService->getFieldType($fieldDefinition->fieldTypeIdentifier)))
+                    ->setAutoInitialize(false)
+                    ->getForm()
+            );
+    }
+
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver
             ->setDefaults([
                 'translation_domain' => 'ezrepoforms_content_type',
             ]);
+    }
+
+    private function getAttributes(FieldDefinition $fieldDefinition)
+    {
+        $validatorConfiguration = $fieldDefinition->getValidatorConfiguration();
+        $attributes = ['step' => 'any'];
+
+        if (null !== $validatorConfiguration['FloatValueValidator']['minFloatValue']) {
+            $attributes['min'] = $validatorConfiguration['FloatValueValidator']['minFloatValue'];
+        }
+
+        if (null !== $validatorConfiguration['FloatValueValidator']['maxFloatValue']) {
+            $attributes['max'] = $validatorConfiguration['FloatValueValidator']['maxFloatValue'];
+        }
+
+        return $attributes;
     }
 }
