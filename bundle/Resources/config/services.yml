@@ -186,6 +186,7 @@ services:
             - "@ezpublish.api.service.field_type"
         tags:
             - { name: ez.fieldFormMapper.definition, fieldType: ezisbn }
+            - { name: ez.fieldFormMapper.value, fieldType: ezisbn }
 
     ezrepoforms.field_type.form_mapper.ezmedia:
         class: "%ezrepoforms.field_type.form_mapper.ezmedia.class%"
