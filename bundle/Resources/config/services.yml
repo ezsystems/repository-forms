@@ -162,6 +162,7 @@ services:
             - "@ezpublish.api.service.field_type"
         tags:
             - { name: ez.fieldFormMapper.definition, fieldType: ezfloat }
+            - { name: ez.fieldFormMapper.value, fieldType: ezfloat }
 
     ezrepoforms.field_type.form_mapper.ezimage:
         class: "%ezrepoforms.field_type.form_mapper.ezimage.class%"
