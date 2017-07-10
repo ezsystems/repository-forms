@@ -148,6 +148,7 @@ services:
         class: "%ezrepoforms.field_type.form_mapper.ezdate.class%"
         tags:
             - { name: ez.fieldFormMapper.definition, fieldType: ezdate }
+            - { name: ez.fieldFormMapper.value, fieldType: ezdate }
 
     ezrepoforms.field_type.form_mapper.ezdatetime:
         class: "%ezrepoforms.field_type.form_mapper.ezdatetime.class%"

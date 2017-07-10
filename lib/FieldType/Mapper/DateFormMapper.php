@@ -9,12 +9,20 @@
 namespace EzSystems\RepositoryForms\FieldType\Mapper;
 
 use eZ\Publish\Core\FieldType\Date\Type;
+use EzSystems\RepositoryForms\Data\Content\FieldData;
 use EzSystems\RepositoryForms\Data\FieldDefinitionData;
+use EzSystems\RepositoryForms\FieldType\DataTransformer\DateValueTransformer;
 use EzSystems\RepositoryForms\FieldType\FieldDefinitionFormMapperInterface;
+use EzSystems\RepositoryForms\FieldType\FieldValueFormMapperInterface;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\FormInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class DateFormMapper implements FieldDefinitionFormMapperInterface
+/**
+ * FormMapper for ezdate FieldType.
+ */
+class DateFormMapper implements FieldDefinitionFormMapperInterface, FieldValueFormMapperInterface
 {
     public function mapFieldDefinitionForm(FormInterface $fieldDefinitionForm, FieldDefinitionData $data)
     {
@@ -35,5 +43,37 @@ class DateFormMapper implements FieldDefinitionFormMapperInterface
                     'translation_domain' => 'ezrepoforms_content_type',
                 ]
             );
+    }
+
+    public function mapFieldValueForm(FormInterface $fieldForm, FieldData $data)
+    {
+        $fieldDefinition = $data->fieldDefinition;
+        $formConfig = $fieldForm->getConfig();
+
+        $fieldForm
+            ->add(
+                $formConfig->getFormFactory()->createBuilder()
+                    ->create(
+                        'value',
+                        DateType::class,
+                        [
+                            'input' => 'datetime',
+                            'widget' => 'single_text',
+                            'required' => $fieldDefinition->isRequired,
+                            'label' => $fieldDefinition->getName($formConfig->getOption('languageCode')),
+                        ]
+                    )
+                    ->addModelTransformer(new DateValueTransformer())
+                    ->setAutoInitialize(false)
+                    ->getForm()
+            );
+    }
+
+    public function configureOptions(OptionsResolver $resolver)
+    {
+        $resolver
+            ->setDefaults([
+                'translation_domain' => 'ezrepoforms_content_type',
+            ]);
     }
 }
