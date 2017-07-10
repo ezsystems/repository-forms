@@ -9,15 +9,22 @@
 namespace EzSystems\RepositoryForms\FieldType\Mapper;
 
 use eZ\Publish\Core\FieldType\DateAndTime\Type;
+use EzSystems\RepositoryForms\Data\Content\FieldData;
 use EzSystems\RepositoryForms\Data\FieldDefinitionData;
+use EzSystems\RepositoryForms\FieldType\DataTransformer\DateTimeValueTransformer;
 use EzSystems\RepositoryForms\FieldType\FieldDefinitionFormMapperInterface;
+use EzSystems\RepositoryForms\FieldType\FieldValueFormMapperInterface;
 use EzSystems\RepositoryForms\Form\Type\DateTimeIntervalType;
+use EzSystems\RepositoryForms\Form\Type\FieldValue\DateTimeLocalType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class DateTimeFormMapper implements FieldDefinitionFormMapperInterface
+/**
+ * FormMapper for ezdatetime FieldType.
+ */
+class DateTimeFormMapper implements FieldDefinitionFormMapperInterface, FieldValueFormMapperInterface
 {
     public function mapFieldDefinitionForm(FormInterface $fieldDefinitionForm, FieldDefinitionData $data)
     {
@@ -46,14 +53,50 @@ class DateTimeFormMapper implements FieldDefinitionFormMapperInterface
             ]);
     }
 
-    /**
-     * Fake method to set the translation domain for the extractor.
-     */
+    public function mapFieldValueForm(FormInterface $fieldForm, FieldData $data)
+    {
+        $fieldDefinition = $data->fieldDefinition;
+        $fieldSettings = $fieldDefinition->getFieldSettings();
+        $formConfig = $fieldForm->getConfig();
+
+        $fieldForm
+            ->add(
+                $formConfig->getFormFactory()->createBuilder()
+                    ->create(
+                        'value',
+                        DateTimeLocalType::class,
+                        [
+                            'input' => 'datetime',
+                            'widget' => 'single_text',
+                            'html5' => true,
+                            'with_seconds' => $fieldSettings['useSeconds'],
+                            'required' => $fieldDefinition->isRequired,
+                            'label' => $fieldDefinition->getName($formConfig->getOption('languageCode')),
+                            'attr' => $this->getAttributes($fieldSettings),
+                        ]
+                    )
+                    ->addModelTransformer(new DateTimeValueTransformer())
+                    ->setAutoInitialize(false)
+                    ->getForm()
+            );
+    }
+
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver
             ->setDefaults([
                 'translation_domain' => 'ezrepoforms_content_type',
             ]);
+    }
+
+    private function getAttributes(array $fieldSettings)
+    {
+        $attributes = [];
+
+        if ($fieldSettings['useSeconds']) {
+            $attributes['step'] = 1;
+        }
+
+        return $attributes;
     }
 }
