@@ -177,6 +177,7 @@ services:
             - "@ezpublish.api.service.field_type"
         tags:
             - { name: ez.fieldFormMapper.definition, fieldType: ezinteger }
+            - { name: ez.fieldFormMapper.value, fieldType: ezinteger }
 
     ezrepoforms.field_type.form_mapper.ezisbn:
         class: "%ezrepoforms.field_type.form_mapper.ezisbn.class%"
