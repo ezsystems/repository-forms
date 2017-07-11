@@ -235,8 +235,11 @@ services:
 
     ezrepoforms.field_type.form_mapper.eztime:
         class: "%ezrepoforms.field_type.form_mapper.eztime.class%"
+        arguments:
+            - "@ezpublish.api.service.field_type"
         tags:
             - { name: ez.fieldFormMapper.definition, fieldType: eztime }
+            - { name: ez.fieldFormMapper.value, fieldType: eztime }
 
     ezrepoforms.field_type.form_mapper.form_type_based:
         abstract: true
