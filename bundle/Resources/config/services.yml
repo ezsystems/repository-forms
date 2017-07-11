@@ -36,6 +36,7 @@ parameters:
     ezrepoforms.field_type.form_mapper.eztime.class: EzSystems\RepositoryForms\FieldType\Mapper\TimeFormMapper
     ezrepoforms.field_type.form_mapper.form_type_based.class: EzSystems\RepositoryForms\FieldType\Mapper\FormTypeBasedFieldValueFormMapper
     ezrepoforms.field_type.form_mapper.ezuser.class: EzSystems\RepositoryForms\FieldType\Mapper\UserAccountFieldValueFormMapper
+    ezrepoforms.field_type.form_mapper.ezurl.class: EzSystems\RepositoryForms\FieldType\Mapper\UrlFormMapper
 
     ezrepoforms.validator.unique_content_type_identifier.class: EzSystems\RepositoryForms\Validator\Constraints\UniqueContentTypeIdentifierValidator
     ezrepoforms.validator.validator_configuration.class: EzSystems\RepositoryForms\Validator\Constraints\ValidatorConfigurationValidator
@@ -245,6 +246,13 @@ services:
         class: "%ezrepoforms.field_type.form_mapper.ezuser.class%"
         tags:
             - { name: ez.fieldFormMapper.value, fieldType: ezuser }
+        arguments:
+            - '@ezpublish.api.service.field_type'
+
+    ezrepoforms.field_type.form_mapper.ezurl:
+        class: "%ezrepoforms.field_type.form_mapper.ezurl.class%"
+        tags:
+            - { name: ez.fieldFormMapper.value, fieldType: ezurl }
         arguments:
             - '@ezpublish.api.service.field_type'
 
