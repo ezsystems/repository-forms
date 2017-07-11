@@ -224,11 +224,11 @@ services:
 
     ezrepoforms.field_type.form_mapper.eztext:
         class: "%ezrepoforms.field_type.form_mapper.eztext.class%"
+        arguments:
+            - "@ezpublish.api.service.field_type"
         tags:
             - { name: ez.fieldFormMapper.definition, fieldType: eztext }
             - { name: ez.fieldFormMapper.value, fieldType: eztext }
-        arguments:
-            - "@ezpublish.api.service.field_type"
 
     ezrepoforms.field_type.form_mapper.eztime:
         class: "%ezrepoforms.field_type.form_mapper.eztime.class%"

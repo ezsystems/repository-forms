@@ -14,16 +14,17 @@ use EzSystems\RepositoryForms\Data\FieldDefinitionData;
 use EzSystems\RepositoryForms\FieldType\DataTransformer\FieldValueTransformer;
 use EzSystems\RepositoryForms\FieldType\FieldDefinitionFormMapperInterface;
 use EzSystems\RepositoryForms\FieldType\FieldValueFormMapperInterface;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormInterface;
-use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
+/**
+ * FormMapper for eztext FieldType.
+ */
 class TextBlockFormMapper implements FieldDefinitionFormMapperInterface, FieldValueFormMapperInterface
 {
-    /**
-     * @var \eZ\Publish\API\Repository\FieldTypeService
-     */
+    /** @var FieldTypeService */
     private $fieldTypeService;
 
     public function __construct(FieldTypeService $fieldTypeService)
@@ -47,8 +48,6 @@ class TextBlockFormMapper implements FieldDefinitionFormMapperInterface, FieldVa
     {
         $fieldDefinition = $data->fieldDefinition;
         $formConfig = $fieldForm->getConfig();
-        $names = $fieldDefinition->getNames();
-        $label = $fieldDefinition->getName($formConfig->getOption('languageCode')) ?: reset($names);
 
         $fieldForm
             ->add(
@@ -58,20 +57,20 @@ class TextBlockFormMapper implements FieldDefinitionFormMapperInterface, FieldVa
                         TextareaType::class,
                         [
                             'required' => $fieldDefinition->isRequired,
-                            'label' => $label,
+                            'label' => $fieldDefinition->getName($formConfig->getOption('languageCode')),
                             'attr' => ['rows' => $data->fieldDefinition->fieldSettings['textRows']],
                         ]
                     )
-                    ->addModelTransformer(new FieldValueTransformer($this->fieldTypeService->getFieldType($fieldDefinition->fieldTypeIdentifier)))
-                    // Deactivate auto-initialize as we're not on the root form.
+                    ->addModelTransformer(
+                        new FieldValueTransformer(
+                            $this->fieldTypeService->getFieldType($fieldDefinition->fieldTypeIdentifier)
+                        )
+                    )
                     ->setAutoInitialize(false)
                     ->getForm()
             );
     }
 
-    /**
-     * Fake method to set the translation domain for the extractor.
-     */
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver
