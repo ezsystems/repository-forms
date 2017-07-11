@@ -7,7 +7,7 @@ namespace EzSystems\RepositoryForms\Features\Context;
 use Behat\Behat\Context\SnippetAcceptingContext;
 use Behat\Behat\Hook\Scope\BeforeScenarioScope;
 use Behat\MinkExtension\Context\RawMinkContext;
-use PHPUnit_Framework_Assert as Assertion;
+use PHPUnit\Framework\Assert as Assertion;
 
 final class SelectionFieldTypeFormContext extends RawMinkContext implements SnippetAcceptingContext
 {
