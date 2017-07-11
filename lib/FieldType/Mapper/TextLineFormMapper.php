@@ -9,21 +9,23 @@
 namespace EzSystems\RepositoryForms\FieldType\Mapper;
 
 use eZ\Publish\API\Repository\FieldTypeService;
+use eZ\Publish\API\Repository\Values\ContentType\FieldDefinition;
 use EzSystems\RepositoryForms\Data\Content\FieldData;
 use EzSystems\RepositoryForms\Data\FieldDefinitionData;
 use EzSystems\RepositoryForms\FieldType\DataTransformer\FieldValueTransformer;
 use EzSystems\RepositoryForms\FieldType\FieldDefinitionFormMapperInterface;
 use EzSystems\RepositoryForms\FieldType\FieldValueFormMapperInterface;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormInterface;
-use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
+/**
+ * FormMapper for ezstring FieldType.
+ */
 class TextLineFormMapper implements FieldDefinitionFormMapperInterface, FieldValueFormMapperInterface
 {
-    /**
-     * @var \eZ\Publish\API\Repository\FieldTypeService
-     */
+    /** @var FieldTypeService */
     private $fieldTypeService;
 
     public function __construct(FieldTypeService $fieldTypeService)
@@ -63,8 +65,6 @@ class TextLineFormMapper implements FieldDefinitionFormMapperInterface, FieldVal
     {
         $fieldDefinition = $data->fieldDefinition;
         $formConfig = $fieldForm->getConfig();
-        $names = $fieldDefinition->getNames();
-        $label = $fieldDefinition->getName($formConfig->getOption('languageCode')) ?: reset($names);
 
         $fieldForm
             ->add(
@@ -72,23 +72,43 @@ class TextLineFormMapper implements FieldDefinitionFormMapperInterface, FieldVal
                     ->create(
                         'value',
                         TextType::class,
-                        ['required' => $fieldDefinition->isRequired, 'label' => $label]
+                        [
+                            'required' => $fieldDefinition->isRequired,
+                            'label' => $fieldDefinition->getName($formConfig->getOption('languageCode')),
+                            'attr' => $this->getAttributes($fieldDefinition),
+                        ]
                     )
                     ->addModelTransformer(new FieldValueTransformer($this->fieldTypeService->getFieldType($fieldDefinition->fieldTypeIdentifier)))
-                    // Deactivate auto-initialize as we're not on the root form.
                     ->setAutoInitialize(false)
                     ->getForm()
             );
     }
 
-    /**
-     * Fake method to set the translation domain for the extractor.
-     */
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver
             ->setDefaults([
                 'translation_domain' => 'ezrepoforms_content_type',
             ]);
+    }
+
+    private function getAttributes(FieldDefinition $fieldDefinition)
+    {
+        $validatorConfiguration = $fieldDefinition->getValidatorConfiguration();
+
+        if (
+            empty($validatorConfiguration['StringLengthValidator']['minStringLength'])
+            && empty($validatorConfiguration['StringLengthValidator']['maxStringLength'])
+        ) {
+            return [];
+        }
+
+        return [
+            'pattern' => sprintf(
+                '.{%d,%d}',
+                $validatorConfiguration['StringLengthValidator']['minStringLength'] ?: '',
+                $validatorConfiguration['StringLengthValidator']['maxStringLength'] ?: ''
+            ),
+        ];
     }
 }
