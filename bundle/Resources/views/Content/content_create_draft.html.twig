@@ -1,0 +1,7 @@
+{% extends noLayout is defined and noLayout == true ? viewbaseLayout : pagelayout %}
+
+{% block content %}
+    {{ form_start(form) }}
+    {{ form_widget(form) }}
+    {{ form_end(form) }}
+{% endblock %}
