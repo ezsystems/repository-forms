@@ -114,3 +114,40 @@
     {%- set type = type|default('number') -%}
     {{ parent() }}
 {%- endblock number_widget -%}
+
+{# ezauthor #}
+
+{%- block ezrepoforms_fieldtype_ezauthor_row -%}
+    {{ block('form_row') }}
+    {% if form.authors.vars.prototype is defined %}
+        <template class="author-template">
+            {{ form_row(form.authors.vars.prototype) }}
+        </template>
+    {% endif %}
+{%- endblock ezrepoforms_fieldtype_ezauthor_row -%}
+
+{%- block ezrepoforms_fieldtype_ezauthor_widget -%}
+    {{ block('form_rows') }}
+{%- endblock ezrepoforms_fieldtype_ezauthor_widget -%}
+
+{%- block ezrepoforms_fieldtype_ezauthor_authors_row -%}
+    {{- form_widget(form) -}}
+{%- endblock ezrepoforms_fieldtype_ezauthor_authors_row -%}
+
+{%- block ezrepoforms_fieldtype_ezauthor_authors_widget -%}
+    {{ block('form_rows') }}
+{%- endblock ezrepoforms_fieldtype_ezauthor_authors_widget -%}
+
+{%- block ezrepoforms_fieldtype_ezauthor_authors_entry_row -%}
+    {{- block('ezrepoforms_fieldtype_ezauthor_authors_entry_widget') -}}
+{%- endblock ezrepoforms_fieldtype_ezauthor_authors_entry_row -%}
+
+{%- block ezrepoforms_fieldtype_ezauthor_authors_entry_widget -%}
+    <fieldset>
+        {{- block('form_rows') -}}
+        <div class="ez-author-tools">
+            <button type="button" class="ez-button ez-button-secondary ez-js-remove-author">{{ 'Remove'|trans }}</button>
+            <button type="button" class="ez-button ez-button-secondary ez-js-add-author">{{ 'Add'|trans }}</button>
+        </div>
+    </fieldset>
+{%- endblock ezrepoforms_fieldtype_ezauthor_authors_entry_widget -%}
