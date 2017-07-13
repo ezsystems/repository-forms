@@ -256,6 +256,14 @@ services:
         arguments:
             - '@ezpublish.api.service.field_type'
 
+    ezrepoforms.field_type.form_mapper.ezemail:
+        class: "%ezrepoforms.field_type.form_mapper.form_type_based.class%"
+        parent: ezrepoforms.field_type.form_mapper.form_type_based
+        tags:
+            - { name: ez.fieldFormMapper.value, fieldType: ezemail }
+        calls:
+            - [setFormType, [\Symfony\Component\Form\Extension\Core\Type\EmailType]]
+
     # Validators
     ezrepoforms.validator.unique_content_type_identifier:
         class: "%ezrepoforms.validator.unique_content_type_identifier.class%"
