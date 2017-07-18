@@ -11,7 +11,7 @@ use Behat\Mink\Element\NodeElement;
 use Behat\MinkExtension\Context\RawMinkContext;
 use eZ\Publish\API\Repository\Values\ContentType\FieldDefinitionCreateStruct;
 use eZ\Publish\API\Repository\Values\ContentType\FieldDefinitionUpdateStruct;
-use PHPUnit_Framework_Assert as Assertion;
+use PHPUnit\Framework\Assert as Assertion;
 
 final class FieldTypeFormContext extends RawMinkContext implements SnippetAcceptingContext
 {

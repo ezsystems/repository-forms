@@ -19,7 +19,7 @@ use eZ\Publish\API\Repository\Values\User\User;
 use eZ\Publish\API\Repository\Values\User\UserGroup;
 use eZ\Publish\Core\Repository\Values\User\RoleCreateStruct;
 use EzSystems\PlatformBehatBundle\Context\RepositoryContext;
-use PHPUnit_Framework_Assert;
+use PHPUnit\Framework\Assert as Assertion;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Yaml\Yaml;
 
@@ -300,7 +300,7 @@ class UserRegistrationContext extends RawMinkContext implements Context, Snippet
         $user = $userService->loadUserByLogin($this->registrationUsername);
         $userGroups = $userService->loadUserGroupsOfUser($user);
 
-        PHPUnit_Framework_Assert::assertEquals(
+        Assertion::assertEquals(
             $this->customUserGroup->id,
             $userGroups[0]->id
         );
@@ -347,7 +347,7 @@ class UserRegistrationContext extends RawMinkContext implements Context, Snippet
             $found = (strpos($html, sprintf('<!-- STOP %s -->', $alternativeTemplate)) !== false);
         }
 
-        PHPUnit_Framework_Assert::assertTrue(
+        Assertion::assertTrue(
             $found,
             "Couldn't find $template " .
             (isset($alternativeTemplate) ? "nor $alternativeTemplate " : ' ') .

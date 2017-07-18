@@ -14,7 +14,7 @@ use eZ\Publish\API\Repository\Repository;
 use eZ\Publish\API\Repository\Values\ContentType\ContentTypeCreateStruct;
 use eZ\Publish\API\Repository\Values\ContentType\FieldDefinitionUpdateStruct;
 use EzSystems\PlatformBehatBundle\Context\RepositoryContext;
-use PHPUnit_Framework_Assert as Assertion;
+use PHPUnit\Framework\Assert as Assertion;
 
 final class ContentType extends RawMinkContext implements Context, SnippetAcceptingContext
 {
