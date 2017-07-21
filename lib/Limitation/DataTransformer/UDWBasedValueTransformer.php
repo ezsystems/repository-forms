@@ -24,7 +24,12 @@ class UDWBasedValueTransformer implements DataTransformerInterface
             return null;
         }
 
-        return implode(',', $value);
+        $locations = [];
+        foreach ($value as $key => $path) {
+            $locations[] = $this->extractLocationIdFromPath($path);
+        }
+
+        return implode(',', $locations);
     }
 
     public function reverseTransform($value)
@@ -34,5 +39,19 @@ class UDWBasedValueTransformer implements DataTransformerInterface
         }
 
         return explode(',', $value);
+    }
+
+    /**
+     * Extracts and returns an item id from a path, e.g. /1/2/58 => 58.
+     *
+     * @param string $path
+     *
+     * @return mixed
+     */
+    private function extractLocationIdFromPath($path)
+    {
+        $pathParts = explode('/', trim($path, '/'));
+
+        return array_pop($pathParts);
     }
 }
