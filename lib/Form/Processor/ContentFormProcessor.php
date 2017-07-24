@@ -45,6 +45,7 @@ class ContentFormProcessor implements EventSubscriberInterface
             RepositoryFormEvents::CONTENT_PUBLISH => ['processPublish', 10],
             RepositoryFormEvents::CONTENT_CANCEL => ['processRemoveDraft', 10],
             RepositoryFormEvents::CONTENT_SAVE_DRAFT => ['processSaveDraft', 10],
+            RepositoryFormEvents::CONTENT_CREATE_DRAFT => ['processCreateDraft', 10],
         ];
     }
 
@@ -60,7 +61,7 @@ class ContentFormProcessor implements EventSubscriberInterface
 
         $defaultUrl = $this->router->generate('ez_content_edit', [
             'contentId' => $draft->id,
-            'version' => $draft->getVersionInfo()->versionNo,
+            'versionNo' => $draft->getVersionInfo()->versionNo,
             'language' => $languageCode,
         ]);
         $event->setResponse(new RedirectResponse($formConfig->getAction() ?: $defaultUrl));
@@ -101,6 +102,23 @@ class ContentFormProcessor implements EventSubscriberInterface
             UrlGeneratorInterface::ABSOLUTE_URL
         );
         $event->setResponse(new RedirectResponse($url));
+    }
+
+    public function processCreateDraft(FormActionEvent $event)
+    {
+        /** @var $createContentDraft \EzSystems\RepositoryForms\Data\Content\CreateContentDraftData */
+        $createContentDraft = $event->getData();
+
+        $contentInfo = $this->contentService->loadContentInfo($createContentDraft->contentId);
+        $versionInfo = $this->contentService->loadVersionInfo($contentInfo, $createContentDraft->fromVersionNo);
+        $contentDraft = $this->contentService->createContentDraft($contentInfo, $versionInfo);
+
+        $contentEditUrl = $this->router->generate('ez_content_edit', [
+            'contentId' => $contentDraft->id,
+            'versionNo' => $contentDraft->getVersionInfo()->versionNo,
+            'language' => $contentDraft->contentInfo->mainLanguageCode,
+        ]);
+        $event->setResponse(new RedirectResponse($contentEditUrl));
     }
 
     /**
