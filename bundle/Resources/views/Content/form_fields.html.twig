@@ -1,0 +1,39 @@
+{% use 'form_div_layout.html.twig' %}
+
+{% block form_errors %}
+    {%- for error in errors if errors|length > 0 -%}
+        <em class="ez-field-edit-error">{{ error.message }}</em>
+    {%- endfor -%}
+{% endblock form_errors %}
+
+{% block form_label %}
+    {%- if form.value is defined -%}
+        {% set label_attr = label_attr|merge({'for': form.value.vars.id}) %}
+    {%- endif %}
+    {%- if compound is same as(false) -%}
+        {% set label_attr = label_attr|merge({'class': 'ez-sub-field-name'}) %}
+    {%- endif %}
+    {{- parent('form_label') -}}
+{% endblock form_label %}
+
+{%- block form_widget_compound -%}
+    <fieldset>
+        {% for child in form %}
+            <div class="ez-sub-field ez-sub-field-{{ child.vars.name }}">
+                <div class="ez-sub-field-text-zone">
+                    {{- form_label(child) -}}
+                    {{- form_errors(child) -}}
+                </div>
+                <div class="ez-sub-field-ui">
+                    {{- form_widget(child) -}}
+                </div>
+            </div>
+        {% endfor %}
+        {{- form_rest(form) -}}
+    </fieldset>
+{%- endblock form_widget_compound -%}
+
+{%- block number_widget -%}
+    {%- set type = type|default('number') -%}
+    {{ parent('number_widget') }}
+{%- endblock number_widget -%}
