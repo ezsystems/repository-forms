@@ -1,13 +1,28 @@
 {% macro display_form(form) %}
+    {% form_theme form with ['EzSystemsRepositoryFormsBundle:Content:form_fields.html.twig', _self] %}
+
     {{ form_start(form) }}
 
     {% for fieldForm in form.fieldsData %}
-        <div class="ezfield-type-{{ fieldForm.vars.data.fieldDefinition.fieldTypeIdentifier }} ezfield-identifier-{{ fieldForm.vars.data.fieldDefinition.identifier }}">
-            <fieldset>
-                <legend>{{- form_label(fieldForm) -}}</legend>
-                {{- form_errors(fieldForm) -}}
+        {% set row_classes = 'ez-field-edit ez-field-edit-' ~ fieldForm.vars.data.fieldDefinition.fieldTypeIdentifier %}
+
+        {%- if fieldForm.vars.required -%}
+            {% set row_classes = row_classes ~ ' ez-field-edit-required' %}
+        {%- endif %}
+
+        {%- if fieldForm.vars.disabled -%}
+            {% set row_classes = row_classes ~ ' ez-field-edit-disabled' %}
+        {%- endif %}
+
+        <div class="{{ row_classes }}">
+            <div class="ez-field-edit-text-zone">
+                {{- form_label(fieldForm) -}}
                 {%- if fieldForm.value is defined -%}
-                    {{ form_errors(fieldForm.value) }}
+                    {{- form_errors(fieldForm.value) -}}
+                {% endif %}
+            </div>
+            <div class="ez-field-edit-ui">
+                {%- if fieldForm.value is defined -%}
                     {{ form_widget(fieldForm.value, {"contentData": form.vars.data}) }}
                 {%- else -%}
                     <p class="non-editable">
@@ -15,7 +30,7 @@
                     </p>
                     {%- do fieldForm.setRendered() -%}
                 {% endif %}
-            </fieldset>
+            </div>
         </div>
     {% endfor %}
 
