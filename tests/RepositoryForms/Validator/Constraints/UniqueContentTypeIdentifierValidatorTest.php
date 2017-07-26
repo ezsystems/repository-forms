@@ -56,6 +56,19 @@ class UniqueContentTypeIdentifierValidatorTest extends TestCase
         $this->validator->validate($value, new UniqueContentTypeIdentifier());
     }
 
+    public function testNullContentTypeIdentifier()
+    {
+        $value = new ContentTypeData(['identifier' => null]);
+        $this->contentTypeService
+            ->expects($this->never())
+            ->method('loadContentTypeByIdentifier');
+        $this->executionContext
+            ->expects($this->never())
+            ->method('buildViolation');
+
+        $this->validator->validate($value, new UniqueContentTypeIdentifier());
+    }
+
     public function testValid()
     {
         $identifier = 'foo_identifier';

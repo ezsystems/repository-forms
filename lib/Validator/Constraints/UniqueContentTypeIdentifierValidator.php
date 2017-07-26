@@ -41,7 +41,7 @@ class UniqueContentTypeIdentifierValidator extends ConstraintValidator
      */
     public function validate($value, Constraint $constraint)
     {
-        if (!$value instanceof ContentTypeData) {
+        if (!$value instanceof ContentTypeData || $value->identifier === null) {
             return;
         }
 
