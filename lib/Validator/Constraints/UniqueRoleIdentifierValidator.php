@@ -36,7 +36,7 @@ class UniqueRoleIdentifierValidator extends ConstraintValidator
      */
     public function validate($value, Constraint $constraint)
     {
-        if (!$value instanceof RoleData) {
+        if (!$value instanceof RoleData || $value->identifier === null) {
             return;
         }
 
