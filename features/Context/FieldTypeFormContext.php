@@ -69,13 +69,13 @@ final class FieldTypeFormContext extends RawMinkContext implements SnippetAccept
     }
 
     /**
-     * @Then /^the edit form should contain a fieldset named after the field definition$/
+     * @Then /^the edit form should contain an identifiable widget for that field definition$/
      */
     public function theEditFormShouldContainAFieldsetNamedAfterTheFieldDefinition()
     {
         $this->assertSession()->elementTextContains(
             'css',
-            sprintf('div.ezfield-identifier-%s fieldset legend', self::$fieldIdentifier),
+            'div.ez-field-edit div.ez-field-edit-text-zone label',
             'Field'
         );
     }
@@ -88,8 +88,7 @@ final class FieldTypeFormContext extends RawMinkContext implements SnippetAccept
         $this->assertSession()->elementExists(
             'css',
             sprintf(
-                'div.ezfield-identifier-%s fieldset input[type=%s]',
-                self::$fieldIdentifier,
+                'div.ez-field-edit div.ez-field-edit-ui input[type=%s]',
                 $inputType
             )
         );
@@ -104,7 +103,7 @@ final class FieldTypeFormContext extends RawMinkContext implements SnippetAccept
 
         $inputNodeElements = $this->getSession()->getPage()->findAll(
             'css',
-            sprintf('div.ezfield-identifier-%s fieldset input', self::$fieldIdentifier)
+            'div.ez-field-edit-ezuser div.ez-field-edit-ui fieldset div.ez-sub-field div.ez-sub-field-ui input'
         );
 
         /** @var NodeElement $nodeElement */
@@ -153,7 +152,7 @@ final class FieldTypeFormContext extends RawMinkContext implements SnippetAccept
     {
         $inputNodeElements = $this->getSession()->getPage()->findAll(
             'css',
-            sprintf('div.ezfield-identifier-%s fieldset input', self::$fieldIdentifier)
+            'div.ez-field-edit div.ez-field-edit-ui input'
         );
         Assertion::assertNotEmpty($inputNodeElements, 'The input field is not marked as required');
         foreach ($inputNodeElements as $inputNodeElement) {

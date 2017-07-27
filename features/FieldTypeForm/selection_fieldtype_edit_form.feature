@@ -8,7 +8,7 @@ Background:
 
 Scenario: The attributes of the field have a form representation
     Given I view the edit form for this field
-     Then the edit form should contain a fieldset named after the field definition
+     Then the edit form should contain an identifiable widget for that field definition
       And it should contain a select field
 
 Scenario: The options added to a field definition have a form representation

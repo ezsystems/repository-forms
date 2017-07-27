@@ -50,7 +50,7 @@ final class SelectionFieldTypeFormContext extends RawMinkContext implements Snip
         $this->assertSession()->elementExists(
             'css',
             sprintf(
-                'div.ezfield-identifier-%s fieldset select',
+                'div.ez-field-edit div.ez-field-edit-ui select#ezrepoforms_content_edit_fieldsData_%s_value',
                 self::$fieldIdentifier
             )
         );
@@ -63,7 +63,7 @@ final class SelectionFieldTypeFormContext extends RawMinkContext implements Snip
     {
         $nodeElements = $this->getSession()->getPage()->findAll(
             'css',
-            sprintf('div.ezfield-identifier-%s fieldset select', self::$fieldIdentifier)
+            sprintf('div.ez-field-edit div.ez-field-edit-ui select#ezrepoforms_content_edit_fieldsData_%s_value', self::$fieldIdentifier)
         );
         Assertion::assertNotEmpty($nodeElements, 'The select field is not marked as required');
         foreach ($nodeElements as $nodeElement) {
@@ -86,14 +86,14 @@ final class SelectionFieldTypeFormContext extends RawMinkContext implements Snip
         $this->assertSession()->elementExists(
             'css',
             sprintf(
-                'div.ezfield-identifier-%s fieldset select',
+                'div.ez-field-edit select#ezrepoforms_content_edit_fieldsData_%s_value',
                 self::$fieldIdentifier
             )
         );
         $this->assertSession()->elementNotContains(
             'css',
             sprintf(
-                'div.ezfield-identifier-%s fieldset select',
+                'div.ez-field-edit select#ezrepoforms_content_edit_fieldsData_%s_value',
                 self::$fieldIdentifier
             ),
             'multiple="multiple"'
@@ -108,7 +108,7 @@ final class SelectionFieldTypeFormContext extends RawMinkContext implements Snip
         $this->assertSession()->elementExists(
             'css',
             sprintf(
-                'div.ezfield-identifier-%s fieldset select[multiple=multiple]',
+                'div.ez-field-edit select#ezrepoforms_content_edit_fieldsData_%s_value[multiple=multiple]',
                 self::$fieldIdentifier
             )
         );

@@ -8,7 +8,7 @@ Background:
 
 Scenario: The attributes of a textline field have a form representation
     When I view the edit form for this field
-    Then the edit form should contain a fieldset named after the field definition
+    Then the edit form should contain an identifiable widget for that field definition
      And it should contain a text input field
 
 Scenario: The input fields are flagged as required when the field definition is required
