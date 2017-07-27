@@ -8,7 +8,7 @@ Background:
 
 Scenario: The attributes of a user field have a form representation
     When I view the edit form for this field
-    Then the edit form should contain a fieldset named after the field definition
+    Then the edit form should contain an identifiable widget for that field definition
      And it should contain the following set of labels, and input fields of the following types:
          | label | type |
          | Username | text |
