@@ -61,6 +61,19 @@ class UniqueRoleIdentifierValidatorTest extends TestCase
         $this->validator->validate($value, new UniqueRoleIdentifier());
     }
 
+    public function testNullRoleIdentifier()
+    {
+        $value = new RoleData(['identifier' => null]);
+        $this->roleService
+            ->expects($this->never())
+            ->method('loadRoleByIdentifier');
+        $this->executionContext
+            ->expects($this->never())
+            ->method('buildViolation');
+
+        $this->validator->validate($value, new UniqueRoleIdentifier());
+    }
+
     public function testValid()
     {
         $identifier = 'foo_identifier';

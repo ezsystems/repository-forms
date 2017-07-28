@@ -9,9 +9,9 @@
 >{{ "role.policy.limitation.location.udw_button"|trans({}, "ezrepoforms_role") }}</button>
 <div>
     <ul id="{{form.limitationValues.vars.id}}-selected-location">
-        {% for limitationValue in form.limitationValues.vars.value %}
+        {% for limitationValue in form.limitationValues.vars.value|split(',') %}
         <li>
-            {{ render( controller( "ez_content:view", {'contentId': limitationValue, 'viewType': '_platformui_content_name'} ) ) }}
+            {{ render( controller( "ez_content:viewAction", {'locationId': limitationValue, 'viewType': '_platformui_content_name'} ) ) }}
         </li>
         {% endfor %}
     </ul>
