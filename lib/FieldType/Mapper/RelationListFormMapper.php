@@ -25,7 +25,7 @@ class RelationListFormMapper extends AbstractRelationFormMapper
                 'label' => 'field_definition.ezobjectrelationlist.selection_default_location',
             ])
             ->add('selectionContentTypes', ChoiceType::class, [
-                'choices' => $this->getContentTypeHash(),
+                'choices' => $this->getContentTypesHash(),
                 'choices_as_values' => true,
                 'expanded' => false,
                 'multiple' => true,

@@ -36,9 +36,10 @@ abstract class AbstractRelationFormMapper implements FieldDefinitionFormMapperIn
 
     /**
      * Fill a hash with all content types and their ids.
+     *
      * @return array
      */
-    protected function getContentTypeHash()
+    protected function getContentTypesHash()
     {
         $contentTypeHash = [];
         foreach ($this->contentTypeService->loadContentTypeGroups() as $contentTypeGroup) {
