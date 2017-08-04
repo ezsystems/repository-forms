@@ -229,8 +229,11 @@ services:
 
     ezrepoforms.field_type.form_mapper.ezrichtext:
         class: "%ezrepoforms.field_type.form_mapper.ezrichtext.class%"
+        arguments:
+            - "@ezpublish.api.service.field_type"
+            - "@ezpublish.fieldType.ezrichtext.converter.edit.xhtml5"
         tags:
-            - { name: ez.fieldFormMapper.definition, fieldType: ezrichtext }
+            - { name: ez.fieldFormMapper.value, fieldType: ezrichtext }
 
     ezrepoforms.field_type.form_mapper.ezselection:
         class: "%ezrepoforms.field_type.form_mapper.ezselection.class%"
