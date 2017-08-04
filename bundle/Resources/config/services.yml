@@ -209,6 +209,7 @@ services:
         parent: ezrepoforms.field_type.form_mapper.abstractrelation
         tags:
             - { name: ez.fieldFormMapper.definition, fieldType: ezobjectrelationlist }
+            - { name: ez.fieldFormMapper.value, fieldType: ezobjectrelationlist }
 
     ezrepoforms.field_type.form_mapper.ezpage:
         class: "%ezrepoforms.field_type.form_mapper.ezpage.class%"

@@ -8,9 +8,12 @@
  */
 namespace EzSystems\RepositoryForms\FieldType\Mapper;
 
+use EzSystems\RepositoryForms\Data\Content\FieldData;
 use EzSystems\RepositoryForms\Data\FieldDefinitionData;
+use EzSystems\RepositoryForms\FieldType\DataTransformer\RelationListValueTransformer;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -33,6 +36,28 @@ class RelationListFormMapper extends AbstractRelationFormMapper
                 'property_path' => 'fieldSettings[selectionContentTypes]',
                 'label' => 'field_definition.ezobjectrelationlist.selection_content_types',
             ]);
+    }
+
+    public function mapFieldValueForm(FormInterface $fieldForm, FieldData $data)
+    {
+        $fieldDefinition = $data->fieldDefinition;
+        $formConfig = $fieldForm->getConfig();
+
+        $fieldForm
+            ->add(
+                $formConfig->getFormFactory()->createBuilder()
+                    ->create(
+                        'value',
+                        TextType::class,
+                        [
+                            'required' => $fieldDefinition->isRequired,
+                            'label' => $fieldDefinition->getName($formConfig->getOption('languageCode')),
+                        ]
+                    )
+                    ->addModelTransformer(new RelationListValueTransformer())
+                    ->setAutoInitialize(false)
+                    ->getForm()
+            );
     }
 
     /**
