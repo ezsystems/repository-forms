@@ -8,19 +8,20 @@
  */
 namespace EzSystems\RepositoryForms\FieldType\Mapper;
 
+use EzSystems\RepositoryForms\Data\Content\FieldData;
 use EzSystems\RepositoryForms\Data\FieldDefinitionData;
-use EzSystems\RepositoryForms\FieldType\DataTransformer\CountryValueTransformer;
+use EzSystems\RepositoryForms\FieldType\DataTransformer\MultipleCountryValueTransformer;
+use EzSystems\RepositoryForms\FieldType\DataTransformer\SingleCountryValueTransformer;
 use EzSystems\RepositoryForms\FieldType\FieldDefinitionFormMapperInterface;
+use EzSystems\RepositoryForms\FieldType\FieldValueFormMapperInterface;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class CountryFormMapper implements FieldDefinitionFormMapperInterface
+class CountryFormMapper implements FieldDefinitionFormMapperInterface, FieldValueFormMapperInterface
 {
-    /**
-     * @var array Array of countries from ezpublish.fieldType.ezcountry.data
-     */
+    /** @var array Array of countries from ezpublish.fieldType.ezcountry.data */
     protected $countriesInfo;
 
     /**
@@ -56,7 +57,7 @@ class CountryFormMapper implements FieldDefinitionFormMapperInterface
                             'label' => 'field_definition.ezcountry.default_value',
                         ]
                     )
-                    ->addModelTransformer(new CountryValueTransformer($this->countriesInfo))
+                    ->addModelTransformer(new MultipleCountryValueTransformer($this->countriesInfo))
                     // Deactivate auto-initialize as we're not on the root form.
                     ->setAutoInitialize(false)->getForm()
             );
@@ -70,6 +71,32 @@ class CountryFormMapper implements FieldDefinitionFormMapperInterface
         }
 
         return $choices;
+    }
+
+    public function mapFieldValueForm(FormInterface $fieldForm, FieldData $data)
+    {
+        $fieldDefinition = $data->fieldDefinition;
+        $fieldSettings = $fieldDefinition->getFieldSettings();
+        $formConfig = $fieldForm->getConfig();
+
+        $fieldForm
+            ->add(
+                $formConfig->getFormFactory()->createBuilder()
+                    ->create('value', ChoiceType::class, [
+                        'choices' => $this->getCountryChoices($this->countriesInfo),
+                        'multiple' => $fieldSettings['isMultiple'],
+                        'expanded' => false,
+                        'required' => $fieldDefinition->isRequired,
+                        'label' => $fieldDefinition->getName($formConfig->getOption('languageCode')),
+                    ])
+                    ->addModelTransformer(
+                        $fieldSettings['isMultiple']
+                            ? new MultipleCountryValueTransformer($this->countriesInfo)
+                            : new SingleCountryValueTransformer($this->countriesInfo)
+                    )
+                    ->setAutoInitialize(false)
+                    ->getForm()
+            );
     }
 
     /**

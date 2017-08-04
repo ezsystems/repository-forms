@@ -151,9 +151,11 @@ services:
 
     ezrepoforms.field_type.form_mapper.ezcountry:
         class: "%ezrepoforms.field_type.form_mapper.ezcountry.class%"
-        arguments: ["%ezpublish.fieldType.ezcountry.data%"]
+        arguments:
+            - "%ezpublish.fieldType.ezcountry.data%"
         tags:
             - { name: ez.fieldFormMapper.definition, fieldType: ezcountry }
+            - { name: ez.fieldFormMapper.value, fieldType: ezcountry }
 
     ezrepoforms.field_type.form_mapper.ezdate:
         class: "%ezrepoforms.field_type.form_mapper.ezdate.class%"
