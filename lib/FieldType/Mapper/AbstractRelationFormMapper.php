@@ -9,10 +9,10 @@
 namespace EzSystems\RepositoryForms\FieldType\Mapper;
 
 use eZ\Publish\API\Repository\ContentTypeService;
-use eZ\Publish\Core\Helper\TranslationHelper;
 use EzSystems\RepositoryForms\FieldType\FieldDefinitionFormMapperInterface;
+use EzSystems\RepositoryForms\FieldType\FieldValueFormMapperInterface;
 
-abstract class AbstractRelationFormMapper implements FieldDefinitionFormMapperInterface
+abstract class AbstractRelationFormMapper implements FieldDefinitionFormMapperInterface, FieldValueFormMapperInterface
 {
     /**
      * @var ContentTypeService Used to fetch list of available content types
@@ -20,18 +20,11 @@ abstract class AbstractRelationFormMapper implements FieldDefinitionFormMapperIn
     protected $contentTypeService;
 
     /**
-     * @var TranslationHelper Translation helper, for translated content type names
-     */
-    protected $translationHelper;
-
-    /**
      * @param ContentTypeService $contentTypeService
-     * @param TranslationHelper $translationHelper
      */
-    public function __construct(ContentTypeService $contentTypeService, TranslationHelper $translationHelper)
+    public function __construct(ContentTypeService $contentTypeService)
     {
         $this->contentTypeService = $contentTypeService;
-        $this->translationHelper = $translationHelper;
     }
 
     /**
@@ -44,7 +37,7 @@ abstract class AbstractRelationFormMapper implements FieldDefinitionFormMapperIn
         $contentTypeHash = [];
         foreach ($this->contentTypeService->loadContentTypeGroups() as $contentTypeGroup) {
             foreach ($this->contentTypeService->loadContentTypes($contentTypeGroup) as $contentType) {
-                $contentTypeHash[$this->translationHelper->getTranslatedByProperty($contentType, 'names')] = $contentType->identifier;
+                $contentTypeHash[$contentType->getName()] = $contentType->identifier;
             }
         }
         ksort($contentTypeHash);
