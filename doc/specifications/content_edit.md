@@ -34,7 +34,7 @@ The actual creation of the draft is delegated to the FormProcessor API, by firin
 ### Editing a draft
 > A route that displays a content editing form, with options to discard, save or publish.
 
-- path: `/content/edit/{contentId}/{versionNo}/{language}`
+- path: `/content/edit/draft/{contentId}/{versionNo}/{language}`
 - controller action: `ContentEditController::editContentDraftAction`
 
 `language` is optional.
