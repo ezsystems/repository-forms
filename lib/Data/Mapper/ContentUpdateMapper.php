@@ -29,7 +29,7 @@ class ContentUpdateMapper implements FormDataMapperInterface
         $this->configureOptions($optionsResolver);
         $params = $optionsResolver->resolve($params);
 
-        $data = new ContentUpdateData(['contentDraft' => $contentDraft]);
+        $data = new ContentUpdateData(['contentDraft' => $contentDraft, 'contentType' => $params['contentType']]);
         $fields = $contentDraft->getFieldsByLanguage($params['languageCode']);
         foreach ($params['contentType']->fieldDefinitions as $fieldDef) {
             $field = $fields[$fieldDef->identifier];
