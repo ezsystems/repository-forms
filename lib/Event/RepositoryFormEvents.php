@@ -53,11 +53,6 @@ final class RepositoryFormEvents
     const CONTENT_SAVE_DRAFT = 'content.edit.saveDraft';
 
     /**
-     * Triggered when creating a content draft.
-     */
-    const CONTENT_CREATE_DRAFT = 'content.edit.createDraft';
-
-    /**
      * Triggered when publishing a content.
      */
     const CONTENT_PUBLISH = 'content.edit.publish';
