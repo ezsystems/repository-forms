@@ -3,6 +3,21 @@ ez_content_create_no_draft:
     defaults:
         _controller: ez_content_edit:createWithoutDraftAction
 
+ez_content_edit:
+    path: /content/edit/{contentId}/{versionNo}/{language}
+    defaults:
+        _controller: ez_content_edit:editContentDraftAction
+        language: null
+
+ez_content_draft_create:
+    path: /content/create/draft/{contentId}/{fromVersionNo}/{fromLanguage}/{toLanguage}
+    defaults:
+        _controller: ez_content_edit:createContentDraftAction
+        contentId: null
+        fromVersionNo: null
+        fromLanguage: null
+        toLanguage: null
+
 ez_user_register:
   path: /register
   defaults:
