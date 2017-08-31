@@ -10,9 +10,11 @@
 <div>
     <ul id="{{form.limitationValues.vars.id}}-selected-location">
         {% for limitationValue in form.limitationValues.vars.value|split(',') %}
-        <li>
-            {{ render( controller( "ez_content:viewAction", {'locationId': limitationValue, 'viewType': '_platformui_content_name'} ) ) }}
-        </li>
+            {% if limitationValue is not empty %}
+                <li>
+                    {{ render( controller( "ez_content:viewAction", {'locationId': limitationValue, 'viewType': '_platformui_content_name'} ) ) }}
+                </li>
+            {% endif %}
         {% endfor %}
     </ul>
 </div>
