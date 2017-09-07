@@ -1,6 +1,11 @@
 language: php
 sudo: required
 
+env:
+  global:
+    # For behat tests
+    - COMPOSE_FILE="doc/docker-compose/base-prod.yml:doc/docker-compose/selenium.yml"
+
 matrix:
   # mark as finished before allow_failures are run
   fast_finish: true
