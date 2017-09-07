@@ -20,7 +20,7 @@ final class ContentType extends RawMinkContext implements Context, SnippetAccept
 {
     use RepositoryContext;
 
-    /** @var \eZ\Publish\API\Repository\ContentTypeService */
+    /** @var \eZ\Publish\API\Repository\ContentTypeService Dummy change */
     private $contentTypeService;
 
     /**
