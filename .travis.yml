@@ -1,5 +1,6 @@
 language: php
 sudo: required
+dist: precise
 
 matrix:
   # mark as finished before allow_failures are run
