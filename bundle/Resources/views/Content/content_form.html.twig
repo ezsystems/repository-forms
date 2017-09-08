@@ -2,37 +2,6 @@
     {% form_theme form with ['EzSystemsRepositoryFormsBundle:Content:form_fields.html.twig', _self] %}
 
     {{ form_start(form) }}
-
-    {% for fieldForm in form.fieldsData %}
-        {% set row_classes = 'ez-field-edit ez-field-edit-' ~ fieldForm.vars.data.fieldDefinition.fieldTypeIdentifier %}
-
-        {%- if fieldForm.vars.required -%}
-            {% set row_classes = row_classes ~ ' ez-field-edit-required' %}
-        {%- endif %}
-
-        {%- if fieldForm.vars.disabled -%}
-            {% set row_classes = row_classes ~ ' ez-field-edit-disabled' %}
-        {%- endif %}
-
-        <div class="{{ row_classes }}">
-            <div class="ez-field-edit-text-zone">
-                {{- form_label(fieldForm) -}}
-                {%- if fieldForm.value is defined -%}
-                    {{- form_errors(fieldForm.value) -}}
-                {% endif %}
-            </div>
-            <div class="ez-field-edit-ui">
-                {%- if fieldForm.value is defined -%}
-                    {{ form_widget(fieldForm.value, {"contentData": form.vars.data}) }}
-                {%- else -%}
-                    <p class="non-editable">
-                        {{ "content.field.non_editable"|trans({}, "ezrepoforms_content") }}
-                    </p>
-                    {%- do fieldForm.setRendered() -%}
-                {% endif %}
-            </div>
-        </div>
-    {% endfor %}
-
+    {{- form_widget(form.fieldsData) -}}
     {{ form_end(form) }}
 {% endmacro %}
