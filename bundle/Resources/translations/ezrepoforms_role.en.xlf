@@ -48,6 +48,18 @@
         <note>key: role.identifier</note>
         <jms:reference-file line="44">/../../../../.././lib/Form/Type/Role/RoleUpdateType.php</jms:reference-file>
       </trans-unit>
+      <trans-unit id="6345474b02b9503fc624bf2e4c781130f58d9d41" resname="role.policy.all_modules">
+        <source>All modules</source>
+        <target>All modules</target>
+        <note>key: role.policy.all_modules</note>
+        <jms:reference-file line="54">/../../../../.././lib/Form/Type/Role/PolicyType.php</jms:reference-file>
+      </trans-unit>
+      <trans-unit id="d4690e1d0c7d2cf0468ab5aa04caa891e1b5efbd" resname="role.policy.all_modules_all_functions">
+        <source>All modules / All functions</source>
+        <target>All modules / All functions</target>
+        <note>key: role.policy.all_modules_all_functions</note>
+        <jms:reference-file line="54">/../../../../.././lib/Form/Type/Role/PolicyType.php</jms:reference-file>
+      </trans-unit>
       <trans-unit id="deab5c91a76488732d0405e72c36702ed2aea3d6" resname="role.policy.all_functions">
         <source>All functions</source>
         <target>All functions</target>
