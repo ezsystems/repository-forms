@@ -25,14 +25,14 @@
     "autoload": {
         "psr-4": {
             "EzSystems\\RepositoryFormsBundle\\": "bundle",
-            "EzSystems\\RepositoryForms\\": "lib"
+            "EzSystems\\RepositoryForms\\": "lib",
+            "EzSystems\\RepositoryForms\\Features\\": "features"
         }
     },
     "autoload-dev": {
         "psr-4": {
             "EzSystems\\RepositoryForms\\Tests\\": "tests/RepositoryForms",
-            "EzSystems\\RepositoryFormsBundle\\Tests\\": "tests/RepositoryFormsBundle",
-            "EzSystems\\RepositoryForms\\Features\\": "features"
+            "EzSystems\\RepositoryFormsBundle\\Tests\\": "tests/RepositoryFormsBundle"
         }
     },
     "extra": {
