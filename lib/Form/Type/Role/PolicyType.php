@@ -51,7 +51,12 @@ class PolicyType extends AbstractType
      */
     private function buildPolicyChoicesFromMap($policyMap)
     {
-        $policyChoices = ['role.policy.all_modules' => ['role.policy.all_modules_all_functions' => '*|*']];
+        $policyChoices = [
+            $this->translator->trans('role.policy.all_modules', [], 'ezrepoforms_role') => [
+                $this->translator->trans('role.policy.all_modules_all_functions', [], 'ezrepoforms_role') => '*|*',
+            ],
+        ];
+
         foreach ($policyMap as $module => $functionList) {
             $humanizedModule = $this->humanize($module);
             // For each module, add possibility to grant access to all functions.
