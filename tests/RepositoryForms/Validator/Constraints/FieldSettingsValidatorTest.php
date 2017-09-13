@@ -10,14 +10,18 @@
  */
 namespace EzSystems\RepositoryForms\Tests\Validator\Constraints;
 
+use eZ\Publish\API\Repository\FieldTypeService;
+use eZ\Publish\API\Repository\FieldType;
 use eZ\Publish\Core\FieldType\ValidationError;
 use eZ\Publish\Core\Repository\Values\ContentType\FieldDefinition;
 use EzSystems\RepositoryForms\Data\FieldDefinitionData;
 use EzSystems\RepositoryForms\Validator\Constraints\FieldSettings;
 use EzSystems\RepositoryForms\Validator\Constraints\FieldSettingsValidator;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
+use Symfony\Component\Validator\Context\ExecutionContextInterface;
+use Symfony\Component\Validator\Violation\ConstraintViolationBuilderInterface;
 
-class FieldSettingsValidatorTest extends PHPUnit_Framework_TestCase
+class FieldSettingsValidatorTest extends TestCase
 {
     /**
      * @var \PHPUnit_Framework_MockObject_MockObject
@@ -37,8 +41,8 @@ class FieldSettingsValidatorTest extends PHPUnit_Framework_TestCase
     protected function setUp()
     {
         parent::setUp();
-        $this->executionContext = $this->getMock('\Symfony\Component\Validator\Context\ExecutionContextInterface');
-        $this->fieldTypeService = $this->getMock('\eZ\Publish\API\Repository\FieldTypeService');
+        $this->executionContext = $this->createMock(ExecutionContextInterface::class);
+        $this->fieldTypeService = $this->createMock(FieldTypeService::class);
         $this->validator = new FieldSettingsValidator($this->fieldTypeService);
         $this->validator->initialize($this->executionContext);
     }
@@ -62,7 +66,7 @@ class FieldSettingsValidatorTest extends PHPUnit_Framework_TestCase
         $fieldDefinition = new FieldDefinition(['fieldTypeIdentifier' => $fieldTypeIdentifier]);
         $fieldSettings = ['foo' => 'bar'];
         $fieldDefData = new FieldDefinitionData(['identifier' => 'foo', 'fieldDefinition' => $fieldDefinition, 'fieldSettings' => $fieldSettings]);
-        $fieldType = $this->getMock('\eZ\Publish\API\Repository\FieldType');
+        $fieldType = $this->createMock(FieldType::class);
         $this->fieldTypeService
             ->expects($this->once())
             ->method('getFieldType')
@@ -83,7 +87,7 @@ class FieldSettingsValidatorTest extends PHPUnit_Framework_TestCase
         $fieldDefinition = new FieldDefinition(['fieldTypeIdentifier' => $fieldTypeIdentifier]);
         $fieldSettings = ['%foo%' => 'bar'];
         $fieldDefData = new FieldDefinitionData(['identifier' => 'foo', 'fieldDefinition' => $fieldDefinition, 'fieldSettings' => $fieldSettings]);
-        $fieldType = $this->getMock('\eZ\Publish\API\Repository\FieldType');
+        $fieldType = $this->createMock(FieldType::class);
         $this->fieldTypeService
             ->expects($this->once())
             ->method('getFieldType')
@@ -98,7 +102,7 @@ class FieldSettingsValidatorTest extends PHPUnit_Framework_TestCase
             ->with($fieldSettings)
             ->willReturn([new ValidationError($errorMessage, null, ['%foo%' => $errorParameter])]);
 
-        $constraintViolationBuilder = $this->getMock('\Symfony\Component\Validator\Violation\ConstraintViolationBuilderInterface');
+        $constraintViolationBuilder = $this->createMock(ConstraintViolationBuilderInterface::class);
         $this->executionContext
             ->expects($this->once())
             ->method('buildViolation')

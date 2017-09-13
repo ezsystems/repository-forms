@@ -12,9 +12,9 @@ namespace EzSystems\RepositoryForms\Tests\FieldType\DataTransformer;
 
 use eZ\Publish\Core\FieldType\TextLine\Value;
 use EzSystems\RepositoryForms\FieldType\DataTransformer\TextLineValueTransformer;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 
-class TextLineValueTransformerTest extends PHPUnit_Framework_TestCase
+class TextLineValueTransformerTest extends TestCase
 {
     /**
      * @dataProvider transformProvider

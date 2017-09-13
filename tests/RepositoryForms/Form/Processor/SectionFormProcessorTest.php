@@ -8,15 +8,17 @@
  */
 namespace EzSystems\RepositoryForms\Tests\Form\Processor;
 
+use eZ\Publish\API\Repository\SectionService;
 use eZ\Publish\API\Repository\Values\Content\Section;
 use EzSystems\RepositoryForms\Data\Section\SectionCreateData;
 use EzSystems\RepositoryForms\Data\Section\SectionUpdateData;
 use EzSystems\RepositoryForms\Event\FormActionEvent;
 use EzSystems\RepositoryForms\Event\RepositoryFormEvents;
 use EzSystems\RepositoryForms\Form\Processor\SectionFormProcessor;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
+use Symfony\Component\Form\FormInterface;
 
-class SectionFormProcessorTest extends PHPUnit_Framework_TestCase
+class SectionFormProcessorTest extends TestCase
 {
     /**
      * @var \PHPUnit_Framework_MockObject_MockObject|\eZ\Publish\API\Repository\SectionService
@@ -31,7 +33,7 @@ class SectionFormProcessorTest extends PHPUnit_Framework_TestCase
     protected function setUp()
     {
         parent::setUp();
-        $this->sectionService = $this->getMock('\eZ\Publish\API\Repository\SectionService');
+        $this->sectionService = $this->createMock(SectionService::class);
         $this->processor = new SectionFormProcessor($this->sectionService);
     }
 
@@ -49,7 +51,7 @@ class SectionFormProcessorTest extends PHPUnit_Framework_TestCase
     {
         $data = new SectionCreateData();
         $newSection = new Section();
-        $event = new FormActionEvent($this->getMock('\Symfony\Component\Form\FormInterface'), $data, 'foo');
+        $event = new FormActionEvent($this->createMock(FormInterface::class), $data, 'foo');
 
         $this->sectionService
             ->expects($this->once())
@@ -66,7 +68,7 @@ class SectionFormProcessorTest extends PHPUnit_Framework_TestCase
         $existingSection = new Section();
         $updatedSection = new Section();
         $data = new SectionUpdateData(['section' => $existingSection]);
-        $event = new FormActionEvent($this->getMock('\Symfony\Component\Form\FormInterface'), $data, 'foo');
+        $event = new FormActionEvent($this->createMock(FormInterface::class), $data, 'foo');
 
         $this->sectionService
             ->expects($this->once())

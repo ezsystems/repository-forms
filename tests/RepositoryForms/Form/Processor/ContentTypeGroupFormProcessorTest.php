@@ -8,15 +8,17 @@
  */
 namespace EzSystems\RepositoryForms\Tests\Form\Processor;
 
+use eZ\Publish\API\Repository\ContentTypeService;
 use eZ\Publish\Core\Repository\Values\ContentType\ContentTypeGroup;
 use EzSystems\RepositoryForms\Data\ContentTypeGroup\ContentTypeGroupCreateData;
 use EzSystems\RepositoryForms\Data\ContentTypeGroup\ContentTypeGroupUpdateData;
 use EzSystems\RepositoryForms\Event\FormActionEvent;
 use EzSystems\RepositoryForms\Event\RepositoryFormEvents;
 use EzSystems\RepositoryForms\Form\Processor\ContentTypeGroupFormProcessor;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
+use Symfony\Component\Form\FormInterface;
 
-class ContentTypeGroupFormProcessorTest extends PHPUnit_Framework_TestCase
+class ContentTypeGroupFormProcessorTest extends TestCase
 {
     /**
      * @var \PHPUnit_Framework_MockObject_MockObject
@@ -31,7 +33,7 @@ class ContentTypeGroupFormProcessorTest extends PHPUnit_Framework_TestCase
     protected function setUp()
     {
         parent::setUp();
-        $this->contentTypeService = $this->getMock('\eZ\Publish\API\Repository\ContentTypeService');
+        $this->contentTypeService = $this->createMock(ContentTypeService::class);
         $this->processor = new ContentTypeGroupFormProcessor($this->contentTypeService);
     }
 
@@ -49,7 +51,7 @@ class ContentTypeGroupFormProcessorTest extends PHPUnit_Framework_TestCase
     {
         $data = new ContentTypeGroupCreateData();
         $newContentTypeGroup = new ContentTypeGroup();
-        $event = new FormActionEvent($this->getMock('\Symfony\Component\Form\FormInterface'), $data, 'foo');
+        $event = new FormActionEvent($this->createMock(FormInterface::class), $data, 'foo');
 
         $this->contentTypeService
             ->expects($this->once())
@@ -67,7 +69,7 @@ class ContentTypeGroupFormProcessorTest extends PHPUnit_Framework_TestCase
         $existingContentTypeGroup = new ContentTypeGroup(['id' => $contentTypeGroupId]);
         $updatedContentTypeGroup = new ContentTypeGroup(['id' => $contentTypeGroupId]);
         $data = new ContentTypeGroupUpdateData(['contentTypeGroup' => $existingContentTypeGroup]);
-        $event = new FormActionEvent($this->getMock('\Symfony\Component\Form\FormInterface'), $data, 'foo');
+        $event = new FormActionEvent($this->createMock(FormInterface::class), $data, 'foo');
 
         $this->contentTypeService
             ->expects($this->once())

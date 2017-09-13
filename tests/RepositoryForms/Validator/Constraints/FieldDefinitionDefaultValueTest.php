@@ -11,10 +11,10 @@
 namespace EzSystems\RepositoryForms\Tests\Validator\Constraints;
 
 use EzSystems\RepositoryForms\Validator\Constraints\FieldDefinitionDefaultValue;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 use Symfony\Component\Validator\Constraint;
 
-class FieldDefinitionDefaultValueTest extends PHPUnit_Framework_TestCase
+class FieldDefinitionDefaultValueTest extends TestCase
 {
     public function testConstruct()
     {

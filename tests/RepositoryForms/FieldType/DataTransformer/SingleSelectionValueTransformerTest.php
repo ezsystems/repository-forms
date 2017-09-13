@@ -12,9 +12,9 @@ namespace EzSystems\RepositoryForms\Tests\FieldType\DataTransformer;
 
 use eZ\Publish\Core\FieldType\Selection\Value;
 use EzSystems\RepositoryForms\FieldType\DataTransformer\SingleSelectionValueTransformer;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 
-class SingleSelectionValueTransformerTest extends PHPUnit_Framework_TestCase
+class SingleSelectionValueTransformerTest extends TestCase
 {
     public function transformProvider()
     {
@@ -48,7 +48,7 @@ class SingleSelectionValueTransformerTest extends PHPUnit_Framework_TestCase
     public function transformNullProvider()
     {
         return [
-            [new \eZ\Publish\Core\FieldType\Selection\Value()],
+            [new Value()],
             [[]],
             [false],
             [''],

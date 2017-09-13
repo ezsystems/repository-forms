@@ -11,9 +11,9 @@
 namespace EzSystems\RepositoryForms\Tests\Validator\Constraints;
 
 use EzSystems\RepositoryForms\Validator\Constraints\UniqueContentTypeIdentifier;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 
-class UniqueContentTypeIdentifierTest extends PHPUnit_Framework_TestCase
+class UniqueContentTypeIdentifierTest extends TestCase
 {
     public function testConstruct()
     {

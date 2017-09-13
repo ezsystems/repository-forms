@@ -8,6 +8,7 @@
  */
 namespace EzSystems\RepositoryForms\Tests\Form\Processor;
 
+use eZ\Publish\API\Repository\RoleService;
 use eZ\Publish\Core\Repository\Values\User\Policy;
 use eZ\Publish\Core\Repository\Values\User\PolicyDraft;
 use eZ\Publish\Core\Repository\Values\User\Role;
@@ -16,9 +17,10 @@ use EzSystems\RepositoryForms\Data\Mapper\PolicyMapper;
 use EzSystems\RepositoryForms\Event\FormActionEvent;
 use EzSystems\RepositoryForms\Event\RepositoryFormEvents;
 use EzSystems\RepositoryForms\Form\Processor\PolicyFormProcessor;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
+use Symfony\Component\Form\FormInterface;
 
-class PolicyFormProcessorTest extends PHPUnit_Framework_TestCase
+class PolicyFormProcessorTest extends TestCase
 {
     /**
      * @var \PHPUnit_Framework_MockObject_MockObject
@@ -33,7 +35,7 @@ class PolicyFormProcessorTest extends PHPUnit_Framework_TestCase
     protected function setUp()
     {
         parent::setUp();
-        $this->roleService = $this->getMock('\eZ\Publish\API\Repository\RoleService');
+        $this->roleService = $this->createMock(RoleService::class);
         $this->processor = new PolicyFormProcessor($this->roleService);
     }
 
@@ -63,7 +65,7 @@ class PolicyFormProcessorTest extends PHPUnit_Framework_TestCase
         $module = 'foo';
         $function = 'bar';
         $data->moduleFunction = "$module|$function";
-        $event = new FormActionEvent($this->getMock('\Symfony\Component\Form\FormInterface'), $data, 'foo');
+        $event = new FormActionEvent($this->createMock(FormInterface::class), $data, 'foo');
 
         $newPolicyDraft = new PolicyDraft(['innerPolicy' => new Policy(['id' => 456])]);
         $updatedRoleDraft = new RoleDraft(['innerRole' => new Role(['policies' => [$existingPolicy, $newPolicyDraft]])]);
@@ -90,7 +92,7 @@ class PolicyFormProcessorTest extends PHPUnit_Framework_TestCase
         $module = 'foo';
         $function = 'bar';
         $data->moduleFunction = "$module|$function";
-        $event = new FormActionEvent($this->getMock('\Symfony\Component\Form\FormInterface'), $data, 'foo');
+        $event = new FormActionEvent($this->createMock(FormInterface::class), $data, 'foo');
 
         $this->roleService
             ->expects($this->once())
@@ -113,7 +115,7 @@ class PolicyFormProcessorTest extends PHPUnit_Framework_TestCase
         $module = 'foo';
         $function = 'bar';
         $data->moduleFunction = "$module|$function";
-        $event = new FormActionEvent($this->getMock('\Symfony\Component\Form\FormInterface'), $data, 'foo');
+        $event = new FormActionEvent($this->createMock(FormInterface::class), $data, 'foo');
 
         $this->roleService
             ->expects($this->never())
@@ -140,7 +142,7 @@ class PolicyFormProcessorTest extends PHPUnit_Framework_TestCase
         $module = 'foo';
         $function = 'bar';
         $data->moduleFunction = "$module|$function";
-        $event = new FormActionEvent($this->getMock('\Symfony\Component\Form\FormInterface'), $data, 'foo');
+        $event = new FormActionEvent($this->createMock(FormInterface::class), $data, 'foo');
 
         $this->roleService
             ->expects($this->once())

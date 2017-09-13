@@ -11,15 +11,16 @@
 namespace EzSystems\RepositoryForms\Tests\Event;
 
 use EzSystems\RepositoryForms\Event\FormActionEvent;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 use stdClass;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Form\FormInterface;
 
-class FormActionEventTest extends PHPUnit_Framework_TestCase
+class FormActionEventTest extends TestCase
 {
     public function testConstruct()
     {
-        $form = $this->getMock('\Symfony\Component\Form\FormInterface');
+        $form = $this->createMock(FormInterface::class);
         $data = new stdClass();
         $clickedButton = 'fooButton';
         $options = ['languageCode' => 'eng-GB', 'foo' => 'bar'];
@@ -34,7 +35,7 @@ class FormActionEventTest extends PHPUnit_Framework_TestCase
     public function testEventDoesntHaveResponse()
     {
         $event = new FormActionEvent(
-            $this->getMock('\Symfony\Component\Form\FormInterface'),
+            $this->createMock(FormInterface::class),
             new stdClass(), 'fooButton'
         );
         self::assertFalse($event->hasResponse());
@@ -44,7 +45,7 @@ class FormActionEventTest extends PHPUnit_Framework_TestCase
     public function testEventSetResponse()
     {
         $event = new FormActionEvent(
-            $this->getMock('\Symfony\Component\Form\FormInterface'),
+            $this->createMock(FormInterface::class),
             new stdClass(), 'fooButton'
         );
         self::assertFalse($event->hasResponse());
@@ -62,7 +63,7 @@ class FormActionEventTest extends PHPUnit_Framework_TestCase
         $options = ['languageCode' => 'eng-GB', 'foo' => 'bar', 'obj' => $objectOption];
 
         $event = new FormActionEvent(
-            $this->getMock('\Symfony\Component\Form\FormInterface'),
+            $this->createMock(FormInterface::class),
             new stdClass(), 'fooButton', $options
         );
         self::assertTrue($event->hasOption('languageCode'));

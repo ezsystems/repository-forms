@@ -12,9 +12,9 @@ namespace EzSystems\RepositoryForms\Tests\FieldType\DataTransformer;
 
 use eZ\Publish\Core\FieldType\Country\Value;
 use EzSystems\RepositoryForms\FieldType\DataTransformer\CountryValueTransformer;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 
-class CountryValueTransformerTest extends PHPUnit_Framework_TestCase
+class CountryValueTransformerTest extends TestCase
 {
     /**
      * @var array Array of countries from ezpublish.fieldType.ezcountry.data
