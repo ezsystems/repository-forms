@@ -11,7 +11,10 @@
 namespace EzSystems\RepositoryForms\Tests\FieldType;
 
 use EzSystems\RepositoryForms\FieldType\FieldTypeFormMapperRegistry;
+use EzSystems\RepositoryForms\FieldType\FieldTypeFormMapperInterface;
+use EzSystems\RepositoryForms\Data\FieldDefinitionData;
 use PHPUnit\Framework\TestCase;
+use Symfony\Component\Form\FormInterface;
 
 class FieldTypeFormMapperRegistryTest extends TestCase
 {
@@ -20,11 +23,11 @@ class FieldTypeFormMapperRegistryTest extends TestCase
         $registry = new FieldTypeFormMapperRegistry();
         self::assertSame([], $registry->getMappers());
 
-        $mapper1 = $this->getMock('\EzSystems\RepositoryForms\FieldType\FieldTypeFormMapperInterface');
+        $mapper1 = $this->createMock(FieldTypeFormMapperInterface::class);
         $identifier1 = 'foo';
         $registry->addMapper($mapper1, $identifier1);
         $identifier2 = 'bar';
-        $mapper2 = $this->getMock('\EzSystems\RepositoryForms\FieldType\FieldTypeFormMapperInterface');
+        $mapper2 = $this->createMock(FieldTypeFormMapperInterface::class);
         $registry->addMapper($mapper2, $identifier2);
         self::assertSame([
             $identifier1 => $mapper1,
@@ -37,7 +40,7 @@ class FieldTypeFormMapperRegistryTest extends TestCase
         $registry = new FieldTypeFormMapperRegistry();
         $identifier = 'foo';
         self::assertFalse($registry->hasMapper($identifier));
-        $registry->addMapper($this->getMock('\EzSystems\RepositoryForms\FieldType\FieldTypeFormMapperInterface'), $identifier);
+        $registry->addMapper($this->createMock(FieldTypeFormMapperInterface::class), $identifier);
         self::assertTrue($registry->hasMapper($identifier));
     }
 
@@ -53,7 +56,7 @@ class FieldTypeFormMapperRegistryTest extends TestCase
     public function testGetMapper()
     {
         $registry = new FieldTypeFormMapperRegistry();
-        $mapper = $this->getMock('\EzSystems\RepositoryForms\FieldType\FieldTypeFormMapperInterface');
+        $mapper = $this->createMock(FieldTypeFormMapperInterface::class);
         $registry->addMapper($mapper, 'foo');
         self::assertSame($mapper, $registry->getMapper('foo'));
     }
@@ -61,8 +64,8 @@ class FieldTypeFormMapperRegistryTest extends TestCase
     public function testMapFieldDefinitionFormNoMapper()
     {
         $registry = new FieldTypeFormMapperRegistry();
-        $form = $this->getMock('\Symfony\Component\Form\FormInterface');
-        $data = $this->getMock('\EzSystems\RepositoryForms\Data\FieldDefinitionData');
+        $form = $this->createMock(FormInterface::class);
+        $data = $this->createMock(FieldDefinitionData::class);
         $data
             ->expects($this->once())
             ->method('getFieldTypeIdentifier')
@@ -73,11 +76,11 @@ class FieldTypeFormMapperRegistryTest extends TestCase
 
     public function testMapFieldDefinitionForm()
     {
-        $mapper = $this->getMock('\EzSystems\RepositoryForms\FieldType\FieldTypeFormMapperInterface');
+        $mapper = $this->createMock(FieldTypeFormMapperInterface::class);
         $registry = new FieldTypeFormMapperRegistry();
         $registry->addMapper($mapper, 'ezstring');
-        $form = $this->getMock('\Symfony\Component\Form\FormInterface');
-        $data = $this->getMock('\EzSystems\RepositoryForms\Data\FieldDefinitionData');
+        $form = $this->createMock(FormInterface::class);
+        $data = $this->createMock(FieldDefinitionData::class);
         $data
             ->expects($this->once())
             ->method('getFieldTypeIdentifier')

@@ -15,7 +15,10 @@ use EzSystems\RepositoryForms\Data\ContentTypeData;
 use EzSystems\RepositoryForms\Data\FieldDefinitionData;
 use EzSystems\RepositoryForms\FieldType\FieldTypeFormMapperDispatcher;
 use EzSystems\RepositoryForms\FieldType\FieldTypeFormMapperDispatcherInterface;
+use EzSystems\RepositoryForms\FieldType\FieldDefinitionFormMapperInterface;
+use EzSystems\RepositoryForms\FieldType\FieldValueFormMapperInterface;
 use PHPUnit\Framework\TestCase;
+use Symfony\Component\Form\FormInterface;
 
 class FieldTypeFormMapperDispatcherTest extends TestCase
 {
@@ -39,8 +42,8 @@ class FieldTypeFormMapperDispatcherTest extends TestCase
         $this->dispatcher = new FieldTypeFormMapperDispatcher();
 
         // Should be improved to test with a value + definition mapper (this is what repo-forms uses)
-        $this->fieldDefinitionMapperMock = $this->getMock('EzSystems\RepositoryForms\FieldType\FieldDefinitionFormMapperInterface');
-        $this->fieldValueMapperMock = $this->getMock('EzSystems\RepositoryForms\FieldType\FieldValueFormMapperInterface');
+        $this->fieldDefinitionMapperMock = $this->createMock(FieldDefinitionFormMapperInterface::class);
+        $this->fieldValueMapperMock = $this->createMock(FieldValueFormMapperInterface::class);
         $this->dispatcher->addMapper($this->fieldDefinitionMapperMock, 'first_type');
         $this->dispatcher->addMapper($this->fieldValueMapperMock, 'second_type');
     }
@@ -52,7 +55,7 @@ class FieldTypeFormMapperDispatcherTest extends TestCase
             'contentTypeData' => new ContentTypeData(),
         ]);
 
-        $formMock = $this->getMock('Symfony\Component\Form\FormInterface');
+        $formMock = $this->createMock(FormInterface::class);
 
         $this->fieldValueMapperMock
             ->expects($this->never())
@@ -73,7 +76,7 @@ class FieldTypeFormMapperDispatcherTest extends TestCase
             'fieldDefinition' => new FieldDefinition(['fieldTypeIdentifier' => 'second_type']),
         ]);
 
-        $formMock = $this->getMock('Symfony\Component\Form\FormInterface');
+        $formMock = $this->createMock(FormInterface::class);
 
         $this->fieldValueMapperMock
             ->expects($this->once())

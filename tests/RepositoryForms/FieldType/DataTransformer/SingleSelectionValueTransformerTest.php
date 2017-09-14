@@ -48,7 +48,7 @@ class SingleSelectionValueTransformerTest extends TestCase
     public function transformNullProvider()
     {
         return [
-            [new \eZ\Publish\Core\FieldType\Selection\Value()],
+            [new Value()],
             [[]],
             [false],
             [''],

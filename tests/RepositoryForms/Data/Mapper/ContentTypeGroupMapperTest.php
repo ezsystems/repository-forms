@@ -10,6 +10,8 @@ namespace EzSystems\RepositoryForms\Tests\Data\Mapper;
 
 use eZ\Publish\Core\Repository\Values\ContentType\ContentTypeGroup;
 use EzSystems\RepositoryForms\Data\Mapper\ContentTypeGroupMapper;
+use EzSystems\RepositoryForms\Data\ContentTypeGroup\ContentTypeGroupCreateData;
+use EzSystems\RepositoryForms\Data\ContentTypeGroup\ContentTypeGroupUpdateData;
 use PHPUnit\Framework\TestCase;
 
 class ContentTypeGroupMapperTest extends TestCase
@@ -18,7 +20,7 @@ class ContentTypeGroupMapperTest extends TestCase
     {
         $contentTypeGroup = new ContentTypeGroup();
         $data = (new ContentTypeGroupMapper())->mapToFormData($contentTypeGroup);
-        self::assertInstanceOf('\EzSystems\RepositoryForms\Data\ContentTypeGroup\ContentTypeGroupCreateData', $data);
+        self::assertInstanceOf(ContentTypeGroupCreateData::class, $data);
         self::assertSame($contentTypeGroup, $data->contentTypeGroup);
     }
 
@@ -27,7 +29,7 @@ class ContentTypeGroupMapperTest extends TestCase
         $id = 123;
         $contentTypeGroup = new ContentTypeGroup(['id' => $id, 'identifier' => 'Foo']);
         $data = (new ContentTypeGroupMapper())->mapToFormData($contentTypeGroup);
-        self::assertInstanceOf('\EzSystems\RepositoryForms\Data\ContentTypeGroup\ContentTypeGroupUpdateData', $data);
+        self::assertInstanceOf(ContentTypeGroupUpdateData::class, $data);
         self::assertSame($contentTypeGroup, $data->contentTypeGroup);
         self::assertSame($id, $data->getId());
     }

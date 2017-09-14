@@ -41,8 +41,8 @@ class UniqueLanguageCodeValidatorTest extends TestCase
 
     protected function setUp()
     {
-        $this->languageService = $this->getMock(LanguageService::class);
-        $this->executionContext = $this->getMock(ExecutionContextInterface::class);
+        $this->languageService = $this->createMock(LanguageService::class);
+        $this->executionContext = $this->createMock(ExecutionContextInterface::class);
         $this->validator = new UniqueLanguageCodeValidator($this->languageService);
         $this->validator->initialize($this->executionContext);
     }
@@ -74,7 +74,7 @@ class UniqueLanguageCodeValidatorTest extends TestCase
             ->willThrowException(new InvalidArgumentException('languageCode', 'language code has an invalid value'));
         $this->executionContext
             ->expects($this->never())
-            ->method('buildVioloation');
+            ->method('buildViolation');
 
         $this->validator->validate($value, new UniqueLanguageCode());
     }
@@ -93,7 +93,7 @@ class UniqueLanguageCodeValidatorTest extends TestCase
             ->willThrowException(new NotFoundException('Language', $languageCode));
         $this->executionContext
             ->expects($this->never())
-            ->method('buildVioloation');
+            ->method('buildViolation');
 
         $this->validator->validate($value, new UniqueLanguageCode());
     }
@@ -120,7 +120,7 @@ class UniqueLanguageCodeValidatorTest extends TestCase
             ->willReturn($returnedLanguage);
         $this->executionContext
             ->expects($this->never())
-            ->method('buildVioloation');
+            ->method('buildViolation');
 
         $this->validator->validate($value, new UniqueLanguageCode());
     }
@@ -145,7 +145,7 @@ class UniqueLanguageCodeValidatorTest extends TestCase
             ->with($languageCode)
             ->willReturn($returnedLanguage);
         $constraint = new UniqueLanguageCode();
-        $constraintViolationBuilder = $this->getMock(ConstraintViolationBuilderInterface::class);
+        $constraintViolationBuilder = $this->createMock(ConstraintViolationBuilderInterface::class);
         $this->executionContext
             ->expects($this->once())
             ->method('buildViolation')

@@ -8,6 +8,7 @@
  */
 namespace EzSystems\RepositoryForms\Tests\Form\Processor;
 
+use eZ\Publish\API\Repository\LanguageService;
 use eZ\Publish\API\Repository\Values\Content\Language;
 use EzSystems\RepositoryForms\Data\Language\LanguageCreateData;
 use EzSystems\RepositoryForms\Data\Language\LanguageUpdateData;
@@ -15,6 +16,7 @@ use EzSystems\RepositoryForms\Event\FormActionEvent;
 use EzSystems\RepositoryForms\Event\RepositoryFormEvents;
 use EzSystems\RepositoryForms\Form\Processor\LanguageFormProcessor;
 use PHPUnit\Framework\TestCase;
+use Symfony\Component\Form\FormInterface;
 
 class LanguageFormProcessorTest extends TestCase
 {
@@ -31,7 +33,7 @@ class LanguageFormProcessorTest extends TestCase
     protected function setUp()
     {
         parent::setUp();
-        $this->languageService = $this->getMock('\eZ\Publish\API\Repository\LanguageService');
+        $this->languageService = $this->createMock(LanguageService::class);
         $this->processor = new LanguageFormProcessor($this->languageService);
     }
 
@@ -49,7 +51,7 @@ class LanguageFormProcessorTest extends TestCase
     {
         $data = new LanguageCreateData();
         $newLanguage = new Language();
-        $event = new FormActionEvent($this->getMock('\Symfony\Component\Form\FormInterface'), $data, 'foo');
+        $event = new FormActionEvent($this->createMock(FormInterface::class), $data, 'foo');
 
         $this->languageService
             ->expects($this->once())
@@ -66,7 +68,7 @@ class LanguageFormProcessorTest extends TestCase
         $existingLanguage = new Language();
         $updatedLanguage = new Language();
         $data = new LanguageUpdateData(['language' => $existingLanguage, 'name' => 'update']);
-        $event = new FormActionEvent($this->getMock('\Symfony\Component\Form\FormInterface'), $data, 'foo');
+        $event = new FormActionEvent($this->createMock(FormInterface::class), $data, 'foo');
 
         $this->languageService
             ->expects($this->once())

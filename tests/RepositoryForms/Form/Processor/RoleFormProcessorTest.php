@@ -10,12 +10,15 @@
  */
 namespace EzSystems\RepositoryForms\Tests\Form\Processor;
 
+use eZ\Publish\API\Repository\RoleService;
 use eZ\Publish\Core\Repository\Values\User\RoleDraft;
 use EzSystems\RepositoryForms\Data\Role\RoleData;
 use EzSystems\RepositoryForms\Event\FormActionEvent;
 use EzSystems\RepositoryForms\Event\RepositoryFormEvents;
 use EzSystems\RepositoryForms\Form\Processor\RoleFormProcessor;
 use PHPUnit\Framework\TestCase;
+use Symfony\Component\Routing\RouterInterface;
+use Symfony\Component\Form\FormInterface;
 
 class RoleFormProcessorTest extends TestCase
 {
@@ -37,8 +40,8 @@ class RoleFormProcessorTest extends TestCase
     protected function setUp()
     {
         parent::setUp();
-        $this->roleService = $this->getMock('\eZ\Publish\API\Repository\RoleService');
-        $this->router = $this->getMock('\Symfony\Component\Routing\RouterInterface');
+        $this->roleService = $this->createMock(RoleService::class);
+        $this->router = $this->createMock(RouterInterface::class);
         $this->formProcessor = new RoleFormProcessor($this->roleService, $this->router);
     }
 
@@ -55,7 +58,7 @@ class RoleFormProcessorTest extends TestCase
     {
         $roleDraft = new RoleDraft();
         $roleData = new RoleData(['roleDraft' => $roleDraft]);
-        $event = new FormActionEvent($this->getMock('\Symfony\Component\Form\FormInterface'), $roleData, null);
+        $event = new FormActionEvent($this->createMock(FormInterface::class), $roleData, null);
 
         $this->roleService
             ->expects($this->at(0))
@@ -73,7 +76,7 @@ class RoleFormProcessorTest extends TestCase
     {
         $roleDraft = new RoleDraft();
         $roleData = new RoleData(['roleDraft' => $roleDraft]);
-        $event = new FormActionEvent($this->getMock('\Symfony\Component\Form\FormInterface'), $roleData, 'saveRole');
+        $event = new FormActionEvent($this->createMock(FormInterface::class), $roleData, 'saveRole');
 
         $this->roleService
             ->expects($this->at(0))
@@ -91,7 +94,7 @@ class RoleFormProcessorTest extends TestCase
     {
         $roleDraft = new RoleDraft();
         $roleData = new RoleData(['roleDraft' => $roleDraft]);
-        $event = new FormActionEvent($this->getMock('\Symfony\Component\Form\FormInterface'), $roleData, 'removeDraft');
+        $event = new FormActionEvent($this->createMock(FormInterface::class), $roleData, 'removeDraft');
 
         $this->roleService
             ->expects($this->once())

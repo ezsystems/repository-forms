@@ -15,6 +15,8 @@ use EzSystems\RepositoryForms\Data\FieldDefinitionData;
 use EzSystems\RepositoryForms\Validator\Constraints\UniqueFieldDefinitionIdentifier;
 use EzSystems\RepositoryForms\Validator\Constraints\UniqueFieldDefinitionIdentifierValidator;
 use PHPUnit\Framework\TestCase;
+use Symfony\Component\Validator\Context\ExecutionContextInterface;
+use Symfony\Component\Validator\Violation\ConstraintViolationBuilderInterface;
 
 class UniqueFieldDefinitionIdentifierValidatorTest extends TestCase
 {
@@ -31,7 +33,7 @@ class UniqueFieldDefinitionIdentifierValidatorTest extends TestCase
     protected function setUp()
     {
         parent::setUp();
-        $this->executionContext = $this->getMock('\Symfony\Component\Validator\Context\ExecutionContextInterface');
+        $this->executionContext = $this->createMock(ExecutionContextInterface::class);
         $this->validator = new UniqueFieldDefinitionIdentifierValidator();
         $this->validator->initialize($this->executionContext);
     }
@@ -66,7 +68,7 @@ class UniqueFieldDefinitionIdentifierValidatorTest extends TestCase
     {
         $identifier = 'foo';
         $constraint = new UniqueFieldDefinitionIdentifier();
-        $constraintViolationBuilder = $this->getMock('\Symfony\Component\Validator\Violation\ConstraintViolationBuilderInterface');
+        $constraintViolationBuilder = $this->createMock(ConstraintViolationBuilderInterface::class);
         $this->executionContext
             ->expects($this->once())
             ->method('buildViolation')
