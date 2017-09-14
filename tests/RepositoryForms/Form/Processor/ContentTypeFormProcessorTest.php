@@ -12,17 +12,21 @@ namespace EzSystems\RepositoryForms\Tests\Form\Processor;
 
 use eZ\Publish\API\Repository\Values\ContentType\FieldDefinitionCreateStruct;
 use eZ\Publish\Core\Repository\Values\ContentType\ContentType;
+use eZ\Publish\API\Repository\ContentTypeService;
 use eZ\Publish\Core\Repository\Values\ContentType\ContentTypeDraft;
 use eZ\Publish\Core\Repository\Values\ContentType\FieldDefinition;
+use eZ\Publish\Core\Helper\FieldsGroups\FieldsGroupsList;
 use EzSystems\RepositoryForms\Data\ContentTypeData;
 use EzSystems\RepositoryForms\Data\FieldDefinitionData;
 use EzSystems\RepositoryForms\Event\FormActionEvent;
 use EzSystems\RepositoryForms\Event\RepositoryFormEvents;
 use EzSystems\RepositoryForms\Form\Processor\ContentTypeFormProcessor;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\Routing\RouterInterface;
+use Symfony\Component\Form\FormInterface;
 
-class ContentTypeFormProcessorTest extends PHPUnit_Framework_TestCase
+class ContentTypeFormProcessorTest extends TestCase
 {
     /**
      * @var \eZ\Publish\API\Repository\ContentTypeService|\PHPUnit_Framework_MockObject_MockObject
@@ -47,9 +51,9 @@ class ContentTypeFormProcessorTest extends PHPUnit_Framework_TestCase
     protected function setUp()
     {
         parent::setUp();
-        $this->contentTypeService = $this->getMock('\eZ\Publish\API\Repository\ContentTypeService');
-        $this->router = $this->getMock('\Symfony\Component\Routing\RouterInterface');
-        $this->groupsList = $this->getMock('eZ\Publish\Core\Helper\FieldsGroups\FieldsGroupsList');
+        $this->contentTypeService = $this->createMock(ContentTypeService::class);
+        $this->router = $this->createMock(RouterInterface::class);
+        $this->groupsList = $this->createMock(FieldsGroupsList::class);
 
         $this->formProcessor = new ContentTypeFormProcessor($this->contentTypeService, $this->router);
         $this->formProcessor->setGroupsList($this->groupsList);
@@ -90,7 +94,7 @@ class ContentTypeFormProcessorTest extends PHPUnit_Framework_TestCase
             ->method('updateContentTypeDraft')
             ->with($contentTypeDraft, $contentTypeData);
 
-        $event = new FormActionEvent($this->getMock('\Symfony\Component\Form\FormInterface'), $contentTypeData, 'fooAction');
+        $event = new FormActionEvent($this->createMock(FormInterface::class), $contentTypeData, 'fooAction');
         $this->formProcessor->processDefaultAction($event);
     }
 
@@ -113,12 +117,12 @@ class ContentTypeFormProcessorTest extends PHPUnit_Framework_TestCase
             count($existingFieldDefinitions) + 1
         );
 
-        $fieldTypeSelectionForm = $this->getMock('\Symfony\Component\Form\FormInterface');
+        $fieldTypeSelectionForm = $this->createMock(FormInterface::class);
         $fieldTypeSelectionForm
             ->expects($this->once())
             ->method('getData')
             ->willReturn($fieldTypeIdentifier);
-        $mainForm = $this->getMock('\Symfony\Component\Form\FormInterface');
+        $mainForm = $this->createMock(FormInterface::class);
         $mainForm
             ->expects($this->once())
             ->method('get')
@@ -159,7 +163,7 @@ class ContentTypeFormProcessorTest extends PHPUnit_Framework_TestCase
     {
         $contentTypeDraft = new ContentTypeDraft();
         $event = new FormActionEvent(
-            $this->getMock('\Symfony\Component\Form\FormInterface'),
+            $this->createMock(FormInterface::class),
             new ContentTypeData(['contentTypeDraft' => $contentTypeDraft]),
             'publishContentType', ['languageCode' => 'eng-GB']
         );
@@ -177,7 +181,7 @@ class ContentTypeFormProcessorTest extends PHPUnit_Framework_TestCase
         $redirectUrl = 'http://foo.com/bar';
         $contentTypeDraft = new ContentTypeDraft();
         $event = new FormActionEvent(
-            $this->getMock('\Symfony\Component\Form\FormInterface'),
+            $this->createMock(FormInterface::class),
             new ContentTypeData(['contentTypeDraft' => $contentTypeDraft]),
             'publishContentType', ['languageCode' => 'eng-GB']
         );
@@ -210,8 +214,8 @@ class ContentTypeFormProcessorTest extends PHPUnit_Framework_TestCase
             ]),
         ]);
 
-        $fieldDefForm1 = $this->getMock('\Symfony\Component\Form\FormInterface');
-        $fieldDefSelected1 = $this->getMock('\Symfony\Component\Form\FormInterface');
+        $fieldDefForm1 = $this->createMock(FormInterface::class);
+        $fieldDefSelected1 = $this->createMock(FormInterface::class);
         $fieldDefForm1
             ->expects($this->once())
             ->method('get')
@@ -225,8 +229,8 @@ class ContentTypeFormProcessorTest extends PHPUnit_Framework_TestCase
             ->expects($this->never())
             ->method('getData');
 
-        $fieldDefForm2 = $this->getMock('\Symfony\Component\Form\FormInterface');
-        $fieldDefSelected2 = $this->getMock('\Symfony\Component\Form\FormInterface');
+        $fieldDefForm2 = $this->createMock(FormInterface::class);
+        $fieldDefSelected2 = $this->createMock(FormInterface::class);
         $fieldDefForm2
             ->expects($this->once())
             ->method('get')
@@ -241,8 +245,8 @@ class ContentTypeFormProcessorTest extends PHPUnit_Framework_TestCase
             ->method('getData')
             ->willReturn(new FieldDefinitionData(['fieldDefinition' => $fieldDefinition1]));
 
-        $fieldDefForm3 = $this->getMock('\Symfony\Component\Form\FormInterface');
-        $fieldDefSelected3 = $this->getMock('\Symfony\Component\Form\FormInterface');
+        $fieldDefForm3 = $this->createMock(FormInterface::class);
+        $fieldDefSelected3 = $this->createMock(FormInterface::class);
         $fieldDefForm3
             ->expects($this->once())
             ->method('get')
@@ -257,7 +261,7 @@ class ContentTypeFormProcessorTest extends PHPUnit_Framework_TestCase
             ->method('getData')
             ->willReturn(new FieldDefinitionData(['fieldDefinition' => $fieldDefinition1]));
 
-        $mainForm = $this->getMock('\Symfony\Component\Form\FormInterface');
+        $mainForm = $this->createMock(FormInterface::class);
         $mainForm
             ->expects($this->once())
             ->method('get')
@@ -276,7 +280,7 @@ class ContentTypeFormProcessorTest extends PHPUnit_Framework_TestCase
     {
         $contentTypeDraft = new ContentTypeDraft();
         $event = new FormActionEvent(
-            $this->getMock('\Symfony\Component\Form\FormInterface'),
+            $this->createMock(FormInterface::class),
             new ContentTypeData(['contentTypeDraft' => $contentTypeDraft]),
             'removeDraft', ['languageCode' => 'eng-GB']
         );
@@ -294,7 +298,7 @@ class ContentTypeFormProcessorTest extends PHPUnit_Framework_TestCase
         $redirectUrl = 'http://foo.com/bar';
         $contentTypeDraft = new ContentTypeDraft();
         $event = new FormActionEvent(
-            $this->getMock('\Symfony\Component\Form\FormInterface'),
+            $this->createMock(FormInterface::class),
             new ContentTypeData(['contentTypeDraft' => $contentTypeDraft]),
             'removeDraft', ['languageCode' => 'eng-GB']
         );

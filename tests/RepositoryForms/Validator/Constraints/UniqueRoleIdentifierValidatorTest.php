@@ -19,10 +19,10 @@ use EzSystems\RepositoryForms\Validator\Constraints\UniqueRoleIdentifier;
 use EzSystems\RepositoryForms\Validator\Constraints\UniqueRoleIdentifierValidator;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
 use Symfony\Component\Validator\Violation\ConstraintViolationBuilderInterface;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 use stdClass;
 
-class UniqueRoleIdentifierValidatorTest extends PHPUnit_Framework_TestCase
+class UniqueRoleIdentifierValidatorTest extends TestCase
 {
     /**
      * @var \PHPUnit_Framework_MockObject_MockObject
@@ -42,8 +42,8 @@ class UniqueRoleIdentifierValidatorTest extends PHPUnit_Framework_TestCase
     protected function setUp()
     {
         parent::setUp();
-        $this->roleService = $this->getMock(RoleService::class);
-        $this->executionContext = $this->getMock(ExecutionContextInterface::class);
+        $this->roleService = $this->createMock(RoleService::class);
+        $this->executionContext = $this->createMock(ExecutionContextInterface::class);
         $this->validator = new UniqueRoleIdentifierValidator($this->roleService);
         $this->validator->initialize($this->executionContext);
     }
@@ -85,7 +85,7 @@ class UniqueRoleIdentifierValidatorTest extends PHPUnit_Framework_TestCase
             ->willThrowException(new NotFoundException('foo', 'bar'));
         $this->executionContext
             ->expects($this->never())
-            ->method('buildVioloation');
+            ->method('buildViolation');
 
         $this->validator->validate($value, new UniqueRoleIdentifier());
     }
@@ -111,7 +111,7 @@ class UniqueRoleIdentifierValidatorTest extends PHPUnit_Framework_TestCase
             ->willReturn($returnedRole);
         $this->executionContext
             ->expects($this->never())
-            ->method('buildVioloation');
+            ->method('buildViolation');
 
         $this->validator->validate($value, new UniqueRoleIdentifier());
     }
@@ -127,7 +127,7 @@ class UniqueRoleIdentifierValidatorTest extends PHPUnit_Framework_TestCase
             'roleDraft' => $roleDraft,
         ]);
         $constraint = new UniqueRoleIdentifier();
-        $constraintViolationBuilder = $this->getMock(ConstraintViolationBuilderInterface::class);
+        $constraintViolationBuilder = $this->createMock(ConstraintViolationBuilderInterface::class);
         $returnedRole = $this->getMockBuilder(Role::class)
             ->setConstructorArgs([['id' => 123]])
             ->getMockForAbstractClass();

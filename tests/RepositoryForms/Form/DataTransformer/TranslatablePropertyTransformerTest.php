@@ -11,9 +11,9 @@
 namespace EzSystems\RepositoryForms\Tests\Form\DataTransformer;
 
 use EzSystems\RepositoryForms\Form\DataTransformer\TranslatablePropertyTransformer;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 
-class TranslatablePropertyTransformerTest extends PHPUnit_Framework_TestCase
+class TranslatablePropertyTransformerTest extends TestCase
 {
     /**
      * @dataProvider transformInvalidValueProvider

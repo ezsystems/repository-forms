@@ -12,13 +12,15 @@ namespace EzSystems\RepositoryForms\Tests\Data;
 
 use EzSystems\RepositoryForms\Data\ContentTypeData;
 use EzSystems\RepositoryForms\Data\FieldDefinitionData;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
+use eZ\Publish\API\Repository\Values\ContentType\ContentTypeDraft;
+use eZ\Publish\API\Repository\Values\ContentType\FieldDefinition;
 
-class ContentTypeDataTest extends PHPUnit_Framework_TestCase
+class ContentTypeDataTest extends TestCase
 {
     public function testContentTypeDraft()
     {
-        $contentTypeDraft = $this->getMockForAbstractClass('\eZ\Publish\API\Repository\Values\ContentType\ContentTypeDraft');
+        $contentTypeDraft = $this->getMockForAbstractClass(ContentTypeDraft::class);
         $data = new ContentTypeData(['contentTypeDraft' => $contentTypeDraft]);
         self::assertSame($contentTypeDraft, $data->contentTypeDraft);
     }
@@ -43,25 +45,25 @@ class ContentTypeDataTest extends PHPUnit_Framework_TestCase
     {
         $fieldDef1 = new FieldDefinitionData(
             ['fieldDefinition' => $this->getMockForAbstractClass(
-                '\eZ\Publish\API\Repository\Values\ContentType\FieldDefinition',
+                FieldDefinition::class,
                 [['id' => 1, 'identifier' => 'snarf', 'position' => 3]]
             )]
         );
         $fieldDef2 = new FieldDefinitionData(
             ['fieldDefinition' => $this->getMockForAbstractClass(
-                '\eZ\Publish\API\Repository\Values\ContentType\FieldDefinition',
+                FieldDefinition::class,
                 [['id' => 2, 'identifier' => 'gnubel', 'position' => 2]]
             )]
         );
         $fieldDef3 = new FieldDefinitionData(
             ['fieldDefinition' => $this->getMockForAbstractClass(
-                '\eZ\Publish\API\Repository\Values\ContentType\FieldDefinition',
+                FieldDefinition::class,
                 [['id' => 3, 'identifier' => 'heffa', 'position' => 2]]
             )]
         );
         $fieldDef4 = new FieldDefinitionData(
             ['fieldDefinition' => $this->getMockForAbstractClass(
-                '\eZ\Publish\API\Repository\Values\ContentType\FieldDefinition',
+                FieldDefinition::class,
                 [['id' => 4, 'identifier' => 'lump', 'position' => 1]]
             )]
         );

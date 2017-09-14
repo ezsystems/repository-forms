@@ -13,9 +13,11 @@ use eZ\Publish\Core\Repository\Values\User\PolicyDraft;
 use eZ\Publish\Core\Repository\Values\User\Role;
 use eZ\Publish\Core\Repository\Values\User\RoleDraft;
 use EzSystems\RepositoryForms\Data\Mapper\PolicyMapper;
-use PHPUnit_Framework_TestCase;
+use EzSystems\RepositoryForms\Data\Role\PolicyCreateData;
+use EzSystems\RepositoryForms\Data\Role\PolicyUpdateData;
+use PHPUnit\Framework\TestCase;
 
-class PolicyMapperTest extends PHPUnit_Framework_TestCase
+class PolicyMapperTest extends TestCase
 {
     /**
      * @expectedException \Symfony\Component\OptionsResolver\Exception\MissingOptionsException
@@ -45,7 +47,7 @@ class PolicyMapperTest extends PHPUnit_Framework_TestCase
             'initialRole' => $initialRole,
             'availableLimitationTypes' => [],
         ]);
-        self::assertInstanceOf('\EzSystems\RepositoryForms\Data\Role\PolicyCreateData', $data);
+        self::assertInstanceOf(PolicyCreateData::class, $data);
         self::assertSame($policy, $data->policyDraft);
         self::assertSame($roleDraft, $data->roleDraft);
         self::assertSame($initialRole, $data->initialRole);
@@ -88,7 +90,7 @@ class PolicyMapperTest extends PHPUnit_Framework_TestCase
             'initialRole' => $initialRole,
             'availableLimitationTypes' => [],
         ]);
-        self::assertInstanceOf('\EzSystems\RepositoryForms\Data\Role\PolicyUpdateData', $data);
+        self::assertInstanceOf(PolicyUpdateData::class, $data);
         self::assertSame($policy, $data->policyDraft);
         self::assertSame($roleDraft, $data->roleDraft);
         self::assertSame($initialRole, $data->initialRole);

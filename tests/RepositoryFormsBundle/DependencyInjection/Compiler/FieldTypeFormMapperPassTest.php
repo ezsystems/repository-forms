@@ -13,6 +13,7 @@ use Matthias\SymfonyDependencyInjectionTest\PhpUnit\AbstractCompilerPassTestCase
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Definition;
 use Symfony\Component\DependencyInjection\Reference;
+use EzSystems\RepositoryForms\FieldType\FieldTypeFormMapperInterface;
 
 class FieldTypeFormMapperPassTest extends AbstractCompilerPassTestCase
 {
@@ -32,13 +33,13 @@ class FieldTypeFormMapperPassTest extends AbstractCompilerPassTestCase
         $fieldTypeMapperServiceId = 'fieldtype_mapper';
         $def = new Definition();
         $def->addTag('ez.fieldType.formMapper', ['fieldType' => 'fieldtype1']);
-        $def->setClass(get_class($this->getMock('EzSystems\RepositoryForms\FieldType\FieldTypeFormMapperInterface')));
+        $def->setClass(get_class($this->createMock(FieldTypeFormMapperInterface::class)));
         $this->setDefinition($fieldTypeMapperServiceId, $def);
 
         $fieldValueMapperServiceId = 'fieldvalue_mapper';
         $def = new Definition();
         $def->addTag('ez.fieldType.formMapper', ['fieldType' => 'fieldtype2']);
-        $def->setClass(get_class($this->getMock('EzSystems\RepositoryForms\FieldType\FieldValueFormMapperInterface')));
+        $def->setClass(get_class($this->createMock(FieldTypeFormMapperInterface::class)));
         $this->setDefinition($fieldValueMapperServiceId, $def);
 
         $this->compile();

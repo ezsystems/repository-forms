@@ -10,15 +10,17 @@ namespace EzSystems\RepositoryForms\Tests\Data\Mapper;
 
 use eZ\Publish\API\Repository\Values\Content\Language;
 use EzSystems\RepositoryForms\Data\Mapper\LanguageMapper;
-use PHPUnit_Framework_TestCase;
+use EzSystems\RepositoryForms\Data\Language\LanguageCreateData;
+use EzSystems\RepositoryForms\Data\Language\LanguageUpdateData;
+use PHPUnit\Framework\TestCase;
 
-class LanguageMapperTest extends PHPUnit_Framework_TestCase
+class LanguageMapperTest extends TestCase
 {
     public function testMapToLanguageCreateData()
     {
         $language = new Language();
         $languageData = (new LanguageMapper())->mapToFormData($language);
-        self::assertInstanceOf('\EzSystems\RepositoryForms\Data\Language\LanguageCreateData', $languageData);
+        self::assertInstanceOf(LanguageCreateData::class, $languageData);
         self::assertSame($language, $languageData->language);
     }
 
@@ -27,7 +29,7 @@ class LanguageMapperTest extends PHPUnit_Framework_TestCase
         $languageId = 123;
         $language = new Language(['id' => $languageId, 'name' => 'Foo', 'languageCode' => 'foo']);
         $languageData = (new LanguageMapper())->mapToFormData($language);
-        self::assertInstanceOf('\EzSystems\RepositoryForms\Data\Language\LanguageUpdateData', $languageData);
+        self::assertInstanceOf(LanguageUpdateData::class, $languageData);
         self::assertSame($language, $languageData->language);
         self::assertSame($languageId, $languageData->getId());
     }

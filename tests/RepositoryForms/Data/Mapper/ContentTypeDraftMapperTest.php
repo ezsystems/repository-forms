@@ -14,12 +14,13 @@ use eZ\Publish\API\Repository\Values\Content\Location;
 use eZ\Publish\Core\Repository\Values\ContentType\ContentType;
 use eZ\Publish\Core\Repository\Values\ContentType\ContentTypeDraft;
 use eZ\Publish\Core\Repository\Values\ContentType\FieldDefinition;
+use eZ\Publish\Core\FieldType\Value;
 use EzSystems\RepositoryForms\Data\ContentTypeData;
 use EzSystems\RepositoryForms\Data\FieldDefinitionData;
 use EzSystems\RepositoryForms\Data\Mapper\ContentTypeDraftMapper;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 
-class ContentTypeDraftMapperTest extends PHPUnit_Framework_TestCase
+class ContentTypeDraftMapperTest extends TestCase
 {
     public function testMapToFormData()
     {
@@ -35,7 +36,7 @@ class ContentTypeDraftMapperTest extends PHPUnit_Framework_TestCase
             'isInfoCollector' => false,
             'validatorConfiguration' => ['validator' => 'config'],
             'fieldSettings' => ['field' => 'settings'],
-            'defaultValue' => $this->getMockForAbstractClass('\eZ\Publish\Core\FieldType\Value'),
+            'defaultValue' => $this->getMockForAbstractClass(Value::class),
             'isSearchable' => true,
         ]);
         $fieldDef2 = new FieldDefinition([
