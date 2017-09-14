@@ -10,6 +10,8 @@ namespace EzSystems\RepositoryForms\Tests\Data\Mapper;
 
 use eZ\Publish\API\Repository\Values\Content\Section;
 use EzSystems\RepositoryForms\Data\Mapper\SectionMapper;
+use EzSystems\RepositoryForms\Data\Section\SectionCreateData;
+use EzSystems\RepositoryForms\Data\Section\SectionUpdateData;
 use PHPUnit\Framework\TestCase;
 
 class SectionMapperTest extends TestCase
@@ -18,7 +20,7 @@ class SectionMapperTest extends TestCase
     {
         $section = new Section();
         $sectionData = (new SectionMapper())->mapToFormData($section);
-        self::assertInstanceOf('\EzSystems\RepositoryForms\Data\Section\SectionCreateData', $sectionData);
+        self::assertInstanceOf(SectionCreateData::class, $sectionData);
         self::assertSame($section, $sectionData->section);
     }
 
@@ -27,7 +29,7 @@ class SectionMapperTest extends TestCase
         $sectionId = 123;
         $section = new Section(['id' => $sectionId, 'name' => 'Foo', 'identifier' => 'foo']);
         $sectionData = (new SectionMapper())->mapToFormData($section);
-        self::assertInstanceOf('\EzSystems\RepositoryForms\Data\Section\SectionUpdateData', $sectionData);
+        self::assertInstanceOf(SectionUpdateData::class, $sectionData);
         self::assertSame($section, $sectionData->section);
         self::assertSame($sectionId, $sectionData->getId());
     }

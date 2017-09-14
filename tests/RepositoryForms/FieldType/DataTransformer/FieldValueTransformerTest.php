@@ -22,7 +22,7 @@ class FieldValueTransformerTest extends TestCase
     {
         $value = new stdClass();
 
-        $fieldType = $this->getMock(FieldType::class);
+        $fieldType = $this->createMock(FieldType::class);
         $fieldType
             ->expects($this->never())
             ->method('toHash');
@@ -34,10 +34,10 @@ class FieldValueTransformerTest extends TestCase
 
     public function testTransform()
     {
-        $value = $this->getMock(Value::class);
+        $value = $this->createMock(Value::class);
         $valueHash = ['lorem' => 'Lorem ipsum dolor...'];
 
-        $fieldType = $this->getMock(FieldType::class);
+        $fieldType = $this->createMock(FieldType::class);
         $fieldType
             ->expects($this->once())
             ->method('toHash')
@@ -51,9 +51,9 @@ class FieldValueTransformerTest extends TestCase
 
     public function testReverseTransformNull()
     {
-        $emptyValue = $this->getMock(Value::class);
+        $emptyValue = $this->createMock(Value::class);
 
-        $fieldType = $this->getMock(FieldType::class);
+        $fieldType = $this->createMock(FieldType::class);
         $fieldType
             ->expects($this->once())
             ->method('getEmptyValue')
@@ -70,9 +70,9 @@ class FieldValueTransformerTest extends TestCase
     public function testReverseTransform()
     {
         $value = 'Lorem ipsum dolor...';
-        $expected = $this->getMock(Value::class);
+        $expected = $this->createMock(Value::class);
 
-        $fieldType = $this->getMock(FieldType::class);
+        $fieldType = $this->createMock(FieldType::class);
         $fieldType
             ->expects($this->never())
             ->method('getEmptyValue');

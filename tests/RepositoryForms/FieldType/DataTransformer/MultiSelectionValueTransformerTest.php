@@ -50,7 +50,7 @@ class MultiSelectionValueTransformerTest extends TestCase
     public function transformNullProvider()
     {
         return [
-            [new \eZ\Publish\Core\FieldType\Selection\Value()],
+            [new Value()],
             [[]],
             [42],
             [false],

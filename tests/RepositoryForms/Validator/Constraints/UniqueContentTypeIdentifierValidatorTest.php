@@ -10,12 +10,17 @@
  */
 namespace EzSystems\RepositoryForms\Tests\Validator\Constraints;
 
+use eZ\Publish\API\Repository\ContentTypeService;
+use eZ\Publish\API\Repository\Values\ContentType\ContentType;
+use eZ\Publish\API\Repository\Values\ContentType\ContentTypeDraft;
 use eZ\Publish\Core\Base\Exceptions\NotFoundException;
 use EzSystems\RepositoryForms\Data\ContentTypeData;
 use EzSystems\RepositoryForms\Validator\Constraints\UniqueContentTypeIdentifier;
 use EzSystems\RepositoryForms\Validator\Constraints\UniqueContentTypeIdentifierValidator;
 use PHPUnit\Framework\TestCase;
 use stdClass;
+use Symfony\Component\Validator\Context\ExecutionContextInterface;
+use Symfony\Component\Validator\Violation\ConstraintViolationBuilderInterface;
 
 class UniqueContentTypeIdentifierValidatorTest extends TestCase
 {
@@ -37,8 +42,8 @@ class UniqueContentTypeIdentifierValidatorTest extends TestCase
     protected function setUp()
     {
         parent::setUp();
-        $this->contentTypeService = $this->getMock('\eZ\Publish\API\Repository\ContentTypeService');
-        $this->executionContext = $this->getMock('\Symfony\Component\Validator\Context\ExecutionContextInterface');
+        $this->contentTypeService = $this->createMock(ContentTypeService::class);
+        $this->executionContext = $this->createMock(ExecutionContextInterface::class);
         $this->validator = new UniqueContentTypeIdentifierValidator($this->contentTypeService);
         $this->validator->initialize($this->executionContext);
     }
@@ -80,7 +85,7 @@ class UniqueContentTypeIdentifierValidatorTest extends TestCase
             ->willThrowException(new NotFoundException('foo', 'bar'));
         $this->executionContext
             ->expects($this->never())
-            ->method('buildVioloation');
+            ->method('buildViolation');
 
         $this->validator->validate($value, new UniqueContentTypeIdentifier());
     }
@@ -89,11 +94,11 @@ class UniqueContentTypeIdentifierValidatorTest extends TestCase
     {
         $identifier = 'foo_identifier';
         $contentTypeId = 123;
-        $contentTypeDraft = $this->getMockBuilder('\eZ\Publish\API\Repository\Values\ContentType\ContentTypeDraft')
+        $contentTypeDraft = $this->getMockBuilder(ContentTypeDraft::class)
             ->setConstructorArgs([['id' => $contentTypeId]])
             ->getMockForAbstractClass();
         $value = new ContentTypeData(['identifier' => $identifier, 'contentTypeDraft' => $contentTypeDraft]);
-        $returnedContentType = $this->getMockBuilder('\eZ\Publish\API\Repository\Values\ContentType\ContentType')
+        $returnedContentType = $this->getMockBuilder(ContentType::class)
             ->setConstructorArgs([['id' => $contentTypeId]])
             ->getMockForAbstractClass();
         $this->contentTypeService
@@ -103,7 +108,7 @@ class UniqueContentTypeIdentifierValidatorTest extends TestCase
             ->willReturn($returnedContentType);
         $this->executionContext
             ->expects($this->never())
-            ->method('buildVioloation');
+            ->method('buildViolation');
 
         $this->validator->validate($value, new UniqueContentTypeIdentifier());
     }
@@ -111,13 +116,13 @@ class UniqueContentTypeIdentifierValidatorTest extends TestCase
     public function testInvalid()
     {
         $identifier = 'foo_identifier';
-        $contentTypeDraft = $this->getMockBuilder('\eZ\Publish\API\Repository\Values\ContentType\ContentTypeDraft')
+        $contentTypeDraft = $this->getMockBuilder(ContentTypeDraft::class)
             ->setConstructorArgs([['id' => 456]])
             ->getMockForAbstractClass();
         $value = new ContentTypeData(['identifier' => $identifier, 'contentTypeDraft' => $contentTypeDraft]);
         $constraint = new UniqueContentTypeIdentifier();
-        $constraintViolationBuilder = $this->getMock('\Symfony\Component\Validator\Violation\ConstraintViolationBuilderInterface');
-        $returnedContentType = $this->getMockBuilder('\eZ\Publish\API\Repository\Values\ContentType\ContentType')
+        $constraintViolationBuilder = $this->createMock(ConstraintViolationBuilderInterface::class);
+        $returnedContentType = $this->getMockBuilder(ContentType::class)
             ->setConstructorArgs([['id' => 123]])
             ->getMockForAbstractClass();
         $this->contentTypeService
