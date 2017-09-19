@@ -16,5 +16,6 @@ Changes affecting version compatibility with former or future versions.
   How it might affect your code: Don't rely on `TranslationHelper` as the same functionality is now achieved by calling `getNames()` directly on the object.
 
 ## Deprecations
-
+ - The "ezrepoforms.user_register.view_templates_listener" service is deprecated since 1.10 and will be removed in 2.0. Use "ezrepoforms.view_templates_listener" instead
+   
 ## Removed features
