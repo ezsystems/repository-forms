@@ -38,6 +38,7 @@ parameters:
     ezrepoforms.field_type.form_mapper.form_type_based.class: EzSystems\RepositoryForms\FieldType\Mapper\FormTypeBasedFieldValueFormMapper
     ezrepoforms.field_type.form_mapper.ezuser.class: EzSystems\RepositoryForms\FieldType\Mapper\UserAccountFieldValueFormMapper
     ezrepoforms.field_type.form_mapper.ezurl.class: EzSystems\RepositoryForms\FieldType\Mapper\UrlFormMapper
+    ezrepoforms.field_type.form_mapper.ezgmaplocation.class: EzSystems\RepositoryForms\FieldType\Mapper\MapLocationFormMapper
 
     ezrepoforms.validator.unique_content_type_identifier.class: EzSystems\RepositoryForms\Validator\Constraints\UniqueContentTypeIdentifierValidator
     ezrepoforms.validator.validator_configuration.class: EzSystems\RepositoryForms\Validator\Constraints\ValidatorConfigurationValidator
@@ -280,6 +281,12 @@ services:
             - { name: ez.fieldFormMapper.value, fieldType: ezemail }
         calls:
             - [setFormType, [\Symfony\Component\Form\Extension\Core\Type\EmailType]]
+
+    ezrepoforms.field_type.form_mapper.ezgmaplocation:
+        class: "%ezrepoforms.field_type.form_mapper.ezgmaplocation.class%"
+        arguments: ["@ezpublish.api.service.field_type"]
+        tags:
+            - { name: ez.fieldFormMapper.value, fieldType: ezgmaplocation }
 
     # Validators
     ezrepoforms.validator.unique_content_type_identifier:
