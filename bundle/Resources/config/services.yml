@@ -196,19 +196,21 @@ services:
     ezrepoforms.field_type.form_mapper.abstractrelation:
         class: "%ezrepoforms.field_type.form_mapper.abstractrelation.class%"
         abstract: true
-        arguments: ["@ezpublish.api.service.content_type", "@ezpublish.translation_helper"]
+        arguments: ["@ezpublish.api.service.content_type"]
 
     ezrepoforms.field_type.form_mapper.ezobjectrelation:
         class: "%ezrepoforms.field_type.form_mapper.ezobjectrelation.class%"
         parent: ezrepoforms.field_type.form_mapper.abstractrelation
         tags:
             - { name: ez.fieldFormMapper.definition, fieldType: ezobjectrelation }
+            - { name: ez.fieldFormMapper.value, fieldType: ezobjectrelation }
 
     ezrepoforms.field_type.form_mapper.ezobjectrelationlist:
         class: "%ezrepoforms.field_type.form_mapper.ezobjectrelationlist.class%"
         parent: ezrepoforms.field_type.form_mapper.abstractrelation
         tags:
             - { name: ez.fieldFormMapper.definition, fieldType: ezobjectrelationlist }
+            - { name: ez.fieldFormMapper.value, fieldType: ezobjectrelationlist }
 
     ezrepoforms.field_type.form_mapper.ezpage:
         class: "%ezrepoforms.field_type.form_mapper.ezpage.class%"
