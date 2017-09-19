@@ -40,6 +40,7 @@ parameters:
     ezrepoforms.field_type.form_mapper.ezuser.class: EzSystems\RepositoryForms\FieldType\Mapper\UserAccountFieldValueFormMapper
     ezrepoforms.field_type.form_mapper.ezurl.class: EzSystems\RepositoryForms\FieldType\Mapper\UrlFormMapper
     ezrepoforms.field_type.form_mapper.ezgmaplocation.class: EzSystems\RepositoryForms\FieldType\Mapper\MapLocationFormMapper
+    ezrepoforms.field_type.form_mapper.ezkeyword.class: EzSystems\RepositoryForms\FieldType\Mapper\KeywordFormMapper
 
     ezrepoforms.validator.unique_content_type_identifier.class: EzSystems\RepositoryForms\Validator\Constraints\UniqueContentTypeIdentifierValidator
     ezrepoforms.validator.validator_configuration.class: EzSystems\RepositoryForms\Validator\Constraints\ValidatorConfigurationValidator
@@ -294,6 +295,12 @@ services:
         arguments: ["@ezpublish.api.service.field_type"]
         tags:
             - { name: ez.fieldFormMapper.value, fieldType: ezgmaplocation }
+
+    ezrepoforms.field_type.form_mapper.ezkeyword:
+        class: "%ezrepoforms.field_type.form_mapper.ezkeyword.class%"
+        arguments: ["@ezpublish.api.service.field_type"]
+        tags:
+            - { name: ez.fieldFormMapper.value, fieldType: ezkeyword }
 
     # Validators
     ezrepoforms.validator.unique_content_type_identifier:
