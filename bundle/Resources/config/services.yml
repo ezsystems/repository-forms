@@ -16,6 +16,7 @@ parameters:
 
     ezrepoforms.field_value.user_type.class: EzSystems\RepositoryForms\Form\Type\User\UserAccountType
 
+    ezrepoforms.field_type.form_mapper.ezauthor.class: EzSystems\RepositoryForms\FieldType\Mapper\AuthorFormMapper
     ezrepoforms.field_type.form_mapper.ezbinaryfile.class: EzSystems\RepositoryForms\FieldType\Mapper\BinaryFileFormMapper
     ezrepoforms.field_type.form_mapper.ezboolean.class: EzSystems\RepositoryForms\FieldType\Mapper\CheckboxFormMapper
     ezrepoforms.field_type.form_mapper.ezcountry.class: EzSystems\RepositoryForms\FieldType\Mapper\CountryFormMapper
@@ -127,6 +128,12 @@ services:
             - { name: form.type, alias: ezuser }
 
     # FieldType form mappers
+    ezrepoforms.field_type.form_mapper.ezauthor:
+        class: "%ezrepoforms.field_type.form_mapper.ezauthor.class%"
+        tags:
+            - { name: ez.fieldFormMapper.definition, fieldType: ezauthor }
+            - { name: ez.fieldFormMapper.value, fieldType: ezauthor }
+
     ezrepoforms.field_type.form_mapper.ezbinaryfile:
         class: "%ezrepoforms.field_type.form_mapper.ezbinaryfile.class%"
         tags:
