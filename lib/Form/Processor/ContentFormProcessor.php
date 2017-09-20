@@ -59,7 +59,7 @@ class ContentFormProcessor implements EventSubscriberInterface
         $languageCode = $formConfig->getOption('languageCode');
         $draft = $this->saveDraft($data, $languageCode);
 
-        $defaultUrl = $this->router->generate('ez_content_edit', [
+        $defaultUrl = $this->router->generate('ez_content_draft_edit', [
             'contentId' => $draft->id,
             'versionNo' => $draft->getVersionInfo()->versionNo,
             'language' => $languageCode,
@@ -113,7 +113,7 @@ class ContentFormProcessor implements EventSubscriberInterface
         $versionInfo = $this->contentService->loadVersionInfo($contentInfo, $createContentDraft->fromVersionNo);
         $contentDraft = $this->contentService->createContentDraft($contentInfo, $versionInfo);
 
-        $contentEditUrl = $this->router->generate('ez_content_edit', [
+        $contentEditUrl = $this->router->generate('ez_content_draft_edit', [
             'contentId' => $contentDraft->id,
             'versionNo' => $contentDraft->getVersionInfo()->versionNo,
             'language' => $contentDraft->contentInfo->mainLanguageCode,
