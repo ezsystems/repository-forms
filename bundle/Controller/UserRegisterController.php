@@ -9,8 +9,8 @@
 namespace EzSystems\RepositoryFormsBundle\Controller;
 
 use eZ\Bundle\EzPublishCoreBundle\Controller;
-use EzSystems\RepositoryForms\Data\Mapper\UserRegisterMapper;
 use eZ\Publish\Core\MVC\Symfony\Security\Authorization\Attribute;
+use EzSystems\RepositoryForms\Data\Mapper\UserRegisterMapper;
 use EzSystems\RepositoryForms\Form\ActionDispatcher\ActionDispatcherInterface;
 use EzSystems\RepositoryForms\Form\Type\User\UserRegisterType;
 use EzSystems\RepositoryForms\UserRegister\View\UserRegisterConfirmView;
@@ -43,9 +43,7 @@ class UserRegisterController extends Controller
      *
      * @param Request $request
      *
-     * @return \Symfony\Component\HttpFoundation\Response
-     *
-     * @throws \Exception if the current user isn't allowed to register an account
+     * @return \EzSystems\RepositoryForms\UserRegister\View\UserRegisterFormView|\Symfony\Component\HttpFoundation\Response * @throws \Exception if the current user isn't allowed to register an account
      */
     public function registerAction(Request $request)
     {
@@ -70,10 +68,7 @@ class UserRegisterController extends Controller
             }
         }
 
-        return new UserRegisterFormView(
-            null,
-            ['form' => $form->createView()]
-        );
+        return new UserRegisterFormView(null, ['form' => $form->createView()]);
     }
 
     public function registerConfirmAction()

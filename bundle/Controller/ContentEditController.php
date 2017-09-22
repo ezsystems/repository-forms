@@ -14,6 +14,8 @@ use eZ\Publish\API\Repository\ContentTypeService;
 use eZ\Publish\API\Repository\LocationService;
 use eZ\Publish\API\Repository\Values\Content\VersionInfo;
 use eZ\Publish\Core\Base\Exceptions\BadStateException;
+use EzSystems\RepositoryForms\Content\View\ContentCreateDraftView;
+use EzSystems\RepositoryForms\Content\View\ContentEditView;
 use EzSystems\RepositoryForms\Data\Content\CreateContentDraftData;
 use EzSystems\RepositoryForms\Data\Mapper\ContentCreateMapper;
 use EzSystems\RepositoryForms\Data\Mapper\ContentUpdateMapper;
@@ -46,6 +48,8 @@ class ContentEditController extends Controller
 
     /**
      * @var string
+     *
+     * @deprecated Deprecated since 1.10 and will be removed in 2.0. See setPagelayout().
      */
     private $pagelayout;
 
@@ -69,7 +73,7 @@ class ContentEditController extends Controller
      * @param int $parentLocationId Location the content should be a child of
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return \EzSystems\RepositoryForms\Content\View\ContentEditView|\Symfony\Component\HttpFoundation\Response
      */
     public function createWithoutDraftAction($contentTypeIdentifier, $language, $parentLocationId, Request $request)
     {
@@ -88,10 +92,9 @@ class ContentEditController extends Controller
             }
         }
 
-        return $this->render('EzSystemsRepositoryFormsBundle:Content:content_edit.html.twig', [
+        return new ContentEditView(null, [
             'form' => $form->createView(),
             'languageCode' => $language,
-            'pagelayout' => $this->pagelayout,
         ]);
     }
 
@@ -104,7 +107,7 @@ class ContentEditController extends Controller
      * @param string $toLanguage
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return \EzSystems\RepositoryForms\Content\View\ContentCreateDraftView|\Symfony\Component\HttpFoundation\Response
      */
     public function createContentDraftAction($contentId, $fromVersionNo = null, $fromLanguage = null, $toLanguage = null, Request $request)
     {
@@ -135,10 +138,7 @@ class ContentEditController extends Controller
             }
         }
 
-        return $this->render('@EzSystemsRepositoryForms/Content/content_create_draft.html.twig', [
-            'form' => $form->createView(),
-            'pagelayout' => $this->pagelayout,
-        ]);
+        return new ContentCreateDraftView(null, ['form' => $form->createView()]);
     }
 
     /**
@@ -149,7 +149,7 @@ class ContentEditController extends Controller
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param string $language Language code to create the version in (eng-GB, ger-DE, ...))
      *
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return \EzSystems\RepositoryForms\Content\View\ContentEditView|\Symfony\Component\HttpFoundation\Response
      * @throws \eZ\Publish\Core\Base\Exceptions\BadStateException If the version isn't editable, or if there is no editable version.
      */
     public function editContentDraftAction($contentId, $versionNo = null, Request $request, $language = null)
@@ -183,16 +183,17 @@ class ContentEditController extends Controller
             }
         }
 
-        return $this->render('EzSystemsRepositoryFormsBundle:Content:content_edit.html.twig', [
+        return new ContentEditView(null, [
             'form' => $form->createView(),
             'languageCode' => $language,
-            'pagelayout' => $this->pagelayout,
         ]);
     }
 
     /**
      * @param string $pagelayout
      * @return ContentEditController
+     *
+     * @deprecated Deprecated since 1.10 and will be removed in 2.0. Pagelayout is injected via ViewTemplatesListener.
      */
     public function setPagelayout($pagelayout)
     {
