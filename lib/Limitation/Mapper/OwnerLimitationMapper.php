@@ -9,9 +9,10 @@
 namespace EzSystems\RepositoryForms\Limitation\Mapper;
 
 use eZ\Publish\API\Repository\Values\User\Limitation;
+use EzSystems\RepositoryForms\Limitation\LimitationValueMapperInterface;
 use Symfony\Component\Translation\TranslatorInterface;
 
-class OwnerLimitationMapper extends MultipleSelectionBasedMapper
+class OwnerLimitationMapper extends MultipleSelectionBasedMapper implements LimitationValueMapperInterface
 {
     /**
      * @var TranslatorInterface
@@ -28,6 +29,13 @@ class OwnerLimitationMapper extends MultipleSelectionBasedMapper
         // 2: "Session" is not supported yet, see OwnerLimitationType
         return [
             1 => $this->translator->trans('policy.limitation.owner.self', [], 'ezrepoforms_role'),
+        ];
+    }
+
+    public function mapLimitationValue(Limitation $limitation)
+    {
+        return [
+            $this->translator->trans('policy.limitation.owner.self', [], 'ezrepoforms_role'),
         ];
     }
 }

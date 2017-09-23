@@ -8,23 +8,49 @@
  */
 namespace EzSystems\RepositoryForms\Limitation\Mapper;
 
+use eZ\Publish\API\Repository\LocationService;
+use eZ\Publish\API\Repository\SearchService;
+use eZ\Publish\API\Repository\Values\Content\LocationQuery;
+use eZ\Publish\API\Repository\Values\Content\Query\Criterion\Ancestor;
 use eZ\Publish\API\Repository\Values\User\Limitation;
 use EzSystems\RepositoryForms\Limitation\DataTransformer\UDWBasedValueTransformer;
 use EzSystems\RepositoryForms\Limitation\LimitationFormMapperInterface;
+use EzSystems\RepositoryForms\Limitation\LimitationValueMapperInterface;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\FormInterface;
 
 /**
  * Base class for mappers based on Universal Discovery Widget.
  */
-class UDWBasedMapper implements LimitationFormMapperInterface
+class UDWBasedMapper implements LimitationFormMapperInterface, LimitationValueMapperInterface
 {
+    /**
+     * @var LocationService
+     */
+    protected $locationService;
+
+    /**
+     * @var SearchService
+     */
+    protected $searchService;
+
     /**
      * Form template to use.
      *
      * @var string
      */
     private $template;
+
+    /**
+     * UDWBasedMapper constructor.
+     *
+     * @param SearchService $searchService
+     */
+    public function __construct(LocationService $locationService, SearchService $searchService)
+    {
+        $this->locationService = $locationService;
+        $this->searchService = $searchService;
+    }
 
     public function setFormTemplate($template)
     {
@@ -53,5 +79,27 @@ class UDWBasedMapper implements LimitationFormMapperInterface
 
     public function filterLimitationValues(Limitation $limitation)
     {
+    }
+
+    public function mapLimitationValue(Limitation $limitation)
+    {
+        $values = [];
+
+        foreach ($limitation->limitationValues as $id) {
+            $location = $this->locationService->loadLocation($id);
+
+            $query = new LocationQuery([
+                'filter' => new Ancestor($location->pathString),
+            ]);
+
+            $path = [];
+            foreach ($this->searchService->findLocations($query)->searchHits as $hit) {
+                $path[] = $hit->valueObject->getContentInfo();
+            }
+
+            $values[] = $path;
+        }
+
+        return $values;
     }
 }

@@ -9,8 +9,10 @@
 namespace EzSystems\RepositoryForms\Limitation\Mapper;
 
 use eZ\Publish\API\Repository\LanguageService;
+use eZ\Publish\API\Repository\Values\User\Limitation;
+use EzSystems\RepositoryForms\Limitation\LimitationValueMapperInterface;
 
-class LanguageLimitationMapper extends MultipleSelectionBasedMapper
+class LanguageLimitationMapper extends MultipleSelectionBasedMapper implements LimitationValueMapperInterface
 {
     /**
      * @var LanguageService
@@ -30,5 +32,16 @@ class LanguageLimitationMapper extends MultipleSelectionBasedMapper
         }
 
         return $choices;
+    }
+
+    public function mapLimitationValue(Limitation $limitation)
+    {
+        $values = [];
+
+        foreach ($limitation->limitationValues as $languageCode) {
+            $values[] = $this->languageService->loadLanguage($languageCode);
+        }
+
+        return $values;
     }
 }
