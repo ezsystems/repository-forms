@@ -10,17 +10,18 @@
     {% if form.children.value is defined %}
         {{- form_row(form) -}}
     {% else %}
-        {%- if expanded is defined and expanded -%}
-            {%- set element = 'fieldset' -%}
-        {%- endif -%}
-        <{{ element|default('div') }} class="form-group">
-        {{- form_label(form) -}}
-        <p class="non-editable">
-            {{ "content.field.non_editable"|trans({}, "ezrepoforms_content") }}
-        </p>
-        {{- form_errors(form) -}}
-        </{{ element|default('div') }}>
-        {%- do field.setRendered() -%}
+        <div class="form-group ez-field-edit ez-field-edit-{{ form.vars.value.fieldDefinition.fieldTypeIdentifier }}">
+            <div class="ez-field-edit-text-zone">
+                {{ form_label(form) }}
+                {{ form_errors(form) }}
+            </div>
+            <div class="ez-field-edit-ui">
+                <p class="non-editable">
+                    {{ "content.field.non_editable"|trans({}, "ezrepoforms_content") }}
+                </p>
+            </div>
+        </div>
+        {%- do form.setRendered() -%}
     {% endif %}
 {%- endblock _ezrepoforms_user_register_fieldsData_entry_row -%}
 
@@ -29,16 +30,17 @@
         {% if field.value is defined %}
             {{- form_row(field) -}}
         {% else %}
-            {%- if expanded is defined and expanded -%}
-                {%- set element = 'fieldset' -%}
-            {%- endif -%}
-            <{{ element|default('div') }} class="form-group">
-            {{- form_label(field) -}}
-            <p class="non-editable">
-                {{ "content.field.non_editable"|trans({}, "ezrepoforms_content") }}
-            </p>
-            {{- form_errors(field) -}}
-            </{{ element|default('div') }}>
+            <div class="form-group ez-field-edit ez-field-edit-{{ field.vars.value.fieldDefinition.fieldTypeIdentifier }}">
+                <div class="ez-field-edit-text-zone">
+                    {{ form_label(field) }}
+                    {{ form_errors(field) }}
+                </div>
+                <div class="ez-field-edit-ui">
+                    <p class="non-editable">
+                        {{ "content.field.non_editable"|trans({}, "ezrepoforms_content") }}
+                    </p>
+                </div>
+            </div>
             {%- do field.setRendered() -%}
         {% endif %}
     {% endfor %}
@@ -47,27 +49,44 @@
 {# General form theming #}
 
 {%- block form_row -%}
-    {# below variable can be used to style/change row which represents the fieldtype #}
     {% set is_fieldtype = form.parent.vars.value.fieldDefinition is defined %}
-    {% set class = 'form-group' %}
-    {% if is_fieldtype %}
-        {% set class = class ~ ' ez-fieldtype-' ~ form.parent.vars.value.fieldDefinition.fieldTypeIdentifier %}
+    {% set class_prefix = 'field-edit' %}
+
+    {% if is_fieldtype is same as(false) %}
+        {% set class_prefix = 'sub-field' %}
     {% endif %}
+    {%- set row_classes -%}
+        {% spaceless %}
+            ez-{{ class_prefix }}
+            {%- if is_fieldtype %} ez-field-edit-{{ form.parent.vars.value.fieldDefinition.fieldTypeIdentifier }}{% else %} ez-sub-field-{{ form.vars.name }}{% endif -%}
+            {%- if required %} ez-{{ class_prefix }}-required{% endif -%}
+            {%- if disabled %} ez-{{ class_prefix }}-disabled{% endif -%}
+        {% endspaceless %}
+    {%- endset -%}
 
-    {%- if expanded is defined and expanded -%}
-        {%- set element = 'fieldset' -%}
-    {%- endif -%}
-    <{{ element|default('div') }} class="{{ class }}">
-    {{- form_label(form) -}}
-    {{- form_widget(form) -}}
-    {{- form_errors(form) -}}
-    </{{ element|default('div') }}>
-{%- endblock -%}
+    <div class="form-group {{ row_classes }}">
+        <div class="ez-{{ class_prefix }}-text-zone">
+            {{ form_label(form) }}
+            {{ form_errors(form) }}
+        </div>
+        <div class="ez-{{ class_prefix }}-ui">
+            {{ form_widget(form) }}
+        </div>
+    </div>
+{%- endblock form_row -%}
 
-{%- block form_widget -%}
-    {%- set attr = attr|merge({class: (attr.class|default('') ~ ' form-control' ~ (type|default('') == 'file' ? '-file' : ''))|trim}) -%}
-    {{- parent() -}}
-{%- endblock -%}
+{%- block form_errors -%}
+    {%- for error in errors if errors|length > 0 -%}
+        <em class="ez-field-edit-error">{{ error.message }}</em>
+    {%- endfor -%}
+{%- endblock form_errors -%}
+
+{%- block form_widget_compound -%}
+    <fieldset {{ block('widget_container_attributes') }}>
+        {{- block('form_rows') -}}
+        {{- form_rest(form) -}}
+    </fieldset>
+{%- endblock form_widget_compound -%}
 
 {# Enrichements to default Symfony types #}
 
