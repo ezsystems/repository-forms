@@ -57,6 +57,7 @@
     {% endif %}
     {%- set row_classes -%}
         {% spaceless %}
+            form-group
             ez-{{ class_prefix }}
             {%- if is_fieldtype %} ez-field-edit-{{ form.parent.vars.value.fieldDefinition.fieldTypeIdentifier }}{% else %} ez-sub-field-{{ form.vars.name }}{% endif -%}
             {%- if required %} ez-{{ class_prefix }}-required{% endif -%}
@@ -64,7 +65,8 @@
         {% endspaceless %}
     {%- endset -%}
 
-    <div class="form-group {{ row_classes }}">
+    {%- set attr = attr|merge({'class': (attr.class|default('') ~ ' ' ~ row_classes)|trim }) -%}
+    <div {{ block('attributes') }}>
         <div class="ez-{{ class_prefix }}-text-zone">
             {{ form_label(form) }}
             {{ form_errors(form) }}
@@ -98,12 +100,10 @@
 {# ezauthor #}
 
 {%- block ezrepoforms_fieldtype_ezauthor_row -%}
-    {{ block('form_row') }}
     {% if form.authors.vars.prototype is defined %}
-        <template class="author-template">
-            {{ form_row(form.authors.vars.prototype) }}
-        </template>
+        {%- set attr = attr|merge({'data-prototype': form_row(form.authors.vars.prototype) }) -%}
     {% endif %}
+    {{ block('form_row') }}
 {%- endblock ezrepoforms_fieldtype_ezauthor_row -%}
 
 {%- block ezrepoforms_fieldtype_ezauthor_widget -%}
