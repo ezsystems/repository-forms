@@ -92,23 +92,23 @@ class TextLineFormMapper implements FieldDefinitionFormMapperInterface, FieldVal
             ]);
     }
 
+    /**
+     * @param FieldDefinition $fieldDefinition
+     *
+     * @return array
+     */
     private function getAttributes(FieldDefinition $fieldDefinition)
     {
         $validatorConfiguration = $fieldDefinition->getValidatorConfiguration();
 
-        if (
-            empty($validatorConfiguration['StringLengthValidator']['minStringLength'])
-            && empty($validatorConfiguration['StringLengthValidator']['maxStringLength'])
-        ) {
-            return [];
+        $attributes = [];
+        if (!empty($validatorConfiguration['StringLengthValidator']['minStringLength'])) {
+            $attributes['data-min'] = $validatorConfiguration['StringLengthValidator']['minStringLength'];
+        }
+        if (!empty($validatorConfiguration['StringLengthValidator']['maxStringLength'])) {
+            $attributes['data-max'] = $validatorConfiguration['StringLengthValidator']['maxStringLength'];
         }
 
-        return [
-            'pattern' => sprintf(
-                '.{%d,%d}',
-                $validatorConfiguration['StringLengthValidator']['minStringLength'] ?: '',
-                $validatorConfiguration['StringLengthValidator']['maxStringLength'] ?: ''
-            ),
-        ];
+        return $attributes;
     }
 }
