@@ -57,8 +57,7 @@
     {% endif %}
     {%- set row_classes -%}
         {% spaceless %}
-            form-group
-            ez-{{ class_prefix }}
+            form-group ez-{{ class_prefix -}}
             {%- if is_fieldtype %} ez-field-edit-{{ form.parent.vars.value.fieldDefinition.fieldTypeIdentifier }}{% else %} ez-sub-field-{{ form.vars.name }}{% endif -%}
             {%- if required %} ez-{{ class_prefix }}-required{% endif -%}
             {%- if disabled %} ez-{{ class_prefix }}-disabled{% endif -%}
