@@ -1,5 +1,7 @@
 {% extends 'EzSystemsRepositoryFormsBundle::bootstrap_4_layout.html.twig' %}
 
+{% use 'EzSystemsRepositoryFormsBundle:Content/FieldType:ezauthor.html.twig' %}
+
 {# Important overrides to hide labels and errors on some structural fields #}
 
 {%- block ezrepoforms_content_field_row -%}
@@ -65,7 +67,7 @@
     {%- endset -%}
 
     {%- set row_attr = row_attr|default({})|merge({'class': (row_attr.class|default('') ~ ' ' ~ row_classes)|trim }) -%}
-    <div {{ block('row_attributes') }}>
+    <div {% with {'attr': row_attr} %}{{ block('attributes') }}{% endwith %}>
         <div class="ez-{{ class_prefix }}-text-zone">
             {{ form_label(form) }}
             {{ form_errors(form) }}
@@ -83,10 +85,10 @@
 {%- endblock form_errors -%}
 
 {%- block form_widget_compound -%}
-    <fieldset {{ block('widget_container_attributes') }}>
+    <div {{ block('widget_container_attributes') }}>
         {{- block('form_rows') -}}
         {{- form_rest(form) -}}
-    </fieldset>
+    </div>
 {%- endblock form_widget_compound -%}
 
 {# Enrichements to default Symfony types #}
@@ -95,49 +97,3 @@
     {%- set type = type|default('number') -%}
     {{ parent() }}
 {%- endblock number_widget -%}
-
-{# ezauthor #}
-
-{%- block ezrepoforms_fieldtype_ezauthor_row -%}
-    {% if form.authors.vars.prototype is defined %}
-        {%- set row_attr = row_attr|default({})|merge({'data-prototype': form_row(form.authors.vars.prototype) }) -%}
-    {% endif %}
-    {{ block('form_row') }}
-{%- endblock ezrepoforms_fieldtype_ezauthor_row -%}
-
-{%- block ezrepoforms_fieldtype_ezauthor_widget -%}
-    {{ block('form_rows') }}
-{%- endblock ezrepoforms_fieldtype_ezauthor_widget -%}
-
-{%- block ezrepoforms_fieldtype_ezauthor_authors_row -%}
-    {{- form_widget(form) -}}
-{%- endblock ezrepoforms_fieldtype_ezauthor_authors_row -%}
-
-{%- block ezrepoforms_fieldtype_ezauthor_authors_widget -%}
-    {{ block('form_rows') }}
-{%- endblock ezrepoforms_fieldtype_ezauthor_authors_widget -%}
-
-{%- block ezrepoforms_fieldtype_ezauthor_authors_entry_row -%}
-    {{- block('ezrepoforms_fieldtype_ezauthor_authors_entry_widget') -}}
-{%- endblock ezrepoforms_fieldtype_ezauthor_authors_entry_row -%}
-
-{%- block ezrepoforms_fieldtype_ezauthor_authors_entry_widget -%}
-    <fieldset>
-        {{- block('form_rows') -}}
-        <div class="ez-author-tools">
-            <button type="button" class="ez-button ez-button-secondary ez-js-remove-author">{{ 'Remove'|trans }}</button>
-            <button type="button" class="ez-button ez-button-secondary ez-js-add-author">{{ 'Add'|trans }}</button>
-        </div>
-    </fieldset>
-{%- endblock ezrepoforms_fieldtype_ezauthor_authors_entry_widget -%}
-
-{% block row_attributes -%}
-    {%- for attrname, attrvalue in row_attr -%}
-        {{- " " -}}
-        {%- if attrvalue is same as(true) -%}
-            {{- attrname }}="{{ attrname }}"
-        {%- else -%}
-            {{- attrname }}="{{ attrvalue }}"
-        {%- endif -%}
-    {%- endfor -%}
-{%- endblock -%}
