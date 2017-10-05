@@ -24,15 +24,23 @@
 {%- endblock ezrepoforms_fieldtype_ezauthor_authors_entry_row -%}
 
 {%- block ezrepoforms_fieldtype_ezauthor_authors_entry_widget -%}
-    <div class="form-row">
+    <div class="form-row rounded ez-author-row">
         {% set row_attr = row_attr|default({})|merge({'class': row_attr.class|default('') ~ ' col'|trim}) %}
         {#{{ block('form_rows') }}#}
         {% for child in form %}
             {{ form_row(child, {'row_attr': row_attr}) }}
         {% endfor %}
         <div class="ez-author-tools col">
-            <button type="button" class="ez-button ez-button-secondary ez-js-remove-author">{{ 'Remove'|trans }}</button>
-            <button type="button" class="ez-button ez-button-secondary ez-js-add-author">{{ 'Add'|trans }}</button>
+            <button type="button" disabled class="ez-button btn btn-icon btn-secondary ez-button-secondary ez-js-remove-author">
+                <svg class="ez-icon ez-icon-trash">
+                    <use xlink:href="{{ asset('bundles/ezplatform/img/ez-icons.svg') }}#trash"></use>
+                </svg>
+            </button>
+            <button type="button" class="ez-button btn btn-icon btn-secondary ez-button-secondary ez-js-add-author">
+                <svg class="ez-icon ez-icon-create">
+                    <use xlink:href="{{ asset('bundles/ezplatform/img/ez-icons.svg') }}#create"></use>
+                </svg>
+            </button>
         </div>
     </div>
 {%- endblock ezrepoforms_fieldtype_ezauthor_authors_entry_widget -%}
