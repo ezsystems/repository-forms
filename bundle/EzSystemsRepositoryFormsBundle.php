@@ -15,6 +15,7 @@ use EzSystems\RepositoryFormsBundle\DependencyInjection\Compiler\FieldTypeFormMa
 use EzSystems\RepositoryFormsBundle\DependencyInjection\Compiler\FieldTypeFormMapperPass;
 use EzSystems\RepositoryFormsBundle\DependencyInjection\Compiler\LimitationFormMapperPass;
 use EzSystems\RepositoryFormsBundle\DependencyInjection\Configuration\Parser\ContentEdit;
+use EzSystems\RepositoryFormsBundle\DependencyInjection\Compiler\LimitationValueMapperPass;
 use EzSystems\RepositoryFormsBundle\DependencyInjection\Configuration\Parser\UserRegistration;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
@@ -27,6 +28,7 @@ class EzSystemsRepositoryFormsBundle extends Bundle
         $container->addCompilerPass(new FieldTypeFormMapperPass());
         $container->addCompilerPass(new FieldTypeFormMapperDispatcherPass());
         $container->addCompilerPass(new LimitationFormMapperPass());
+        $container->addCompilerPass(new LimitationValueMapperPass());
 
         $eZExtension = $container->getExtension('ezpublish');
         $eZExtension->addPolicyProvider(new UserRegisterPolicyProvider());

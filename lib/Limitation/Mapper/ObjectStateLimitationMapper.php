@@ -9,8 +9,11 @@
 namespace EzSystems\RepositoryForms\Limitation\Mapper;
 
 use eZ\Publish\API\Repository\ObjectStateService;
+use eZ\Publish\API\Repository\Values\ObjectState\ObjectState;
+use eZ\Publish\API\Repository\Values\User\Limitation;
+use EzSystems\RepositoryForms\Limitation\LimitationValueMapperInterface;
 
-class ObjectStateLimitationMapper extends MultipleSelectionBasedMapper
+class ObjectStateLimitationMapper extends MultipleSelectionBasedMapper implements LimitationValueMapperInterface
 {
     /**
      * @var ObjectStateService
@@ -27,10 +30,34 @@ class ObjectStateLimitationMapper extends MultipleSelectionBasedMapper
         $choices = [];
         foreach ($this->objectStateService->loadObjectStateGroups() as $group) {
             foreach ($this->objectStateService->loadObjectStates($group) as $state) {
-                $choices[$state->id] = $state->getObjectStateGroup()->getName($state->defaultLanguageCode) . ':' . $state->getName($state->defaultLanguageCode);
+                $choices[$state->id] = $this->getObjectStateLabel($state);
             }
         }
 
         return $choices;
+    }
+
+    public function mapLimitationValue(Limitation $limitation)
+    {
+        $values = [];
+
+        foreach ($limitation->limitationValues as $stateId) {
+            $values[] = $this->getObjectStateLabel(
+                $this->objectStateService->loadObjectState($stateId)
+            );
+        }
+
+        return $values;
+    }
+
+    protected function getObjectStateLabel(ObjectState $state)
+    {
+        $groupName = $state
+            ->getObjectStateGroup()
+            ->getName($state->defaultLanguageCode);
+
+        $stateName = $state->getName($state->defaultLanguageCode);
+
+        return $groupName . ':' . $stateName;
     }
 }

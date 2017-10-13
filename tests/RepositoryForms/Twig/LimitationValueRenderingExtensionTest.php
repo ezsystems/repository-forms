@@ -1,0 +1,172 @@
+<?php
+
+/**
+ * This file is part of the eZ RepositoryForms package.
+ *
+ * @copyright Copyright (C) eZ Systems AS. All rights reserved.
+ * @license For full copyright and license information view LICENSE file distributed with this source code.
+ */
+namespace EzSystems\RepositoryForms\Tests\Twig;
+
+use Exception;
+use eZ\Publish\API\Repository\Values\User\Limitation;
+use eZ\Publish\Core\MVC\Symfony\Templating\Tests\Twig\Extension\FileSystemTwigIntegrationTestCase;
+use EzSystems\RepositoryForms\Limitation\LimitationValueMapperInterface;
+use EzSystems\RepositoryForms\Limitation\LimitationValueMapperRegistryInterface;
+use EzSystems\RepositoryForms\Limitation\Templating\LimitationBlockRenderer;
+use EzSystems\RepositoryForms\Twig\LimitationValueRenderingExtension;
+use ReflectionProperty;
+use Twig_Environment;
+use Twig_Error;
+use Twig_Loader_Array;
+use Twig_Loader_Chain;
+use Twig_Loader_Filesystem;
+
+class LimitationValueRenderingExtensionTest extends FileSystemTwigIntegrationTestCase
+{
+    public function getExtensions(\Twig_Environment $twig = null)
+    {
+        $limitationBlockRenderer = new LimitationBlockRenderer(
+            $this->createLimitationValueMapperRegistryMock(),
+            $twig
+        );
+
+        $limitationBlockRenderer->setLimitationValueResources([
+            'templates/limitation_value_1.html.twig',
+            'templates/limitation_value_2.html.twig',
+        ]);
+
+        return [
+            new LimitationValueRenderingExtension($limitationBlockRenderer),
+        ];
+    }
+
+    private function createLimitationValueMapperRegistryMock()
+    {
+        $mapperMock = $this->createMock(LimitationValueMapperInterface::class);
+        $mapperMock
+            ->expects($this->atLeastOnce())
+            ->method('mapLimitationValue')
+            ->willReturnCallback(function (Limitation $limitation) {
+                return $limitation->limitationValues;
+            });
+
+        $registryMock = $this->createMock(LimitationValueMapperRegistryInterface::class);
+        $registryMock
+            ->expects($this->atLeastOnce())
+            ->method('getMapper')
+            ->willReturn($mapperMock);
+
+        return $registryMock;
+    }
+
+    public function getLimitation($identifier, array $values)
+    {
+        return new LimitationMock($identifier, $values);
+    }
+
+    /**
+     * @see \eZ\Publish\Core\MVC\Symfony\Templating\Tests\Twig\Extension\FileSystemTwigIntegrationTestCase::doIntegrationTest
+     */
+    protected function doIntegrationTest($file, $message, $condition, $templates, $exception, $outputs)
+    {
+        if (!$outputs) {
+            $this->markTestSkipped('no legacy tests to run');
+        }
+
+        if ($condition) {
+            eval('$ret = ' . $condition . ';');
+            if (!$ret) {
+                $this->markTestSkipped($condition);
+            }
+        }
+
+        $loader = new Twig_Loader_Chain([
+            new Twig_Loader_Array($templates),
+            new Twig_Loader_Filesystem($this->getFixturesDir()),
+        ]);
+
+        foreach ($outputs as $i => $match) {
+            $config = array_merge([
+                'cache' => false,
+                'strict_variables' => true,
+            ], $match[2] ? eval($match[2] . ';') : []);
+
+            $twig = new Twig_Environment($loader, $config);
+            $twig->addGlobal('global', 'global');
+            // (!) Twig_Environment is dependency of LimitationBlockRenderer
+            foreach ($this->getExtensions($twig) as $extension) {
+                $twig->addExtension($extension);
+            }
+
+            foreach ($this->getTwigFilters() as $filter) {
+                $twig->addFilter($filter);
+            }
+
+            foreach ($this->getTwigTests() as $test) {
+                $twig->addTest($test);
+            }
+
+            foreach ($this->getTwigFunctions() as $function) {
+                $twig->addFunction($function);
+            }
+
+            // avoid using the same PHP class name for different cases
+            $p = new ReflectionProperty($twig, 'templateClassPrefix');
+            $p->setAccessible(true);
+            $p->setValue($twig, '__TwigTemplate_' . hash('sha256', uniqid(mt_rand(), true), false) . '_');
+
+            try {
+                $template = $twig->loadTemplate('index.twig');
+            } catch (Exception $e) {
+                if (false !== $exception) {
+                    $message = $e->getMessage();
+                    $this->assertSame(trim($exception), trim(sprintf('%s: %s', get_class($e), $message)));
+                    $last = substr($message, strlen($message) - 1);
+                    $this->assertTrue('.' === $last || '?' === $last, $message, 'Exception message must end with a dot or a question mark.');
+
+                    return;
+                }
+
+                throw new Twig_Error(sprintf('%s: %s', get_class($e), $e->getMessage()), -1, $file, $e);
+            }
+
+            try {
+                $output = trim($template->render(eval($match[1] . ';')), "\n ");
+            } catch (Exception $e) {
+                if (false !== $exception) {
+                    $this->assertSame(trim($exception), trim(sprintf('%s: %s', get_class($e), $e->getMessage())));
+
+                    return;
+                }
+
+                $e = new Twig_Error(sprintf('%s: %s', get_class($e), $e->getMessage()), -1, $file, $e);
+
+                $output = trim(sprintf('%s: %s', get_class($e), $e->getMessage()));
+            }
+
+            if (false !== $exception) {
+                list($class) = explode(':', $exception);
+                $constraintClass = class_exists('PHPUnit\Framework\Constraint\Exception') ? 'PHPUnit\Framework\Constraint\Exception' : 'PHPUnit_Framework_Constraint_Exception';
+                $this->assertThat(null, new $constraintClass($class));
+            }
+
+            $expected = trim($match[3], "\n ");
+
+            if ($expected !== $output) {
+                printf("Compiled templates that failed on case %d:\n", $i + 1);
+
+                foreach (array_keys($templates) as $name) {
+                    echo "Template: $name\n";
+                    echo $twig->compile($twig->parse($twig->tokenize($twig->getLoader()->getSourceContext($name))));
+                }
+            }
+            $this->assertEquals($expected, $output, $message . ' (in ' . $file . ')');
+        }
+    }
+
+    protected function getFixturesDir()
+    {
+        return __DIR__ . '/_fixtures/ez_render_limitation_value/';
+    }
+}

@@ -48,7 +48,12 @@ parameters:
     ezrepoforms.validator.default_field_value.class: EzSystems\RepositoryForms\Validator\Constraints\FieldDefinitionDefaultValueValidator
     ezrepoforms.validator.field_value.class: EzSystems\RepositoryForms\Validator\Constraints\FieldValueValidator
 
+    ezrepoforms.templating.limitation_block_renderer.class: EzSystems\RepositoryForms\Limitation\Templating\LimitationBlockRenderer
+    ezrepoforms.templating.limitation_block_renderer.value_resources:
+        - 'EzSystemsRepositoryFormsBundle::limitation_values.html.twig'
+
     ezrepoforms.twig.field_edit_rendering_extension.class: EzSystems\RepositoryForms\Twig\FieldEditRenderingExtension
+    ezrepoforms.twig.limitation_rendering_extension.class: EzSystems\RepositoryForms\Twig\LimitationValueRenderingExtension
     ezrepoforms.action_dispatcher.base.class: EzSystems\RepositoryForms\Form\ActionDispatcher\AbstractActionDispatcher
     ezrepoforms.action_dispatcher.content_type.class: EzSystems\RepositoryForms\Form\ActionDispatcher\ContentTypeDispatcher
     ezrepoforms.action_dispatcher.content_type.group.class: EzSystems\RepositoryForms\Form\ActionDispatcher\ContentTypeGroupDispatcher
@@ -341,6 +346,21 @@ services:
     ezrepoforms.twig.field_edit_rendering_extension:
         class: "%ezrepoforms.twig.field_edit_rendering_extension.class%"
         arguments: ["@ezpublish.templating.field_block_renderer"]
+        tags:
+            - { name: twig.extension }
+
+    ezrepoforms.templating.limitation_block_renderer:
+        class: '%ezrepoforms.templating.limitation_block_renderer.class%'
+        arguments:
+            - '@ezrepoforms.limitation_value_mapper.registry'
+            - '@twig'
+        calls:
+            - ['setLimitationValueResources', [ '%ezrepoforms.templating.limitation_block_renderer.value_resources%' ]]
+
+    ezrepoforms.twig.limitation_rendering_extension:
+        class: '%ezrepoforms.twig.limitation_rendering_extension.class%'
+        arguments:
+            - '@ezrepoforms.templating.limitation_block_renderer'
         tags:
             - { name: twig.extension }
 
