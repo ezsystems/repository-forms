@@ -8,8 +8,6 @@
  */
 namespace EzSystems\RepositoryForms\Limitation\Mapper;
 
-use eZ\Publish\API\Repository\LocationService;
-use eZ\Publish\API\Repository\SearchService;
 use eZ\Publish\API\Repository\Values\Content\LocationQuery;
 use eZ\Publish\API\Repository\Values\Content\Query\Criterion\Ancestor;
 use eZ\Publish\API\Repository\Values\User\Limitation;
