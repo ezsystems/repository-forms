@@ -8,7 +8,10 @@
  */
 namespace EzSystems\RepositoryForms\Limitation\Mapper;
 
-class ParentDepthLimitationMapper extends MultipleSelectionBasedMapper
+use eZ\Publish\API\Repository\Values\User\Limitation;
+use EzSystems\RepositoryForms\Limitation\LimitationValueMapperInterface;
+
+class ParentDepthLimitationMapper extends MultipleSelectionBasedMapper implements LimitationValueMapperInterface
 {
     /**
      * @var int The maximum possible depth to use in a limitation
@@ -28,5 +31,10 @@ class ParentDepthLimitationMapper extends MultipleSelectionBasedMapper
         }
 
         return $choices;
+    }
+
+    public function mapLimitationValue(Limitation $limitation)
+    {
+        return $limitation->limitationValues;
     }
 }

@@ -8,7 +8,10 @@
  */
 namespace EzSystems\RepositoryForms\Limitation\Mapper;
 
-class SiteAccessLimitationMapper extends MultipleSelectionBasedMapper
+use eZ\Publish\API\Repository\Values\User\Limitation;
+use EzSystems\RepositoryForms\Limitation\LimitationValueMapperInterface;
+
+class SiteAccessLimitationMapper extends MultipleSelectionBasedMapper implements LimitationValueMapperInterface
 {
     /**
      * @var array
@@ -24,9 +27,26 @@ class SiteAccessLimitationMapper extends MultipleSelectionBasedMapper
     {
         $siteAccesses = [];
         foreach ($this->siteAccessList as $sa) {
-            $siteAccesses[sprintf('%u', crc32($sa))] = $sa;
+            $siteAccesses[$this->getSiteAccessKey($sa)] = $sa;
         }
 
         return $siteAccesses;
+    }
+
+    public function mapLimitationValue(Limitation $limitation)
+    {
+        $values = [];
+        foreach ($this->siteAccessList as $sa) {
+            if (in_array($this->getSiteAccessKey($sa), $limitation->limitationValues)) {
+                $values[] = $sa;
+            }
+        }
+
+        return $values;
+    }
+
+    private function getSiteAccessKey($sa)
+    {
+        return sprintf('%u', crc32($sa));
     }
 }

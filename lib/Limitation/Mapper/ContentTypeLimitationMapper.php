@@ -9,8 +9,10 @@
 namespace EzSystems\RepositoryForms\Limitation\Mapper;
 
 use eZ\Publish\API\Repository\ContentTypeService;
+use eZ\Publish\API\Repository\Values\User\Limitation;
+use EzSystems\RepositoryForms\Limitation\LimitationValueMapperInterface;
 
-class ContentTypeLimitationMapper extends MultipleSelectionBasedMapper
+class ContentTypeLimitationMapper extends MultipleSelectionBasedMapper implements LimitationValueMapperInterface
 {
     /**
      * @var ContentTypeService
@@ -32,5 +34,15 @@ class ContentTypeLimitationMapper extends MultipleSelectionBasedMapper
         }
 
         return $contentTypeChoices;
+    }
+
+    public function mapLimitationValue(Limitation $limitation)
+    {
+        $values = [];
+        foreach ($limitation->limitationValues as $contentTypeId) {
+            $values[] = $this->contentTypeService->loadContentType($contentTypeId);
+        }
+
+        return $values;
     }
 }

@@ -9,9 +9,10 @@
 namespace EzSystems\RepositoryForms\Limitation\Mapper;
 
 use eZ\Publish\API\Repository\Values\User\Limitation;
+use EzSystems\RepositoryForms\Limitation\LimitationValueMapperInterface;
 use Symfony\Component\Translation\TranslatorInterface;
 
-class GroupLimitationMapper extends MultipleSelectionBasedMapper
+class GroupLimitationMapper extends MultipleSelectionBasedMapper implements LimitationValueMapperInterface
 {
     /**
      * @var TranslatorInterface
@@ -27,6 +28,13 @@ class GroupLimitationMapper extends MultipleSelectionBasedMapper
     {
         return [
             1 => $this->translator->trans('policy.limitation.group.self', [], 'ezrepoforms_role'),
+        ];
+    }
+
+    public function mapLimitationValue(Limitation $limitation)
+    {
+        return [
+            $this->translator->trans('policy.limitation.group.self', [], 'ezrepoforms_role'),
         ];
     }
 }

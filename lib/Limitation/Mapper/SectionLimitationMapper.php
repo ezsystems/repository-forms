@@ -9,8 +9,10 @@
 namespace EzSystems\RepositoryForms\Limitation\Mapper;
 
 use eZ\Publish\API\Repository\SectionService;
+use eZ\Publish\API\Repository\Values\User\Limitation;
+use EzSystems\RepositoryForms\Limitation\LimitationValueMapperInterface;
 
-class SectionLimitationMapper extends MultipleSelectionBasedMapper
+class SectionLimitationMapper extends MultipleSelectionBasedMapper implements LimitationValueMapperInterface
 {
     /**
      * @var SectionService
@@ -30,5 +32,15 @@ class SectionLimitationMapper extends MultipleSelectionBasedMapper
         }
 
         return $choices;
+    }
+
+    public function mapLimitationValue(Limitation $limitation)
+    {
+        $values = [];
+        foreach ($limitation->limitationValues as $sectionId) {
+            $values[] = $this->sectionService->loadSection($sectionId);
+        }
+
+        return $values;
     }
 }

@@ -10,9 +10,10 @@ namespace EzSystems\RepositoryForms\Limitation\Mapper;
 
 use eZ\Publish\API\Repository\Values\User\Limitation;
 use EzSystems\RepositoryForms\Limitation\LimitationFormMapperInterface;
+use EzSystems\RepositoryForms\Limitation\LimitationValueMapperInterface;
 use Symfony\Component\Form\FormInterface;
 
-class NullLimitationMapper implements LimitationFormMapperInterface
+class NullLimitationMapper implements LimitationFormMapperInterface, LimitationValueMapperInterface
 {
     /**
      * @var string
@@ -35,5 +36,10 @@ class NullLimitationMapper implements LimitationFormMapperInterface
 
     public function filterLimitationValues(Limitation $limitation)
     {
+    }
+
+    public function mapLimitationValue(Limitation $limitation)
+    {
+        return $limitation->limitationValues;
     }
 }
