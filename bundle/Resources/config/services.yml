@@ -446,3 +446,10 @@ services:
         class: EzSystems\RepositoryForms\Translation\SortingTranslationExtractor
         tags:
             - { name: jms_translation.extractor, alias: ez_location_sorting }
+
+    ezrepoforms.translation.extractor.limitation:
+        class: EzSystems\RepositoryForms\Translation\LimitationTranslationExtractor
+        arguments:
+            - '%ezpublish.api.role.policy_map%'
+        tags:
+            - { name: jms_translation.extractor, alias: ez_policy_limitation }
