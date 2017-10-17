@@ -4,7 +4,6 @@ imports:
     - {resource: role.yml}
 
 parameters:
-    ezrepoforms.field_type_form_mapper.registry.class: EzSystems\RepositoryForms\FieldType\FieldTypeFormMapperRegistry
     ezrepoforms.field_type_form_mapper.dispatcher.class: EzSystems\RepositoryForms\FieldType\FieldTypeFormMapperDispatcher
     ezrepoforms.content_type.create.form_type.class: EzSystems\RepositoryForms\Form\Type\ContentType\ContentTypeCreateType
     ezrepoforms.content_type.update.form_type.class: EzSystems\RepositoryForms\Form\Type\ContentType\ContentTypeUpdateType
@@ -78,10 +77,6 @@ parameters:
     ezrepoforms.user_content_type_identifier: "user"
 
 services:
-    # deprecated in 1.1, will be removed in 2.0
-    ezrepoforms.field_type_form_mapper.registry:
-        class: "%ezrepoforms.field_type_form_mapper.registry.class%"
-
     ezrepoforms.field_type_form_mapper.dispatcher:
         class: "%ezrepoforms.field_type_form_mapper.dispatcher.class%"
 
