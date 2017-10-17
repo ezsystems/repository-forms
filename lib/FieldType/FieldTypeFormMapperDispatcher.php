@@ -23,7 +23,7 @@ class FieldTypeFormMapperDispatcher implements FieldTypeFormMapperDispatcherInte
     /**
      * FieldType form mappers, indexed by FieldType identifier.
      *
-     * @var FieldTypeFormMapperInterface[]|FieldValueFormMapperInterface[]|FieldDefinitionFormMapperInterface[]
+     * @var FieldValueFormMapperInterface[]|FieldDefinitionFormMapperInterface[]
      */
     private $mappers = [];
 
@@ -39,17 +39,6 @@ class FieldTypeFormMapperDispatcher implements FieldTypeFormMapperDispatcherInte
 
     public function addMapper(FieldFormMapperInterface $mapper, $fieldTypeIdentifier)
     {
-        if ($mapper instanceof FieldTypeFormMapperInterface) {
-            @trigger_error(
-                'The FieldTypeFormMapperInterface interface is deprecated in ezsystems/repository-forms 1.1, ' .
-                "and will be removed in version 2.0\n" .
-                'Use FieldValueFormMapperInterface and FieldDefinitionFormMapperInterface instead',
-                E_USER_DEPRECATED
-            );
-            $this->mappers[$fieldTypeIdentifier] = $mapper;
-            $valid = true;
-        }
-
         if ($mapper instanceof FieldValueFormMapperInterface) {
             $this->valueMappers[$fieldTypeIdentifier] = $mapper;
             $valid = true;
@@ -62,7 +51,7 @@ class FieldTypeFormMapperDispatcher implements FieldTypeFormMapperDispatcherInte
 
         if (!isset($valid)) {
             throw new \InvalidArgumentException(
-                'Expecting a FieldValueFormMapperInterface, FieldDefinitionFormMapperInterface or FieldTypeFormMapperInterface'
+                'Expecting a FieldValueFormMapperInterface, FieldDefinitionFormMapperInterface'
             );
         }
     }

@@ -5,14 +5,16 @@
  *
  * @copyright Copyright (C) eZ Systems AS. All rights reserved.
  * @license For full copyright and license information view LICENSE file distributed with this source code.
+ *
+ * @version //autogentag//
  */
 namespace EzSystems\RepositoryForms\Tests\FieldType\DataTransformer;
 
 use eZ\Publish\Core\FieldType\Country\Value;
-use EzSystems\RepositoryForms\FieldType\DataTransformer\CountryValueTransformer;
+use EzSystems\RepositoryForms\FieldType\DataTransformer\MultipleCountryValueTransformer;
 use PHPUnit\Framework\TestCase;
 
-class CountryValueTransformerTest extends TestCase
+class MultipleCountryValueTransformerTest extends TestCase
 {
     /**
      * @var array Array of countries from ezpublish.fieldType.ezcountry.data
@@ -63,7 +65,7 @@ class CountryValueTransformerTest extends TestCase
      */
     public function testTransform($valueAsArray)
     {
-        $transformer = new CountryValueTransformer($this->countriesInfo);
+        $transformer = new MultipleCountryValueTransformer($this->countriesInfo);
         $value = new Value($valueAsArray);
         self::assertSame(array_keys($valueAsArray), $transformer->transform($value));
     }
@@ -73,7 +75,7 @@ class CountryValueTransformerTest extends TestCase
      */
     public function testReverseTransform($valueAsArray)
     {
-        $transformer = new CountryValueTransformer($this->countriesInfo);
+        $transformer = new MultipleCountryValueTransformer($this->countriesInfo);
         $expectedValue = new Value($valueAsArray);
         self::assertEquals($expectedValue, $transformer->reverseTransform(array_keys($valueAsArray)));
     }
@@ -93,7 +95,7 @@ class CountryValueTransformerTest extends TestCase
      */
     public function testTransformNull($value)
     {
-        $transformer = new CountryValueTransformer($this->countriesInfo);
+        $transformer = new MultipleCountryValueTransformer($this->countriesInfo);
         self::assertNull($transformer->transform($value));
     }
 
@@ -112,7 +114,7 @@ class CountryValueTransformerTest extends TestCase
      */
     public function testReverseTransformNull($value)
     {
-        $transformer = new CountryValueTransformer($this->countriesInfo);
+        $transformer = new MultipleCountryValueTransformer($this->countriesInfo);
         self::assertNull($transformer->reverseTransform($value));
     }
 }

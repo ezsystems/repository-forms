@@ -40,8 +40,7 @@ class FieldTypeFormMapperDispatcherPass implements CompilerPassInterface
     }
 
     /**
-     * Gathers services tagged as either ez.fieldFormMapper.value or ez.fieldFormMapper.definition, as well
-     * as the deprecated ez.fieldType.formMapper.
+     * Gathers services tagged as either ez.fieldFormMapper.value or ez.fieldFormMapper.definition.
      *
      * @param \Symfony\Component\DependencyInjection\ContainerBuilder $container
      *
@@ -49,19 +48,8 @@ class FieldTypeFormMapperDispatcherPass implements CompilerPassInterface
      */
     private function findTaggedFormMapperServices(ContainerBuilder $container)
     {
-        $formMappers = $container->findTaggedServiceIds('ez.fieldType.formMapper');
-        foreach (array_keys($formMappers) as $serviceId) {
-            @trigger_error(
-                "The ez.fieldType.formMapper service tag from $serviceId is deprecated in ezsystems/repository-forms 1.3, " .
-                "and will be removed in version 2.0\n" .
-                'Use ez.fieldFormMapper.value and/or ez.fieldFormMapper.definition instead.',
-                E_USER_DEPRECATED
-            );
-        }
-
         return
             $container->findTaggedServiceIds('ez.fieldFormMapper.value') +
-            $container->findTaggedServiceIds('ez.fieldFormMapper.definition') +
-            $formMappers;
+            $container->findTaggedServiceIds('ez.fieldFormMapper.definition');
     }
 }

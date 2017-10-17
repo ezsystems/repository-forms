@@ -10,7 +10,6 @@ namespace EzSystems\RepositoryFormsBundle;
 
 use EzSystems\RepositoryForms\Security\UserRegisterPolicyProvider;
 use EzSystems\RepositoryFormsBundle\DependencyInjection\Compiler\FieldTypeFormMapperDispatcherPass;
-use EzSystems\RepositoryFormsBundle\DependencyInjection\Compiler\FieldTypeFormMapperPass;
 use EzSystems\RepositoryFormsBundle\DependencyInjection\Compiler\LimitationFormMapperPass;
 use EzSystems\RepositoryFormsBundle\DependencyInjection\Compiler\LimitationValueMapperPass;
 use EzSystems\RepositoryFormsBundle\DependencyInjection\Configuration\Parser\ContentEdit;
@@ -25,7 +24,6 @@ class EzSystemsRepositoryFormsBundle extends Bundle
     public function build(ContainerBuilder $container)
     {
         parent::build($container);
-        $container->addCompilerPass(new FieldTypeFormMapperPass());
         $container->addCompilerPass(new FieldTypeFormMapperDispatcherPass());
         $container->addCompilerPass(new LimitationFormMapperPass());
         $container->addCompilerPass(new LimitationValueMapperPass());
