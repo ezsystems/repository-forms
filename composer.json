@@ -17,7 +17,8 @@
     "require-dev": {
         "phpunit/phpunit": "^5.7",
         "matthiasnoback/symfony-dependency-injection-test": "~1.0",
-        "behat/behat": "^3.0"
+        "behat/behat": "^3.0",
+        "friendsofphp/php-cs-fixer": "^2.7"
     },
     "conflict": {
         "symfony/symfony": "2.7.11"
