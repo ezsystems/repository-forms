@@ -72,7 +72,6 @@ parameters:
     ezrepoforms.user_register.registration_group_loader.configurable.class: EzSystems\RepositoryForms\UserRegister\ConfigurableRegistrationGroupLoader
     ezrepoforms.user_register.registration_content_type_loader.configurable.class: EzSystems\RepositoryForms\UserRegister\ConfigurableRegistrationContentTypeLoader
     ezrepoforms.view_templates_listener.class: EzSystems\RepositoryForms\EventListener\ViewTemplatesListener
-    ezrepoforms.user_register.view_templates_listener.class: '%ezrepoforms.view_templates_listener.class%' # Deprecated in 1.10, to be removed in 2.0
 
     ezrepoforms.form_data_mapper.user_register.class: EzSystems\RepositoryForms\Data\Mapper\UserRegisterMapper
 
@@ -473,10 +472,6 @@ services:
             - [setViewTemplate, ['EzSystems\RepositoryForms\Content\View\ContentEditView', "$content_edit.templates.edit$"]]
             - [setViewTemplate, ['EzSystems\RepositoryForms\Content\View\ContentCreateDraftView', "$content_edit.templates.create_draft$"]]
             - [setPagelayout, ["$pagelayout$"]]
-
-    ezrepoforms.user_register.view_templates_listener:
-        alias: ezrepoforms.view_templates_listener
-        deprecated: 'The "%service_id%" service is deprecated since 1.10 and will be removed in 2.0. Use "ezrepoforms.view_templates_listener" instead.'
 
     ezrepoforms.translation.extractor.sorting:
         class: EzSystems\RepositoryForms\Translation\SortingTranslationExtractor
