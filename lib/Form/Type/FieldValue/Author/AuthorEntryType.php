@@ -45,7 +45,7 @@ class AuthorEntryType extends AbstractType
                 'id',
                 HiddenType::class,
                 [
-                    'label' => 'content.field_type.ezauthor.id',
+                    'label' => false,
                 ]
             )
             ->add(
