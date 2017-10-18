@@ -34,7 +34,7 @@ class UrlType extends AbstractType
                 BaseUrlType::class,
                 [
                     'label' => 'content.field_type.ezurl.link',
-                    'required' => false,
+                    'required' => $options['required'],
                 ]
             )
             ->add(
