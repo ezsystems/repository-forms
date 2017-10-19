@@ -32,8 +32,18 @@ class LimitationValueRenderingExtensionTest extends FileSystemTwigIntegrationTes
         );
 
         $limitationBlockRenderer->setLimitationValueResources([
-            'templates/limitation_value_1.html.twig',
-            'templates/limitation_value_2.html.twig',
+            [
+                'template' => 'templates/limitation_value_1.html.twig',
+                'priority' => 10,
+            ],
+            [
+                'template' => 'templates/limitation_value_2.html.twig',
+                'priority' => 0,
+            ],
+            [
+                'template' => 'templates/limitation_value_3.html.twig',
+                'priority' => 20,
+            ],
         ]);
 
         return [

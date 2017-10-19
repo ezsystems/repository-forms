@@ -3,3 +3,5 @@ parameters:
     ezsettings.default.user_registration.templates.form: "EzSystemsRepositoryFormsBundle:Content:content_edit.html.twig"
     ezsettings.default.user_registration.templates.confirmation: "EzSystemsRepositoryFormsBundle:User:register_confirmation.html.twig"
 
+    ezsettings.default.limitation_value_templates:
+        - { template: 'EzSystemsRepositoryFormsBundle::limitation_values.html.twig', priority: 0 }
