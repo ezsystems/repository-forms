@@ -10,28 +10,15 @@ namespace EzSystems\RepositoryForms\FieldType\Mapper;
 
 use EzSystems\RepositoryForms\Data\Content\FieldData;
 use EzSystems\RepositoryForms\Data\FieldDefinitionData;
-use EzSystems\RepositoryForms\FieldType\DataTransformer\MultipleCountryValueTransformer;
-use EzSystems\RepositoryForms\FieldType\DataTransformer\SingleCountryValueTransformer;
 use EzSystems\RepositoryForms\FieldType\FieldDefinitionFormMapperInterface;
 use EzSystems\RepositoryForms\FieldType\FieldValueFormMapperInterface;
+use EzSystems\RepositoryForms\Form\Type\FieldType\CountryFieldType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class CountryFormMapper implements FieldDefinitionFormMapperInterface, FieldValueFormMapperInterface
 {
-    /** @var array Array of countries from ezpublish.fieldType.ezcountry.data */
-    protected $countriesInfo;
-
-    /**
-     * @param array $countriesInfo
-     */
-    public function __construct(array $countriesInfo)
-    {
-        $this->countriesInfo = $countriesInfo;
-    }
-
     public function mapFieldDefinitionForm(FormInterface $fieldDefinitionForm, FieldDefinitionData $data)
     {
         $fieldDefinitionForm
@@ -48,8 +35,7 @@ class CountryFormMapper implements FieldDefinitionFormMapperInterface, FieldValu
                 $fieldDefinitionForm->getConfig()->getFormFactory()->createBuilder()
                     ->create(
                         'defaultValue',
-                        ChoiceType::class, [
-                            'choices' => $this->getCountryChoices($this->countriesInfo),
+                        CountryFieldType::class, [
                             'choices_as_values' => true,
                             'multiple' => true,
                             'expanded' => false,
@@ -57,20 +43,9 @@ class CountryFormMapper implements FieldDefinitionFormMapperInterface, FieldValu
                             'label' => 'field_definition.ezcountry.default_value',
                         ]
                     )
-                    ->addModelTransformer(new MultipleCountryValueTransformer($this->countriesInfo))
                     // Deactivate auto-initialize as we're not on the root form.
                     ->setAutoInitialize(false)->getForm()
             );
-    }
-
-    private function getCountryChoices(array $countriesInfo)
-    {
-        $choices = [];
-        foreach ($countriesInfo as $country) {
-            $choices[$country['Name']] = $country['Alpha2'];
-        }
-
-        return $choices;
     }
 
     public function mapFieldValueForm(FormInterface $fieldForm, FieldData $data)
@@ -82,18 +57,11 @@ class CountryFormMapper implements FieldDefinitionFormMapperInterface, FieldValu
         $fieldForm
             ->add(
                 $formConfig->getFormFactory()->createBuilder()
-                    ->create('value', ChoiceType::class, [
-                        'choices' => $this->getCountryChoices($this->countriesInfo),
+                    ->create('value', CountryFieldType::class, [
                         'multiple' => $fieldSettings['isMultiple'],
-                        'expanded' => false,
                         'required' => $fieldDefinition->isRequired,
                         'label' => $fieldDefinition->getName($formConfig->getOption('languageCode')),
                     ])
-                    ->addModelTransformer(
-                        $fieldSettings['isMultiple']
-                            ? new MultipleCountryValueTransformer($this->countriesInfo)
-                            : new SingleCountryValueTransformer($this->countriesInfo)
-                    )
                     ->setAutoInitialize(false)
                     ->getForm()
             );
