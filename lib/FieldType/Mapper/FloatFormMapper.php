@@ -8,13 +8,11 @@
  */
 namespace EzSystems\RepositoryForms\FieldType\Mapper;
 
-use eZ\Publish\API\Repository\FieldTypeService;
-use eZ\Publish\API\Repository\Values\ContentType\FieldDefinition;
 use EzSystems\RepositoryForms\Data\Content\FieldData;
 use EzSystems\RepositoryForms\Data\FieldDefinitionData;
-use EzSystems\RepositoryForms\FieldType\DataTransformer\FieldValueTransformer;
 use EzSystems\RepositoryForms\FieldType\FieldDefinitionFormMapperInterface;
 use EzSystems\RepositoryForms\FieldType\FieldValueFormMapperInterface;
+use EzSystems\RepositoryForms\Form\Type\FieldType\FloatFieldType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -24,25 +22,16 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class FloatFormMapper implements FieldDefinitionFormMapperInterface, FieldValueFormMapperInterface
 {
-    /** @var FieldTypeService */
-    private $fieldTypeService;
-
-    public function __construct(FieldTypeService $fieldTypeService)
-    {
-        $this->fieldTypeService = $fieldTypeService;
-    }
-
     public function mapFieldDefinitionForm(FormInterface $fieldDefinitionForm, FieldDefinitionData $fieldDefinition)
     {
         $defaultValueForm = $fieldDefinitionForm
             ->getConfig()
             ->getFormFactory()
             ->createBuilder()
-            ->create('defaultValue', NumberType::class, [
+            ->create('defaultValue', FloatFieldType::class, [
                 'required' => false,
                 'label' => 'field_definition.ezfloat.default_value',
             ])
-            ->addModelTransformer(new FieldValueTransformer($this->fieldTypeService->getFieldType($fieldDefinition->getFieldTypeIdentifier())))
             ->setAutoInitialize(false)
             ->getForm();
 
@@ -68,20 +57,21 @@ class FloatFormMapper implements FieldDefinitionFormMapperInterface, FieldValueF
     {
         $fieldDefinition = $data->fieldDefinition;
         $formConfig = $fieldForm->getConfig();
+        $validatorConfiguration = $fieldDefinition->getValidatorConfiguration();
 
         $fieldForm
             ->add(
                 $formConfig->getFormFactory()->createBuilder()
                     ->create(
                         'value',
-                        NumberType::class,
+                        FloatFieldType::class,
                         [
                             'required' => $fieldDefinition->isRequired,
                             'label' => $fieldDefinition->getName($formConfig->getOption('languageCode')),
-                            'attr' => $this->getAttributes($fieldDefinition),
+                            'min' => $validatorConfiguration['FloatValueValidator']['minFloatValue'],
+                            'max' => $validatorConfiguration['FloatValueValidator']['maxFloatValue'],
                         ]
                     )
-                    ->addModelTransformer(new FieldValueTransformer($this->fieldTypeService->getFieldType($fieldDefinition->fieldTypeIdentifier)))
                     ->setAutoInitialize(false)
                     ->getForm()
             );
@@ -93,21 +83,5 @@ class FloatFormMapper implements FieldDefinitionFormMapperInterface, FieldValueF
             ->setDefaults([
                 'translation_domain' => 'ezrepoforms_content_type',
             ]);
-    }
-
-    private function getAttributes(FieldDefinition $fieldDefinition)
-    {
-        $validatorConfiguration = $fieldDefinition->getValidatorConfiguration();
-        $attributes = ['step' => 'any'];
-
-        if (null !== $validatorConfiguration['FloatValueValidator']['minFloatValue']) {
-            $attributes['min'] = $validatorConfiguration['FloatValueValidator']['minFloatValue'];
-        }
-
-        if (null !== $validatorConfiguration['FloatValueValidator']['maxFloatValue']) {
-            $attributes['max'] = $validatorConfiguration['FloatValueValidator']['maxFloatValue'];
-        }
-
-        return $attributes;
     }
 }
