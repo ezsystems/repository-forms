@@ -8,13 +8,11 @@
  */
 namespace EzSystems\RepositoryForms\FieldType\Mapper;
 
-use eZ\Publish\API\Repository\FieldTypeService;
 use EzSystems\RepositoryForms\Data\Content\FieldData;
 use EzSystems\RepositoryForms\Data\FieldDefinitionData;
-use EzSystems\RepositoryForms\FieldType\DataTransformer\FieldValueTransformer;
 use EzSystems\RepositoryForms\FieldType\FieldDefinitionFormMapperInterface;
 use EzSystems\RepositoryForms\FieldType\FieldValueFormMapperInterface;
-use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use EzSystems\RepositoryForms\Form\Type\FieldType\CheckboxFieldType;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -23,25 +21,16 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class CheckboxFormMapper implements FieldDefinitionFormMapperInterface, FieldValueFormMapperInterface
 {
-    /** @var FieldTypeService */
-    private $fieldTypeService;
-
-    public function __construct(FieldTypeService $fieldTypeService)
-    {
-        $this->fieldTypeService = $fieldTypeService;
-    }
-
     public function mapFieldDefinitionForm(FormInterface $fieldDefinitionForm, FieldDefinitionData $fieldDefinition)
     {
         $defaultValueForm = $fieldDefinitionForm
             ->getConfig()
             ->getFormFactory()
             ->createBuilder()
-            ->create('defaultValue', CheckboxType::class, [
+            ->create('defaultValue', CheckboxFieldType::class, [
                 'required' => false,
                 'label' => 'field_definition.ezboolean.default_value',
             ])
-            ->addModelTransformer(new FieldValueTransformer($this->fieldTypeService->getFieldType($fieldDefinition->getFieldTypeIdentifier())))
             ->setAutoInitialize(false)
             ->getForm();
 
@@ -58,13 +47,12 @@ class CheckboxFormMapper implements FieldDefinitionFormMapperInterface, FieldVal
                 $formConfig->getFormFactory()->createBuilder()
                     ->create(
                         'value',
-                        CheckboxType::class,
+                        CheckboxFieldType::class,
                         [
                             'required' => $fieldDefinition->isRequired,
                             'label' => $fieldDefinition->getName($formConfig->getOption('languageCode')),
                         ]
                     )
-                    ->addModelTransformer(new FieldValueTransformer($this->fieldTypeService->getFieldType($fieldDefinition->fieldTypeIdentifier)))
                     ->setAutoInitialize(false)
                     ->getForm()
             );
