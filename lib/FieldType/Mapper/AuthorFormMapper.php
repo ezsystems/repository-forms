@@ -10,7 +10,7 @@ namespace EzSystems\RepositoryForms\FieldType\Mapper;
 
 use EzSystems\RepositoryForms\Data\Content\FieldData;
 use EzSystems\RepositoryForms\FieldType\FieldValueFormMapperInterface;
-use EzSystems\RepositoryForms\Form\Type\FieldValue\AuthorsType;
+use EzSystems\RepositoryForms\Form\Type\FieldType\AuthorFieldType;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -31,7 +31,7 @@ class AuthorFormMapper implements FieldValueFormMapperInterface
         $fieldForm
             ->add(
                 $formConfig->getFormFactory()->createBuilder()
-                    ->create('value', AuthorsType::class, [
+                    ->create('value', AuthorFieldType::class, [
                         'required' => $fieldDefinition->isRequired,
                         'label' => $fieldDefinition->getName($formConfig->getOption('languageCode')),
                     ])
