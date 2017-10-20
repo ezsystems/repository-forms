@@ -8,11 +8,9 @@
  */
 namespace EzSystems\RepositoryForms\FieldType\Mapper;
 
-use eZ\Publish\API\Repository\FieldTypeService;
 use EzSystems\RepositoryForms\Data\Content\FieldData;
-use EzSystems\RepositoryForms\FieldType\DataTransformer\FieldValueTransformer;
 use EzSystems\RepositoryForms\FieldType\FieldValueFormMapperInterface;
-use EzSystems\RepositoryForms\Form\Type\FieldValue\MapLocationType;
+use EzSystems\RepositoryForms\Form\Type\FieldType\MapLocationFieldType;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -21,14 +19,6 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class MapLocationFormMapper implements FieldValueFormMapperInterface
 {
-    /** @var FieldTypeService */
-    private $fieldTypeService;
-
-    public function __construct(FieldTypeService $fieldTypeService)
-    {
-        $this->fieldTypeService = $fieldTypeService;
-    }
-
     public function mapFieldValueForm(FormInterface $fieldForm, FieldData $data)
     {
         $fieldDefinition = $data->fieldDefinition;
@@ -39,13 +29,12 @@ class MapLocationFormMapper implements FieldValueFormMapperInterface
                 $formConfig->getFormFactory()->createBuilder()
                     ->create(
                         'value',
-                        MapLocationType::class,
+                        MapLocationFieldType::class,
                         [
                             'required' => $fieldDefinition->isRequired,
                             'label' => $fieldDefinition->getName($formConfig->getOption('languageCode')),
                         ]
                     )
-                    ->addModelTransformer(new FieldValueTransformer($this->fieldTypeService->getFieldType($fieldDefinition->fieldTypeIdentifier)))
                     ->setAutoInitialize(false)
                     ->getForm()
             );

@@ -3,38 +3,38 @@
  * @copyright Copyright (C) eZ Systems AS. All rights reserved.
  * @license For full copyright and license information view LICENSE file distributed with this source code.
  */
-namespace EzSystems\RepositoryForms\Form\Type\FieldValue;
+namespace EzSystems\RepositoryForms\Form\Type\FieldType;
 
+use eZ\Publish\API\Repository\FieldTypeService;
+use EzSystems\RepositoryForms\FieldType\DataTransformer\FieldValueTransformer;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 
 /**
- * Combined entry type for ezgmaplocation.
+ * Form Type representing ezgmaplocation field type.
  */
-class MapLocationType extends AbstractType
+class MapLocationFieldType extends AbstractType
 {
-    /**
-     * @return string
-     */
+    /** @var FieldTypeService */
+    protected $fieldTypeService;
+
+    public function __construct(FieldTypeService $fieldTypeService)
+    {
+        $this->fieldTypeService = $fieldTypeService;
+    }
+
     public function getName()
     {
         return $this->getBlockPrefix();
     }
 
-    /**
-     * @return string
-     */
     public function getBlockPrefix()
     {
-        return 'ezrepoforms_fieldtype_ezgmaplocation';
+        return 'ezplatform_fieldtype_ezgmaplocation';
     }
 
-    /**
-     * @param FormBuilderInterface $builder
-     * @param array $options
-     */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
@@ -70,8 +70,8 @@ class MapLocationType extends AbstractType
                 [
                     'label' => 'content.field_type.ezgmaplocation.address',
                     'required' => false,
-                    'empty_data' => '',
                 ]
-            );
+            )
+            ->addModelTransformer(new FieldValueTransformer($this->fieldTypeService->getFieldType('ezgmaplocation')));
     }
 }
