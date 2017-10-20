@@ -8,16 +8,14 @@
  */
 namespace EzSystems\RepositoryForms\FieldType\Mapper;
 
-use eZ\Publish\API\Repository\FieldTypeService;
 use eZ\Publish\Core\FieldType\Time\Type;
 use EzSystems\RepositoryForms\Data\Content\FieldData;
 use EzSystems\RepositoryForms\Data\FieldDefinitionData;
-use EzSystems\RepositoryForms\FieldType\DataTransformer\FieldValueTransformer;
 use EzSystems\RepositoryForms\FieldType\FieldDefinitionFormMapperInterface;
 use EzSystems\RepositoryForms\FieldType\FieldValueFormMapperInterface;
+use EzSystems\RepositoryForms\Form\Type\FieldType\TimeFieldType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Symfony\Component\Form\Extension\Core\Type\TimeType;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -26,14 +24,6 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class TimeFormMapper implements FieldDefinitionFormMapperInterface, FieldValueFormMapperInterface
 {
-    /** @var FieldTypeService */
-    private $fieldTypeService;
-
-    public function __construct(FieldTypeService $fieldTypeService)
-    {
-        $this->fieldTypeService = $fieldTypeService;
-    }
-
     public function mapFieldDefinitionForm(FormInterface $fieldDefinitionForm, FieldDefinitionData $data)
     {
         $fieldDefinitionForm
@@ -72,15 +62,11 @@ class TimeFormMapper implements FieldDefinitionFormMapperInterface, FieldValueFo
         $fieldForm
             ->add(
                 $formConfig->getFormFactory()->createBuilder()
-                    ->create('value', TimeType::class, [
-                        'input' => 'timestamp',
-                        'widget' => 'single_text',
+                    ->create('value', TimeFieldType::class, [
                         'with_seconds' => $fieldSettings['useSeconds'],
                         'required' => $fieldDefinition->isRequired,
                         'label' => $fieldDefinition->getName($formConfig->getOption('languageCode')),
-                        'attr' => $this->getAttributes($fieldSettings),
                     ])
-                    ->addModelTransformer(new FieldValueTransformer($this->fieldTypeService->getFieldType($fieldDefinition->fieldTypeIdentifier)))
                     ->setAutoInitialize(false)
                     ->getForm()
             );
@@ -92,16 +78,5 @@ class TimeFormMapper implements FieldDefinitionFormMapperInterface, FieldValueFo
             ->setDefaults([
                 'translation_domain' => 'ezrepoforms_content_type',
             ]);
-    }
-
-    private function getAttributes(array $fieldSettings)
-    {
-        $attributes = [];
-
-        if ($fieldSettings['useSeconds']) {
-            $attributes['step'] = 1;
-        }
-
-        return $attributes;
     }
 }
