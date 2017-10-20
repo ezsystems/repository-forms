@@ -1,7 +1,0 @@
-{% macro display_form(form) %}
-    {% form_theme form with ['EzSystemsRepositoryFormsBundle:Content:form_fields.html.twig', _self] %}
-
-    {{ form_start(form) }}
-    {{- form_widget(form.fieldsData) -}}
-    {{ form_end(form) }}
-{% endmacro %}

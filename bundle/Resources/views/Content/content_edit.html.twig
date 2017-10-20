@@ -1,9 +1,9 @@
 {% extends noLayout is defined and noLayout == true ? viewbaseLayout : pagelayout %}
 
 {% block content %}
-    {% import "EzSystemsRepositoryFormsBundle:Content:content_form.html.twig" as contentForms %}
-
     <section class="ez-content-edit">
-        {{ contentForms.display_form(form) }}
+        {{ form_start(form) }}
+        {{- form_widget(form.fieldsData) -}}
+        {{ form_end(form) }}
     </section>
 {% endblock %}
