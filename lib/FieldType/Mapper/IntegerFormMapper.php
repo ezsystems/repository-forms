@@ -8,13 +8,11 @@
  */
 namespace EzSystems\RepositoryForms\FieldType\Mapper;
 
-use eZ\Publish\API\Repository\FieldTypeService;
-use eZ\Publish\API\Repository\Values\ContentType\FieldDefinition;
 use EzSystems\RepositoryForms\Data\Content\FieldData;
 use EzSystems\RepositoryForms\Data\FieldDefinitionData;
-use EzSystems\RepositoryForms\FieldType\DataTransformer\FieldValueTransformer;
 use EzSystems\RepositoryForms\FieldType\FieldDefinitionFormMapperInterface;
 use EzSystems\RepositoryForms\FieldType\FieldValueFormMapperInterface;
+use EzSystems\RepositoryForms\Form\Type\FieldType\IntegerFieldType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -24,25 +22,16 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class IntegerFormMapper implements FieldDefinitionFormMapperInterface, FieldValueFormMapperInterface
 {
-    /** @var FieldTypeService */
-    private $fieldTypeService;
-
-    public function __construct(FieldTypeService $fieldTypeService)
-    {
-        $this->fieldTypeService = $fieldTypeService;
-    }
-
     public function mapFieldDefinitionForm(FormInterface $fieldDefinitionForm, FieldDefinitionData $fieldDefinition)
     {
         $defaultValueForm = $fieldDefinitionForm
             ->getConfig()
             ->getFormFactory()
             ->createBuilder()
-            ->create('defaultValue', IntegerType::class, [
+            ->create('defaultValue', IntegerFieldType::class, [
                 'required' => false,
                 'label' => 'field_definition.ezinteger.default_value',
             ])
-            ->addModelTransformer(new FieldValueTransformer($this->fieldTypeService->getFieldType($fieldDefinition->getFieldTypeIdentifier())))
             ->setAutoInitialize(false)
             ->getForm();
 
@@ -68,24 +57,20 @@ class IntegerFormMapper implements FieldDefinitionFormMapperInterface, FieldValu
     {
         $fieldDefinition = $data->fieldDefinition;
         $formConfig = $fieldForm->getConfig();
+        $validatorConfiguration = $fieldDefinition->getValidatorConfiguration();
 
         $fieldForm
             ->add(
                 $formConfig->getFormFactory()->createBuilder()
                     ->create(
                         'value',
-                        IntegerType::class,
+                        IntegerFieldType::class,
                         [
-                            'block_name' => $fieldDefinition->fieldTypeIdentifier,
                             'required' => $fieldDefinition->isRequired,
                             'label' => $fieldDefinition->getName($formConfig->getOption('languageCode')),
-                            'attr' => $this->getAttributes($fieldDefinition),
+                            'min' => $validatorConfiguration['IntegerValueValidator']['minIntegerValue'],
+                            'max' => $validatorConfiguration['IntegerValueValidator']['maxIntegerValue'],
                         ]
-                    )
-                    ->addModelTransformer(
-                        new FieldValueTransformer(
-                            $this->fieldTypeService->getFieldType($fieldDefinition->fieldTypeIdentifier)
-                        )
                     )
                     ->setAutoInitialize(false)
                     ->getForm()
@@ -98,21 +83,5 @@ class IntegerFormMapper implements FieldDefinitionFormMapperInterface, FieldValu
             ->setDefaults([
                 'translation_domain' => 'ezrepoforms_content_type',
             ]);
-    }
-
-    private function getAttributes(FieldDefinition $fieldDefinition)
-    {
-        $validatorConfiguration = $fieldDefinition->getValidatorConfiguration();
-        $attributes = ['step' => 1];
-
-        if (null !== $validatorConfiguration['IntegerValueValidator']['minIntegerValue']) {
-            $attributes['min'] = $validatorConfiguration['IntegerValueValidator']['minIntegerValue'];
-        }
-
-        if (null !== $validatorConfiguration['IntegerValueValidator']['maxIntegerValue']) {
-            $attributes['max'] = $validatorConfiguration['IntegerValueValidator']['maxIntegerValue'];
-        }
-
-        return $attributes;
     }
 }
