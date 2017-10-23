@@ -9,6 +9,7 @@ echo '# Extract RepositoryForms';
   --exclude-dir=vendor \
   --output-dir=./vendor/ezsystems/repository-forms/bundle/Resources/translations \
   --enable-extractor=ez_location_sorting \
+  --enable-extractor=ez_policy_limitation \
   --keep
   "$@"
 

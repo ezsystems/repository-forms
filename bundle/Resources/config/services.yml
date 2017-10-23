@@ -24,8 +24,6 @@ parameters:
     ezrepoforms.validator.field_value.class: EzSystems\RepositoryForms\Validator\Constraints\FieldValueValidator
 
     ezrepoforms.templating.limitation_block_renderer.class: EzSystems\RepositoryForms\Limitation\Templating\LimitationBlockRenderer
-    ezrepoforms.templating.limitation_block_renderer.value_resources:
-        - 'EzSystemsRepositoryFormsBundle::limitation_values.html.twig'
 
     ezrepoforms.twig.field_edit_rendering_extension.class: EzSystems\RepositoryForms\Twig\FieldEditRenderingExtension
     ezrepoforms.twig.limitation_rendering_extension.class: EzSystems\RepositoryForms\Twig\LimitationValueRenderingExtension
@@ -151,7 +149,7 @@ services:
             - '@ezrepoforms.limitation_value_mapper.registry'
             - '@twig'
         calls:
-            - ['setLimitationValueResources', [ '%ezrepoforms.templating.limitation_block_renderer.value_resources%' ]]
+            - ['setLimitationValueResources', [ '$limitation_value_templates$' ]]
 
     ezrepoforms.twig.limitation_rendering_extension:
         class: '%ezrepoforms.twig.limitation_rendering_extension.class%'
@@ -278,3 +276,10 @@ services:
         class: EzSystems\RepositoryForms\Translation\SortingTranslationExtractor
         tags:
             - { name: jms_translation.extractor, alias: ez_location_sorting }
+
+    ezrepoforms.translation.extractor.limitation:
+        class: EzSystems\RepositoryForms\Translation\LimitationTranslationExtractor
+        arguments:
+            - '%ezpublish.api.role.policy_map%'
+        tags:
+            - { name: jms_translation.extractor, alias: ez_policy_limitation }

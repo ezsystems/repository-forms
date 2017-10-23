@@ -70,9 +70,13 @@ class LimitationBlockRenderer implements LimitationBlockRendererInterface
         return $template->renderBlock($blockName, $parameters);
     }
 
-    public function setLimitationValueResources(array $limitationValueResources)
+    public function setLimitationValueResources(array $resources)
     {
-        $this->limitationValueResources = $limitationValueResources;
+        usort($resources, function ($a, $b) {
+            return $b['priority'] - $a['priority'];
+        });
+
+        $this->limitationValueResources = array_column($resources, 'template');
     }
 
     /**

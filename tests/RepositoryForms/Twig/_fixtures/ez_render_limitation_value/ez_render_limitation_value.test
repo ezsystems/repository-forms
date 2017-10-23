@@ -13,6 +13,6 @@ return [
 ];
 --EXPECT--
 foo: 1,2,3
-bar: A,B,C
+bar: A|B|C
 FOO: 1|2|3
 custom_param: A,B,C PARAM A:A PARAM B:B
