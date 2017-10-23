@@ -8,40 +8,27 @@
  */
 namespace EzSystems\RepositoryForms\FieldType\Mapper;
 
-use eZ\Publish\API\Repository\FieldTypeService;
 use EzSystems\RepositoryForms\Data\Content\FieldData;
 use EzSystems\RepositoryForms\Data\FieldDefinitionData;
-use EzSystems\RepositoryForms\FieldType\DataTransformer\FieldValueTransformer;
 use EzSystems\RepositoryForms\FieldType\FieldDefinitionFormMapperInterface;
 use EzSystems\RepositoryForms\FieldType\FieldValueFormMapperInterface;
+use EzSystems\RepositoryForms\Form\Type\FieldType\ISBNFieldType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class ISBNFormMapper implements FieldDefinitionFormMapperInterface, FieldValueFormMapperInterface
 {
-    /**
-     * @var \eZ\Publish\API\Repository\FieldTypeService
-     */
-    private $fieldTypeService;
-
-    public function __construct(FieldTypeService $fieldTypeService)
-    {
-        $this->fieldTypeService = $fieldTypeService;
-    }
-
     public function mapFieldDefinitionForm(FormInterface $fieldDefinitionForm, FieldDefinitionData $fieldDefinition)
     {
         $defaultValueForm = $fieldDefinitionForm
             ->getConfig()
             ->getFormFactory()
             ->createBuilder()
-            ->create('defaultValue', TextType::class, [
+            ->create('defaultValue', ISBNFieldType::class, [
                 'required' => false,
                 'label' => 'field_definition.ezisbn.default_value',
             ])
-            ->addModelTransformer(new FieldValueTransformer($this->fieldTypeService->getFieldType($fieldDefinition->getFieldTypeIdentifier())))
             ->setAutoInitialize(false)
             ->getForm();
 
@@ -66,14 +53,12 @@ class ISBNFormMapper implements FieldDefinitionFormMapperInterface, FieldValueFo
                 $formConfig->getFormFactory()->createBuilder()
                     ->create(
                         'value',
-                        TextType::class,
+                        ISBNFieldType::class,
                         [
                             'required' => $fieldDefinition->isRequired,
                             'label' => $fieldDefinition->getName($formConfig->getOption('languageCode')),
                         ]
                     )
-                    ->addModelTransformer(new FieldValueTransformer($this->fieldTypeService->getFieldType($fieldDefinition->fieldTypeIdentifier)))
-                    // Deactivate auto-initialize as we're not on the root form.
                     ->setAutoInitialize(false)
                     ->getForm()
             );

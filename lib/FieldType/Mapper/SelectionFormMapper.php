@@ -10,12 +10,10 @@ namespace EzSystems\RepositoryForms\FieldType\Mapper;
 
 use EzSystems\RepositoryForms\Data\Content\FieldData;
 use EzSystems\RepositoryForms\Data\FieldDefinitionData;
-use EzSystems\RepositoryForms\FieldType\DataTransformer\MultiSelectionValueTransformer;
-use EzSystems\RepositoryForms\FieldType\DataTransformer\SingleSelectionValueTransformer;
 use EzSystems\RepositoryForms\FieldType\FieldDefinitionFormMapperInterface;
 use EzSystems\RepositoryForms\FieldType\FieldValueFormMapperInterface;
+use EzSystems\RepositoryForms\Form\Type\FieldType\SelectionFieldType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormInterface;
@@ -66,21 +64,14 @@ class SelectionFormMapper implements FieldDefinitionFormMapperInterface, FieldVa
                 $formConfig->getFormFactory()->createBuilder()
                     ->create(
                         'value',
-                        ChoiceType::class,
+                        SelectionFieldType::class,
                         [
                             'required' => $fieldDefinition->isRequired,
                             'label' => $label,
                             'multiple' => $fieldDefinition->fieldSettings['isMultiple'],
                             'choices' => array_flip($fieldDefinition->fieldSettings['options']),
-                            'choices_as_values' => true,
                         ]
                     )
-                    ->addModelTransformer(
-                        $fieldDefinition->fieldSettings['isMultiple'] ?
-                            new MultiSelectionValueTransformer() :
-                            new SingleSelectionValueTransformer()
-                    )
-                    // Deactivate auto-initialize as we're not on the root form.
                     ->setAutoInitialize(false)
                     ->getForm()
             );

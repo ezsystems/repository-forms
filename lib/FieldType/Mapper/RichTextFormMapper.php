@@ -8,33 +8,14 @@
  */
 namespace EzSystems\RepositoryForms\FieldType\Mapper;
 
-use eZ\Publish\API\Repository\FieldTypeService;
-use eZ\Publish\Core\FieldType\RichText\Converter;
 use EzSystems\RepositoryForms\Data\Content\FieldData;
-use EzSystems\RepositoryForms\FieldType\DataTransformer\RichTextValueTransformer;
 use EzSystems\RepositoryForms\FieldType\FieldValueFormMapperInterface;
-use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use EzSystems\RepositoryForms\Form\Type\FieldType\RichTextFieldType;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class RichTextFormMapper implements FieldValueFormMapperInterface
 {
-    /**
-     * @var FieldTypeService
-     */
-    private $fieldTypeService;
-
-    /**
-     * @var \eZ\Publish\Core\FieldType\RichText\Converter
-     */
-    private $docbookToXhtml5EditConverter;
-
-    public function __construct(FieldTypeService $fieldTypeService, Converter $docbookToXhtml5EditConverter)
-    {
-        $this->fieldTypeService = $fieldTypeService;
-        $this->docbookToXhtml5EditConverter = $docbookToXhtml5EditConverter;
-    }
-
     public function mapFieldValueForm(FormInterface $fieldForm, FieldData $data)
     {
         $fieldDefinition = $data->fieldDefinition;
@@ -43,11 +24,10 @@ class RichTextFormMapper implements FieldValueFormMapperInterface
         $fieldForm
             ->add(
                 $formConfig->getFormFactory()->createBuilder()
-                    ->create('value', TextareaType::class, [
+                    ->create('value', RichTextFieldType::class, [
                         'required' => $fieldDefinition->isRequired,
                         'label' => $fieldDefinition->getName($formConfig->getOption('languageCode')),
                     ])
-                    ->addModelTransformer(new RichTextValueTransformer($this->fieldTypeService->getFieldType($fieldDefinition->fieldTypeIdentifier), $this->docbookToXhtml5EditConverter))
                     ->setAutoInitialize(false)
                     ->getForm()
             );

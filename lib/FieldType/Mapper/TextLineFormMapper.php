@@ -8,15 +8,12 @@
  */
 namespace EzSystems\RepositoryForms\FieldType\Mapper;
 
-use eZ\Publish\API\Repository\FieldTypeService;
-use eZ\Publish\API\Repository\Values\ContentType\FieldDefinition;
 use EzSystems\RepositoryForms\Data\Content\FieldData;
 use EzSystems\RepositoryForms\Data\FieldDefinitionData;
-use EzSystems\RepositoryForms\FieldType\DataTransformer\FieldValueTransformer;
 use EzSystems\RepositoryForms\FieldType\FieldDefinitionFormMapperInterface;
 use EzSystems\RepositoryForms\FieldType\FieldValueFormMapperInterface;
+use EzSystems\RepositoryForms\Form\Type\FieldType\TextLineFieldType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -25,14 +22,6 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class TextLineFormMapper implements FieldDefinitionFormMapperInterface, FieldValueFormMapperInterface
 {
-    /** @var FieldTypeService */
-    private $fieldTypeService;
-
-    public function __construct(FieldTypeService $fieldTypeService)
-    {
-        $this->fieldTypeService = $fieldTypeService;
-    }
-
     public function mapFieldDefinitionForm(FormInterface $fieldDefinitionForm, FieldDefinitionData $data)
     {
         $fieldDefinitionForm
@@ -49,15 +38,14 @@ class TextLineFormMapper implements FieldDefinitionFormMapperInterface, FieldVal
                 'attr' => ['min' => 0],
             ])
             ->add(
-                // Creating from FormBuilder as we need to add a DataTransformer.
-                $fieldDefinitionForm->getConfig()->getFormFactory()->createBuilder()
-                    ->create('defaultValue', TextType::class, [
+                $fieldDefinitionForm
+                    ->getConfig()->getFormFactory()->createBuilder()
+                    ->create('defaultValue', TextLineFieldType::class, [
                         'required' => false,
                         'label' => 'field_definition.ezstring.default_value',
                     ])
-                    ->addModelTransformer(new FieldValueTransformer($this->fieldTypeService->getFieldType($data->getFieldTypeIdentifier())))
-                    // Deactivate auto-initialize as we're not on the root form.
-                    ->setAutoInitialize(false)->getForm()
+                    ->setAutoInitialize(false)
+                    ->getForm()
             );
     }
 
@@ -65,20 +53,21 @@ class TextLineFormMapper implements FieldDefinitionFormMapperInterface, FieldVal
     {
         $fieldDefinition = $data->fieldDefinition;
         $formConfig = $fieldForm->getConfig();
+        $validatorConfiguration = $fieldDefinition->getValidatorConfiguration();
 
         $fieldForm
             ->add(
                 $formConfig->getFormFactory()->createBuilder()
                     ->create(
                         'value',
-                        TextType::class,
+                        TextLineFieldType::class,
                         [
                             'required' => $fieldDefinition->isRequired,
                             'label' => $fieldDefinition->getName($formConfig->getOption('languageCode')),
-                            'attr' => $this->getAttributes($fieldDefinition),
+                            'min' => $validatorConfiguration['StringLengthValidator']['minStringLength'],
+                            'max' => $validatorConfiguration['StringLengthValidator']['maxStringLength'],
                         ]
                     )
-                    ->addModelTransformer(new FieldValueTransformer($this->fieldTypeService->getFieldType($fieldDefinition->fieldTypeIdentifier)))
                     ->setAutoInitialize(false)
                     ->getForm()
             );
@@ -90,25 +79,5 @@ class TextLineFormMapper implements FieldDefinitionFormMapperInterface, FieldVal
             ->setDefaults([
                 'translation_domain' => 'ezrepoforms_content_type',
             ]);
-    }
-
-    private function getAttributes(FieldDefinition $fieldDefinition)
-    {
-        $validatorConfiguration = $fieldDefinition->getValidatorConfiguration();
-
-        if (
-            empty($validatorConfiguration['StringLengthValidator']['minStringLength'])
-            && empty($validatorConfiguration['StringLengthValidator']['maxStringLength'])
-        ) {
-            return [];
-        }
-
-        return [
-            'pattern' => sprintf(
-                '.{%d,%d}',
-                $validatorConfiguration['StringLengthValidator']['minStringLength'] ?: '',
-                $validatorConfiguration['StringLengthValidator']['maxStringLength'] ?: ''
-            ),
-        ];
     }
 }

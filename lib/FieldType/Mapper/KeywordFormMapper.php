@@ -9,9 +9,8 @@
 namespace EzSystems\RepositoryForms\FieldType\Mapper;
 
 use EzSystems\RepositoryForms\Data\Content\FieldData;
-use EzSystems\RepositoryForms\FieldType\DataTransformer\KeywordValueTransformer;
 use EzSystems\RepositoryForms\FieldType\FieldValueFormMapperInterface;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
+use EzSystems\RepositoryForms\Form\Type\FieldType\KeywordFieldType;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -30,13 +29,12 @@ class KeywordFormMapper implements FieldValueFormMapperInterface
                 $formConfig->getFormFactory()->createBuilder()
                     ->create(
                         'value',
-                        TextType::class,
+                        KeywordFieldType::class,
                         [
                             'required' => $fieldDefinition->isRequired,
                             'label' => $fieldDefinition->getName($formConfig->getOption('languageCode')),
                         ]
                     )
-                    ->addModelTransformer(new KeywordValueTransformer())
                     ->setAutoInitialize(false)
                     ->getForm()
             );

@@ -8,11 +8,9 @@
  */
 namespace EzSystems\RepositoryForms\FieldType\Mapper;
 
-use eZ\Publish\API\Repository\FieldTypeService;
 use EzSystems\RepositoryForms\Data\Content\FieldData;
-use EzSystems\RepositoryForms\FieldType\DataTransformer\FieldValueTransformer;
 use EzSystems\RepositoryForms\FieldType\FieldValueFormMapperInterface;
-use EzSystems\RepositoryForms\Form\Type\FieldValue\UrlType;
+use EzSystems\RepositoryForms\Form\Type\FieldType\UrlFieldType;
 use Symfony\Component\Form\FormInterface;
 
 /**
@@ -20,17 +18,6 @@ use Symfony\Component\Form\FormInterface;
  */
 class UrlFormMapper implements FieldValueFormMapperInterface
 {
-    /** @var FieldTypeService */
-    private $fieldTypeService;
-
-    /**
-     * @param FieldTypeService $fieldTypeService
-     */
-    public function __construct(FieldTypeService $fieldTypeService)
-    {
-        $this->fieldTypeService = $fieldTypeService;
-    }
-
     /**
      * @param FormInterface $fieldForm
      * @param FieldData $data
@@ -43,15 +30,10 @@ class UrlFormMapper implements FieldValueFormMapperInterface
         $fieldForm
             ->add(
                 $formConfig->getFormFactory()->createBuilder()
-                    ->create(
-                        'value',
-                        UrlType::class,
-                        [
-                            'required' => $fieldDefinition->isRequired,
-                            'label' => $fieldDefinition->getName($formConfig->getOption('languageCode')),
-                        ]
-                    )
-                    ->addModelTransformer(new FieldValueTransformer($this->fieldTypeService->getFieldType($fieldDefinition->fieldTypeIdentifier)))
+                    ->create('value', UrlFieldType::class, [
+                        'required' => $fieldDefinition->isRequired,
+                        'label' => $fieldDefinition->getName($formConfig->getOption('languageCode')),
+                    ])
                     ->setAutoInitialize(false)
                     ->getForm()
             );

@@ -1,13 +1,14 @@
 <?php
+
 /**
  * @copyright Copyright (C) eZ Systems AS. All rights reserved.
  * @license For full copyright and license information view LICENSE file distributed with this source code.
  */
-namespace EzSystems\RepositoryForms\Form\Type\FieldValue;
+namespace EzSystems\RepositoryForms\Form\Type\FieldType;
 
 use eZ\Publish\Core\FieldType\Author\Author;
 use eZ\Publish\Core\FieldType\Author\Value;
-use EzSystems\RepositoryForms\Form\Type\FieldValue\Author\AuthorCollectionType;
+use EzSystems\RepositoryForms\Form\Type\FieldType\Author\AuthorCollectionType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
@@ -15,9 +16,9 @@ use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
- * Combined Type for ezauthor.
+ * Form Type representing ezauthor field type.
  */
-class AuthorsType extends AbstractType
+class AuthorFieldType extends AbstractType
 {
     public function getName()
     {
@@ -26,7 +27,7 @@ class AuthorsType extends AbstractType
 
     public function getBlockPrefix()
     {
-        return 'ezrepoforms_fieldtype_ezauthor';
+        return 'ezplatform_fieldtype_ezauthor';
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options)
@@ -38,9 +39,7 @@ class AuthorsType extends AbstractType
 
     public function configureOptions(OptionsResolver $resolver)
     {
-        parent::configureOptions($resolver);
-
-        $resolver->setDefault('data_class', Value::class);
+        $resolver->setDefaults(['data_class' => Value::class]);
     }
 
     public function addEmptyEntry(FormEvent $event)

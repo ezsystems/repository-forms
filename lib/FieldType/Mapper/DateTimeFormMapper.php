@@ -11,11 +11,10 @@ namespace EzSystems\RepositoryForms\FieldType\Mapper;
 use eZ\Publish\Core\FieldType\DateAndTime\Type;
 use EzSystems\RepositoryForms\Data\Content\FieldData;
 use EzSystems\RepositoryForms\Data\FieldDefinitionData;
-use EzSystems\RepositoryForms\FieldType\DataTransformer\DateTimeValueTransformer;
 use EzSystems\RepositoryForms\FieldType\FieldDefinitionFormMapperInterface;
 use EzSystems\RepositoryForms\FieldType\FieldValueFormMapperInterface;
 use EzSystems\RepositoryForms\Form\Type\DateTimeIntervalType;
-use EzSystems\RepositoryForms\Form\Type\FieldValue\DateTimeLocalType;
+use EzSystems\RepositoryForms\Form\Type\FieldType\DateTimeFieldType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormInterface;
@@ -64,18 +63,13 @@ class DateTimeFormMapper implements FieldDefinitionFormMapperInterface, FieldVal
                 $formConfig->getFormFactory()->createBuilder()
                     ->create(
                         'value',
-                        DateTimeLocalType::class,
+                        DateTimeFieldType::class,
                         [
-                            'input' => 'datetime',
-                            'widget' => 'single_text',
-                            'html5' => true,
                             'with_seconds' => $fieldSettings['useSeconds'],
                             'required' => $fieldDefinition->isRequired,
                             'label' => $fieldDefinition->getName($formConfig->getOption('languageCode')),
-                            'attr' => $this->getAttributes($fieldSettings),
                         ]
                     )
-                    ->addModelTransformer(new DateTimeValueTransformer())
                     ->setAutoInitialize(false)
                     ->getForm()
             );
@@ -87,16 +81,5 @@ class DateTimeFormMapper implements FieldDefinitionFormMapperInterface, FieldVal
             ->setDefaults([
                 'translation_domain' => 'ezrepoforms_content_type',
             ]);
-    }
-
-    private function getAttributes(array $fieldSettings)
-    {
-        $attributes = [];
-
-        if ($fieldSettings['useSeconds']) {
-            $attributes['step'] = 1;
-        }
-
-        return $attributes;
     }
 }

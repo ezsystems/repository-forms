@@ -10,10 +10,9 @@ namespace EzSystems\RepositoryForms\FieldType\Mapper;
 
 use EzSystems\RepositoryForms\Data\Content\FieldData;
 use EzSystems\RepositoryForms\Data\FieldDefinitionData;
-use EzSystems\RepositoryForms\FieldType\DataTransformer\RelationListValueTransformer;
+use EzSystems\RepositoryForms\Form\Type\FieldType\RelationListFieldType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -48,13 +47,12 @@ class RelationListFormMapper extends AbstractRelationFormMapper
                 $formConfig->getFormFactory()->createBuilder()
                     ->create(
                         'value',
-                        TextType::class,
+                        RelationListFieldType::class,
                         [
                             'required' => $fieldDefinition->isRequired,
                             'label' => $fieldDefinition->getName($formConfig->getOption('languageCode')),
                         ]
                     )
-                    ->addModelTransformer(new RelationListValueTransformer())
                     ->setAutoInitialize(false)
                     ->getForm()
             );

@@ -11,11 +11,10 @@ namespace EzSystems\RepositoryForms\FieldType\Mapper;
 use eZ\Publish\Core\FieldType\Date\Type;
 use EzSystems\RepositoryForms\Data\Content\FieldData;
 use EzSystems\RepositoryForms\Data\FieldDefinitionData;
-use EzSystems\RepositoryForms\FieldType\DataTransformer\DateValueTransformer;
 use EzSystems\RepositoryForms\FieldType\FieldDefinitionFormMapperInterface;
 use EzSystems\RepositoryForms\FieldType\FieldValueFormMapperInterface;
+use EzSystems\RepositoryForms\Form\Type\FieldType\DateFieldType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -55,15 +54,12 @@ class DateFormMapper implements FieldDefinitionFormMapperInterface, FieldValueFo
                 $formConfig->getFormFactory()->createBuilder()
                     ->create(
                         'value',
-                        DateType::class,
+                        DateFieldType::class,
                         [
-                            'input' => 'datetime',
-                            'widget' => 'single_text',
                             'required' => $fieldDefinition->isRequired,
                             'label' => $fieldDefinition->getName($formConfig->getOption('languageCode')),
                         ]
                     )
-                    ->addModelTransformer(new DateValueTransformer())
                     ->setAutoInitialize(false)
                     ->getForm()
             );

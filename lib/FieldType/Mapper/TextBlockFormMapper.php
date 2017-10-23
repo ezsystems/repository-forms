@@ -8,14 +8,12 @@
  */
 namespace EzSystems\RepositoryForms\FieldType\Mapper;
 
-use eZ\Publish\API\Repository\FieldTypeService;
 use EzSystems\RepositoryForms\Data\Content\FieldData;
 use EzSystems\RepositoryForms\Data\FieldDefinitionData;
-use EzSystems\RepositoryForms\FieldType\DataTransformer\FieldValueTransformer;
 use EzSystems\RepositoryForms\FieldType\FieldDefinitionFormMapperInterface;
 use EzSystems\RepositoryForms\FieldType\FieldValueFormMapperInterface;
+use EzSystems\RepositoryForms\Form\Type\FieldType\TextBlockFieldType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
-use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -24,14 +22,6 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class TextBlockFormMapper implements FieldDefinitionFormMapperInterface, FieldValueFormMapperInterface
 {
-    /** @var FieldTypeService */
-    private $fieldTypeService;
-
-    public function __construct(FieldTypeService $fieldTypeService)
-    {
-        $this->fieldTypeService = $fieldTypeService;
-    }
-
     public function mapFieldDefinitionForm(FormInterface $fieldDefinitionForm, FieldDefinitionData $data)
     {
         $fieldDefinitionForm
@@ -54,17 +44,12 @@ class TextBlockFormMapper implements FieldDefinitionFormMapperInterface, FieldVa
                 $formConfig->getFormFactory()->createBuilder()
                     ->create(
                         'value',
-                        TextareaType::class,
+                        TextBlockFieldType::class,
                         [
                             'required' => $fieldDefinition->isRequired,
                             'label' => $fieldDefinition->getName($formConfig->getOption('languageCode')),
-                            'attr' => ['rows' => $data->fieldDefinition->fieldSettings['textRows']],
+                            'rows' => $data->fieldDefinition->fieldSettings['textRows'],
                         ]
-                    )
-                    ->addModelTransformer(
-                        new FieldValueTransformer(
-                            $this->fieldTypeService->getFieldType($fieldDefinition->fieldTypeIdentifier)
-                        )
                     )
                     ->setAutoInitialize(false)
                     ->getForm()

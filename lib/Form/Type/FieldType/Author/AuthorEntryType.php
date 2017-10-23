@@ -3,7 +3,7 @@
  * @copyright Copyright (C) eZ Systems AS. All rights reserved.
  * @license For full copyright and license information view LICENSE file distributed with this source code.
  */
-namespace EzSystems\RepositoryForms\Form\Type\FieldValue\Author;
+namespace EzSystems\RepositoryForms\Form\Type\FieldType\Author;
 
 use eZ\Publish\Core\FieldType\Author\Author;
 use Symfony\Component\Form\AbstractType;
@@ -31,7 +31,7 @@ class AuthorEntryType extends AbstractType
      */
     public function getBlockPrefix()
     {
-        return 'ezrepoforms_fieldtype_ezauthor_authors_entry';
+        return 'ezplatform_fieldtype_ezauthor_authors_entry';
     }
 
     /**
@@ -45,14 +45,15 @@ class AuthorEntryType extends AbstractType
                 'id',
                 HiddenType::class,
                 [
-                    'label' => 'content.field_type.ezauthor.id',
+                    'label' => false,
                 ]
             )
             ->add(
                 'name',
                 TextType::class,
                 [
-                    'label' => 'content.field_type.ezauthor.name',
+                    'label' => /** @Desc("Name") */
+                        'content.field_type.ezauthor.name',
                     'required' => $options['required'],
                 ]
             )
@@ -60,7 +61,8 @@ class AuthorEntryType extends AbstractType
                 'email',
                 EmailType::class,
                 [
-                    'label' => 'content.field_type.ezauthor.email',
+                    'label' => /** @Desc("E-mail") */
+                        'content.field_type.ezauthor.email',
                     'required' => $options['required'],
                 ]
             );
@@ -68,8 +70,9 @@ class AuthorEntryType extends AbstractType
 
     public function configureOptions(OptionsResolver $resolver)
     {
-        parent::configureOptions($resolver);
-
-        $resolver->setDefault('data_class', Author::class);
+        $resolver->setDefaults([
+            'data_class' => Author::class,
+            'translation_domain' => 'ezrepoforms_content',
+        ]);
     }
 }

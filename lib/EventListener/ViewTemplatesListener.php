@@ -18,16 +18,16 @@ class ViewTemplatesListener implements EventSubscriberInterface
      * Hash of [View type FQN] => template.
      * @var array
      */
-    private $viewTemplates;
+    protected $viewTemplates;
 
     /**
      * @var string
      */
-    private $pagelayout;
+    protected $pagelayout;
 
     public static function getSubscribedEvents()
     {
-        return [MVCEvents::PRE_CONTENT_VIEW => 'setUserRegistrationTemplates'];
+        return [MVCEvents::PRE_CONTENT_VIEW => 'setViewTemplates'];
     }
 
     /**
@@ -57,7 +57,7 @@ class ViewTemplatesListener implements EventSubscriberInterface
      *
      * @param PreContentViewEvent $event
      */
-    public function setUserRegistrationTemplates(PreContentViewEvent $event)
+    public function setViewTemplates(PreContentViewEvent $event)
     {
         $view = $event->getContentView();
 
