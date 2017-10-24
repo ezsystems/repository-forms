@@ -6,15 +6,10 @@ matrix:
   # mark as finished before allow_failures are run
   fast_finish: true
   include:
-    # 5.6
-    - php: 5.6
+    # 7.1
+    - php: 7.1
       env: TEST_CONFIG="phpunit.xml.dist"
-    - php: 5.6
-      env: BEHAT_OPTS="--profile=repository-forms"
-    # 7.0
-    - php: 7.0
-      env: TEST_CONFIG="phpunit.xml.dist"
-    - php: 7.0
+    - php: 7.1
       env: BEHAT_OPTS="--profile=repository-forms"
 
 # test only master (+ Pull requests)
