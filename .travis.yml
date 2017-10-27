@@ -21,7 +21,7 @@ matrix:
 branches:
   only:
     - master
-    - "1.9"
+    - "1.10"
     - "/^feature-/"
 
 before_install:
