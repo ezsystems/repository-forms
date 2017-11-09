@@ -5,10 +5,9 @@
  */
 namespace EzSystems\RepositoryForms\Form\Type\FieldType;
 
-use eZ\Publish\API\Repository\FieldTypeService;
-use EzSystems\RepositoryForms\FieldType\DataTransformer\FieldValueTransformer;
+use EzSystems\RepositoryForms\FieldType\DataTransformer\TimeValueTransformer;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\TimeType;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
@@ -19,14 +18,6 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class TimeFieldType extends AbstractType
 {
-    /** @var FieldTypeService */
-    protected $fieldTypeService;
-
-    public function __construct(FieldTypeService $fieldTypeService)
-    {
-        $this->fieldTypeService = $fieldTypeService;
-    }
-
     public function getName()
     {
         return $this->getBlockPrefix();
@@ -39,28 +30,24 @@ class TimeFieldType extends AbstractType
 
     public function getParent()
     {
-        return TimeType::class;
+        return IntegerType::class;
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->addModelTransformer(new FieldValueTransformer($this->fieldTypeService->getFieldType('eztime')));
+        $builder
+            ->addModelTransformer(new TimeValueTransformer());
     }
 
     public function buildView(FormView $view, FormInterface $form, array $options)
     {
-        if ($options['with_seconds']) {
-            $view->vars['attr']['step'] = 1;
-        }
+        $view->vars['attr']['data-seconds'] = (int) $options['with_seconds'];
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver
-            ->setDefaults([
-                'input' => 'timestamp',
-                'widget' => 'single_text',
-                'html5' => false,
-            ]);
+            ->setDefault('with_seconds', true)
+            ->setAllowedTypes('with_seconds', 'bool');
     }
 }
