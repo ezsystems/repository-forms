@@ -1,21 +1,34 @@
 <?php
 
 /**
- * This file is part of the eZ RepositoryForms package.
- *
  * @copyright Copyright (C) eZ Systems AS. All rights reserved.
  * @license For full copyright and license information view LICENSE file distributed with this source code.
  */
 namespace EzSystems\RepositoryForms\FieldType\Mapper;
 
+use eZ\Publish\API\Repository\FieldTypeService;
+use eZ\Publish\Core\FieldType\Image\Value;
+use EzSystems\RepositoryForms\Data\Content\FieldData;
 use EzSystems\RepositoryForms\Data\FieldDefinitionData;
+use EzSystems\RepositoryForms\FieldType\DataTransformer\ImageValueTransformer;
 use EzSystems\RepositoryForms\FieldType\FieldDefinitionFormMapperInterface;
-use Symfony\Component\Form\FormInterface;
+use EzSystems\RepositoryForms\FieldType\FieldValueFormMapperInterface;
+use EzSystems\RepositoryForms\Form\Type\FieldType\ImageFieldType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
+use Symfony\Component\Form\FormInterface;
+use Symfony\Component\OptionsResolver\Exception\AccessException;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class ImageFormMapper implements FieldDefinitionFormMapperInterface
+class ImageFormMapper implements FieldDefinitionFormMapperInterface, FieldValueFormMapperInterface
 {
+    /** @var FieldTypeService */
+    private $fieldTypeService;
+
+    public function __construct(FieldTypeService $fieldTypeService)
+    {
+        $this->fieldTypeService = $fieldTypeService;
+    }
+
     public function mapFieldDefinitionForm(FormInterface $fieldDefinitionForm, FieldDefinitionData $data)
     {
         $fieldDefinitionForm
@@ -26,8 +39,33 @@ class ImageFormMapper implements FieldDefinitionFormMapperInterface
             ]);
     }
 
+    public function mapFieldValueForm(FormInterface $fieldForm, FieldData $data)
+    {
+        $fieldDefinition = $data->fieldDefinition;
+        $formConfig = $fieldForm->getConfig();
+        $fieldType = $this->fieldTypeService->getFieldType($fieldDefinition->fieldTypeIdentifier);
+
+        $fieldForm
+            ->add(
+                $formConfig->getFormFactory()->createBuilder()
+                    ->create(
+                        'value',
+                        ImageFieldType::class,
+                        [
+                            'required' => $fieldDefinition->isRequired,
+                            'label' => $fieldDefinition->getName($formConfig->getOption('languageCode')),
+                        ]
+                    )
+                    ->addModelTransformer(new ImageValueTransformer($fieldType, $data->value, Value::class))
+                    ->setAutoInitialize(false)
+                    ->getForm()
+            );
+    }
+
     /**
      * Fake method to set the translation domain for the extractor.
+     *
+     * @throws AccessException
      */
     public function configureOptions(OptionsResolver $resolver)
     {

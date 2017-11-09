@@ -35,6 +35,7 @@ services:
     EzSystems\RepositoryForms\FieldType\Mapper\BinaryFileFormMapper:
         tags:
             - { name: ez.fieldFormMapper.definition, fieldType: ezbinaryfile }
+            - { name: ez.fieldFormMapper.value, fieldType: ezbinaryfile }
 
     EzSystems\RepositoryForms\FieldType\Mapper\CheckboxFormMapper:
         tags:
@@ -69,6 +70,7 @@ services:
     EzSystems\RepositoryForms\FieldType\Mapper\ImageFormMapper:
         tags:
             - { name: ez.fieldFormMapper.definition, fieldType: ezimage }
+            - { name: ez.fieldFormMapper.value, fieldType: ezimage }
 
     EzSystems\RepositoryForms\FieldType\Mapper\IntegerFormMapper:
         tags:
@@ -83,6 +85,7 @@ services:
     EzSystems\RepositoryForms\FieldType\Mapper\MediaFormMapper:
         tags:
             - { name: ez.fieldFormMapper.definition, fieldType: ezmedia }
+            - { name: ez.fieldFormMapper.value, fieldType: ezmedia }
 
     EzSystems\RepositoryForms\FieldType\Mapper\AbstractRelationFormMapper:
         abstract: true
@@ -116,11 +119,6 @@ services:
     EzSystems\RepositoryForms\FieldType\Mapper\RichTextFormMapper:
         tags:
             - { name: ez.fieldFormMapper.value, fieldType: ezrichtext }
-
-    EzSystems\RepositoryForms\FieldType\Mapper\SelectionFormMapper:
-        tags:
-            - { name: ez.fieldFormMapper.definition, fieldType: ezselection }
-            - { name: ez.fieldFormMapper.value, fieldType: ezselection }
 
     EzSystems\RepositoryForms\FieldType\Mapper\TextLineFormMapper:
         tags:
