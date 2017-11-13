@@ -7,8 +7,10 @@ namespace EzSystems\RepositoryForms\Form\Type\FieldType;
 
 use EzSystems\RepositoryForms\FieldType\DataTransformer\DateTimeValueTransformer;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormInterface;
+use Symfony\Component\Form\FormView;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
@@ -28,34 +30,24 @@ class DateTimeFieldType extends AbstractType
 
     public function getParent()
     {
-        return DateTimeType::class;
+        return IntegerType::class;
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->setAttributes($this->getAttributes($options))
             ->addModelTransformer(new DateTimeValueTransformer());
     }
 
-    private function getAttributes(array $options)
+    public function buildView(FormView $view, FormInterface $form, array $options)
     {
-        $attributes = [];
-
-        if ($options['with_seconds']) {
-            $attributes['step'] = 1;
-        }
-
-        return $attributes;
+        $view->vars['attr']['data-seconds'] = (int) $options['with_seconds'];
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults([
-            'input' => 'datetime',
-            'date_widget' => 'single_text',
-            'time_widget' => 'single_text',
-            'html5' => false,
-        ]);
+        $resolver
+            ->setDefault('with_seconds', true)
+            ->setAllowedTypes('with_seconds', 'bool');
     }
 }
