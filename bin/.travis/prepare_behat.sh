@@ -10,6 +10,8 @@ export TRAVIS_BUILD_DIR="$HOME/build/ezplatform"
 # Checkout meta repo, use the branch indicated in composer.json under extra._ezplatform_branch_for_behat_tests
 EZPLATFORM_BRANCH=`php -r 'echo json_decode(file_get_contents("./composer.json"))->extra->_ezplatform_branch_for_behat_tests;'`
 
+echo "$EZPLATFORM_BRANCH"
+
 cd "$HOME/build"
 
 git clone --depth 1 --single-branch --branch "$EZPLATFORM_BRANCH" https://github.com/ezsystems/ezplatform.git
