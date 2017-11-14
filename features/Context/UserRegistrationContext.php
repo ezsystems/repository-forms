@@ -179,8 +179,8 @@ class UserRegistrationContext extends RawMinkContext implements Context, Snippet
             $this->assertSession()->elementExists(
                 'css',
                 sprintf(
-                    'div.ez-field-edit-%s',
-                    $fieldDefinition->fieldTypeIdentifier
+                    '#ezrepoforms_user_register_fieldsData_%s',
+                    $fieldDefinition->identifier
                 )
             );
             /** @todo It should also check if there is corresponding input created once all types are implemented */

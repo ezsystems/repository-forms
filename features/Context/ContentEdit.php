@@ -128,7 +128,7 @@ final class ContentEdit extends MinkContext implements Context, SnippetAccepting
         $this->assertPageAddress($uri);
         $this->assertElementOnPage(
             sprintf(
-                'div.ez-field-edit input#ezrepoforms_content_edit_fieldsData_%s_value',
+                'input[name="ezrepoforms_content_edit[fieldsData][%s][value]"]',
                 self::$constrainedFieldIdentifier
             )
         );
@@ -139,7 +139,10 @@ final class ContentEdit extends MinkContext implements Context, SnippetAccepting
      */
     public function thereIsARelevantErrorMessageLinkedToTheInvalidField()
     {
-        $selector = 'div.ez-field-edit-ezstring div.ez-field-edit-text-zone em.ez-field-edit-error';
+        $selector = sprintf(
+            '#ezrepoforms_content_edit_fieldsData_%s div.has-error ul li',
+            self::$constrainedFieldIdentifier
+        );
 
         $this->assertSession()->elementExists('css', $selector);
         $this->assertSession()->elementTextContains('css', $selector, 'The string can not be shorter than 5 characters.');

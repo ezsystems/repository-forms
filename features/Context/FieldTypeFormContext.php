@@ -75,7 +75,7 @@ final class FieldTypeFormContext extends RawMinkContext implements SnippetAccept
     {
         $this->assertSession()->elementTextContains(
             'css',
-            'div.ez-field-edit div.ez-field-edit-text-zone label',
+            'form[name="ezrepoforms_content_edit"] label',
             'Field'
         );
     }
@@ -88,7 +88,9 @@ final class FieldTypeFormContext extends RawMinkContext implements SnippetAccept
         $this->assertSession()->elementExists(
             'css',
             sprintf(
-                'div.ez-field-edit div.ez-field-edit-ui input[type=%s]',
+                'form[name="ezrepoforms_content_edit"] '
+                . 'input[name="ezrepoforms_content_edit[fieldsData][%s][value]"][type=%s]',
+                self::$fieldIdentifier,
                 $inputType
             )
         );
@@ -103,7 +105,12 @@ final class FieldTypeFormContext extends RawMinkContext implements SnippetAccept
 
         $inputNodeElements = $this->getSession()->getPage()->findAll(
             'css',
-            'div.ez-field-edit-ezuser div.ez-field-edit-ui fieldset div.ez-sub-field div.ez-sub-field-ui input'
+            sprintf(
+                'form[name="ezrepoforms_content_edit"] '
+                . 'div#ezrepoforms_content_edit_fieldsData_%s_value '
+                . 'input',
+                self::$fieldIdentifier
+            )
         );
 
         /** @var NodeElement $nodeElement */
@@ -152,7 +159,12 @@ final class FieldTypeFormContext extends RawMinkContext implements SnippetAccept
     {
         $inputNodeElements = $this->getSession()->getPage()->findAll(
             'css',
-            'div.ez-field-edit div.ez-field-edit-ui input'
+            sprintf(
+                'input#ezrepoforms_content_edit_fieldsData_%s_value, '
+                . 'div#ezrepoforms_content_edit_fieldsData_%s_value input',
+                self::$fieldIdentifier,
+                self::$fieldIdentifier
+            )
         );
         Assertion::assertNotEmpty($inputNodeElements, 'The input field is not marked as required');
         foreach ($inputNodeElements as $inputNodeElement) {
