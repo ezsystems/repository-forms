@@ -11,6 +11,7 @@ export TRAVIS_BUILD_DIR="$HOME/build/ezplatform"
 EZPLATFORM_BRANCH=`php -r 'echo json_decode(file_get_contents("./composer.json"))->extra->_ezplatform_branch_for_behat_tests;'`
 
 echo "$EZPLATFORM_BRANCH"
+echo "$EZPLATFORM_BRANCH"
 
 cd "$HOME/build"
 
