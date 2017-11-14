@@ -50,7 +50,8 @@ final class SelectionFieldTypeFormContext extends RawMinkContext implements Snip
         $this->assertSession()->elementExists(
             'css',
             sprintf(
-                'div.ez-field-edit div.ez-field-edit-ui select#ezrepoforms_content_edit_fieldsData_%s_value',
+                'form[name="ezrepoforms_content_edit"] '
+                . 'select[name="ezrepoforms_content_edit[fieldsData][%s][value]"]',
                 self::$fieldIdentifier
             )
         );
@@ -63,7 +64,10 @@ final class SelectionFieldTypeFormContext extends RawMinkContext implements Snip
     {
         $nodeElements = $this->getSession()->getPage()->findAll(
             'css',
-            sprintf('div.ez-field-edit div.ez-field-edit-ui select#ezrepoforms_content_edit_fieldsData_%s_value', self::$fieldIdentifier)
+            sprintf(
+                'select[name="ezrepoforms_content_edit[fieldsData][%s][value][]"]',
+                self::$fieldIdentifier
+            )
         );
         Assertion::assertNotEmpty($nodeElements, 'The select field is not marked as required');
         foreach ($nodeElements as $nodeElement) {
@@ -83,21 +87,13 @@ final class SelectionFieldTypeFormContext extends RawMinkContext implements Snip
      */
     public function theInputIsASingleSelectionDropdown()
     {
-        $this->assertSession()->elementExists(
-            'css',
-            sprintf(
-                'div.ez-field-edit select#ezrepoforms_content_edit_fieldsData_%s_value',
-                self::$fieldIdentifier
-            )
+        $selector = sprintf(
+            'select[name="ezrepoforms_content_edit[fieldsData][%s][value]"]',
+            self::$fieldIdentifier
         );
-        $this->assertSession()->elementNotContains(
-            'css',
-            sprintf(
-                'div.ez-field-edit select#ezrepoforms_content_edit_fieldsData_%s_value',
-                self::$fieldIdentifier
-            ),
-            'multiple="multiple"'
-        );
+
+        $this->assertSession()->elementExists('css', $selector);
+        $this->assertSession()->elementNotContains('css', $selector, 'multiple="multiple"');
     }
 
     /**
@@ -105,12 +101,11 @@ final class SelectionFieldTypeFormContext extends RawMinkContext implements Snip
      */
     public function theInputIsAMultipleSelectionDropdown()
     {
-        $this->assertSession()->elementExists(
-            'css',
-            sprintf(
-                'div.ez-field-edit select#ezrepoforms_content_edit_fieldsData_%s_value[multiple=multiple]',
-                self::$fieldIdentifier
-            )
+        $selector = sprintf(
+            'select[name="ezrepoforms_content_edit[fieldsData][%s][value][]"][multiple=multiple]',
+            self::$fieldIdentifier
         );
+
+        $this->assertSession()->elementExists('css', $selector);
     }
 }
