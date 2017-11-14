@@ -48,6 +48,7 @@ class ViewTemplatesListener implements EventSubscriberInterface
      */
     public function setPagelayout($pagelayout)
     {
+        // test
         $this->pagelayout = $pagelayout;
     }
 
