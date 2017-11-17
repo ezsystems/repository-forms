@@ -5,13 +5,13 @@
  *
  * @copyright Copyright (C) eZ Systems AS. All rights reserved.
  * @license For full copyright and license information view LICENSE file distributed with this source code.
- * @version //autogentag//
  */
 namespace EzSystems\RepositoryForms\FieldType\DataTransformer;
 
-use DateTime;
+use eZ\Publish\API\Repository\Exceptions\InvalidArgumentException;
 use eZ\Publish\Core\FieldType\Date\Value;
 use Symfony\Component\Form\DataTransformerInterface;
+use Symfony\Component\Form\Exception\TransformationFailedException;
 
 /**
  * DataTransformer for Date\Value.
@@ -21,28 +21,49 @@ class DateValueTransformer implements DataTransformerInterface
     /**
      * @param mixed $value
      *
-     * @return DateTime|null
+     * @return int|null
+     *
+     * @throws TransformationFailedException
      */
     public function transform($value)
     {
-        if (!$value instanceof Value) {
+        if (null === $value) {
             return null;
         }
 
-        return $value->date;
+        if (!$value instanceof Value) {
+            throw new TransformationFailedException(
+                sprintf('Expected a %s, got %s instead', Value::class, gettype($value))
+            );
+        }
+
+        if (null === $value->date) {
+            return null;
+        }
+
+        return $value->date->getTimestamp();
     }
 
     /**
-     * @param mixed $value
+     * @param int|mixed $value
      *
      * @return Value|null
+     *
+     * @throws InvalidArgumentException
+     * @throws TransformationFailedException
      */
     public function reverseTransform($value)
     {
-        if ($value === null || !$value instanceof DateTime) {
+        if (empty($value)) {
             return null;
         }
 
-        return new Value($value);
+        if (!is_numeric($value)) {
+            throw new TransformationFailedException(
+                sprintf('Expected a numeric, got %s instead', gettype($value))
+            );
+        }
+
+        return Value::fromTimestamp($value);
     }
 }
