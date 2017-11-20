@@ -30,6 +30,9 @@ class ContentEdit extends AbstractParser
                             ->scalarNode('edit')
                                 ->info('Template to use for content edit form rendering.')
                             ->end()
+                            ->scalarNode('create')
+                                ->info('Template to use for content create form rendering.')
+                            ->end()
                             ->scalarNode('create_draft')
                                 ->info('Template to use for content draft creation rendering.')
                             ->end()
@@ -52,6 +55,14 @@ class ContentEdit extends AbstractParser
                 'content_edit.templates.edit',
                 $currentScope,
                 $settings['templates']['edit']
+            );
+        }
+
+        if (!empty($settings['templates']['create'])) {
+            $contextualizer->setContextualParameter(
+                'content_edit.templates.create',
+                $currentScope,
+                $settings['templates']['create']
             );
         }
 

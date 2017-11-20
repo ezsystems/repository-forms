@@ -15,6 +15,7 @@ use eZ\Publish\API\Repository\LocationService;
 use eZ\Publish\API\Repository\Values\Content\VersionInfo;
 use eZ\Publish\Core\Base\Exceptions\BadStateException;
 use EzSystems\RepositoryForms\Content\View\ContentCreateDraftView;
+use EzSystems\RepositoryForms\Content\View\ContentCreateView;
 use EzSystems\RepositoryForms\Content\View\ContentEditView;
 use EzSystems\RepositoryForms\Data\Content\CreateContentDraftData;
 use EzSystems\RepositoryForms\Data\Mapper\ContentCreateMapper;
@@ -73,16 +74,24 @@ class ContentEditController extends Controller
      * @param int $parentLocationId Location the content should be a child of
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return \EzSystems\RepositoryForms\Content\View\ContentEditView|\Symfony\Component\HttpFoundation\Response
+     * @return \EzSystems\RepositoryForms\Content\View\ContentCreateView|\Symfony\Component\HttpFoundation\Response
+     *
+     * @throws \eZ\Publish\Core\Base\Exceptions\InvalidArgumentType
+     * @throws \eZ\Publish\API\Repository\Exceptions\UnauthorizedException
+     * @throws \eZ\Publish\API\Repository\Exceptions\NotFoundException
      */
     public function createWithoutDraftAction($contentTypeIdentifier, $language, $parentLocationId, Request $request)
     {
+        $parentLocation = $this->locationService->loadLocation($parentLocationId);
         $contentType = $this->contentTypeService->loadContentTypeByIdentifier($contentTypeIdentifier);
         $data = (new ContentCreateMapper())->mapToFormData($contentType, [
             'mainLanguageCode' => $language,
             'parentLocation' => $this->locationService->newLocationCreateStruct($parentLocationId),
         ]);
-        $form = $this->createForm(ContentEditType::class, $data, ['languageCode' => $language]);
+        $form = $this->createForm(ContentEditType::class, $data, [
+            'languageCode' => $language,
+            'drafts_enabled' => true,
+        ]);
         $form->handleRequest($request);
 
         if ($form->isValid()) {
@@ -92,9 +101,11 @@ class ContentEditController extends Controller
             }
         }
 
-        return new ContentEditView(null, [
+        return new ContentCreateView(null, [
             'form' => $form->createView(),
             'languageCode' => $language,
+            'contentType' => $contentType,
+            'parentLocation' => $parentLocation,
         ]);
     }
 
