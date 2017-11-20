@@ -12,6 +12,8 @@ use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
@@ -49,6 +51,15 @@ class ContentEditType extends AbstractType
                     'label' => 'content.cancel_button',
                     'attr' => ['formnovalidate' => 'formnovalidate'],
                 ]);
+            $builder->addEventListener(FormEvents::POST_SUBMIT, [$this, 'suppressValidationOnCancel'], 900);
+        }
+    }
+
+    public function suppressValidationOnCancel(FormEvent $event) {
+        $form = $event->getForm();
+
+        if ($form->get('cancel')->isClicked()) {
+            $event->stopPropagation();
         }
     }
 
