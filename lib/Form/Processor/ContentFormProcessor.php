@@ -43,7 +43,7 @@ class ContentFormProcessor implements EventSubscriberInterface
     {
         return [
             RepositoryFormEvents::CONTENT_PUBLISH => ['processPublish', 10],
-            RepositoryFormEvents::CONTENT_CANCEL => ['processRemoveDraft', 10],
+            RepositoryFormEvents::CONTENT_CANCEL => ['processCancel', 10],
             RepositoryFormEvents::CONTENT_SAVE_DRAFT => ['processSaveDraft', 10],
             RepositoryFormEvents::CONTENT_CREATE_DRAFT => ['processCreateDraft', 10],
         ];
@@ -85,13 +85,18 @@ class ContentFormProcessor implements EventSubscriberInterface
         $event->setResponse(new RedirectResponse($redirectUrl));
     }
 
-    public function processRemoveDraft(FormActionEvent $event)
+    public function processCancel(FormActionEvent $event)
     {
         /** @var \EzSystems\RepositoryForms\Data\Content\ContentCreateData|\EzSystems\RepositoryForms\Data\Content\ContentUpdateData $data */
         $data = $event->getData();
-        $form = $event->getForm();
 
         if ($data->isNew()) {
+            $response = new RedirectResponse($this->router->generate(
+                '_ezpublishLocation',
+                ['locationId' => $data->getLocationStructs()[0]->parentLocationId]
+            ));
+            $event->setResponse($response);
+
             return;
         }
 
