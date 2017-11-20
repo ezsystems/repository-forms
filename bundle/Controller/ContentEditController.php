@@ -108,15 +108,27 @@ class ContentEditController extends Controller
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return \EzSystems\RepositoryForms\Content\View\ContentCreateDraftView|\Symfony\Component\HttpFoundation\Response
+     *
+     * @throws \eZ\Publish\API\Repository\Exceptions\UnauthorizedException
+     * @throws \eZ\Publish\API\Repository\Exceptions\NotFoundException
+     * @throws \eZ\Publish\Core\Base\Exceptions\InvalidArgumentType
      */
-    public function createContentDraftAction($contentId, $fromVersionNo = null, $fromLanguage = null, $toLanguage = null, Request $request)
-    {
+    public function createContentDraftAction(
+        $contentId,
+        $fromVersionNo = null,
+        $fromLanguage = null,
+        $toLanguage = null,
+        Request $request
+    ) {
         $createContentDraft = new CreateContentDraftData();
+        $contentInfo = null;
+        $contentType = null;
 
         if ($contentId !== null) {
             $createContentDraft->contentId = $contentId;
 
             $contentInfo = $this->contentService->loadContentInfo($contentId);
+            $contentType = $this->contentTypeService->loadContentType($contentInfo->contentTypeId);
             $createContentDraft->fromVersionNo = $fromVersionNo ?: $contentInfo->currentVersionNo;
             $createContentDraft->fromLanguage = $fromLanguage ?: $contentInfo->mainLanguageCode;
         }
@@ -138,7 +150,11 @@ class ContentEditController extends Controller
             }
         }
 
-        return new ContentCreateDraftView(null, ['form' => $form->createView()]);
+        return new ContentCreateDraftView(null, [
+            'form' => $form->createView(),
+            'contentInfo' => $contentInfo,
+            'contentType' => $contentType,
+        ]);
     }
 
     /**
@@ -150,6 +166,10 @@ class ContentEditController extends Controller
      * @param string $language Language code to create the version in (eng-GB, ger-DE, ...))
      *
      * @return \EzSystems\RepositoryForms\Content\View\ContentEditView|\Symfony\Component\HttpFoundation\Response
+     *
+     * @throws \eZ\Publish\Core\Base\Exceptions\InvalidArgumentType
+     * @throws \eZ\Publish\API\Repository\Exceptions\UnauthorizedException
+     * @throws \eZ\Publish\API\Repository\Exceptions\NotFoundException
      * @throws \eZ\Publish\Core\Base\Exceptions\BadStateException If the version isn't editable, or if there is no editable version.
      */
     public function editContentDraftAction($contentId, $versionNo = null, Request $request, $language = null)
@@ -158,6 +178,8 @@ class ContentEditController extends Controller
         if ($draft->getVersionInfo()->status !== VersionInfo::STATUS_DRAFT) {
             throw new BadStateException('Version status', 'status is not draft');
         }
+
+        $contentType = $this->contentTypeService->loadContentType($draft->contentInfo->contentTypeId);
 
         $contentUpdate = (new ContentUpdateMapper())->mapToFormData(
             $draft,
@@ -186,6 +208,8 @@ class ContentEditController extends Controller
         return new ContentEditView(null, [
             'form' => $form->createView(),
             'languageCode' => $language,
+            'content' => $draft,
+            'contentType' => $contentType,
         ]);
     }
 
