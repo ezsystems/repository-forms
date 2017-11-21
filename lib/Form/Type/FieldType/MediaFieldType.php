@@ -39,6 +39,7 @@ class MediaFieldType extends AbstractType
                 CheckboxType::class,
                 [
                     'label' => /** @Desc("Display controls") */ 'content.field_type.ezmedia.display_controls',
+                    'required' => false,
                 ]
             )
             ->add(
@@ -46,6 +47,7 @@ class MediaFieldType extends AbstractType
                 CheckboxType::class,
                 [
                     'label' => /** @Desc("Auto play") */ 'content.field_type.ezmedia.autoplay',
+                    'required' => false,
                 ]
             )
             ->add(
@@ -53,6 +55,7 @@ class MediaFieldType extends AbstractType
                 CheckboxType::class,
                 [
                     'label' => /** @Desc("Loop") */ 'content.field_type.ezmedia.loop',
+                    'required' => false,
                 ]
             )
             ->add(
@@ -60,6 +63,7 @@ class MediaFieldType extends AbstractType
                 IntegerType::class,
                 [
                     'label' => /** @Desc("Width") */ 'content.field_type.ezmedia.width',
+                    'required' => false,
                     'attr' => [
                         'step' => 1,
                         'min' => 1,
@@ -71,6 +75,7 @@ class MediaFieldType extends AbstractType
                 IntegerType::class,
                 [
                     'label' => /** @Desc("Height") */ 'content.field_type.ezmedia.height',
+                    'required' => false,
                     'attr' => [
                         'step' => 1,
                         'min' => 1,
