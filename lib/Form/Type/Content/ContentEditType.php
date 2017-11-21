@@ -55,7 +55,8 @@ class ContentEditType extends AbstractType
         }
     }
 
-    public function suppressValidationOnCancel(FormEvent $event) {
+    public function suppressValidationOnCancel(FormEvent $event)
+    {
         $form = $event->getForm();
 
         if ($form->get('cancel')->isClicked()) {
