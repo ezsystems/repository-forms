@@ -24,15 +24,14 @@ class BinaryFileValueTransformer extends AbstractBinaryBaseTransformer implement
      */
     public function transform($value)
     {
-        $transformedValue = $this->getTransformedValue($value);
-
-        if (null === $transformedValue) {
-            return null;
+        if (null === $value) {
+            $value = $this->fieldType->getEmptyValue();
         }
 
-        return array_merge($transformedValue, [
-            'downloadCount' => $value->downloadCount,
-        ]);
+        return array_merge(
+            $this->getDefaultProperties(),
+            ['downloadCount' => $value->downloadCount]
+        );
     }
 
     /**

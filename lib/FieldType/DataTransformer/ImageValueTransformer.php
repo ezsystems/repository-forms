@@ -24,15 +24,14 @@ class ImageValueTransformer extends AbstractBinaryBaseTransformer implements Dat
      */
     public function transform($value)
     {
-        $transformedValue = $this->getTransformedValue($value);
-
-        if (null === $transformedValue) {
-            return null;
+        if (null === $value) {
+            $value = $this->fieldType->getEmptyValue();
         }
 
-        return array_merge($transformedValue, [
-            'alternativeText' => $value->alternativeText,
-        ]);
+        return array_merge(
+            $this->getDefaultProperties(),
+            ['alternativeText' => $value->alternativeText]
+        );
     }
 
     /**
