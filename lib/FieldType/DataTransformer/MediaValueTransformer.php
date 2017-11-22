@@ -24,19 +24,20 @@ class MediaValueTransformer extends AbstractBinaryBaseTransformer implements Dat
      */
     public function transform($value)
     {
-        $transformedValue = $this->getTransformedValue($value);
-
-        if (null === $transformedValue) {
-            return null;
+        if (null === $value) {
+            $value = $this->fieldType->getEmptyValue();
         }
 
-        return array_merge($transformedValue, [
-            'hasController' => $value->hasController,
-            'loop' => $value->loop,
-            'autoplay' => $value->autoplay,
-            'width' => $value->width,
-            'height' => $value->height,
-        ]);
+        return array_merge(
+            $this->getDefaultProperties(),
+            [
+                'hasController' => $value->hasController,
+                'loop' => $value->loop,
+                'autoplay' => $value->autoplay,
+                'width' => $value->width,
+                'height' => $value->height,
+            ]
+        );
     }
 
     /**

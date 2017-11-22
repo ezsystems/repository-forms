@@ -39,16 +39,10 @@ abstract class AbstractBinaryBaseTransformer
     }
 
     /**
-     * @param Value $value
-     *
      * @return array|null
      */
-    public function getTransformedValue($value)
+    public function getDefaultProperties()
     {
-        if ($this->fieldType->isEmptyValue($value)) {
-            return null;
-        }
-
         return [
             'file' => null,
             'remove' => false,
@@ -67,6 +61,7 @@ abstract class AbstractBinaryBaseTransformer
         if (!is_array($value)) {
             throw new TransformationFailedException(sprintf('Expected a array got %s', gettype($value)));
         }
+
         if ($value['remove']) {
             return $this->fieldType->getEmptyValue();
         }
