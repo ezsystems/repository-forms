@@ -60,6 +60,6 @@ class TimeValueTransformer implements DataTransformerInterface
             );
         }
 
-        return Value::fromTimestamp($value);
+        return new Value($value);
     }
 }
