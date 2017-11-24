@@ -193,8 +193,11 @@ services:
             - { name: kernel.event_subscriber }
 
     ezrepoforms.form_processor.content:
-        class: "%ezrepoforms.form_processor.content.class%"
-        arguments: ["@ezpublish.api.service.content", "@router"]
+        class: '%ezrepoforms.form_processor.content.class%'
+        arguments:
+            - '@ezpublish.api.service.content'
+            - '@ezpublish.api.service.location'
+            - '@router'
         tags:
             - { name: kernel.event_subscriber }
 

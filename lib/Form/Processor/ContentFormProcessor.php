@@ -9,6 +9,7 @@
 namespace EzSystems\RepositoryForms\Form\Processor;
 
 use eZ\Publish\API\Repository\ContentService;
+use eZ\Publish\API\Repository\LocationService;
 use eZ\Publish\API\Repository\Values\Content\ContentStruct;
 use eZ\Publish\Core\MVC\Symfony\Routing\UrlAliasRouter;
 use EzSystems\RepositoryForms\Event\FormActionEvent;
@@ -23,19 +24,22 @@ use Symfony\Component\Routing\RouterInterface;
  */
 class ContentFormProcessor implements EventSubscriberInterface
 {
-    /**
-     * @var \eZ\Publish\API\Repository\ContentService
-     */
+    /** @var \eZ\Publish\API\Repository\ContentService */
     private $contentService;
 
-    /**
-     * @var \Symfony\Component\Routing\RouterInterface
-     */
+    /** @var \eZ\Publish\API\Repository\LocationService */
+    private $locationService;
+
+    /** @var \Symfony\Component\Routing\RouterInterface */
     private $router;
 
-    public function __construct(ContentService $contentService, RouterInterface $router)
-    {
+    public function __construct(
+        ContentService $contentService,
+        LocationService $locationService,
+        RouterInterface $router
+    ) {
         $this->contentService = $contentService;
+        $this->locationService = $locationService;
         $this->router = $router;
     }
 
@@ -100,10 +104,23 @@ class ContentFormProcessor implements EventSubscriberInterface
             return;
         }
 
-        $this->contentService->deleteVersion($data->contentDraft->getVersionInfo());
+        $content = $data->contentDraft;
+        $contentInfo = $content->contentInfo;
+        $versionInfo = $data->contentDraft->getVersionInfo();
+
+        // if there is only one version you have to remove whole content instead of a version itself
+        if (1 === count($this->contentService->loadVersions($contentInfo))) {
+            $parentLocation = $this->locationService->loadParentLocationsForDraftContent($versionInfo)[0];
+            $redirectionContentId = $parentLocation->getContentInfo()->id; // parent location content id
+            $this->contentService->deleteContent($contentInfo);
+        } else {
+            $redirectionContentId = $contentInfo->id;
+            $this->contentService->deleteVersion($versionInfo);
+        }
+
         $url = $this->router->generate(
             UrlAliasRouter::URL_ALIAS_ROUTE_NAME,
-            ['contentId' => $data->contentDraft->id],
+            ['contentId' => $redirectionContentId],
             UrlGeneratorInterface::ABSOLUTE_URL
         );
         $event->setResponse(new RedirectResponse($url));
