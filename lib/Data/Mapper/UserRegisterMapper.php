@@ -10,13 +10,13 @@ namespace EzSystems\RepositoryForms\Data\Mapper;
 
 use eZ\Publish\API\Repository\Values\Content\Field;
 use EzSystems\RepositoryForms\Data\Content\FieldData;
-use EzSystems\RepositoryForms\Data\User\UserCreateData;
-use EzSystems\RepositoryForms\UserRegister\RegistrationContentTypeLoader;
-use EzSystems\RepositoryForms\UserRegister\RegistrationGroupLoader;
+use EzSystems\RepositoryForms\Data\User\UserRegisterData;
+use EzSystems\RepositoryForms\User\RegistrationContentTypeLoader;
+use EzSystems\RepositoryForms\User\RegistrationGroupLoader;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
- * Form data mapper for user registration / creation.
+ * Form data mapper for user creation.
  */
 class UserRegisterMapper
 {
@@ -47,7 +47,7 @@ class UserRegisterMapper
     }
 
     /**
-     * @return UserCreateData
+     * @return UserRegisterData
      */
     public function mapToFormData()
     {
@@ -57,7 +57,7 @@ class UserRegisterMapper
 
         $contentType = $this->contentTypeLoader->loadContentType();
 
-        $data = new UserCreateData([
+        $data = new UserRegisterData([
             'contentType' => $contentType,
             'mainLanguageCode' => $this->params['language'],
         ]);

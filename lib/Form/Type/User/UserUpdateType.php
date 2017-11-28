@@ -5,9 +5,9 @@
  * @copyright Copyright (C) eZ Systems AS. All rights reserved.
  * @license For full copyright and license information view LICENSE file distributed with this source code.
  */
-namespace EzSystems\RepositoryForms\Form\Type\Content;
+namespace EzSystems\RepositoryForms\Form\Type\User;
 
-use EzSystems\RepositoryForms\Form\EventSubscriber\SuppressValidationSubscriber;
+use EzSystems\RepositoryForms\Data\User\UserUpdateData;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -18,7 +18,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  * Underlying data will be either \EzSystems\RepositoryForms\Data\Content\ContentCreateData or \EzSystems\RepositoryForms\Data\Content\ContentUpdateData
  * depending on the context (create or update).
  */
-class ContentEditType extends AbstractType
+class UserUpdateType extends AbstractType
 {
     public function getName()
     {
@@ -27,37 +27,27 @@ class ContentEditType extends AbstractType
 
     public function getBlockPrefix()
     {
-        return 'ezrepoforms_content_edit';
+        return 'ezrepoforms_user_update';
     }
 
     public function getParent()
     {
-        return BaseContentType::class;
+        return BaseUserType::class;
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('publish', SubmitType::class, ['label' => 'content.publish_button']);
-
-        if ($options['drafts_enabled']) {
-            $builder
-                ->add('saveDraft', SubmitType::class, ['label' => 'content.save_button'])
-                ->add('cancel', SubmitType::class, [
-                    'label' => 'content.cancel_button',
-                    'attr' => ['formnovalidate' => 'formnovalidate'],
-                ]);
-            $builder->addEventSubscriber(new SuppressValidationSubscriber());
-        }
+            ->add('update', SubmitType::class, ['label' => /** @Desc("Update") */ 'user.update']);
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver
             ->setDefaults([
-                'drafts_enabled' => false,
-                'data_class' => '\eZ\Publish\API\Repository\Values\Content\ContentStruct',
-                'translation_domain' => 'ezrepoforms_content',
+                'data_class' => UserUpdateData::class,
+                'intent' => 'update',
+                'translation_domain' => 'ezrepoforms_user',
             ]);
     }
 }

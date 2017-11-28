@@ -96,6 +96,33 @@ EzSystems\RepositoryForms\Data\Content\ContentUpdateData:
         fieldsData:
             - Valid: ~
 
+EzSystems\RepositoryForms\Data\User\UserCreateData:
+    properties:
+        login:
+            - NotBlank: ~
+        email:
+            - NotBlank: ~
+        password:
+            - NotBlank: ~
+        fieldsData:
+            - Valid: ~
+
+EzSystems\RepositoryForms\Data\User\UserUpdateData:
+    properties:
+        fieldsData:
+            - Valid: ~
+
+EzSystems\RepositoryForms\Data\User\UserRegisterData:
+    properties:
+        fieldsData:
+            - Valid: ~
+
+EzSystems\RepositoryForms\Data\User\UserAccountFieldData:
+    properties:
+        username:
+            - Valid: ~
+            - NotBlank: ~
+
 EzSystems\RepositoryForms\Data\Content\FieldData:
     constraints:
         - EzSystems\RepositoryForms\Validator\Constraints\FieldValue: ~

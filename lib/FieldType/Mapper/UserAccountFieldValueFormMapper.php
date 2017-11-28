@@ -8,14 +8,18 @@
  */
 namespace EzSystems\RepositoryForms\FieldType\Mapper;
 
-use eZ\Publish\API\Repository\FieldTypeService;
 use eZ\Publish\Core\FieldType\User\Value as ApiUserValue;
 use EzSystems\RepositoryForms\Data\Content\FieldData;
 use EzSystems\RepositoryForms\Data\User\UserAccountFieldData;
 use EzSystems\RepositoryForms\FieldType\FieldValueFormMapperInterface;
-use EzSystems\RepositoryForms\Form\Type\User\UserAccountType;
+use EzSystems\RepositoryForms\Form\Type\FieldType\UserAccountFieldType;
 use Symfony\Component\Form\CallbackTransformer;
+use Symfony\Component\Form\Exception\AlreadySubmittedException;
+use Symfony\Component\Form\Exception\LogicException;
+use Symfony\Component\Form\Exception\UnexpectedTypeException;
 use Symfony\Component\Form\FormInterface;
+use Symfony\Component\OptionsResolver\Exception\AccessException;
+use Symfony\Component\OptionsResolver\Exception\InvalidOptionsException;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
@@ -24,44 +28,32 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 final class UserAccountFieldValueFormMapper implements FieldValueFormMapperInterface
 {
     /**
-     * @var \eZ\Publish\API\Repository\FieldTypeService
-     */
-    private $fieldTypeService;
-
-    public function __construct(FieldTypeService $fieldTypeService)
-    {
-        $this->fieldTypeService = $fieldTypeService;
-    }
-
-    /**
      * Maps Field form to current FieldType based on the configured form type (self::$formType).
      *
      * @param FormInterface $fieldForm Form for the current Field.
      * @param FieldData $data Underlying data for current Field form.
+     *
+     * @throws AlreadySubmittedException
+     * @throws LogicException
+     * @throws UnexpectedTypeException
+     * @throws InvalidOptionsException
      */
     public function mapFieldValueForm(FormInterface $fieldForm, FieldData $data)
     {
         $fieldDefinition = $data->fieldDefinition;
         $formConfig = $fieldForm->getConfig();
+        $rootForm = $fieldForm->getRoot()->getRoot();
+        $formIntent = $rootForm->getConfig()->getOption('intent');
 
         $fieldForm
             ->add(
                 $formConfig->getFormFactory()->createBuilder()
-                    ->create('value', UserAccountType::class, ['required' => $fieldDefinition->isRequired, 'label' => $fieldDefinition->getName()])
-                    ->addModelTransformer(
-                        new CallbackTransformer(
-                            function (ApiUserValue $data) {
-                                return new UserAccountFieldData($data->login, null, $data->email);
-                            },
-                            function ($submittedData) {
-                                return new UserAccountFieldData(
-                                    $submittedData->username,
-                                    $submittedData->password,
-                                    $submittedData->email
-                                );
-                            }
-                        )
-                    )
+                    ->create('value', UserAccountFieldType::class, [
+                        'required' => true,
+                        'label' => $fieldDefinition->getName(),
+                        'intent' => $formIntent,
+                    ])
+                    ->addModelTransformer($this->getModelTransformer())
                     ->setAutoInitialize(false)
                     ->getForm()
             );
@@ -69,6 +61,8 @@ final class UserAccountFieldValueFormMapper implements FieldValueFormMapperInter
 
     /**
      * Fake method to set the translation domain for the extractor.
+     *
+     * @throws AccessException
      */
     public function configureOptions(OptionsResolver $resolver)
     {
@@ -76,5 +70,20 @@ final class UserAccountFieldValueFormMapper implements FieldValueFormMapperInter
             ->setDefaults([
                 'translation_domain' => 'ezrepoforms_content_type',
             ]);
+    }
+
+    /**
+     * @return CallbackTransformer
+     */
+    public function getModelTransformer()
+    {
+        return new CallbackTransformer(
+            function (ApiUserValue $data) {
+                return new UserAccountFieldData($data->login, null, $data->email);
+            },
+            function (UserAccountFieldData $submittedData) {
+                return $submittedData;
+            }
+        );
     }
 }

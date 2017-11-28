@@ -106,4 +106,29 @@ final class RepositoryFormEvents
      * Triggered when updating a language.
      */
     const LANGUAGE_UPDATE = 'language.update';
+
+    /**
+     * Base name for User edit processing events.
+     */
+    const USER_EDIT = 'user.edit';
+
+    /**
+     * Triggered when saving an user.
+     */
+    const USER_UPDATE = 'user.edit.update';
+
+    /**
+     * Triggered when creating an user.
+     */
+    const USER_CREATE = 'user.edit.create';
+
+    /**
+     * Triggered when registering an user.
+     */
+    const USER_REGISTER = 'user.edit.register';
+
+    /**
+     * Triggered when canceling a user edition.
+     */
+    const USER_CANCEL = 'user.edit.cancel';
 }

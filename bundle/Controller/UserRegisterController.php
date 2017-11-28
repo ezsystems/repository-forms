@@ -13,9 +13,10 @@ use eZ\Publish\Core\MVC\Symfony\Security\Authorization\Attribute;
 use EzSystems\RepositoryForms\Data\Mapper\UserRegisterMapper;
 use EzSystems\RepositoryForms\Form\ActionDispatcher\ActionDispatcherInterface;
 use EzSystems\RepositoryForms\Form\Type\User\UserRegisterType;
-use EzSystems\RepositoryForms\UserRegister\View\UserRegisterConfirmView;
-use EzSystems\RepositoryForms\UserRegister\View\UserRegisterFormView;
+use EzSystems\RepositoryForms\User\View\UserRegisterConfirmView;
+use EzSystems\RepositoryForms\User\View\UserRegisterFormView;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\UnauthorizedHttpException;
 
 class UserRegisterController extends Controller
@@ -28,14 +29,14 @@ class UserRegisterController extends Controller
     /**
      * @var ActionDispatcherInterface
      */
-    private $contentActionDispatcher;
+    private $userActionDispatcher;
 
     public function __construct(
         UserRegisterMapper $userRegisterMapper,
-        ActionDispatcherInterface $contentActionDispatcher
+        ActionDispatcherInterface $userActionDispatcher
     ) {
         $this->userRegisterMapper = $userRegisterMapper;
-        $this->contentActionDispatcher = $contentActionDispatcher;
+        $this->userActionDispatcher = $userActionDispatcher;
     }
 
     /**
@@ -43,7 +44,9 @@ class UserRegisterController extends Controller
      *
      * @param Request $request
      *
-     * @return \EzSystems\RepositoryForms\UserRegister\View\UserRegisterFormView|\Symfony\Component\HttpFoundation\Response * @throws \Exception if the current user isn't allowed to register an account
+     * @return UserRegisterFormView|Response
+     *
+     * @throws \Exception if the current user isn't allowed to register an account
      */
     public function registerAction(Request $request)
     {
@@ -61,9 +64,9 @@ class UserRegisterController extends Controller
 
         $form->handleRequest($request);
 
-        if ($form->isValid()) {
-            $this->contentActionDispatcher->dispatchFormAction($form, $data, $form->getClickedButton()->getName());
-            if ($response = $this->contentActionDispatcher->getResponse()) {
+        if ($form->isSubmitted() && $form->isValid()) {
+            $this->userActionDispatcher->dispatchFormAction($form, $data, $form->getClickedButton()->getName());
+            if ($response = $this->userActionDispatcher->getResponse()) {
                 return $response;
             }
         }
