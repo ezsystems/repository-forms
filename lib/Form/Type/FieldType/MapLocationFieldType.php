@@ -11,6 +11,9 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormInterface;
+use Symfony\Component\Form\FormView;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
  * Form Type representing ezgmaplocation field type.
@@ -42,12 +45,13 @@ class MapLocationFieldType extends AbstractType
                 'latitude',
                 NumberType::class,
                 [
-                    'label' => 'content.field_type.ezgmaplocation.latitude',
+                    'label' => /** @Desc("Latitude") */ 'content.field_type.ezgmaplocation.latitude',
                     'required' => $options['required'],
+                    'scale' => 6,
                     'attr' => [
                         'min' => -90,
                         'max' => 90,
-                        'step' => 'any',
+                        'step' => 0.000001,
                     ],
                 ]
             )
@@ -55,12 +59,13 @@ class MapLocationFieldType extends AbstractType
                 'longitude',
                 NumberType::class,
                 [
-                    'label' => 'content.field_type.ezgmaplocation.longitude',
+                    'label' => /** @Desc("Longitude") */ 'content.field_type.ezgmaplocation.longitude',
                     'required' => $options['required'],
+                    'scale' => 6,
                     'attr' => [
                         'min' => -90,
                         'max' => 90,
-                        'step' => 'any',
+                        'step' => 0.000001,
                     ],
                 ]
             )
@@ -68,10 +73,24 @@ class MapLocationFieldType extends AbstractType
                 'address',
                 TextType::class,
                 [
-                    'label' => 'content.field_type.ezgmaplocation.address',
+                    'label' => /* @Desc("Address") */ 'content.field_type.ezgmaplocation.address',
                     'required' => false,
+                    'empty_data' => '',
                 ]
             )
-            ->addModelTransformer(new FieldValueTransformer($this->fieldTypeService->getFieldType('ezgmaplocation')));
+            ->addModelTransformer(
+                new FieldValueTransformer($this->fieldTypeService->getFieldType('ezgmaplocation'))
+            );
+    }
+
+    public function finishView(FormView $view, FormInterface $form, array $options)
+    {
+        $view->children['latitude']->vars['type'] = 'number';
+        $view->children['longitude']->vars['type'] = 'number';
+    }
+
+    public function configureOptions(OptionsResolver $resolver)
+    {
+        $resolver->setDefaults(['translation_domain' => 'ezrepoforms_fieldtype']);
     }
 }
