@@ -50,7 +50,7 @@ class CheckboxFormMapper implements FieldDefinitionFormMapperInterface, FieldVal
                         CheckboxFieldType::class,
                         [
                             'required' => $fieldDefinition->isRequired,
-                            'label' => $fieldDefinition->getName($formConfig->getOption('languageCode')),
+                            'label' => $fieldDefinition->getName(),
                         ]
                     )
                     ->setAutoInitialize(false)

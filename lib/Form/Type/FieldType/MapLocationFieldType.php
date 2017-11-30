@@ -74,7 +74,7 @@ class MapLocationFieldType extends AbstractType
                 TextType::class,
                 [
                     'label' => /* @Desc("Address") */ 'content.field_type.ezgmaplocation.address',
-                    'required' => false,
+                    'required' => $options['required'],
                     'empty_data' => '',
                 ]
             )

@@ -67,7 +67,7 @@ class FloatFormMapper implements FieldDefinitionFormMapperInterface, FieldValueF
                         FloatFieldType::class,
                         [
                             'required' => $fieldDefinition->isRequired,
-                            'label' => $fieldDefinition->getName($formConfig->getOption('languageCode')),
+                            'label' => $fieldDefinition->getName(),
                             'min' => $validatorConfiguration['FloatValueValidator']['minFloatValue'],
                             'max' => $validatorConfiguration['FloatValueValidator']['maxFloatValue'],
                         ]

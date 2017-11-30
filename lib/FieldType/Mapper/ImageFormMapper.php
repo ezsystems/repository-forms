@@ -53,7 +53,7 @@ class ImageFormMapper implements FieldDefinitionFormMapperInterface, FieldValueF
                         ImageFieldType::class,
                         [
                             'required' => $fieldDefinition->isRequired,
-                            'label' => $fieldDefinition->getName($formConfig->getOption('languageCode')),
+                            'label' => $fieldDefinition->getName(),
                         ]
                     )
                     ->addModelTransformer(new ImageValueTransformer($fieldType, $data->value, Value::class))

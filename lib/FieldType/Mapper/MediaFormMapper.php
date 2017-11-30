@@ -69,7 +69,7 @@ class MediaFormMapper implements FieldDefinitionFormMapperInterface, FieldValueF
                         MediaFieldType::class,
                         [
                             'required' => $fieldDefinition->isRequired,
-                            'label' => $fieldDefinition->getName($formConfig->getOption('languageCode')),
+                            'label' => $fieldDefinition->getName(),
                         ]
                     )
                     ->addModelTransformer(new MediaValueTransformer($fieldType, $data->value, Value::class))

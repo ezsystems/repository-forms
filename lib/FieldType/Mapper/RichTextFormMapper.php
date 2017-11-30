@@ -26,7 +26,7 @@ class RichTextFormMapper implements FieldValueFormMapperInterface
                 $formConfig->getFormFactory()->createBuilder()
                     ->create('value', RichTextFieldType::class, [
                         'required' => $fieldDefinition->isRequired,
-                        'label' => $fieldDefinition->getName($formConfig->getOption('languageCode')),
+                        'label' => $fieldDefinition->getName(),
                     ])
                     ->setAutoInitialize(false)
                     ->getForm()
