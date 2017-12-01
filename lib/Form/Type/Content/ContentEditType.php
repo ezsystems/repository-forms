@@ -14,6 +14,8 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
+use Symfony\Component\Form\FormInterface;
+use Symfony\Component\Form\FormView;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
@@ -39,7 +41,10 @@ class ContentEditType extends AbstractType
             ->add('fieldsData', CollectionType::class, [
                 'entry_type' => ContentFieldType::class,
                 'label' => 'ezrepoforms.content.fields',
-                'entry_options' => ['languageCode' => $options['languageCode']],
+                'entry_options' => [
+                    'languageCode' => $options['languageCode'],
+                    'mainLanguageCode' => $options['mainLanguageCode'],
+                ],
             ])
             ->add('redirectUrlAfterPublish', HiddenType::class, ['required' => false, 'mapped' => false])
             ->add('publish', SubmitType::class, ['label' => 'content.publish_button']);
@@ -53,6 +58,12 @@ class ContentEditType extends AbstractType
                 ]);
             $builder->addEventListener(FormEvents::POST_SUBMIT, [$this, 'suppressValidationOnCancel'], 900);
         }
+    }
+
+    public function buildView(FormView $view, FormInterface $form, array $options)
+    {
+        $view->vars['languageCode'] = $options['languageCode'];
+        $view->vars['mainLanguageCode'] = $options['mainLanguageCode'];
     }
 
     public function suppressValidationOnCancel(FormEvent $event)
@@ -72,6 +83,6 @@ class ContentEditType extends AbstractType
                 'data_class' => '\eZ\Publish\API\Repository\Values\Content\ContentStruct',
                 'translation_domain' => 'ezrepoforms_content',
             ])
-            ->setRequired(['languageCode']);
+            ->setRequired(['languageCode', 'mainLanguageCode']);
     }
 }
