@@ -10,9 +10,9 @@ use eZ\Publish\Core\FieldType\Author\Author;
 use eZ\Publish\Core\FieldType\Author\Value;
 use EzSystems\RepositoryForms\Form\Type\FieldType\Author\AuthorCollectionType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\CallbackTransformer;
+use Symfony\Component\Form\DataTransformerInterface;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\Form\FormEvent;
-use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
@@ -34,7 +34,7 @@ class AuthorFieldType extends AbstractType
     {
         $builder
             ->add('authors', AuthorCollectionType::class, [])
-            ->addEventListener(FormEvents::PRE_SET_DATA, [$this, 'addEmptyEntry']);
+            ->addViewTransformer($this->getViewTransformer());
     }
 
     public function configureOptions(OptionsResolver $resolver)
@@ -42,13 +42,30 @@ class AuthorFieldType extends AbstractType
         $resolver->setDefaults(['data_class' => Value::class]);
     }
 
-    public function addEmptyEntry(FormEvent $event)
+    /**
+     * Returns a view transformer which handles empty row needed to display add/remove buttons.
+     *
+     * @return DataTransformerInterface
+     */
+    public function getViewTransformer(): DataTransformerInterface
     {
-        $data = $event->getData();
-        $contentStruct = $event->getForm()->getRoot()->getData();
+        return new CallbackTransformer(function (Value $value) {
+            if (0 === $value->authors->count()) {
+                $value->authors->append(new Author());
+            }
 
-        if ($contentStruct->isNew()) {
-            $data->authors->offsetSet(0, new Author(['id' => null, 'name' => null, 'email' => null]));
-        }
+            return $value;
+        }, function (Value $value) {
+            $value->authors->exchangeArray(
+                array_filter(
+                    $value->authors->getArrayCopy(),
+                    function (Author $author) {
+                        return !empty($author->email);
+                    }
+                )
+            );
+
+            return $value;
+        });
     }
 }
