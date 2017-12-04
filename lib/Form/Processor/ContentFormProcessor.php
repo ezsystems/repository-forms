@@ -11,7 +11,11 @@ namespace EzSystems\RepositoryForms\Form\Processor;
 use eZ\Publish\API\Repository\ContentService;
 use eZ\Publish\API\Repository\LocationService;
 use eZ\Publish\API\Repository\Values\Content\ContentStruct;
+use eZ\Publish\Core\Base\Exceptions\InvalidArgumentException;
 use eZ\Publish\Core\MVC\Symfony\Routing\UrlAliasRouter;
+use EzSystems\RepositoryForms\Data\Content\ContentCreateData;
+use EzSystems\RepositoryForms\Data\Content\ContentUpdateData;
+use EzSystems\RepositoryForms\Data\NewnessChecker;
 use EzSystems\RepositoryForms\Event\FormActionEvent;
 use EzSystems\RepositoryForms\Event\RepositoryFormEvents;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
@@ -153,7 +157,12 @@ class ContentFormProcessor implements EventSubscriberInterface
      */
     private function saveDraft(ContentStruct $data, $languageCode)
     {
+        $mainLanguageCode = $this->resolveMainLanguageCode($data);
         foreach ($data->fieldsData as $fieldDefIdentifier => $fieldData) {
+            if ($mainLanguageCode != $languageCode && !$fieldData->fieldDefinition->isTranslatable) {
+                continue;
+            }
+
             $data->setField($fieldDefIdentifier, $fieldData->value, $languageCode);
         }
 
@@ -164,5 +173,26 @@ class ContentFormProcessor implements EventSubscriberInterface
         }
 
         return $contentDraft;
+    }
+
+    /**
+     * @param ContentUpdateData|ContentCreateData|NewnessChecker $data
+     *
+     * @return string
+     *
+     * @throws \eZ\Publish\Core\Base\Exceptions\InvalidArgumentException
+     */
+    private function resolveMainLanguageCode($data): string
+    {
+        if (!$data instanceof ContentUpdateData && !$data instanceof ContentCreateData) {
+            throw new InvalidArgumentException(
+                '$data',
+                'expected type of ContentUpdateData or ContentCreateData'
+            );
+        }
+
+        return $data->isNew()
+            ? $data->mainLanguageCode
+            : $data->contentDraft->getVersionInfo()->getContentInfo()->mainLanguageCode;
     }
 }

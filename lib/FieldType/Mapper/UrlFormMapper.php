@@ -32,7 +32,7 @@ class UrlFormMapper implements FieldValueFormMapperInterface
                 $formConfig->getFormFactory()->createBuilder()
                     ->create('value', UrlFieldType::class, [
                         'required' => $fieldDefinition->isRequired,
-                        'label' => $fieldDefinition->getName($formConfig->getOption('languageCode')),
+                        'label' => $fieldDefinition->getName(),
                     ])
                     ->setAutoInitialize(false)
                     ->getForm()

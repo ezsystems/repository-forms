@@ -12,6 +12,8 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
+use Symfony\Component\Form\FormInterface;
+use Symfony\Component\Form\FormView;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class ContentFieldType extends AbstractType
@@ -43,7 +45,13 @@ class ContentFieldType extends AbstractType
                 'data_class' => '\EzSystems\RepositoryForms\Data\Content\FieldData',
                 'translation_domain' => 'ezrepoforms_content',
             ])
-            ->setRequired(['languageCode']);
+            ->setRequired(['languageCode', 'mainLanguageCode']);
+    }
+
+    public function buildView(FormView $view, FormInterface $form, array $options)
+    {
+        $view->vars['languageCode'] = $options['languageCode'];
+        $view->vars['mainLanguageCode'] = $options['mainLanguageCode'];
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options)

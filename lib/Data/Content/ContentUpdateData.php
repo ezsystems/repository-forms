@@ -13,7 +13,7 @@ use EzSystems\RepositoryForms\Data\NewnessCheckable;
 
 /**
  * @property-read \EzSystems\RepositoryForms\Data\Content\FieldData[] $fieldsData
- * @property-read \eZ\Publish\API\Repository\Values\Content\Content[] $contentDraft
+ * @property-read \eZ\Publish\API\Repository\Values\Content\Content $contentDraft
  */
 class ContentUpdateData extends ContentUpdateStruct implements NewnessCheckable
 {

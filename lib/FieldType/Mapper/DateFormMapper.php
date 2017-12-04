@@ -57,7 +57,7 @@ class DateFormMapper implements FieldDefinitionFormMapperInterface, FieldValueFo
                         DateFieldType::class,
                         [
                             'required' => $fieldDefinition->isRequired,
-                            'label' => $fieldDefinition->getName($formConfig->getOption('languageCode')),
+                            'label' => $fieldDefinition->getName(),
                         ]
                     )
                     ->setAutoInitialize(false)

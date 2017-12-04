@@ -11,6 +11,7 @@ namespace EzSystems\RepositoryFormsBundle\Controller;
 use eZ\Bundle\EzPublishCoreBundle\Controller;
 use eZ\Publish\API\Repository\ContentService;
 use eZ\Publish\API\Repository\ContentTypeService;
+use eZ\Publish\API\Repository\LanguageService;
 use eZ\Publish\API\Repository\LocationService;
 use eZ\Publish\API\Repository\Values\Content\VersionInfo;
 use eZ\Publish\Core\Base\Exceptions\BadStateException;
@@ -27,24 +28,19 @@ use Symfony\Component\HttpFoundation\Request;
 
 class ContentEditController extends Controller
 {
-    /**
-     * @var ContentTypeService
-     */
+    /** @var ContentTypeService */
     private $contentTypeService;
 
-    /**
-     * @var ContentService
-     */
+    /** @var ContentService */
     private $contentService;
 
-    /**
-     * @var LocationService
-     */
+    /** @var LocationService */
     private $locationService;
 
-    /**
-     * @var ActionDispatcherInterface
-     */
+    /** @var LanguageService */
+    private $languageService;
+
+    /** @var ActionDispatcherInterface */
     private $contentActionDispatcher;
 
     /**
@@ -58,10 +54,12 @@ class ContentEditController extends Controller
         ContentTypeService $contentTypeService,
         ContentService $contentService,
         LocationService $locationService,
+        LanguageService $languageService,
         ActionDispatcherInterface $contentActionDispatcher
     ) {
         $this->contentTypeService = $contentTypeService;
         $this->locationService = $locationService;
+        $this->languageService = $languageService;
         $this->contentActionDispatcher = $contentActionDispatcher;
         $this->contentService = $contentService;
     }
@@ -82,14 +80,16 @@ class ContentEditController extends Controller
      */
     public function createWithoutDraftAction($contentTypeIdentifier, $language, $parentLocationId, Request $request)
     {
+        $language = $this->languageService->loadLanguage($language);
         $parentLocation = $this->locationService->loadLocation($parentLocationId);
         $contentType = $this->contentTypeService->loadContentTypeByIdentifier($contentTypeIdentifier);
         $data = (new ContentCreateMapper())->mapToFormData($contentType, [
-            'mainLanguageCode' => $language,
+            'mainLanguageCode' => $language->languageCode,
             'parentLocation' => $this->locationService->newLocationCreateStruct($parentLocationId),
         ]);
         $form = $this->createForm(ContentEditType::class, $data, [
-            'languageCode' => $language,
+            'languageCode' => $language->languageCode,
+            'mainLanguageCode' => $language->languageCode,
             'drafts_enabled' => true,
         ]);
         $form->handleRequest($request);
@@ -103,7 +103,7 @@ class ContentEditController extends Controller
 
         return new ContentCreateView(null, [
             'form' => $form->createView(),
-            'languageCode' => $language,
+            'language' => $language,
             'contentType' => $contentType,
             'parentLocation' => $parentLocation,
         ]);
@@ -190,12 +190,14 @@ class ContentEditController extends Controller
             throw new BadStateException('Version status', 'status is not draft');
         }
 
+        $language = $language ?: $draft->getVersionInfo()->getContentInfo()->mainLanguageCode;
+        $language = $this->languageService->loadLanguage($language);
         $contentType = $this->contentTypeService->loadContentType($draft->contentInfo->contentTypeId);
 
         $contentUpdate = (new ContentUpdateMapper())->mapToFormData(
             $draft,
             [
-                'languageCode' => $language,
+                'languageCode' => $language->languageCode,
                 'contentType' => $this->contentTypeService->loadContentType($draft->contentInfo->contentTypeId),
             ]
         );
@@ -203,7 +205,8 @@ class ContentEditController extends Controller
             ContentEditType::class,
             $contentUpdate,
             [
-                'languageCode' => $language,
+                'languageCode' => $language->languageCode,
+                'mainLanguageCode' => $draft->contentInfo->mainLanguageCode,
                 'drafts_enabled' => true,
             ]
         );
@@ -218,7 +221,7 @@ class ContentEditController extends Controller
 
         return new ContentEditView(null, [
             'form' => $form->createView(),
-            'languageCode' => $language,
+            'language' => $language,
             'content' => $draft,
             'contentType' => $contentType,
         ]);
