@@ -3,7 +3,9 @@
 {% block content %}
     <section class="ez-content-edit">
         {{ form_start(form) }}
-        {{- form_widget(form.fieldsData) -}}
+        {% for child in form.fieldsData %}
+            {{- form_widget(child) -}}
+        {% endfor %}
         {{ form_end(form) }}
     </section>
 {% endblock %}

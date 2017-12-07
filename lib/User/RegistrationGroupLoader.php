@@ -6,7 +6,7 @@
  * @license For full copyright and license information view LICENSE file distributed with this source code.
  * @version //autogentag//
  */
-namespace EzSystems\RepositoryForms\UserRegister;
+namespace EzSystems\RepositoryForms\User;
 
 use eZ\Publish\API\Repository\Values\User\UserGroup;
 

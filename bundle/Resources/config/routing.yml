@@ -25,11 +25,21 @@ ez_content_draft_create:
         expose: true
 
 ez_user_register:
-  path: /register
-  defaults:
-      _controller: "ezrepoforms.controller.user_register:registerAction"
+    path: /register
+    defaults:
+        _controller: "ezrepoforms.controller.user_register:registerAction"
 
 ez_user_register_confirmation:
-  path: /register-confirm
-  defaults:
-      _controller: "ezrepoforms.controller.user_register:registerConfirmAction"
+    path: /register-confirm
+    defaults:
+        _controller: "ezrepoforms.controller.user_register:registerConfirmAction"
+
+ez_user_create:
+    path: /user/create
+    defaults:
+        _controller: "ezrepoforms.controller.user:createAction"
+
+ez_user_update:
+    path: /user/update
+    defaults:
+        _controller: "ezrepoforms.controller.user:updateAction"

@@ -7,77 +7,69 @@
  *
  * @version //autogentag//
  */
-namespace EzSystems\RepositoryForms\Form\Processor;
+namespace EzSystems\RepositoryForms\Form\Processor\User;
 
 use eZ\Publish\API\Repository\Repository;
 use eZ\Publish\API\Repository\UserService;
-use eZ\Publish\API\Repository\Values\Content\ContentStruct;
-use EzSystems\RepositoryForms\Data\User\UserCreateData;
+use eZ\Publish\API\Repository\Values\User\User;
+use EzSystems\RepositoryForms\Data\User\UserRegisterData;
 use EzSystems\RepositoryForms\Event\FormActionEvent;
 use EzSystems\RepositoryForms\Event\RepositoryFormEvents;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Routing\RouterInterface;
 
 /**
- * Listens for and processes RepositoryForm events: publish, remove draft, save draft...
+ * Listens for and processes User register events.
  */
 class UserRegisterFormProcessor implements EventSubscriberInterface
 {
-    /**
-     * @var \eZ\Publish\API\Repository\UserService
-     */
+    /** @var \eZ\Publish\API\Repository\UserService */
     private $userService;
 
-    /**
-     * @var \Symfony\Component\Routing\RouterInterface
-     */
-    private $router;
+    /** @var UrlGeneratorInterface */
+    private $urlGenerator;
 
-    /**
-     * @var Repository
-     */
+    /** @var Repository */
     private $repository;
 
     public function __construct(Repository $repository, UserService $userService, RouterInterface $router)
     {
         $this->userService = $userService;
-        $this->router = $router;
+        $this->urlGenerator = $router;
         $this->repository = $repository;
     }
 
     public static function getSubscribedEvents()
     {
         return [
-            RepositoryFormEvents::CONTENT_PUBLISH => ['processPublish', 20],
+            RepositoryFormEvents::USER_REGISTER => ['processRegister', 20],
         ];
     }
 
-    public function processPublish(FormActionEvent $event)
+    public function processRegister(FormActionEvent $event)
     {
-        /** @var \EzSystems\RepositoryForms\Data\User\UserCreateData $data */
-        if (!($data = $event->getData()) instanceof UserCreateData) {
+        /** @var UserRegisterData $data */
+        if (!($data = $event->getData()) instanceof UserRegisterData) {
             return;
         }
         $form = $event->getForm();
 
-        $this->saveDraft($data, $form->getConfig()->getOption('languageCode'));
+        $this->createUser($data, $form->getConfig()->getOption('languageCode'));
 
-        $redirectUrl = $this->router->generate('ez_user_register_confirmation');
+        $redirectUrl = $this->urlGenerator->generate('ez_user_register_confirmation');
         $event->setResponse(new RedirectResponse($redirectUrl));
         $event->stopPropagation();
     }
 
     /**
-     * Saves content draft corresponding to $data.
-     * Depending on the nature of $data (create or update data), the draft will either be created or simply updated.
-     *
-     * @param ContentStruct|\EzSystems\RepositoryForms\Data\User\UserCreateData $data
+     * @param UserRegisterData $data
      * @param $languageCode
      *
-     * @return \eZ\Publish\API\Repository\Values\Content\Content
+     * @return User
      */
-    private function saveDraft(UserCreateData $data, $languageCode)
+    private function createUser(UserRegisterData $data, $languageCode)
     {
         foreach ($data->fieldsData as $fieldDefIdentifier => $fieldData) {
             if ($fieldData->getFieldTypeIdentifier() !== 'ezuser') {

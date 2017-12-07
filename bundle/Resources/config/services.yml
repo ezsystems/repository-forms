@@ -15,8 +15,6 @@ parameters:
     ezrepoforms.field_definition.form_type.class: EzSystems\RepositoryForms\Form\Type\FieldDefinition\FieldDefinitionType
     ezrepoforms.field.form_type.class: EzSystems\RepositoryForms\Form\Type\Content\ContentFieldType
 
-    ezrepoforms.field_value.user_type.class: EzSystems\RepositoryForms\Form\Type\User\UserAccountType
-
     ezrepoforms.validator.unique_content_type_identifier.class: EzSystems\RepositoryForms\Validator\Constraints\UniqueContentTypeIdentifierValidator
     ezrepoforms.validator.validator_configuration.class: EzSystems\RepositoryForms\Validator\Constraints\ValidatorConfigurationValidator
     ezrepoforms.validator.field_settings.class: EzSystems\RepositoryForms\Validator\Constraints\FieldSettingsValidator
@@ -31,21 +29,27 @@ parameters:
     ezrepoforms.action_dispatcher.content_type.class: EzSystems\RepositoryForms\Form\ActionDispatcher\ContentTypeDispatcher
     ezrepoforms.action_dispatcher.content_type.group.class: EzSystems\RepositoryForms\Form\ActionDispatcher\ContentTypeGroupDispatcher
     ezrepoforms.action_dispatcher.content.class: EzSystems\RepositoryForms\Form\ActionDispatcher\ContentDispatcher
+    ezrepoforms.action_dispatcher.user.class: EzSystems\RepositoryForms\Form\ActionDispatcher\UserDispatcher
     ezrepoforms.form_processor.content_type.class: EzSystems\RepositoryForms\Form\Processor\ContentTypeFormProcessor
     ezrepoforms.form_processor.content_type.options.redirect_route_after_publish: ~
     ezrepoforms.form_processor.content_type.options:
         redirectRouteAfterPublish: "%ezrepoforms.form_processor.content_type.options.redirect_route_after_publish%"
     ezrepoforms.form_processor.content_type_group.class: EzSystems\RepositoryForms\Form\Processor\ContentTypeGroupFormProcessor
     ezrepoforms.form_processor.content.class: EzSystems\RepositoryForms\Form\Processor\ContentFormProcessor
-    ezrepoforms.form_processor.user_register.class: EzSystems\RepositoryForms\Form\Processor\UserRegisterFormProcessor
+    ezrepoforms.form_processor.user_create.class: EzSystems\RepositoryForms\Form\Processor\User\UserCreateFormProcessor
+    ezrepoforms.form_processor.user_update.class: EzSystems\RepositoryForms\Form\Processor\User\UserUpdateFormProcessor
+    ezrepoforms.form_processor.user_register.class: EzSystems\RepositoryForms\Form\Processor\User\UserRegisterFormProcessor
+    ezrepoforms.form_processor.user_cancel.class: EzSystems\RepositoryForms\Form\Processor\User\UserCancelFormProcessor
 
     ezrepoforms.controller.content_edit.class: EzSystems\RepositoryFormsBundle\Controller\ContentEditController
     ezrepoforms.controller.user_register.class: EzSystems\RepositoryFormsBundle\Controller\UserRegisterController
+    ezrepoforms.controller.user.class: EzSystems\RepositoryFormsBundle\Controller\UserController
 
-    ezrepoforms.user_register.registration_group_loader.configurable.class: EzSystems\RepositoryForms\UserRegister\ConfigurableRegistrationGroupLoader
-    ezrepoforms.user_register.registration_content_type_loader.configurable.class: EzSystems\RepositoryForms\UserRegister\ConfigurableRegistrationContentTypeLoader
+    ezrepoforms.user_register.registration_group_loader.configurable.class: EzSystems\RepositoryForms\User\ConfigurableRegistrationGroupLoader
+    ezrepoforms.user_register.registration_content_type_loader.configurable.class: EzSystems\RepositoryForms\User\ConfigurableRegistrationContentTypeLoader
     ezrepoforms.view_templates_listener.class: EzSystems\RepositoryForms\EventListener\ViewTemplatesListener
     ezrepoforms.user_register.view_templates_listener.class: '%ezrepoforms.view_templates_listener.class%' # Deprecated in 1.10, to be removed in 2.0
+    ezrepoforms.user_edit_listener.class: EzSystems\RepositoryForms\EventListener\UserEditListener
 
     ezrepoforms.form_data_mapper.user_register.class: EzSystems\RepositoryForms\Data\Mapper\UserRegisterMapper
 
@@ -101,11 +105,6 @@ services:
         arguments: ["@ezrepoforms.field_type_form_mapper.dispatcher"]
         tags:
             - { name: form.type, alias: ezrepoforms_content_field }
-
-    ezrepoforms.field_value.user_type:
-        class: "%ezrepoforms.field_value.user_type.class%"
-        tags:
-            - { name: form.type, alias: ezuser }
 
     # Validators
     ezrepoforms.validator.unique_content_type_identifier:
@@ -183,6 +182,10 @@ services:
         class: "%ezrepoforms.action_dispatcher.content_type.group.class%"
         parent: ezrepoforms.action_dispatcher.base
 
+    ezrepoforms.action_dispatcher.user:
+        class: "%ezrepoforms.action_dispatcher.user.class%"
+        parent: ezrepoforms.action_dispatcher.base
+
     # Form processors
     ezrepoforms.form_processor.content_type:
         class: "%ezrepoforms.form_processor.content_type.class%"
@@ -201,11 +204,35 @@ services:
         tags:
             - { name: kernel.event_subscriber }
 
+    ezrepoforms.form_processor.user_create:
+        class: "%ezrepoforms.form_processor.user_create.class%"
+        arguments:
+            - '@ezpublish.api.service.user'
+            - '@router'
+        tags:
+            - { name: kernel.event_subscriber }
+
+    ezrepoforms.form_processor.user_update:
+        class: "%ezrepoforms.form_processor.user_update.class%"
+        arguments:
+            - '@ezpublish.api.service.user'
+            - '@ezpublish.api.service.content'
+            - '@router'
+        tags:
+            - { name: kernel.event_subscriber }
+
     ezrepoforms.form_processor.user_register:
         class: "%ezrepoforms.form_processor.user_register.class%"
         arguments:
             - '@ezpublish.api.repository'
             - '@ezpublish.api.service.user'
+            - '@router'
+        tags:
+            - { name: kernel.event_subscriber }
+
+    ezrepoforms.form_processor.user:
+        class: "%ezrepoforms.form_processor.user_cancel.class%"
+        arguments:
             - '@router'
         tags:
             - { name: kernel.event_subscriber }
@@ -229,11 +256,21 @@ services:
         calls:
             - [setPageLayout, [$pagelayout$]]
 
+    ezrepoforms.controller.user:
+        class: "%ezrepoforms.controller.user.class%"
+        arguments:
+            - "@ezpublish.api.service.content_type"
+            - "@ezpublish.api.service.user"
+            - "@ezpublish.api.service.location"
+            - "@ezpublish.api.service.language"
+            - "@ezrepoforms.action_dispatcher.user"
+        parent: ezpublish.controller.base
+
     ezrepoforms.controller.user_register:
         class: "%ezrepoforms.controller.user_register.class%"
         arguments:
             - "@ezrepoforms.form_data_mapper.user_register"
-            - "@ezrepoforms.action_dispatcher.content"
+            - "@ezrepoforms.action_dispatcher.user"
         parent: ezpublish.controller.base
 
     ez_content_edit:
@@ -266,8 +303,10 @@ services:
         tags:
             - { name: kernel.event_subscriber }
         calls:
-            - [setViewTemplate, ['EzSystems\RepositoryForms\UserRegister\View\UserRegisterFormView', "$user_registration.templates.form$"]]
-            - [setViewTemplate, ['EzSystems\RepositoryForms\UserRegister\View\UserRegisterConfirmView', "$user_registration.templates.confirmation$"]]
+            - [setViewTemplate, ['EzSystems\RepositoryForms\User\View\UserCreateView', "$user_edit.templates.create$"]]
+            - [setViewTemplate, ['EzSystems\RepositoryForms\User\View\UserUpdateView', "$user_edit.templates.update$"]]
+            - [setViewTemplate, ['EzSystems\RepositoryForms\User\View\UserRegisterFormView', "$user_registration.templates.form$"]]
+            - [setViewTemplate, ['EzSystems\RepositoryForms\User\View\UserRegisterConfirmView', "$user_registration.templates.confirmation$"]]
             - [setViewTemplate, ['EzSystems\RepositoryForms\Content\View\ContentEditView', "$content_edit.templates.edit$"]]
             - [setViewTemplate, ['EzSystems\RepositoryForms\Content\View\ContentCreateView', "$content_edit.templates.create$"]]
             - [setViewTemplate, ['EzSystems\RepositoryForms\Content\View\ContentCreateDraftView', "$content_edit.templates.create_draft$"]]
@@ -276,6 +315,15 @@ services:
     ezrepoforms.user_register.view_templates_listener:
         alias: ezrepoforms.view_templates_listener
         deprecated: 'The "%service_id%" service is deprecated since 1.10 and will be removed in 2.0. Use "ezrepoforms.view_templates_listener" instead.'
+
+    ezrepoforms.user_edit_listener:
+        class: "%ezrepoforms.user_edit_listener.class%"
+        arguments:
+            - "@ezpublish.api.service.content_type"
+            - "@ezpublish.api.service.content"
+            - "@ezrepoforms.controller.user"
+        tags:
+            - { name: kernel.event_subscriber }
 
     ezrepoforms.translation.extractor.sorting:
         class: EzSystems\RepositoryForms\Translation\SortingTranslationExtractor

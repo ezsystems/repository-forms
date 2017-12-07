@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:jms="urn:jms:translation" version="1.2">
+  <file source-language="en" target-language="en" datatype="plaintext" original="not.available">
+    <header>
+      <tool tool-id="JMSTranslationBundle" tool-name="JMSTranslationBundle" tool-version="1.1.0-DEV"/>
+      <note>The source node in most cases contains the sample message as written by the developer. If it looks like a dot-delimitted string such as "form.label.firstname", then the developer has not provided a default message.</note>
+    </header>
+    <body>
+      <trans-unit id="cbafe6fd8d60ab0c2255f5649c9f0b9096a7a850" resname="user.cancel">
+        <source>Cancel</source>
+        <target>Cancel</target>
+        <note>key: user.cancel</note>
+      </trans-unit>
+      <trans-unit id="95639f06e13f36ba07b01ee8cf5753dbe98fe7ba" resname="user.create">
+        <source>Create</source>
+        <target>Create</target>
+        <note>key: user.create</note>
+      </trans-unit>
+      <trans-unit id="eb38155e104e6d4ebc123884d6052104032a34d7" resname="user.enabled">
+        <source>Enabled</source>
+        <target>Enabled</target>
+        <note>key: user.enabled</note>
+      </trans-unit>
+      <trans-unit id="35f124029a019e1546ec5545a6ffa4968f9e4418" resname="user.update">
+        <source>Update</source>
+        <target>Update</target>
+        <note>key: user.update</note>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>
