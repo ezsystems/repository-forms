@@ -13,6 +13,7 @@ use EzSystems\RepositoryForms\Data\FieldDefinitionData;
 use EzSystems\RepositoryForms\Form\Type\FieldType\RelationListFieldType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -34,6 +35,12 @@ class RelationListFormMapper extends AbstractRelationFormMapper
                 'required' => false,
                 'property_path' => 'fieldSettings[selectionContentTypes]',
                 'label' => 'field_definition.ezobjectrelationlist.selection_content_types',
+            ])
+            ->add('selectionLimit', IntegerType::class, [
+                'required' => false,
+                'empty_data' => 0,
+                'property_path' => 'validatorConfiguration[RelationListValueValidator][selectionLimit]',
+                'label' => /** @Desc("Selection limit") */ 'field_definition.ezobjectrelationlist.selection_limit',
             ]);
     }
 

@@ -5,10 +5,15 @@
  */
 namespace EzSystems\RepositoryForms\Form\Type\FieldType;
 
+use eZ\Publish\API\Repository\ContentService;
+use eZ\Publish\API\Repository\ContentTypeService;
+use eZ\Publish\Core\FieldType\Relation\Value;
 use EzSystems\RepositoryForms\FieldType\DataTransformer\RelationValueTransformer;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormInterface;
+use Symfony\Component\Form\FormView;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
@@ -16,6 +21,22 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class RelationFieldType extends AbstractType
 {
+    /** @var ContentService */
+    private $contentService;
+
+    /** @var ContentTypeService */
+    private $contentTypeService;
+
+    /**
+     * @param ContentService $contentService
+     * @param ContentTypeService $contentTypeService
+     */
+    public function __construct(ContentService $contentService, ContentTypeService $contentTypeService)
+    {
+        $this->contentService = $contentService;
+        $this->contentTypeService = $contentTypeService;
+    }
+
     public function getName()
     {
         return $this->getBlockPrefix();
@@ -34,6 +55,26 @@ class RelationFieldType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->addModelTransformer(new RelationValueTransformer());
+    }
+
+    public function finishView(FormView $view, FormInterface $form, array $options)
+    {
+        $view->vars['relations'] = [];
+
+        /** @var Value $data */
+        $data = $form->getData();
+
+        if (!$data instanceof Value || null === $data->destinationContentId) {
+            return;
+        }
+
+        $contentInfo = $this->contentService->loadContentInfo($data->destinationContentId);
+        $contentType = $this->contentTypeService->loadContentType($contentInfo->contentTypeId);
+
+        $view->vars['relations'][$data->destinationContentId] = [
+            'contentInfo' => $contentInfo,
+            'contentType' => $contentType,
+        ];
     }
 
     public function configureOptions(OptionsResolver $resolver)
