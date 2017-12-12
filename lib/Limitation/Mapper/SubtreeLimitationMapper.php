@@ -10,6 +10,7 @@ namespace EzSystems\RepositoryForms\Limitation\Mapper;
 
 use eZ\Publish\API\Repository\Values\Content\LocationQuery;
 use eZ\Publish\API\Repository\Values\Content\Query\Criterion\Ancestor;
+use eZ\Publish\API\Repository\Values\Content\Query\SortClause\Location\Path;
 use eZ\Publish\API\Repository\Values\User\Limitation;
 
 class SubtreeLimitationMapper extends UDWBasedMapper
@@ -35,6 +36,7 @@ class SubtreeLimitationMapper extends UDWBasedMapper
         foreach ($limitation->limitationValues as $pathString) {
             $query = new LocationQuery([
                 'filter' => new Ancestor($pathString),
+                'sortClauses' => [new Path()],
             ]);
 
             $path = [];

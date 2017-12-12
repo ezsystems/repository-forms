@@ -13,6 +13,7 @@ use eZ\Publish\API\Repository\SearchService;
 use eZ\Publish\API\Repository\Values\Content\ContentInfo;
 use eZ\Publish\API\Repository\Values\Content\LocationQuery;
 use eZ\Publish\API\Repository\Values\Content\Query\Criterion\Ancestor;
+use eZ\Publish\API\Repository\Values\Content\Query\SortClause\Location\Path;
 use eZ\Publish\API\Repository\Values\Content\Search\SearchHit;
 use eZ\Publish\API\Repository\Values\Content\Search\SearchResult;
 use eZ\Publish\API\Repository\Values\User\Limitation\SubtreeLimitation;
@@ -59,6 +60,7 @@ class UDWBasedMapperTest extends TestCase
 
             $query = new LocationQuery([
                 'filter' => new Ancestor($location->pathString),
+                'sortClauses' => [new Path()],
             ]);
 
             $searchServiceMock
