@@ -12,6 +12,7 @@ use eZ\Publish\API\Repository\LocationService;
 use eZ\Publish\API\Repository\SearchService;
 use eZ\Publish\API\Repository\Values\Content\LocationQuery;
 use eZ\Publish\API\Repository\Values\Content\Query\Criterion\Ancestor;
+use eZ\Publish\API\Repository\Values\Content\Query\SortClause\Location\Path;
 use eZ\Publish\API\Repository\Values\User\Limitation;
 use EzSystems\RepositoryForms\Limitation\DataTransformer\UDWBasedValueTransformer;
 use EzSystems\RepositoryForms\Limitation\LimitationFormMapperInterface;
@@ -90,6 +91,7 @@ class UDWBasedMapper implements LimitationFormMapperInterface, LimitationValueMa
 
             $query = new LocationQuery([
                 'filter' => new Ancestor($location->pathString),
+                'sortClauses' => [new Path()],
             ]);
 
             $path = [];
