@@ -11,6 +11,7 @@
 namespace EzSystems\RepositoryForms\Form\Processor;
 
 use eZ\Publish\API\Repository\ContentTypeService;
+use eZ\Publish\API\Repository\Values\ContentType\ContentTypeDraft;
 use eZ\Publish\API\Repository\Values\ContentType\FieldDefinitionCreateStruct;
 use eZ\Publish\Core\Helper\FieldsGroups\FieldsGroupsList;
 use EzSystems\RepositoryForms\Event\FormActionEvent;
@@ -102,7 +103,11 @@ class ContentTypeFormProcessor implements EventSubscriberInterface
 
         $fieldDefCreateStruct = new FieldDefinitionCreateStruct([
             'fieldTypeIdentifier' => $fieldTypeIdentifier,
-            'identifier' => sprintf('new_%s_%d', $fieldTypeIdentifier, count($contentTypeDraft->fieldDefinitions) + 1),
+            'identifier' => $this->resolveNewFieldDefinitionIdentifier(
+                $contentTypeDraft,
+                $maxFieldPos,
+                $fieldTypeIdentifier
+            ),
             'names' => [$event->getOption('languageCode') => 'New FieldDefinition'],
             'position' => $maxFieldPos + 1,
         ]);
@@ -149,5 +154,28 @@ class ContentTypeFormProcessor implements EventSubscriberInterface
                 new RedirectResponse($this->router->generate($this->options['redirectRouteAfterPublish']))
             );
         }
+    }
+
+    /**
+     * Resolves unique field definition identifier.
+     *
+     * @param ContentTypeDraft $contentTypeDraft
+     * @param int $startIndex
+     * @param string $fieldTypeIdentifier
+     *
+     * @return string
+     */
+    private function resolveNewFieldDefinitionIdentifier(
+        ContentTypeDraft $contentTypeDraft,
+        int $startIndex,
+        string $fieldTypeIdentifier
+    ): string {
+        $fieldDefinitionIdentifiers = array_column($contentTypeDraft->getFieldDefinitions(), 'identifier');
+
+        do {
+            $fieldDefinitionIdentifier = sprintf('new_%s_%d', $fieldTypeIdentifier, ++$startIndex);
+        } while (in_array($fieldDefinitionIdentifier, $fieldDefinitionIdentifiers, true));
+
+        return $fieldDefinitionIdentifier;
     }
 }
