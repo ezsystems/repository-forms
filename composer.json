@@ -10,7 +10,7 @@
         }
     ],
     "require": {
-        "php": "~7.0",
+        "php": "^7.1",
         "ezsystems/ezpublish-kernel": "^6.7|^7.0",
         "symfony/symfony": "^2.8 | ^3.0",
         "jms/translation-bundle": "^1.3"
