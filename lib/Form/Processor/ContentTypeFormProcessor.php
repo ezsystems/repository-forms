@@ -167,9 +167,9 @@ class ContentTypeFormProcessor implements EventSubscriberInterface
      */
     private function resolveNewFieldDefinitionIdentifier(
         ContentTypeDraft $contentTypeDraft,
-        int $startIndex,
-        string $fieldTypeIdentifier
-    ): string {
+        $startIndex,
+        $fieldTypeIdentifier
+    ) {
         $fieldDefinitionIdentifiers = array_column($contentTypeDraft->getFieldDefinitions(), 'identifier');
 
         do {
