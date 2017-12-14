@@ -10,21 +10,21 @@
  */
 namespace EzSystems\RepositoryForms\Tests\Form\Processor;
 
-use eZ\Publish\API\Repository\Values\ContentType\FieldDefinitionCreateStruct;
-use eZ\Publish\Core\Repository\Values\ContentType\ContentType;
 use eZ\Publish\API\Repository\ContentTypeService;
+use eZ\Publish\API\Repository\Values\ContentType\FieldDefinitionCreateStruct;
+use eZ\Publish\Core\Helper\FieldsGroups\FieldsGroupsList;
+use eZ\Publish\Core\Repository\Values\ContentType\ContentType;
 use eZ\Publish\Core\Repository\Values\ContentType\ContentTypeDraft;
 use eZ\Publish\Core\Repository\Values\ContentType\FieldDefinition;
-use eZ\Publish\Core\Helper\FieldsGroups\FieldsGroupsList;
 use EzSystems\RepositoryForms\Data\ContentTypeData;
 use EzSystems\RepositoryForms\Data\FieldDefinitionData;
 use EzSystems\RepositoryForms\Event\FormActionEvent;
 use EzSystems\RepositoryForms\Event\RepositoryFormEvents;
 use EzSystems\RepositoryForms\Form\Processor\ContentTypeFormProcessor;
 use PHPUnit\Framework\TestCase;
+use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\Routing\RouterInterface;
-use Symfony\Component\Form\FormInterface;
 
 class ContentTypeFormProcessorTest extends TestCase
 {
@@ -100,17 +100,23 @@ class ContentTypeFormProcessorTest extends TestCase
 
     public function testAddFieldDefinition()
     {
+        $fieldTypeIdentifier = 'ezstring';
         $languageCode = 'fre-FR';
         $existingFieldDefinitions = [
-            new FieldDefinition(),
-            new FieldDefinition(),
+            new FieldDefinition([
+                'fieldTypeIdentifier' => $fieldTypeIdentifier,
+                'identifier' => sprintf('new_%s_%d', $fieldTypeIdentifier, 1),
+            ]),
+            new FieldDefinition([
+                'fieldTypeIdentifier' => $fieldTypeIdentifier,
+                'identifier' => sprintf('new_%s_%d', $fieldTypeIdentifier, 2),
+            ]),
         ];
         $contentTypeDraft = new ContentTypeDraft([
             'innerContentType' => new ContentType([
                 'fieldDefinitions' => $existingFieldDefinitions,
             ]),
         ]);
-        $fieldTypeIdentifier = 'ezstring';
         $expectedNewFieldDefIdentifier = sprintf(
             'new_%s_%d',
             $fieldTypeIdentifier,
