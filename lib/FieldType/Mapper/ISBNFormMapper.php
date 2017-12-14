@@ -47,6 +47,8 @@ class ISBNFormMapper implements FieldDefinitionFormMapperInterface, FieldValueFo
     {
         $fieldDefinition = $data->fieldDefinition;
         $formConfig = $fieldForm->getConfig();
+        $names = $fieldDefinition->getNames();
+        $label = $fieldDefinition->getName($formConfig->getOption('mainLanguageCode')) ?: reset($names);
 
         $fieldForm
             ->add(
@@ -56,7 +58,7 @@ class ISBNFormMapper implements FieldDefinitionFormMapperInterface, FieldValueFo
                         ISBNFieldType::class,
                         [
                             'required' => $fieldDefinition->isRequired,
-                            'label' => $fieldDefinition->getName(),
+                            'label' => $label,
                         ]
                     )
                     ->setAutoInitialize(false)

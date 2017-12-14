@@ -53,6 +53,8 @@ class CountryFormMapper implements FieldDefinitionFormMapperInterface, FieldValu
         $fieldDefinition = $data->fieldDefinition;
         $fieldSettings = $fieldDefinition->getFieldSettings();
         $formConfig = $fieldForm->getConfig();
+        $names = $fieldDefinition->getNames();
+        $label = $fieldDefinition->getName($formConfig->getOption('mainLanguageCode')) ?: reset($names);
 
         $fieldForm
             ->add(
@@ -60,7 +62,7 @@ class CountryFormMapper implements FieldDefinitionFormMapperInterface, FieldValu
                     ->create('value', CountryFieldType::class, [
                         'multiple' => $fieldSettings['isMultiple'],
                         'required' => $fieldDefinition->isRequired,
-                        'label' => $fieldDefinition->getName(),
+                        'label' => $label,
                     ])
                     ->setAutoInitialize(false)
                     ->getForm()

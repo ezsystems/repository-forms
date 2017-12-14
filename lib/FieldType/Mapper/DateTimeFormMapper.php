@@ -57,6 +57,8 @@ class DateTimeFormMapper implements FieldDefinitionFormMapperInterface, FieldVal
         $fieldDefinition = $data->fieldDefinition;
         $fieldSettings = $fieldDefinition->getFieldSettings();
         $formConfig = $fieldForm->getConfig();
+        $names = $fieldDefinition->getNames();
+        $label = $fieldDefinition->getName($formConfig->getOption('mainLanguageCode')) ?: reset($names);
 
         $fieldForm
             ->add(
@@ -67,7 +69,7 @@ class DateTimeFormMapper implements FieldDefinitionFormMapperInterface, FieldVal
                         [
                             'with_seconds' => $fieldSettings['useSeconds'],
                             'required' => $fieldDefinition->isRequired,
-                            'label' => $fieldDefinition->getName(),
+                            'label' => $label,
                         ]
                     )
                     ->setAutoInitialize(false)

@@ -23,6 +23,8 @@ class MapLocationFormMapper implements FieldValueFormMapperInterface
     {
         $fieldDefinition = $data->fieldDefinition;
         $formConfig = $fieldForm->getConfig();
+        $names = $fieldDefinition->getNames();
+        $label = $fieldDefinition->getName($formConfig->getOption('mainLanguageCode')) ?: reset($names);
 
         $fieldForm
             ->add(
@@ -32,7 +34,7 @@ class MapLocationFormMapper implements FieldValueFormMapperInterface
                         MapLocationFieldType::class,
                         [
                             'required' => $fieldDefinition->isRequired,
-                            'label' => $fieldDefinition->getName(),
+                            'label' => $label,
                         ]
                     )
                     ->setAutoInitialize(false)

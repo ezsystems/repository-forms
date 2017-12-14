@@ -5,10 +5,10 @@ namespace EzSystems\RepositoryForms\Tests\FieldType\Mapper;
 use eZ\Publish\API\Repository\FieldType;
 use eZ\Publish\API\Repository\FieldTypeService;
 use EzSystems\RepositoryForms\Data\Content\FieldData;
+use PHPUnit\Framework\TestCase;
 use Symfony\Component\Form\FormConfigInterface;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\Form\FormInterface;
-use PHPUnit\Framework\TestCase;
 
 abstract class BaseMapperTest extends TestCase
 {
@@ -29,7 +29,7 @@ abstract class BaseMapperTest extends TestCase
         $this->config = $this->getMockBuilder(FormConfigInterface::class)->getMock();
         $this->config->expects($this->once())
             ->method('getOption')
-            ->with('languageCode')
+            ->with('mainLanguageCode')
             ->willReturn('eng-GB');
 
         $formFactory = $this->getMockBuilder(FormFactoryInterface::class)

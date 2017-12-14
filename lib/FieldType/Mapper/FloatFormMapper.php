@@ -58,6 +58,8 @@ class FloatFormMapper implements FieldDefinitionFormMapperInterface, FieldValueF
         $fieldDefinition = $data->fieldDefinition;
         $formConfig = $fieldForm->getConfig();
         $validatorConfiguration = $fieldDefinition->getValidatorConfiguration();
+        $names = $fieldDefinition->getNames();
+        $label = $fieldDefinition->getName($formConfig->getOption('mainLanguageCode')) ?: reset($names);
 
         $fieldForm
             ->add(
@@ -67,7 +69,7 @@ class FloatFormMapper implements FieldDefinitionFormMapperInterface, FieldValueF
                         FloatFieldType::class,
                         [
                             'required' => $fieldDefinition->isRequired,
-                            'label' => $fieldDefinition->getName(),
+                            'label' => $label,
                             'min' => $validatorConfiguration['FloatValueValidator']['minFloatValue'],
                             'max' => $validatorConfiguration['FloatValueValidator']['maxFloatValue'],
                         ]
