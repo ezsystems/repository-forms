@@ -1,6 +1,6 @@
-language: php
+dist: trusty
 sudo: required
-dist: precise
+language: php
 
 matrix:
   # mark as finished before allow_failures are run
