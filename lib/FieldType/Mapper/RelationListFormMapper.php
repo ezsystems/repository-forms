@@ -48,6 +48,8 @@ class RelationListFormMapper extends AbstractRelationFormMapper
     {
         $fieldDefinition = $data->fieldDefinition;
         $formConfig = $fieldForm->getConfig();
+        $names = $fieldDefinition->getNames();
+        $label = $fieldDefinition->getName($formConfig->getOption('mainLanguageCode')) ?: reset($names);
 
         $fieldForm
             ->add(
@@ -57,7 +59,7 @@ class RelationListFormMapper extends AbstractRelationFormMapper
                         RelationListFieldType::class,
                         [
                             'required' => $fieldDefinition->isRequired,
-                            'label' => $fieldDefinition->getName(),
+                            'label' => $fieldDefinition->getName($label),
                         ]
                     )
                     ->setAutoInitialize(false)

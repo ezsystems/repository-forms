@@ -56,6 +56,8 @@ class SelectionFormMapper implements FieldDefinitionFormMapperInterface, FieldVa
     {
         $fieldDefinition = $data->fieldDefinition;
         $formConfig = $fieldForm->getConfig();
+        $names = $fieldDefinition->getNames();
+        $label = $fieldDefinition->getName($formConfig->getOption('languageCode')) ?: reset($names);
 
         $fieldForm
             ->add(
@@ -65,7 +67,7 @@ class SelectionFormMapper implements FieldDefinitionFormMapperInterface, FieldVa
                         SelectionFieldType::class,
                         [
                             'required' => $fieldDefinition->isRequired,
-                            'label' => $fieldDefinition->getName(),
+                            'label' => $label,
                             'multiple' => $fieldDefinition->fieldSettings['isMultiple'],
                             'choices' => array_flip($fieldDefinition->fieldSettings['options']),
                         ]

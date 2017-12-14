@@ -27,13 +27,15 @@ class AuthorFormMapper implements FieldValueFormMapperInterface
     {
         $fieldDefinition = $data->fieldDefinition;
         $formConfig = $fieldForm->getConfig();
+        $names = $fieldDefinition->getNames();
+        $label = $fieldDefinition->getName($formConfig->getOption('mainLanguageCode')) ?: reset($names);
 
         $fieldForm
             ->add(
                 $formConfig->getFormFactory()->createBuilder()
                     ->create('value', AuthorFieldType::class, [
                         'required' => $fieldDefinition->isRequired,
-                        'label' => $fieldDefinition->getName(),
+                        'label' => $label,
                     ])
                     ->setAutoInitialize(false)
                     ->getForm()

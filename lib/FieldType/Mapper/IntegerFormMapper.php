@@ -58,6 +58,8 @@ class IntegerFormMapper implements FieldDefinitionFormMapperInterface, FieldValu
         $fieldDefinition = $data->fieldDefinition;
         $formConfig = $fieldForm->getConfig();
         $validatorConfiguration = $fieldDefinition->getValidatorConfiguration();
+        $names = $fieldDefinition->getNames();
+        $label = $fieldDefinition->getName($formConfig->getOption('mainLanguageCode')) ?: reset($names);
 
         $fieldForm
             ->add(
@@ -67,7 +69,7 @@ class IntegerFormMapper implements FieldDefinitionFormMapperInterface, FieldValu
                         IntegerFieldType::class,
                         [
                             'required' => $fieldDefinition->isRequired,
-                            'label' => $fieldDefinition->getName(),
+                            'label' => $label,
                             'min' => $validatorConfiguration['IntegerValueValidator']['minIntegerValue'],
                             'max' => $validatorConfiguration['IntegerValueValidator']['maxIntegerValue'],
                         ]
