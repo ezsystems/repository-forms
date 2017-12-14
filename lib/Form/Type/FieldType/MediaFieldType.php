@@ -63,7 +63,8 @@ class MediaFieldType extends AbstractType
                 IntegerType::class,
                 [
                     'label' => /** @Desc("Width") */ 'content.field_type.ezmedia.width',
-                    'required' => false,
+                    'required' => true,
+                    'empty_data' => 0,
                     'attr' => [
                         'step' => 1,
                         'min' => 1,
@@ -75,7 +76,8 @@ class MediaFieldType extends AbstractType
                 IntegerType::class,
                 [
                     'label' => /** @Desc("Height") */ 'content.field_type.ezmedia.height',
-                    'required' => false,
+                    'required' => true,
+                    'empty_data' => 0,
                     'attr' => [
                         'step' => 1,
                         'min' => 1,
