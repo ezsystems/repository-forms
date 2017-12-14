@@ -11,6 +11,9 @@ matrix:
       env: TEST_CONFIG="phpunit.xml.dist"
     - php: 7.1
       env: BEHAT_OPTS="--profile=repository-forms"
+    # 7.2
+    - php: 7.2
+      env: TEST_CONFIG="phpunit.xml.dist"
 
 # test only master (+ Pull requests)
 branches:
