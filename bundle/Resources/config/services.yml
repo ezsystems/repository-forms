@@ -20,6 +20,7 @@ parameters:
     ezrepoforms.validator.field_settings.class: EzSystems\RepositoryForms\Validator\Constraints\FieldSettingsValidator
     ezrepoforms.validator.default_field_value.class: EzSystems\RepositoryForms\Validator\Constraints\FieldDefinitionDefaultValueValidator
     ezrepoforms.validator.field_value.class: EzSystems\RepositoryForms\Validator\Constraints\FieldValueValidator
+    ezrepoforms.validator.unique_url.class: EzSystems\RepositoryForms\Validator\Constraints\UniqueURLValidator
 
     ezrepoforms.templating.limitation_block_renderer.class: EzSystems\RepositoryForms\Limitation\Templating\LimitationBlockRenderer
 
@@ -52,6 +53,9 @@ parameters:
     ezrepoforms.user_edit_listener.class: EzSystems\RepositoryForms\EventListener\UserEditListener
 
     ezrepoforms.form_data_mapper.user_register.class: EzSystems\RepositoryForms\Data\Mapper\UserRegisterMapper
+
+    ezrepoforms.form.type.url_list.class: EzSystems\RepositoryForms\Form\Type\URL\URLListType
+    ezrepoforms.form.type.url_edit.class: EzSystems\RepositoryForms\Form\Type\URL\URLEditType
 
     ezrepoforms.user_content_type_identifier: "user"
 
@@ -135,6 +139,13 @@ services:
         class: "%ezrepoforms.validator.default_field_value.class%"
         tags:
             - { name: validator.constraint_validator, alias: ezrepoforms.validator.default_field_value }
+
+    ezrepoforms.validator.unique_url:
+        class: '%ezrepoforms.validator.unique_url.class%'
+        arguments:
+            - '@ezpublish.api.service.url'
+        tags:
+            - { name: validator.constraint_validator, alias: ezrepoforms.validator.unique_url }
 
     ezrepoforms.twig.field_edit_rendering_extension:
         class: "%ezrepoforms.twig.field_edit_rendering_extension.class%"
@@ -336,3 +347,15 @@ services:
             - '%ezpublish.api.role.policy_map%'
         tags:
             - { name: jms_translation.extractor, alias: ez_policy_limitation }
+
+    ezrepoforms.form.type.url_list:
+        class: '%ezrepoforms.form.type.url_list.class%'
+        arguments:
+            - '@translator'
+        tags:
+            - { name: 'form.type', alias: 'ezrepoforms_url_list' }
+
+    ezrepoforms.form.type.url_edit:
+        class: '%ezrepoforms.form.type.url_edit.class%'
+        tags:
+            - { name: 'form.type', alias: 'ezrepoforms_url_edit' }

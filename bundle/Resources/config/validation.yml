@@ -152,3 +152,18 @@ EzSystems\RepositoryForms\Data\Language\LanguageUpdateData:
             - NotBlank: ~
             - Length:
                 max: 255
+
+EzSystems\RepositoryForms\Data\URLListData:
+    properties:
+        url:
+            searchQuery:
+                - Length:
+                    min: 3
+                    max: 255
+
+eZ\Publish\API\Repository\Values\URL\URLUpdateStruct:
+    constraints:
+        - EzSystems\RepositoryForms\Validator\Constraints\UniqueURL: ~
+    properties:
+        url:
+            - NotBlank: ~
