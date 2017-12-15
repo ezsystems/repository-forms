@@ -46,6 +46,11 @@
         <target>The language code "%language_code%" is used by another language. You must enter a unique language code.</target>
         <note>key: ez.language.code.unique</note>
       </trans-unit>
+      <trans-unit id="8bcee04e8c985239d106e0fa910dfec8bdce3669" resname="ez.url.unique">
+        <source>URL must be unique</source>
+        <target>URL must be unique</target>
+        <note>key: ez.url.unique</note>
+      </trans-unit>
     </body>
   </file>
 </xliff>
