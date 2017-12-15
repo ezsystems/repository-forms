@@ -33,7 +33,7 @@ class URLSearchAdapterTest extends TestCase
 
         $searchResults = new SearchResult([
             'items' => [],
-            'count' => 13,
+            'totalCount' => 13,
         ]);
 
         $this->urlService
@@ -50,7 +50,7 @@ class URLSearchAdapterTest extends TestCase
 
         $adapter = new URLSearchAdapter($query, $this->urlService);
 
-        $this->assertEquals($searchResults->count, $adapter->getNbResults());
+        $this->assertEquals($searchResults->totalCount, $adapter->getNbResults());
     }
 
     public function testGetSlice()
@@ -65,7 +65,7 @@ class URLSearchAdapterTest extends TestCase
                 $this->createMock(URL::class),
                 $this->createMock(URL::class),
             ],
-            'count' => 13,
+            'totalCount' => 13,
         ]);
 
         $this->urlService

@@ -9,9 +9,9 @@
 namespace EzSystems\RepositoryForms\Tests\Pagination\Pagerfanta;
 
 use eZ\Publish\API\Repository\Values\Content\Search\SearchHit;
-use eZ\Publish\API\Repository\Values\Content\Search\SearchResult;
 use eZ\Publish\API\Repository\URLService;
 use eZ\Publish\API\Repository\Values\URL\URL;
+use eZ\Publish\API\Repository\Values\URL\UsageSearchResult;
 use EzSystems\RepositoryForms\Pagination\Pagerfanta\URLUsagesAdapter;
 use PHPUnit\Framework\TestCase;
 
@@ -29,8 +29,8 @@ class URLUsagesAdapterTest extends TestCase
     {
         $url = $this->createMock(URL::class);
 
-        $searchResults = new SearchResult([
-            'searchHits' => [],
+        $searchResults = new UsageSearchResult([
+            'items' => [],
             'totalCount' => 10,
         ]);
 
@@ -54,8 +54,8 @@ class URLUsagesAdapterTest extends TestCase
         $offset = 10;
         $limit = 25;
 
-        $searchResults = new SearchResult([
-            'searchHits' => [
+        $searchResults = new UsageSearchResult([
+            'items' => [
                 $this->createMock(SearchHit::class),
                 $this->createMock(SearchHit::class),
                 $this->createMock(SearchHit::class),
@@ -72,7 +72,7 @@ class URLUsagesAdapterTest extends TestCase
         $adapter = new URLUsagesAdapter($url, $this->urlService);
 
         $this->assertEquals(
-            $searchResults->searchHits,
+            $searchResults->items,
             $adapter->getSlice($offset, $limit)
         );
     }
