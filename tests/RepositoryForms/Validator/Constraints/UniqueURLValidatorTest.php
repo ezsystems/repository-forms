@@ -11,7 +11,7 @@ namespace EzSystems\EzPlatformLinkManagerBundle\Test\Validator\Constraints;
 use eZ\Publish\API\Repository\Exceptions\NotFoundException;
 use eZ\Publish\API\Repository\URLService;
 use eZ\Publish\API\Repository\Values\URL\URL;
-use EzSystems\RepositoryForms\Data\URLUpdateData;
+use EzSystems\RepositoryForms\Data\URL\URLUpdateData;
 use EzSystems\RepositoryForms\Validator\Constraints\UniqueURL;
 use EzSystems\RepositoryForms\Validator\Constraints\UniqueURLValidator;
 use PHPUnit\Framework\TestCase;
