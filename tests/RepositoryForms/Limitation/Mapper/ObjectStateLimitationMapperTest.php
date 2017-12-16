@@ -8,38 +8,78 @@
  */
 namespace EzSystems\RepositoryForms\Tests\Limitation\Mapper;
 
+use eZ\Publish\API\Repository\Exceptions\NotFoundException;
 use eZ\Publish\API\Repository\ObjectStateService;
 use eZ\Publish\API\Repository\Values\ObjectState\ObjectStateGroup;
 use eZ\Publish\API\Repository\Values\User\Limitation\ObjectStateLimitation;
 use eZ\Publish\Core\Repository\Values\ObjectState\ObjectState;
 use EzSystems\RepositoryForms\Limitation\Mapper\ObjectStateLimitationMapper;
 use PHPUnit\Framework\TestCase;
+use Psr\Log\LoggerInterface;
 
 class ObjectStateLimitationMapperTest extends TestCase
 {
+    /** @var ObjectStateService|\PHPUnit_Framework_MockObject_MockObject */
+    private $objectStateService;
+
+    /** @var LoggerInterface|\PHPUnit_Framework_MockObject_MockObject */
+    private $logger;
+
+    /** @var ObjectStateLimitationMapper */
+    private $mapper;
+
+    protected function setUp()
+    {
+        $this->objectStateService = $this->createMock(ObjectStateService::class);
+        $this->logger = $this->createMock(LoggerInterface::class);
+
+        $this->mapper = new ObjectStateLimitationMapper($this->objectStateService);
+        $this->mapper->setLogger($this->logger);
+    }
+
     public function testMapLimitationValue()
     {
         $values = ['foo', 'bar', 'baz'];
 
-        $objectStateServiceMock = $this->createMock(ObjectStateService::class);
         foreach ($values as $i => $value) {
             $stateMock = $this->createStateMock($value);
 
-            $objectStateServiceMock
+            $this->objectStateService
                 ->expects($this->at($i))
                 ->method('loadObjectState')
                 ->with($value)
                 ->willReturn($stateMock);
         }
 
-        $mapper = new ObjectStateLimitationMapper($objectStateServiceMock);
-        $result = $mapper->mapLimitationValue(new ObjectStateLimitation([
+        $result = $this->mapper->mapLimitationValue(new ObjectStateLimitation([
             'limitationValues' => $values,
         ]));
 
         $this->assertEquals([
             'foo:foo', 'bar:bar', 'baz:baz',
         ], $result);
+    }
+
+    public function testMapLimitationValueWithNotExistingObjectState()
+    {
+        $values = ['foo'];
+
+        $this->objectStateService
+            ->expects($this->once())
+            ->method('loadObjectState')
+            ->with($values[0])
+            ->willThrowException($this->createMock(NotFoundException::class));
+
+        $this->logger
+            ->expects($this->once())
+            ->method('error')
+            ->with('Could not map limitation value: ObjectState with id = foo not found');
+
+        $actual = $this->mapper->mapLimitationValue(new ObjectStateLimitation([
+            'limitationValues' => $values,
+        ]));
+
+        $this->assertEmpty($actual);
     }
 
     private function createStateMock($value)

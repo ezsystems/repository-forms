@@ -9,11 +9,16 @@
 namespace EzSystems\RepositoryForms\Limitation\Mapper;
 
 use eZ\Publish\API\Repository\ContentTypeService;
+use eZ\Publish\API\Repository\Exceptions\NotFoundException;
 use eZ\Publish\API\Repository\Values\User\Limitation;
 use EzSystems\RepositoryForms\Limitation\LimitationValueMapperInterface;
+use Psr\Log\LoggerAwareTrait;
+use Psr\Log\NullLogger;
 
 class ContentTypeLimitationMapper extends MultipleSelectionBasedMapper implements LimitationValueMapperInterface
 {
+    use LoggerAwareTrait;
+
     /**
      * @var ContentTypeService
      */
@@ -22,6 +27,7 @@ class ContentTypeLimitationMapper extends MultipleSelectionBasedMapper implement
     public function __construct(ContentTypeService $contentTypeService)
     {
         $this->contentTypeService = $contentTypeService;
+        $this->logger = new NullLogger();
     }
 
     protected function getSelectionChoices()
@@ -40,7 +46,11 @@ class ContentTypeLimitationMapper extends MultipleSelectionBasedMapper implement
     {
         $values = [];
         foreach ($limitation->limitationValues as $contentTypeId) {
-            $values[] = $this->contentTypeService->loadContentType($contentTypeId);
+            try {
+                $values[] = $this->contentTypeService->loadContentType($contentTypeId);
+            } catch (NotFoundException $e) {
+                $this->logger->error(sprintf('Could not map limitation value: Content Type with id = %s not found', $contentTypeId));
+            }
         }
 
         return $values;

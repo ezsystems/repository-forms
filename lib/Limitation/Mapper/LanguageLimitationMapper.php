@@ -8,12 +8,17 @@
  */
 namespace EzSystems\RepositoryForms\Limitation\Mapper;
 
+use eZ\Publish\API\Repository\Exceptions\NotFoundException;
 use eZ\Publish\API\Repository\LanguageService;
 use eZ\Publish\API\Repository\Values\User\Limitation;
 use EzSystems\RepositoryForms\Limitation\LimitationValueMapperInterface;
+use Psr\Log\LoggerAwareTrait;
+use Psr\Log\NullLogger;
 
 class LanguageLimitationMapper extends MultipleSelectionBasedMapper implements LimitationValueMapperInterface
 {
+    use LoggerAwareTrait;
+
     /**
      * @var LanguageService
      */
@@ -22,6 +27,7 @@ class LanguageLimitationMapper extends MultipleSelectionBasedMapper implements L
     public function __construct(LanguageService $languageService)
     {
         $this->languageService = $languageService;
+        $this->logger = new NullLogger();
     }
 
     protected function getSelectionChoices()
@@ -39,7 +45,11 @@ class LanguageLimitationMapper extends MultipleSelectionBasedMapper implements L
         $values = [];
 
         foreach ($limitation->limitationValues as $languageCode) {
-            $values[] = $this->languageService->loadLanguage($languageCode);
+            try {
+                $values[] = $this->languageService->loadLanguage($languageCode);
+            } catch (NotFoundException $e) {
+                $this->logger->error(sprintf('Could not map limitation value: Language with code = %s not found', $languageCode));
+            }
         }
 
         return $values;
