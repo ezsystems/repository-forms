@@ -7,13 +7,18 @@
  */
 namespace EzSystems\RepositoryForms\Limitation\Mapper;
 
+use eZ\Publish\API\Repository\Exceptions\NotFoundException;
 use eZ\Publish\API\Repository\ObjectStateService;
 use eZ\Publish\API\Repository\Values\ObjectState\ObjectState;
 use eZ\Publish\API\Repository\Values\User\Limitation;
 use EzSystems\RepositoryForms\Limitation\LimitationValueMapperInterface;
+use Psr\Log\LoggerAwareTrait;
+use Psr\Log\NullLogger;
 
 class ObjectStateLimitationMapper extends MultipleSelectionBasedMapper implements LimitationValueMapperInterface
 {
+    use LoggerAwareTrait;
+
     /**
      * @var ObjectStateService
      */
@@ -22,6 +27,7 @@ class ObjectStateLimitationMapper extends MultipleSelectionBasedMapper implement
     public function __construct(ObjectStateService $objectStateService)
     {
         $this->objectStateService = $objectStateService;
+        $this->logger = new NullLogger();
     }
 
     protected function getSelectionChoices()
@@ -41,9 +47,13 @@ class ObjectStateLimitationMapper extends MultipleSelectionBasedMapper implement
         $values = [];
 
         foreach ($limitation->limitationValues as $stateId) {
-            $values[] = $this->getObjectStateLabel(
-                $this->objectStateService->loadObjectState($stateId)
-            );
+            try {
+                $values[] = $this->getObjectStateLabel(
+                    $this->objectStateService->loadObjectState($stateId)
+                );
+            } catch (NotFoundException $e) {
+                $this->logger->error(sprintf('Could not map limitation value: ObjectState with id = %s not found', $stateId));
+            }
         }
 
         return $values;
