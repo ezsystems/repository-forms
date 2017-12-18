@@ -63,7 +63,7 @@ class UserRegisterController extends Controller
 
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
+        if ($form->isSubmitted() && $form->isValid() && null !== $form->getClickedButton()) {
             $this->userActionDispatcher->dispatchFormAction($form, $data, $form->getClickedButton()->getName());
             if ($response = $this->userActionDispatcher->getResponse()) {
                 return $response;

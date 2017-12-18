@@ -93,7 +93,7 @@ class ContentEditController extends Controller
         ]);
         $form->handleRequest($request);
 
-        if ($form->isValid()) {
+        if ($form->isValid() && null !== $form->getClickedButton()) {
             $this->contentActionDispatcher->dispatchFormAction($form, $data, $form->getClickedButton()->getName());
             if ($response = $this->contentActionDispatcher->getResponse()) {
                 return $response;
@@ -153,7 +153,7 @@ class ContentEditController extends Controller
 
         $form->handleRequest($request);
 
-        if ($form->isValid()) {
+        if ($form->isValid() && null !== $form->getClickedButton()) {
             $this->contentActionDispatcher->dispatchFormAction($form, $createContentDraft, $form->getClickedButton()->getName());
             if ($response = $this->contentActionDispatcher->getResponse()) {
                 return $response;
@@ -211,7 +211,7 @@ class ContentEditController extends Controller
         );
         $form->handleRequest($request);
 
-        if ($form->isValid()) {
+        if ($form->isValid() && null !== $form->getClickedButton()) {
             $this->contentActionDispatcher->dispatchFormAction($form, $contentUpdate, $form->getClickedButton()->getName());
             if ($response = $this->contentActionDispatcher->getResponse()) {
                 return $response;
