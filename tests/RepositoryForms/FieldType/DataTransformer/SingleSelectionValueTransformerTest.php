@@ -29,8 +29,7 @@ class SingleSelectionValueTransformerTest extends TestCase
     public function testTransform($value)
     {
         $transformer = new SingleSelectionValueTransformer();
-        $valueAsArray = [$value];
-        self::assertSame($valueAsArray, $transformer->transform(new Value($valueAsArray)));
+        self::assertSame($value, $transformer->transform(new Value([$value])));
     }
 
     /**
