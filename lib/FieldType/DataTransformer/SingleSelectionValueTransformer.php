@@ -22,11 +22,11 @@ class SingleSelectionValueTransformer implements DataTransformerInterface
             return null;
         }
 
-        if ($value->selection === []) {
+        if (empty($value->selection)) {
             return null;
         }
 
-        return $value->selection;
+        return $value->selection[0];
     }
 
     public function reverseTransform($value)
