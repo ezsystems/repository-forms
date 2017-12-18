@@ -9,31 +9,71 @@
 namespace EzSystems\RepositoryForms\Tests\Limitation\Mapper;
 
 use eZ\Publish\API\Repository\ContentTypeService;
+use eZ\Publish\API\Repository\Exceptions\NotFoundException;
 use eZ\Publish\API\Repository\Values\User\Limitation\ContentTypeLimitation;
 use EzSystems\RepositoryForms\Limitation\Mapper\ContentTypeLimitationMapper;
 use PHPUnit\Framework\TestCase;
+use Psr\Log\LoggerInterface;
 
 class ContentTypeLimitationMapperTest extends TestCase
 {
+    /** @var ContentTypeService|\PHPUnit_Framework_MockObject_MockObject */
+    private $contentTypeService;
+
+    /** @var LoggerInterface|\PHPUnit_Framework_MockObject_MockObject */
+    private $logger;
+
+    /** @var ContentTypeLimitationMapper */
+    private $mapper;
+
+    public function setUp()
+    {
+        $this->contentTypeService = $this->createMock(ContentTypeService::class);
+        $this->logger = $this->createMock(LoggerInterface::class);
+
+        $this->mapper = new ContentTypeLimitationMapper($this->contentTypeService);
+        $this->mapper->setLogger($this->logger);
+    }
+
     public function testMapLimitationValue()
     {
         $values = ['foo', 'bar', 'baz'];
 
-        $contentTypeServiceMock = $this->createMock(ContentTypeService::class);
         foreach ($values as $i => $value) {
-            $contentTypeServiceMock
+            $this->contentTypeService
                 ->expects($this->at($i))
                 ->method('loadContentType')
                 ->with($value)
                 ->willReturn($value);
         }
 
-        $mapper = new ContentTypeLimitationMapper($contentTypeServiceMock);
-        $result = $mapper->mapLimitationValue(new ContentTypeLimitation([
+        $result = $this->mapper->mapLimitationValue(new ContentTypeLimitation([
             'limitationValues' => $values,
         ]));
 
         $this->assertEquals($values, $result);
         $this->assertCount(3, $result);
+    }
+
+    public function testMapLimitationValueWithNotExistingContentType()
+    {
+        $values = ['foo'];
+
+        $this->contentTypeService
+            ->expects($this->once())
+            ->method('loadContentType')
+            ->with($values[0])
+            ->willThrowException($this->createMock(NotFoundException::class));
+
+        $this->logger
+            ->expects($this->once())
+            ->method('error')
+            ->with('Could not map limitation value: Content Type with id = foo not found');
+
+        $actual = $this->mapper->mapLimitationValue(new ContentTypeLimitation([
+            'limitationValues' => $values,
+        ]));
+
+        $this->assertEmpty($actual);
     }
 }

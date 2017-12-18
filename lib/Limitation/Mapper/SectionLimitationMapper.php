@@ -9,10 +9,15 @@ namespace EzSystems\RepositoryForms\Limitation\Mapper;
 
 use eZ\Publish\API\Repository\SectionService;
 use eZ\Publish\API\Repository\Values\User\Limitation;
+use eZ\Publish\API\Repository\Exceptions\NotFoundException;
 use EzSystems\RepositoryForms\Limitation\LimitationValueMapperInterface;
+use Psr\Log\LoggerAwareTrait;
+use Psr\Log\NullLogger;
 
 class SectionLimitationMapper extends MultipleSelectionBasedMapper implements LimitationValueMapperInterface
 {
+    use LoggerAwareTrait;
+
     /**
      * @var SectionService
      */
@@ -21,6 +26,7 @@ class SectionLimitationMapper extends MultipleSelectionBasedMapper implements Li
     public function __construct(SectionService $sectionService)
     {
         $this->sectionService = $sectionService;
+        $this->logger = new NullLogger();
     }
 
     protected function getSelectionChoices()
@@ -37,7 +43,11 @@ class SectionLimitationMapper extends MultipleSelectionBasedMapper implements Li
     {
         $values = [];
         foreach ($limitation->limitationValues as $sectionId) {
-            $values[] = $this->sectionService->loadSection($sectionId);
+            try {
+                $values[] = $this->sectionService->loadSection($sectionId);
+            } catch (NotFoundException $e) {
+                $this->logger->error(sprintf('Could not map limitation value: Section with id = %s not found', $sectionId));
+            }
         }
 
         return $values;

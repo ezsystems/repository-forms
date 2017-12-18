@@ -8,31 +8,71 @@
  */
 namespace EzSystems\RepositoryForms\Tests\Limitation\Mapper;
 
+use eZ\Publish\API\Repository\Exceptions\NotFoundException;
 use eZ\Publish\API\Repository\LanguageService;
 use eZ\Publish\API\Repository\Values\User\Limitation\LanguageLimitation;
 use EzSystems\RepositoryForms\Limitation\Mapper\LanguageLimitationMapper;
 use PHPUnit\Framework\TestCase;
+use Psr\Log\LoggerInterface;
 
 class LanguageTypeLimitationMapperTest extends TestCase
 {
+    /** @var LanguageService|\PHPUnit_Framework_MockObject_MockObject */
+    private $languageService;
+
+    /** @var LoggerInterface|\PHPUnit_Framework_MockObject_MockObject */
+    private $logger;
+
+    /** @var LanguageLimitationMapper */
+    private $mapper;
+
+    protected function setUp()
+    {
+        $this->languageService = $this->createMock(LanguageService::class);
+        $this->logger = $this->createMock(LoggerInterface::class);
+
+        $this->mapper = new LanguageLimitationMapper($this->languageService);
+        $this->mapper->setLogger($this->logger);
+    }
+
     public function testMapLimitationValue()
     {
         $values = ['en_GB', 'en_US', 'pl_PL'];
 
-        $languageServiceMock = $this->createMock(LanguageService::class);
         foreach ($values as $i => $value) {
-            $languageServiceMock
+            $this->languageService
                 ->expects($this->at($i))
                 ->method('loadLanguage')
                 ->with($value)
                 ->willReturnArgument(0);
         }
 
-        $mapper = new LanguageLimitationMapper($languageServiceMock);
-        $result = $mapper->mapLimitationValue(new LanguageLimitation([
+        $result = $this->mapper->mapLimitationValue(new LanguageLimitation([
             'limitationValues' => $values,
         ]));
 
         $this->assertEquals($values, $result);
+    }
+
+    public function testMapLimitationValueWithNotExistingContentType()
+    {
+        $values = ['foo'];
+
+        $this->languageService
+            ->expects($this->once())
+            ->method('loadLanguage')
+            ->with($values[0])
+            ->willThrowException($this->createMock(NotFoundException::class));
+
+        $this->logger
+            ->expects($this->once())
+            ->method('error')
+            ->with('Could not map limitation value: Language with code = foo not found');
+
+        $actual = $this->mapper->mapLimitationValue(new LanguageLimitation([
+            'limitationValues' => $values,
+        ]));
+
+        $this->assertEmpty($actual);
     }
 }
