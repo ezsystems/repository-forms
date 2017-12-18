@@ -106,6 +106,8 @@ services:
         parent: ezrepoforms.limitation.form_mapper.multiple_selection
         class: "%ezrepoforms.limitation.form_mapper.contenttype.class%"
         arguments: ["@ezpublish.api.service.content_type"]
+        calls:
+            - [setLogger, ['@?logger']]
         tags:
             - { name: ez.limitation.formMapper, limitationType: Class }
             - { name: ez.limitation.valueMapper, limitationType: Class }
@@ -114,6 +116,8 @@ services:
         parent: ezrepoforms.limitation.form_mapper.multiple_selection
         class: "%ezrepoforms.limitation.form_mapper.contenttype.class%"
         arguments: ["@ezpublish.api.service.content_type"]
+        calls:
+            - [setLogger, ['@?logger']]
         tags:
             - { name: ez.limitation.formMapper, limitationType: ParentClass }
             - { name: ez.limitation.valueMapper, limitationType: ParentClass }
@@ -122,6 +126,8 @@ services:
         parent: ezrepoforms.limitation.form_mapper.multiple_selection
         class: "%ezrepoforms.limitation.form_mapper.section.class%"
         arguments: ["@ezpublish.api.service.section"]
+        calls:
+            - [setLogger, ['@?logger']]
         tags:
             - { name: ez.limitation.formMapper, limitationType: Section }
             - { name: ez.limitation.valueMapper, limitationType: Section }
@@ -130,6 +136,8 @@ services:
         parent: ezrepoforms.limitation.form_mapper.multiple_selection
         class: "%ezrepoforms.limitation.form_mapper.section.class%"
         arguments: ["@ezpublish.api.service.section"]
+        calls:
+            - [setLogger, ['@?logger']]
         tags:
             - { name: ez.limitation.formMapper, limitationType: NewSection }
             - { name: ez.limitation.valueMapper, limitationType: NewSection }
@@ -138,6 +146,8 @@ services:
         parent: ezrepoforms.limitation.form_mapper.multiple_selection
         class: "%ezrepoforms.limitation.form_mapper.objectstate.class%"
         arguments: ["@ezpublish.api.service.object_state"]
+        calls:
+            - [setLogger, ['@?logger']]
         tags:
             - { name: ez.limitation.formMapper, limitationType: State }
             - { name: ez.limitation.valueMapper, limitationType: State }
@@ -146,6 +156,8 @@ services:
         parent: ezrepoforms.limitation.form_mapper.multiple_selection
         class: "%ezrepoforms.limitation.form_mapper.objectstate.class%"
         arguments: ["@ezpublish.api.service.object_state"]
+        calls:
+            - [setLogger, ['@?logger']]
         tags:
             - { name: ez.limitation.formMapper, limitationType: NewState }
             - { name: ez.limitation.valueMapper, limitationType: NewState }
@@ -154,6 +166,8 @@ services:
         parent: ezrepoforms.limitation.form_mapper.multiple_selection
         class: "%ezrepoforms.limitation.form_mapper.language.class%"
         arguments: ["@ezpublish.api.service.language"]
+        calls:
+            - [setLogger, ['@?logger']]
         tags:
             - { name: ez.limitation.formMapper, limitationType: Language }
             - { name: ez.limitation.valueMapper, limitationType: Language }
