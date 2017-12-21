@@ -83,19 +83,10 @@ class ContentFormProcessor implements EventSubscriberInterface
         $draft = $this->saveDraft($data, $form->getConfig()->getOption('languageCode'));
         $content = $this->contentService->publishVersion($draft->versionInfo);
 
-        $locationId = $content->contentInfo->mainLocationId;
-
-        if ($data->isNew() && !empty($data->getLocationStructs())) {
-            $locationId = $data->getLocationStructs()[0]->parentLocationId;
-        }
-
         // Redirect to the provided URL. Defaults to URLAlias of the published content.
         $redirectUrl = $form['redirectUrlAfterPublish']->getData() ?: $this->router->generate(
-            '_ezpublishLocation',
-            [
-                'locationId' => $data->isNew()
-                    ? $locationId
-                    : $content->contentInfo->mainLocationId,
+            '_ezpublishLocation', [
+                'locationId' => $content->contentInfo->mainLocationId,
             ]
         );
         $event->setResponse(new RedirectResponse($redirectUrl));
