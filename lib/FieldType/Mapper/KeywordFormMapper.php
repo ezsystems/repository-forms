@@ -23,6 +23,8 @@ class KeywordFormMapper implements FieldValueFormMapperInterface
     {
         $fieldDefinition = $data->fieldDefinition;
         $formConfig = $fieldForm->getConfig();
+        $names = $fieldDefinition->getNames();
+        $label = $fieldDefinition->getName($formConfig->getOption('mainLanguageCode')) ?: reset($names);
 
         $fieldForm
             ->add(
@@ -32,7 +34,7 @@ class KeywordFormMapper implements FieldValueFormMapperInterface
                         KeywordFieldType::class,
                         [
                             'required' => $fieldDefinition->isRequired,
-                            'label' => $fieldDefinition->getName($formConfig->getOption('languageCode')),
+                            'label' => $label,
                         ]
                     )
                     ->setAutoInitialize(false)

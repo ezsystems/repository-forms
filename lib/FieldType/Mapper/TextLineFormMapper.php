@@ -54,6 +54,8 @@ class TextLineFormMapper implements FieldDefinitionFormMapperInterface, FieldVal
         $fieldDefinition = $data->fieldDefinition;
         $formConfig = $fieldForm->getConfig();
         $validatorConfiguration = $fieldDefinition->getValidatorConfiguration();
+        $names = $fieldDefinition->getNames();
+        $label = $fieldDefinition->getName($formConfig->getOption('mainLanguageCode')) ?: reset($names);
 
         $fieldForm
             ->add(
@@ -63,7 +65,7 @@ class TextLineFormMapper implements FieldDefinitionFormMapperInterface, FieldVal
                         TextLineFieldType::class,
                         [
                             'required' => $fieldDefinition->isRequired,
-                            'label' => $fieldDefinition->getName($formConfig->getOption('languageCode')),
+                            'label' => $label,
                             'min' => $validatorConfiguration['StringLengthValidator']['minStringLength'],
                             'max' => $validatorConfiguration['StringLengthValidator']['maxStringLength'],
                         ]
