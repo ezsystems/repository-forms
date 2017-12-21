@@ -177,8 +177,8 @@
         <note>key: field_definition.ezbinaryfile.max_file_size</note>
       </trans-unit>
       <trans-unit id="5ae9eea988dc249d137d285ec360214b238efc26" resname="field_definition.ezboolean.default_value">
-        <source>field_definition.ezboolean.default_value</source>
-        <target>field_definition.ezboolean.default_value</target>
+        <source>Default value</source>
+        <target>Default value</target>
         <note>key: field_definition.ezboolean.default_value</note>
       </trans-unit>
       <trans-unit id="3ef6598f8cd7d60095784845bb24852ac531e47c" resname="field_definition.ezcountry.default_value">
@@ -358,7 +358,7 @@
       </trans-unit>
       <trans-unit id="14274feead6c1e1a98261c8df42d6e2e2210cb6f" resname="field_definition.ezobjectrelationlist.selection_limit">
         <source>Selection limit</source>
-        <target state="new">Selection limit</target>
+        <target>Selection limit</target>
         <note>key: field_definition.ezobjectrelationlist.selection_limit</note>
       </trans-unit>
       <trans-unit id="1592c36df8d445c3154d1f639027f97a90739856" resname="field_definition.ezobjectrelationlist.selection_root_udw_button">
