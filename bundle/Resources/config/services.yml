@@ -3,6 +3,7 @@ imports:
     - {resource: section.yml}
     - {resource: role.yml}
     - {resource: fieldtypes.yml}
+    - {resource: form_types.yml}
 
 parameters:
     ezrepoforms.field_type_form_mapper.dispatcher.class: EzSystems\RepositoryForms\FieldType\FieldTypeFormMapperDispatcher
