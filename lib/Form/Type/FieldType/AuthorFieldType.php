@@ -13,6 +13,8 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\CallbackTransformer;
 use Symfony\Component\Form\DataTransformerInterface;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
@@ -34,7 +36,8 @@ class AuthorFieldType extends AbstractType
     {
         $builder
             ->add('authors', AuthorCollectionType::class, [])
-            ->addViewTransformer($this->getViewTransformer());
+            ->addViewTransformer($this->getViewTransformer())
+            ->addEventListener(FormEvents::POST_SUBMIT, [$this, 'filterOutEmptyAuthors']);
     }
 
     public function configureOptions(OptionsResolver $resolver)
@@ -56,16 +59,24 @@ class AuthorFieldType extends AbstractType
 
             return $value;
         }, function (Value $value) {
-            $value->authors->exchangeArray(
-                array_filter(
-                    $value->authors->getArrayCopy(),
-                    function (Author $author) {
-                        return !empty($author->email);
-                    }
-                )
-            );
-
             return $value;
         });
+    }
+
+    /**
+     * @param FormEvent $event
+     */
+    public function filterOutEmptyAuthors(FormEvent $event)
+    {
+        $value = $event->getData();
+
+        $value->authors->exchangeArray(
+            array_filter(
+                $value->authors->getArrayCopy(),
+                function (Author $author) {
+                    return !empty($author->email) || !empty($author->name);
+                }
+            )
+        );
     }
 }
