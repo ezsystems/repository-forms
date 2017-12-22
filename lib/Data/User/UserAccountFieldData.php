@@ -15,25 +15,29 @@ namespace EzSystems\RepositoryForms\Data\User;
  */
 class UserAccountFieldData
 {
-    /**
-     * @var string
-     */
+    /** @var string */
     public $username;
 
-    /**
-     * @var string
-     */
+    /** @var string */
     public $password;
 
-    /**
-     * @var string
-     */
+    /** @var string */
     public $email;
 
-    public function __construct($username, $password, $email)
+    /** @var bool */
+    public $enabled;
+
+    /**
+     * @param string $username
+     * @param string $password
+     * @param string $email
+     * @param bool $enabled
+     */
+    public function __construct($username, $password, $email, $enabled = true)
     {
         $this->username = $username;
         $this->password = $password;
         $this->email = $email;
+        $this->enabled = $enabled;
     }
 }

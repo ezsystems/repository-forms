@@ -81,7 +81,7 @@ final class UserAccountFieldValueFormMapper implements FieldValueFormMapperInter
     {
         return new CallbackTransformer(
             function (ApiUserValue $data) {
-                return new UserAccountFieldData($data->login, null, $data->email);
+                return new UserAccountFieldData($data->login, null, $data->email, $data->enabled);
             },
             function (UserAccountFieldData $submittedData) {
                 return $submittedData;

@@ -11,7 +11,6 @@ use EzSystems\RepositoryForms\Form\EventSubscriber\SuppressValidationSubscriber;
 use EzSystems\RepositoryForms\Form\EventSubscriber\UserFieldsSubscriber;
 use EzSystems\RepositoryForms\Form\Type\Content\BaseContentType;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -41,7 +40,6 @@ class BaseUserType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('enabled', CheckboxType::class, ['required' => false, 'label' => /** @Desc("Enabled") */ 'user.enabled'])
             ->add('cancel', SubmitType::class, [
                 'label' => /** @Desc("Cancel") */ 'user.cancel',
                 'attr' => ['formnovalidate' => 'formnovalidate'],

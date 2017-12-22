@@ -8,6 +8,7 @@
 namespace EzSystems\RepositoryForms\Form\Type\FieldType;
 
 use EzSystems\RepositoryForms\Data\User\UserAccountFieldData;
+use EzSystems\RepositoryForms\Form\Type\SwitcherType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
@@ -48,6 +49,13 @@ class UserAccountFieldType extends AbstractType
                 'required' => true,
                 'label' => 'content.field_type.ezuser.email',
             ]);
+
+        if (in_array($options['intent'], ['create', 'update'], true)) {
+            $builder->add('enabled', SwitcherType::class, [
+                'required' => false,
+                'label' => /** @Desc("Enabled") */ 'content.field_type.ezuser.enabled',
+            ]);
+        }
     }
 
     public function configureOptions(OptionsResolver $resolver)
