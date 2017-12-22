@@ -2,6 +2,11 @@ dist: trusty
 sudo: required
 language: php
 
+env:
+  global:
+    # For functional tests
+    - COMPOSE_FILE="doc/docker-compose/base-dev.yml:doc/docker-compose/selenium.yml"
+
 matrix:
   # mark as finished before allow_failures are run
   fast_finish: true
