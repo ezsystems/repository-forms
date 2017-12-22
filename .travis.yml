@@ -1,6 +1,12 @@
-language: php
+dist: trusty
 sudo: required
-dist: precise
+language: php
+
+env:
+  global:
+    # For functional tests
+    - COMPOSE_FILE="doc/docker/base-dev.yml:doc/docker/selenium.yml"
+    - SYMFONY_ENV=behat
 
 matrix:
   # mark as finished before allow_failures are run
@@ -10,18 +16,18 @@ matrix:
     - php: 5.6
       env: TEST_CONFIG="phpunit.xml.dist"
     - php: 5.6
-      env: BEHAT_OPTS="--profile=repository-forms"
+      env: BEHAT_OPTS="--profile=repository-forms" PHP_IMAGE=ezsystems/php:5.6-v1
     # 7.0
     - php: 7.0
       env: TEST_CONFIG="phpunit.xml.dist"
     - php: 7.0
-      env: BEHAT_OPTS="--profile=repository-forms"
+      env: BEHAT_OPTS="--profile=repository-forms" PHP_IMAGE=ezsystems/php:7.0-v1
 
 # test only master (+ Pull requests)
 branches:
   only:
     - master
-    - "1.5"
+    - /^\d.\d+$/
     - "/^feature-/"
 
 before_install:
@@ -39,8 +45,7 @@ before_script:
 # execute phpunit or behat as the script command
 script:
   - if [ "$TEST_CONFIG" != "" ] ; then php -d date.timezone=$TEST_TIMEZONE -d memory_limit=-1 bin/phpunit -c $TEST_CONFIG ; fi
-  - if [ "$BEHAT_OPTS" != "" ] ; then cd "$HOME/build/ezplatform" && php bin/behat $BEHAT_OPTS ; fi
-  - if [ "$REST_TEST_CONFIG" != "" ] ; then cd "$HOME/build/ezplatform"; php -d date.timezone=$TEST_TIMEZONE -d memory_limit=-1 bin/phpunit -v vendor/ezsystems/ezpublish-kernel/eZ/Bundle/EzPublishRestBundle/Tests/Functional ; fi
+  - if [ "$BEHAT_OPTS" != "" ] ; then cd "$HOME/build/ezplatform"; docker-compose exec --user www-data app sh -c "bin/behat $BEHAT_OPTS" ; fi
 
 # disable mail notifications
 notifications:
