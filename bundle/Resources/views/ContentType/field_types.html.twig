@@ -148,12 +148,14 @@
         {{- form_errors(form.selectionRoot) -}}
         {{- form_widget(form.selectionRoot) -}}
 
-        <button data-universaldiscovery-title="{{"field_definition.ezobjectrelation.selection_root_udw_title"|trans({}, "ezrepoforms_content_type")}}"
-                class="ez-button-tree pure-button ez-font-icon ez-button ez-relation-pick-root-button btn btn-secondary btn--udw-relation-default-location"
-                data-relation-root-input-selector="#{{form.selectionRoot.vars.id}}"
-                data-relation-selected-root-name-selector="#{{form.selectionRoot.vars.id}}-selected-root-name"
-                data-starting-location-id="1"
-                >{{"field_definition.ezobjectrelation.selection_root_udw_button"|trans({}, "ezrepoforms_content_type")}}</button>
+        <div class="mt-1">
+            <button data-universaldiscovery-title="{{"field_definition.ezobjectrelation.selection_root_udw_title"|trans({}, "ezrepoforms_content_type")}}"
+                    class="ez-button-tree pure-button ez-font-icon ez-button ez-relation-pick-root-button btn btn-secondary btn--udw-relation-default-location"
+                    data-relation-root-input-selector="#{{form.selectionRoot.vars.id}}"
+                    data-relation-selected-root-name-selector="#{{form.selectionRoot.vars.id}}-selected-root-name"
+                    data-starting-location-id="1"
+                    >{{"field_definition.ezobjectrelation.selection_root_udw_button"|trans({}, "ezrepoforms_content_type")}}</button>
+        </div>
         <div id="{{form.selectionRoot.vars.id}}-selected-root-name">
             {% if form.selectionRoot.vars.value is not empty %}
                 {{ render( controller( "ez_content:viewLocation", {'locationId': form.selectionRoot.vars.value, 'viewType': '_platformui_content_name'} ) ) }}
@@ -174,12 +176,14 @@
         {{- form_errors(form.selectionDefaultLocation) -}}
         {{- form_widget(form.selectionDefaultLocation) -}}
 
-        <button data-universaldiscovery-title="{{"field_definition.ezobjectrelationlist.selection_root_udw_title"|trans({}, "ezrepoforms_content_type")}}"
-                class="ez-button-tree pure-button ez-font-icon ez-button ez-relation-pick-root-button btn btn-secondary btn--udw-relation-default-location"
-                data-relation-root-input-selector="#{{form.selectionDefaultLocation.vars.id}}"
-                data-relation-selected-root-name-selector="#{{form.selectionDefaultLocation.vars.id}}-selected-root-name"
-                data-starting-location-id="1"
-                >{{"field_definition.ezobjectrelationlist.selection_root_udw_button"|trans({}, "ezrepoforms_content_type")}}</button>
+        <div class="mt-1">
+            <button data-universaldiscovery-title="{{"field_definition.ezobjectrelationlist.selection_root_udw_title"|trans({}, "ezrepoforms_content_type")}}"
+                    class="ez-button-tree pure-button ez-font-icon ez-button ez-relation-pick-root-button btn btn-secondary btn--udw-relation-default-location"
+                    data-relation-root-input-selector="#{{form.selectionDefaultLocation.vars.id}}"
+                    data-relation-selected-root-name-selector="#{{form.selectionDefaultLocation.vars.id}}-selected-root-name"
+                    data-starting-location-id="1"
+                    >{{"field_definition.ezobjectrelationlist.selection_root_udw_button"|trans({}, "ezrepoforms_content_type")}}</button>
+        </div>
         <div id="{{form.selectionDefaultLocation.vars.id}}-selected-root-name">
             {% if form.selectionDefaultLocation.vars.value is not empty %}
                 {{ render( controller( "ez_content:viewLocation", {'locationId': form.selectionDefaultLocation.vars.value, 'viewType': '_platformui_content_name'} ) ) }}
