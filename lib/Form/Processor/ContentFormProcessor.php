@@ -11,7 +11,6 @@ use eZ\Publish\API\Repository\ContentService;
 use eZ\Publish\API\Repository\LocationService;
 use eZ\Publish\API\Repository\Values\Content\ContentStruct;
 use eZ\Publish\Core\Base\Exceptions\InvalidArgumentException;
-use eZ\Publish\Core\MVC\Symfony\Routing\UrlAliasRouter;
 use EzSystems\RepositoryForms\Data\Content\ContentCreateData;
 use EzSystems\RepositoryForms\Data\Content\ContentUpdateData;
 use EzSystems\RepositoryForms\Data\NewnessChecker;
@@ -114,16 +113,16 @@ class ContentFormProcessor implements EventSubscriberInterface
         // if there is only one version you have to remove whole content instead of a version itself
         if (1 === count($this->contentService->loadVersions($contentInfo))) {
             $parentLocation = $this->locationService->loadParentLocationsForDraftContent($versionInfo)[0];
-            $redirectionContentId = $parentLocation->getContentInfo()->id; // parent location content id
+            $redirectionLocationId = $parentLocation->id;
             $this->contentService->deleteContent($contentInfo);
         } else {
-            $redirectionContentId = $contentInfo->id;
+            $redirectionLocationId = $contentInfo->mainLocationId;
             $this->contentService->deleteVersion($versionInfo);
         }
 
         $url = $this->router->generate(
-            UrlAliasRouter::URL_ALIAS_ROUTE_NAME,
-            ['contentId' => $redirectionContentId],
+            '_ezpublishLocation',
+            ['locationId' => $redirectionLocationId],
             UrlGeneratorInterface::ABSOLUTE_URL
         );
         $event->setResponse(new RedirectResponse($url));
