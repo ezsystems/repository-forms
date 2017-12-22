@@ -16,12 +16,12 @@ matrix:
     - php: 5.6
       env: TEST_CONFIG="phpunit.xml.dist"
     - php: 5.6
-      env: BEHAT_OPTS="--profile=repository-forms"
+      env: BEHAT_OPTS="--profile=repository-forms" PHP_IMAGE=ezsystems/php:5.6-v1
     # 7.0
     - php: 7.0
       env: TEST_CONFIG="phpunit.xml.dist"
     - php: 7.0
-      env: BEHAT_OPTS="--profile=repository-forms"
+      env: BEHAT_OPTS="--profile=repository-forms" PHP_IMAGE=ezsystems/php:7.0-v1
 
 # test only master (+ Pull requests)
 branches:
