@@ -58,7 +58,7 @@ class UserRegisterController extends Controller
         $form = $this->createForm(
             UserRegisterType::class,
             $data,
-            ['languageCode' => $language]
+            ['languageCode' => $language, 'mainLanguageCode' => $language]
         );
 
         $form->handleRequest($request);
