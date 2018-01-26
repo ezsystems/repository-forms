@@ -59,6 +59,7 @@ class UserRegisterMapper
         $data = new UserRegisterData([
             'contentType' => $contentType,
             'mainLanguageCode' => $this->params['language'],
+            'enabled' => true,
         ]);
         $data->addParentGroup($this->parentGroupLoader->loadGroup());
 
