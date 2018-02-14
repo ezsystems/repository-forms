@@ -4,6 +4,7 @@ imports:
     - {resource: role.yml}
     - {resource: fieldtypes.yml}
     - {resource: form_types.yml}
+    - {resource: views.yml}
 
 parameters:
     ezrepoforms.field_type_form_mapper.dispatcher.class: EzSystems\RepositoryForms\FieldType\FieldTypeFormMapperDispatcher
@@ -259,8 +260,6 @@ services:
             - "@ezpublish.api.service.language"
             - "@ezrepoforms.action_dispatcher.content"
         parent: ezpublish.controller.base
-        calls:
-            - [setPageLayout, [$pagelayout$]]
 
     ezrepoforms.controller.user:
         class: "%ezrepoforms.controller.user.class%"
@@ -313,7 +312,6 @@ services:
             - [setViewTemplate, ['EzSystems\RepositoryForms\User\View\UserUpdateView', "$user_edit.templates.update$"]]
             - [setViewTemplate, ['EzSystems\RepositoryForms\User\View\UserRegisterFormView', "$user_registration.templates.form$"]]
             - [setViewTemplate, ['EzSystems\RepositoryForms\User\View\UserRegisterConfirmView', "$user_registration.templates.confirmation$"]]
-            - [setViewTemplate, ['EzSystems\RepositoryForms\Content\View\ContentEditView', "$content_edit.templates.edit$"]]
             - [setViewTemplate, ['EzSystems\RepositoryForms\Content\View\ContentCreateView', "$content_edit.templates.create$"]]
             - [setViewTemplate, ['EzSystems\RepositoryForms\Content\View\ContentCreateDraftView', "$content_edit.templates.create_draft$"]]
             - [setPagelayout, ["$pagelayout$"]]

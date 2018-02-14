@@ -9,3 +9,5 @@ parameters:
     ezsettings.default.user_edit.templates.create: "EzSystemsRepositoryFormsBundle:Content:content_edit.html.twig"
     ezsettings.default.limitation_value_templates:
         - { template: 'EzSystemsRepositoryFormsBundle::limitation_values.html.twig', priority: 0 }
+
+    ezsettings.default.content_edit_view: {}
