@@ -7,6 +7,7 @@
  */
 namespace EzSystems\RepositoryForms\Form\ActionDispatcher;
 
+use eZ\Publish\API\Repository\Values\Content\Location;
 use EzSystems\RepositoryForms\Event\RepositoryFormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -14,6 +15,8 @@ class ContentDispatcher extends AbstractActionDispatcher
 {
     protected function configureOptions(OptionsResolver $resolver)
     {
+        $resolver->setDefined(['referrerLocation']);
+        $resolver->setAllowedTypes('referrerLocation', [Location::class, null]);
     }
 
     protected function getActionEventBaseName()

@@ -6,10 +6,11 @@ ez_content_create_no_draft:
         expose: true
 
 ez_content_draft_edit:
-    path: /content/edit/draft/{contentId}/{versionNo}/{language}
+    path: /content/edit/draft/{contentId}/{versionNo}/{language}/{locationId}
     defaults:
         _controller: ez_content_edit:editContentDraftAction
-        language: null
+        language: ~
+        locationId: ~
     options:
         expose: true
 
