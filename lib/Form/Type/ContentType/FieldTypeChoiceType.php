@@ -69,7 +69,7 @@ class FieldTypeChoiceType extends AbstractType
             $choices[$this->getFieldTypeLabel($fieldTypeIdentifier)] = $fieldTypeIdentifier;
         }
 
-        asort($choices, SORT_NATURAL);
+        ksort($choices, SORT_NATURAL);
 
         return $choices;
     }
