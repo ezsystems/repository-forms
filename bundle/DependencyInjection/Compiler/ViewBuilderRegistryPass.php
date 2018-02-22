@@ -7,6 +7,7 @@
  */
 namespace EzSystems\RepositoryFormsBundle\DependencyInjection\Compiler;
 
+use EzSystems\RepositoryForms\Content\View\Builder\ContentCreateViewBuilder;
 use EzSystems\RepositoryForms\Content\View\Builder\ContentEditViewBuilder;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -18,10 +19,15 @@ class ViewBuilderRegistryPass implements CompilerPassInterface
 {
     const VIEW_BUILDER_REGISTRY = 'ezpublish.view_builder.registry';
     const VIEW_BUILDER_CONTENT_EDIT = ContentEditViewBuilder::class;
+    const VIEW_BUILDER_CONTENT_CREATE = ContentCreateViewBuilder::class;
 
     public function process(ContainerBuilder $container)
     {
-        if (!$container->hasDefinition(self::VIEW_BUILDER_REGISTRY) || !$container->hasDefinition(ContentEditViewBuilder::class)) {
+        if (
+            !$container->hasDefinition(self::VIEW_BUILDER_REGISTRY)
+            || !$container->hasDefinition(self::VIEW_BUILDER_CONTENT_EDIT)
+            || !$container->hasDefinition(self::VIEW_BUILDER_CONTENT_CREATE)
+        ) {
             return;
         }
 
@@ -29,6 +35,7 @@ class ViewBuilderRegistryPass implements CompilerPassInterface
 
         $viewBuilders = [
             $container->getDefinition(self::VIEW_BUILDER_CONTENT_EDIT),
+            $container->getDefinition(self::VIEW_BUILDER_CONTENT_CREATE),
         ];
 
         $registry->addMethodCall('addToRegistry', [$viewBuilders]);

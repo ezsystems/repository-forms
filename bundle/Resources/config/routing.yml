@@ -4,6 +4,7 @@ ez_content_create_no_draft:
         _controller: ez_content_edit:createWithoutDraftAction
     options:
         expose: true
+    # @todo rename language to languageCode in 3.0
 
 ez_content_draft_edit:
     path: /content/edit/draft/{contentId}/{versionNo}/{language}/{locationId}
