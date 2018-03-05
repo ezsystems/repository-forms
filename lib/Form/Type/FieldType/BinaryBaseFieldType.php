@@ -37,9 +37,9 @@ class BinaryBaseFieldType extends AbstractType
                     'required' => $options['required'],
                     'constraints' => [
                         new Assert\File([
-                            'maxSize' => $this->getMaxUploadSize()
-                        ])
-                    ]
+                            'maxSize' => $this->getMaxUploadSize(),
+                        ]),
+                    ],
                 ]
             );
     }
@@ -69,8 +69,8 @@ class BinaryBaseFieldType extends AbstractType
         $str = strtoupper(trim($str));
 
         $value = substr($str, 0, -1);
-        $unit  = substr($str, -1);
-        switch($unit) {
+        $unit = substr($str, -1);
+        switch ($unit) {
             case 'G':
                 $value *= 1024;
             case 'M':
