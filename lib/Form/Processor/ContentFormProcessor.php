@@ -64,11 +64,13 @@ class ContentFormProcessor implements EventSubscriberInterface
         $formConfig = $form->getConfig();
         $languageCode = $formConfig->getOption('languageCode');
         $draft = $this->saveDraft($data, $languageCode);
+        $referrerLocation = $event->getOption('referrerLocation');
 
         $defaultUrl = $this->router->generate('ez_content_draft_edit', [
             'contentId' => $draft->id,
             'versionNo' => $draft->getVersionInfo()->versionNo,
             'language' => $languageCode,
+            'locationId' => null !== $referrerLocation ? $referrerLocation->id : null,
         ]);
         $event->setResponse(new RedirectResponse($formConfig->getAction() ?: $defaultUrl));
     }
@@ -136,11 +138,13 @@ class ContentFormProcessor implements EventSubscriberInterface
         $contentInfo = $this->contentService->loadContentInfo($createContentDraft->contentId);
         $versionInfo = $this->contentService->loadVersionInfo($contentInfo, $createContentDraft->fromVersionNo);
         $contentDraft = $this->contentService->createContentDraft($contentInfo, $versionInfo);
+        $referrerLocation = $event->getOption('referrerLocation');
 
         $contentEditUrl = $this->router->generate('ez_content_draft_edit', [
             'contentId' => $contentDraft->id,
             'versionNo' => $contentDraft->getVersionInfo()->versionNo,
             'language' => $contentDraft->contentInfo->mainLanguageCode,
+            'locationId' => null !== $referrerLocation ? $referrerLocation->id : null,
         ]);
         $event->setResponse(new RedirectResponse($contentEditUrl));
     }

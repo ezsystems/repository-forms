@@ -24,6 +24,7 @@ use EzSystems\RepositoryForms\Form\ActionDispatcher\ActionDispatcherInterface;
 use EzSystems\RepositoryForms\Form\Type\Content\ContentDraftCreateType;
 use EzSystems\RepositoryForms\Form\Type\Content\ContentEditType;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 class ContentEditController extends Controller
 {
@@ -69,9 +70,9 @@ class ContentEditController extends Controller
      * @param int $contentTypeIdentifier ContentType id to create
      * @param string $language Language code to create the content in (eng-GB, ger-DE, ...))
      * @param int $parentLocationId Location the content should be a child of
-     * @param \Symfony\Component\HttpFoundation\Request $request
+     * @param Request $request
      *
-     * @return \EzSystems\RepositoryForms\Content\View\ContentCreateView|\Symfony\Component\HttpFoundation\Response
+     * @return \EzSystems\RepositoryForms\Content\View\ContentCreateView|Response
      *
      * @throws \eZ\Publish\Core\Base\Exceptions\InvalidArgumentType
      * @throws \eZ\Publish\API\Repository\Exceptions\UnauthorizedException
@@ -115,9 +116,9 @@ class ContentEditController extends Controller
      * @param int $fromVersionNo
      * @param string $fromLanguage
      * @param string $toLanguage
-     * @param \Symfony\Component\HttpFoundation\Request $request
+     * @param Request $request
      *
-     * @return \EzSystems\RepositoryForms\Content\View\ContentCreateDraftView|\Symfony\Component\HttpFoundation\Response
+     * @return \EzSystems\RepositoryForms\Content\View\ContentCreateDraftView|Response
      *
      * @throws \eZ\Publish\API\Repository\Exceptions\UnauthorizedException
      * @throws \eZ\Publish\API\Repository\Exceptions\NotFoundException
@@ -172,23 +173,26 @@ class ContentEditController extends Controller
      *
      * @param int $contentId ContentType id to create
      * @param int $versionNo Version number the version should be created from. Defaults to the currently published one.
-     * @param \Symfony\Component\HttpFoundation\Request $request
+     * @param Request $request
      * @param string $language Language code to create the version in (eng-GB, ger-DE, ...))
+     * @param int|null $locationId
      *
-     * @return \EzSystems\RepositoryForms\Content\View\ContentEditView|\Symfony\Component\HttpFoundation\Response
-     *
-     * @throws \eZ\Publish\Core\Base\Exceptions\InvalidArgumentType
-     * @throws \eZ\Publish\API\Repository\Exceptions\UnauthorizedException
-     * @throws \eZ\Publish\API\Repository\Exceptions\NotFoundException
-     * @throws \eZ\Publish\Core\Base\Exceptions\BadStateException If the version isn't editable, or if there is no editable version.
+     * @return ContentEditView|Response
+     * @throws BadStateException If the version isn't editable, or if there is no editable version.
      */
-    public function editContentDraftAction($contentId, $versionNo = null, Request $request, $language = null)
-    {
+    public function editContentDraftAction(
+        $contentId,
+        $versionNo = null,
+        Request $request,
+        $language = null,
+        $locationId = null
+    ) {
         $draft = $this->contentService->loadContent($contentId, [$language], $versionNo);
         if ($draft->getVersionInfo()->status !== VersionInfo::STATUS_DRAFT) {
             throw new BadStateException('Version status', 'status is not draft');
         }
 
+        $referrerLocation = $this->locationService->loadLocation($locationId ?? $draft->contentInfo->mainLocationId);
         $language = $language ?: $draft->getVersionInfo()->getContentInfo()->mainLanguageCode;
         $language = $this->languageService->loadLanguage($language);
         $contentType = $this->contentTypeService->loadContentType($draft->contentInfo->contentTypeId);
@@ -212,7 +216,12 @@ class ContentEditController extends Controller
         $form->handleRequest($request);
 
         if ($form->isValid() && null !== $form->getClickedButton()) {
-            $this->contentActionDispatcher->dispatchFormAction($form, $contentUpdate, $form->getClickedButton()->getName());
+            $this->contentActionDispatcher->dispatchFormAction(
+                $form,
+                $contentUpdate,
+                $form->getClickedButton()->getName(),
+                ['referrerLocation' => $referrerLocation]
+            );
             if ($response = $this->contentActionDispatcher->getResponse()) {
                 return $response;
             }
@@ -223,6 +232,7 @@ class ContentEditController extends Controller
             'language' => $language,
             'content' => $draft,
             'contentType' => $contentType,
+            'location' => $referrerLocation,
         ]);
     }
 
