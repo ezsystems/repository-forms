@@ -12,7 +12,9 @@ use EzSystems\RepositoryForms\Security\UserRegisterPolicyProvider;
 use EzSystems\RepositoryFormsBundle\DependencyInjection\Compiler\FieldTypeFormMapperDispatcherPass;
 use EzSystems\RepositoryFormsBundle\DependencyInjection\Compiler\LimitationFormMapperPass;
 use EzSystems\RepositoryFormsBundle\DependencyInjection\Compiler\LimitationValueMapperPass;
+use EzSystems\RepositoryFormsBundle\DependencyInjection\Compiler\ViewBuilderRegistryPass;
 use EzSystems\RepositoryFormsBundle\DependencyInjection\Configuration\Parser\ContentEdit;
+use EzSystems\RepositoryFormsBundle\DependencyInjection\Configuration\Parser\ContentEditView;
 use EzSystems\RepositoryFormsBundle\DependencyInjection\Configuration\Parser\LimitationValueTemplates;
 use EzSystems\RepositoryFormsBundle\DependencyInjection\Configuration\Parser\UserEdit;
 use EzSystems\RepositoryFormsBundle\DependencyInjection\Configuration\Parser\UserRegistration;
@@ -27,6 +29,7 @@ class EzSystemsRepositoryFormsBundle extends Bundle
         $container->addCompilerPass(new FieldTypeFormMapperDispatcherPass());
         $container->addCompilerPass(new LimitationFormMapperPass());
         $container->addCompilerPass(new LimitationValueMapperPass());
+        $container->addCompilerPass(new ViewBuilderRegistryPass());
 
         $eZExtension = $container->getExtension('ezpublish');
         $eZExtension->addPolicyProvider(new UserRegisterPolicyProvider());
@@ -34,6 +37,7 @@ class EzSystemsRepositoryFormsBundle extends Bundle
         $eZExtension->addConfigParser(new ContentEdit());
         $eZExtension->addConfigParser(new UserEdit());
         $eZExtension->addConfigParser(new LimitationValueTemplates());
+        $eZExtension->addConfigParser(new ContentEditView());
         $eZExtension->addDefaultSettings(__DIR__ . '/Resources/config', ['ezpublish_default_settings.yml']);
     }
 }

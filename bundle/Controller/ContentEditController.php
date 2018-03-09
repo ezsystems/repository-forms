@@ -12,19 +12,15 @@ use eZ\Publish\API\Repository\ContentService;
 use eZ\Publish\API\Repository\ContentTypeService;
 use eZ\Publish\API\Repository\LanguageService;
 use eZ\Publish\API\Repository\LocationService;
-use eZ\Publish\API\Repository\Values\Content\VersionInfo;
-use eZ\Publish\Core\Base\Exceptions\BadStateException;
 use EzSystems\RepositoryForms\Content\View\ContentCreateDraftView;
 use EzSystems\RepositoryForms\Content\View\ContentCreateView;
 use EzSystems\RepositoryForms\Content\View\ContentEditView;
 use EzSystems\RepositoryForms\Data\Content\CreateContentDraftData;
 use EzSystems\RepositoryForms\Data\Mapper\ContentCreateMapper;
-use EzSystems\RepositoryForms\Data\Mapper\ContentUpdateMapper;
 use EzSystems\RepositoryForms\Form\ActionDispatcher\ActionDispatcherInterface;
 use EzSystems\RepositoryForms\Form\Type\Content\ContentDraftCreateType;
 use EzSystems\RepositoryForms\Form\Type\Content\ContentEditType;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 
 class ContentEditController extends Controller
 {
@@ -42,13 +38,6 @@ class ContentEditController extends Controller
 
     /** @var ActionDispatcherInterface */
     private $contentActionDispatcher;
-
-    /**
-     * @var string
-     *
-     * @deprecated Deprecated since 1.10 and will be removed in 2.0. See setPagelayout().
-     */
-    private $pagelayout;
 
     public function __construct(
         ContentTypeService $contentTypeService,
@@ -70,9 +59,9 @@ class ContentEditController extends Controller
      * @param int $contentTypeIdentifier ContentType id to create
      * @param string $language Language code to create the content in (eng-GB, ger-DE, ...))
      * @param int $parentLocationId Location the content should be a child of
-     * @param Request $request
+     * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return \EzSystems\RepositoryForms\Content\View\ContentCreateView|Response
+     * @return \EzSystems\RepositoryForms\Content\View\ContentCreateView|\Symfony\Component\HttpFoundation\Response
      *
      * @throws \eZ\Publish\Core\Base\Exceptions\InvalidArgumentType
      * @throws \eZ\Publish\API\Repository\Exceptions\UnauthorizedException
@@ -116,9 +105,9 @@ class ContentEditController extends Controller
      * @param int $fromVersionNo
      * @param string $fromLanguage
      * @param string $toLanguage
-     * @param Request $request
+     * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return \EzSystems\RepositoryForms\Content\View\ContentCreateDraftView|Response
+     * @return \EzSystems\RepositoryForms\Content\View\ContentCreateDraftView|\Symfony\Component\HttpFoundation\Response
      *
      * @throws \eZ\Publish\API\Repository\Exceptions\UnauthorizedException
      * @throws \eZ\Publish\API\Repository\Exceptions\NotFoundException
@@ -169,83 +158,40 @@ class ContentEditController extends Controller
     }
 
     /**
+     * @param \EzSystems\RepositoryForms\Content\View\ContentEditView $view
+     *
+     * @return \EzSystems\RepositoryForms\Content\View\ContentEditView|\Symfony\Component\HttpFoundation\Response
+     *
+     * @throws \eZ\Publish\API\Repository\Exceptions\BadStateException
+     */
+    public function editVersionDraftAction(ContentEditView $view)
+    {
+        return $view;
+    }
+
+    /**
      * Shows a content draft editing form.
+     *
+     * @deprecated In 2.1 and will be removed in 3.0. Please use `editVersionDraftAction()` instead.
      *
      * @param int $contentId ContentType id to create
      * @param int $versionNo Version number the version should be created from. Defaults to the currently published one.
-     * @param Request $request
      * @param string $language Language code to create the version in (eng-GB, ger-DE, ...))
      * @param int|null $locationId
      *
-     * @return ContentEditView|Response
-     * @throws BadStateException If the version isn't editable, or if there is no editable version.
+     * @return \EzSystems\RepositoryForms\Content\View\ContentEditView|\Symfony\Component\HttpFoundation\Response
      */
     public function editContentDraftAction(
         $contentId,
         $versionNo = null,
-        Request $request,
         $language = null,
         $locationId = null
     ) {
-        $draft = $this->contentService->loadContent($contentId, [$language], $versionNo);
-        if ($draft->getVersionInfo()->status !== VersionInfo::STATUS_DRAFT) {
-            throw new BadStateException('Version status', 'status is not draft');
-        }
-
-        $referrerLocation = $this->locationService->loadLocation($locationId ?? $draft->contentInfo->mainLocationId);
-        $language = $language ?: $draft->getVersionInfo()->getContentInfo()->mainLanguageCode;
-        $language = $this->languageService->loadLanguage($language);
-        $contentType = $this->contentTypeService->loadContentType($draft->contentInfo->contentTypeId);
-
-        $contentUpdate = (new ContentUpdateMapper())->mapToFormData(
-            $draft,
-            [
-                'languageCode' => $language->languageCode,
-                'contentType' => $this->contentTypeService->loadContentType($draft->contentInfo->contentTypeId),
-            ]
-        );
-        $form = $this->createForm(
-            ContentEditType::class,
-            $contentUpdate,
-            [
-                'languageCode' => $language->languageCode,
-                'mainLanguageCode' => $draft->contentInfo->mainLanguageCode,
-                'drafts_enabled' => true,
-            ]
-        );
-        $form->handleRequest($request);
-
-        if ($form->isValid() && null !== $form->getClickedButton()) {
-            $this->contentActionDispatcher->dispatchFormAction(
-                $form,
-                $contentUpdate,
-                $form->getClickedButton()->getName(),
-                ['referrerLocation' => $referrerLocation]
-            );
-            if ($response = $this->contentActionDispatcher->getResponse()) {
-                return $response;
-            }
-        }
-
-        return new ContentEditView(null, [
-            'form' => $form->createView(),
-            'language' => $language,
-            'content' => $draft,
-            'contentType' => $contentType,
-            'location' => $referrerLocation,
+        return $this->forward('ez_content_edit:editVersionDraftAction', [
+            'contentId' => $contentId,
+            'versionNo' => $versionNo,
+            'languageCode' => $language,
+            'locationId' => $locationId,
         ]);
-    }
-
-    /**
-     * @param string $pagelayout
-     * @return ContentEditController
-     *
-     * @deprecated Deprecated since 1.10 and will be removed in 2.0. Pagelayout is injected via ViewTemplatesListener.
-     */
-    public function setPagelayout($pagelayout)
-    {
-        $this->pagelayout = $pagelayout;
-
-        return $this;
     }
 }

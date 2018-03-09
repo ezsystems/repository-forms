@@ -1,0 +1,35 @@
+services:
+    _defaults:
+        public: false
+        autowire: true
+        autoconfigure: true
+
+    EzSystems\RepositoryForms\Content\View\Builder\ContentEditViewBuilder:
+        arguments:
+            - '@ezpublish.api.repository'
+            - '@ezpublish.view.configurator'
+            - '@ezpublish.view.view_parameters.injector.dispatcher'
+            - '$content_edit.templates.edit$'
+            - '@ezrepoforms.action_dispatcher.content'
+
+    EzSystems\RepositoryForms\Content\View\Provider\Configured:
+        arguments:
+            - '@ezplatform.repository_forms.content_edit_view.matcher_factory'
+        tags:
+            - { name: ezpublish.view_provider, type: EzSystems\RepositoryForms\Content\View\ContentEditView, priority: 10 }
+
+    ezplatform.repository_forms.content_edit_view.matcher_factory:
+        class: '%ezpublish.view.matcher_factory.class%'
+        arguments:
+            - '@ezpublish.api.repository'
+            - 'eZ\Publish\Core\MVC\Symfony\Matcher\ContentBased'
+        calls:
+            - [setContainer, ['@service_container']]
+            - [setMatchConfig, ['$content_edit_view$']]
+
+    EzSystems\RepositoryForms\Content\View\Filter\ContentEditViewFilter:
+        arguments:
+            - '@ezpublish.api.service.content'
+            - '@ezpublish.api.service.content_type'
+        tags:
+            - { name: kernel.event_subscriber }

@@ -8,8 +8,8 @@ ez_content_create_no_draft:
 ez_content_draft_edit:
     path: /content/edit/draft/{contentId}/{versionNo}/{language}/{locationId}
     defaults:
-        _controller: ez_content_edit:editContentDraftAction
-        language: ~
+        _controller: ez_content_edit:editVersionDraftAction
+        language: ~ # @todo rename to languageCode in 3.0
         locationId: ~
     options:
         expose: true
