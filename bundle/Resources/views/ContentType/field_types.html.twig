@@ -18,6 +18,7 @@
 
 {% block ezboolean_field_definition_edit %}
     <div class="ezboolean-default-value{% if group_class is not empty %} {{ group_class }}{% endif %}">
+        {{- form_row(form.defaultValue, {'label_attr': {'class': 'checkbox-inline'}}) -}}
         {{- form_label(form.defaultValue) -}}
         {{- form_errors(form.defaultValue) -}}
         {{- form_widget(form.defaultValue) -}}
@@ -26,6 +27,7 @@
 
 {% block ezcountry_field_definition_edit %}
     <div class="ezcountry-settings is-multiple{% if group_class is not empty %} {{ group_class }}{% endif %}">
+        {{- form_row(form.isMultiple, {'label_attr': {'class': 'checkbox-inline'}}) -}}
         {{- form_label(form.isMultiple) -}}
         {{- form_errors(form.isMultiple) -}}
         {{- form_widget(form.isMultiple) -}}
@@ -40,6 +42,7 @@
 
 {% block ezdate_field_definition_edit %}
     <div class="ezdate-settings default-type{% if group_class is not empty %} {{ group_class }}{% endif %}">
+        {{- form_row(form.defaultType, {'label_attr': {'class': 'checkbox-inline'}}) -}}
         {{- form_label(form.defaultType) -}}
         {{- form_errors(form.defaultType) -}}
         {{- form_widget(form.defaultType) -}}
@@ -48,12 +51,14 @@
 
 {% block ezdatetime_field_definition_edit %}
     <div class="ezdatetime-settings use-seconds{% if group_class is not empty %} {{ group_class }}{% endif %}">
+        {{- form_row(form.useSeconds, {'label_attr': {'class': 'checkbox-inline'}}) -}}
         {{- form_label(form.useSeconds) -}}
         {{- form_errors(form.useSeconds) -}}
         {{- form_widget(form.useSeconds) -}}
     </div>
 
     <div class="ezdatetime-settings default-type{% if group_class is not empty %} {{ group_class }}{% endif %}">
+        {{- form_row(form.defaultType, {'label_attr': {'class': 'checkbox-inline'}}) -}}
         {{- form_label(form.defaultType) -}}
         {{- form_errors(form.defaultType) -}}
         {{- form_widget(form.defaultType) -}}
@@ -214,6 +219,7 @@
 
 {% block ezselection_field_definition_edit %}
     <div class="ezselection-settings is-multiple{% if group_class is not empty %} {{ group_class }}{% endif %}">
+        {{- form_row(form.isMultiple, {'label_attr': {'class': 'checkbox-inline'}}) -}}
         {{- form_label(form.isMultiple) -}}
         {{- form_errors(form.isMultiple) -}}
         {{- form_widget(form.isMultiple) -}}
