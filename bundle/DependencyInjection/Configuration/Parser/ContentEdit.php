@@ -22,7 +22,8 @@ class ContentEdit extends AbstractParser
     {
         $nodeBuilder
             ->arrayNode('content_edit')
-                ->info('Content edit configuration')
+                ->info('Content edit configuration.')
+                ->setDeprecated('This key was deprecated in 2.1 and will be removed in 3.0. Please use siteaccess aware configuration.')
                 ->children()
                     ->arrayNode('templates')
                         ->info('Content edit templates.')

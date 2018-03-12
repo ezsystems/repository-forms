@@ -11,3 +11,4 @@ parameters:
         - { template: 'EzSystemsRepositoryFormsBundle::limitation_values.html.twig', priority: 0 }
 
     ezsettings.default.content_edit_view: {}
+    ezsettings.default.content_create_view: {}

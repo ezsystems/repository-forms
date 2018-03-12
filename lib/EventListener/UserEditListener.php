@@ -76,6 +76,7 @@ class UserEditListener implements EventSubscriberInterface
                     return;
                 }
 
+                $event->getRequest()->attributes->set('_controller', [$this->userController, 'createAction']);
                 $event->setController([$this->userController, 'createAction']);
             }
         }
@@ -101,6 +102,7 @@ class UserEditListener implements EventSubscriberInterface
                     return;
                 }
 
+                $event->getRequest()->attributes->set('_controller', [$this->userController, 'editAction']);
                 $event->setController([$this->userController, 'editAction']);
             }
         }

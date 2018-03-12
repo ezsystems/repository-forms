@@ -256,8 +256,6 @@ services:
         arguments:
             - "@ezpublish.api.service.content_type"
             - "@ezpublish.api.service.content"
-            - "@ezpublish.api.service.location"
-            - "@ezpublish.api.service.language"
             - "@ezrepoforms.action_dispatcher.content"
         parent: ezpublish.controller.base
 
@@ -312,7 +310,6 @@ services:
             - [setViewTemplate, ['EzSystems\RepositoryForms\User\View\UserUpdateView', "$user_edit.templates.update$"]]
             - [setViewTemplate, ['EzSystems\RepositoryForms\User\View\UserRegisterFormView', "$user_registration.templates.form$"]]
             - [setViewTemplate, ['EzSystems\RepositoryForms\User\View\UserRegisterConfirmView', "$user_registration.templates.confirmation$"]]
-            - [setViewTemplate, ['EzSystems\RepositoryForms\Content\View\ContentCreateView', "$content_edit.templates.create$"]]
             - [setViewTemplate, ['EzSystems\RepositoryForms\Content\View\ContentCreateDraftView', "$content_edit.templates.create_draft$"]]
             - [setPagelayout, ["$pagelayout$"]]
 

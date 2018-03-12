@@ -6,12 +6,12 @@
  */
 declare(strict_types=1);
 
-namespace EzSystems\RepositoryForms\Content\View\Provider;
+namespace EzSystems\RepositoryForms\Content\View\Provider\ContentCreateView;
 
 use eZ\Publish\Core\MVC\Symfony\Matcher\MatcherFactoryInterface;
 use eZ\Publish\Core\MVC\Symfony\View\View;
 use eZ\Publish\Core\MVC\Symfony\View\ViewProvider;
-use EzSystems\RepositoryForms\Content\View\ContentEditView;
+use EzSystems\RepositoryForms\Content\View\ContentCreateView;
 use Symfony\Component\HttpKernel\Controller\ControllerReference;
 
 /**
@@ -38,19 +38,19 @@ class Configured implements ViewProvider
             return null;
         }
 
-        return $this->buildContentEditView($configHash);
+        return $this->buildContentCreateView($configHash);
     }
 
     /**
-     * Builds a ContentEditView object from $viewConfig.
+     * Builds a ContentCreateView object from $viewConfig.
      *
      * @param array $viewConfig
      *
-     * @return \EzSystems\RepositoryForms\Content\View\ContentEditView
+     * @return \EzSystems\RepositoryForms\Content\View\ContentCreateView
      */
-    protected function buildContentEditView(array $viewConfig): ContentEditView
+    protected function buildContentCreateView(array $viewConfig): ContentCreateView
     {
-        $view = new ContentEditView();
+        $view = new ContentCreateView();
         $view->setConfigHash($viewConfig);
         if (isset($viewConfig['template'])) {
             $view->setTemplateIdentifier($viewConfig['template']);

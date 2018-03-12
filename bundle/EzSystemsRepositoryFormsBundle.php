@@ -13,6 +13,7 @@ use EzSystems\RepositoryFormsBundle\DependencyInjection\Compiler\FieldTypeFormMa
 use EzSystems\RepositoryFormsBundle\DependencyInjection\Compiler\LimitationFormMapperPass;
 use EzSystems\RepositoryFormsBundle\DependencyInjection\Compiler\LimitationValueMapperPass;
 use EzSystems\RepositoryFormsBundle\DependencyInjection\Compiler\ViewBuilderRegistryPass;
+use EzSystems\RepositoryFormsBundle\DependencyInjection\Configuration\Parser\ContentCreateView;
 use EzSystems\RepositoryFormsBundle\DependencyInjection\Configuration\Parser\ContentEdit;
 use EzSystems\RepositoryFormsBundle\DependencyInjection\Configuration\Parser\ContentEditView;
 use EzSystems\RepositoryFormsBundle\DependencyInjection\Configuration\Parser\LimitationValueTemplates;
@@ -38,6 +39,7 @@ class EzSystemsRepositoryFormsBundle extends Bundle
         $eZExtension->addConfigParser(new UserEdit());
         $eZExtension->addConfigParser(new LimitationValueTemplates());
         $eZExtension->addConfigParser(new ContentEditView());
+        $eZExtension->addConfigParser(new ContentCreateView());
         $eZExtension->addDefaultSettings(__DIR__ . '/Resources/config', ['ezpublish_default_settings.yml']);
     }
 }
