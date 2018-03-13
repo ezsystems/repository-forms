@@ -58,7 +58,7 @@ class BinaryBaseFieldType extends AbstractType
     {
         static $value = null;
         if ($value === null) {
-            return $this->str2bytes(ini_get('upload_max_filesize'));
+            $value = $this->str2bytes(ini_get('upload_max_filesize'));
         }
 
         return $value;
