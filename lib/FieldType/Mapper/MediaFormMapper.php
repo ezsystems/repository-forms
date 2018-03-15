@@ -37,6 +37,16 @@ class MediaFormMapper implements FieldDefinitionFormMapperInterface, FieldValueF
                 'required' => false,
                 'property_path' => 'validatorConfiguration[FileSizeValidator][maxFileSize]',
                 'label' => 'field_definition.ezmedia.max_file_size',
+                'constraints' => [
+                    new Range([
+                        'min' => 0,
+                        'max' => $this->getMaxUploadSize()
+                    ])
+                ],
+                'attr' => [
+                    'min' => 0,
+                    'max' => $this->getMaxUploadSize()
+                ]
             ])
             ->add('mediaType', ChoiceType::class, [
                 'choices' => [
