@@ -41,6 +41,11 @@
         <target>The role identifier "%identifier%" is used by another role. You must enter a unique identifier.</target>
         <note>key: ez.role.identifier.unique</note>
       </trans-unit>
+      <trans-unit id="f8726e651a7a36140e05f4b5963a415cd08151ec" resname="ez.user.login.unique">
+        <source>The user login "%login%" is used by another user. You must enter a unique login.</source>
+        <target>The user login "%login%" is used by another user. You must enter a unique login.</target>
+        <note>key: ez.user.login.unique</note>
+      </trans-unit>
       <trans-unit id="e7e08263e46325665a4d7f85d5f3465c37d49bb7" resname="ez.language.code.unique">
         <source>The language code "%language_code%" is used by another language. You must enter a unique language code.</source>
         <target>The language code "%language_code%" is used by another language. You must enter a unique language code.</target>

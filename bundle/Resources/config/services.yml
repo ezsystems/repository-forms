@@ -22,6 +22,7 @@ parameters:
     ezrepoforms.validator.default_field_value.class: EzSystems\RepositoryForms\Validator\Constraints\FieldDefinitionDefaultValueValidator
     ezrepoforms.validator.field_value.class: EzSystems\RepositoryForms\Validator\Constraints\FieldValueValidator
     ezrepoforms.validator.unique_url.class: EzSystems\RepositoryForms\Validator\Constraints\UniqueURLValidator
+    ezrepoforms.validator.unique_user_login.class: EzSystems\RepositoryForms\Validator\Constraints\UniqueUserLoginValidator
 
     ezrepoforms.templating.limitation_block_renderer.class: EzSystems\RepositoryForms\Limitation\Templating\LimitationBlockRenderer
 
@@ -142,6 +143,13 @@ services:
             - '@ezpublish.api.service.url'
         tags:
             - { name: validator.constraint_validator, alias: ezrepoforms.validator.unique_url }
+
+    ezrepoforms.validator.unique_user_login:
+        class: '%ezrepoforms.validator.unique_user_login.class%'
+        arguments:
+            - '@ezpublish.api.service.user'
+        tags:
+            - { name: validator.constraint_validator, alias: ezrepoforms.validator.unique_user_login }
 
     ezrepoforms.twig.field_edit_rendering_extension:
         class: "%ezrepoforms.twig.field_edit_rendering_extension.class%"
