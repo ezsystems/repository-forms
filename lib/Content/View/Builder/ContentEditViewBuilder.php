@@ -17,6 +17,7 @@ use eZ\Publish\Core\Base\Exceptions\InvalidArgumentException;
 use eZ\Publish\Core\MVC\Symfony\View\Builder\ViewBuilder;
 use eZ\Publish\Core\MVC\Symfony\View\Configurator;
 use eZ\Publish\Core\MVC\Symfony\View\ParametersInjector;
+use EzSystems\RepositoryForms\Content\View\ContentEditSuccessView;
 use EzSystems\RepositoryForms\Content\View\ContentEditView;
 use EzSystems\RepositoryForms\Form\ActionDispatcher\ActionDispatcherInterface;
 
@@ -66,6 +67,7 @@ class ContentEditViewBuilder implements ViewBuilder
      *
      * @return \eZ\Publish\Core\MVC\Symfony\View\ContentView|\eZ\Publish\Core\MVC\Symfony\View\View
      *
+     * @throws \eZ\Publish\Core\Base\Exceptions\InvalidArgumentType
      * @throws \Symfony\Component\OptionsResolver\Exception\InvalidOptionsException
      * @throws \eZ\Publish\API\Repository\Exceptions\BadStateException
      * @throws \eZ\Publish\API\Repository\Exceptions\InvalidArgumentException
@@ -103,7 +105,7 @@ class ContentEditViewBuilder implements ViewBuilder
             );
 
             if ($response = $this->contentActionDispatcher->getResponse()) {
-                $view->setResponse($response);
+                return new ContentEditSuccessView($response);
             }
         }
 

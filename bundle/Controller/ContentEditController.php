@@ -11,7 +11,9 @@ use eZ\Bundle\EzPublishCoreBundle\Controller;
 use eZ\Publish\API\Repository\ContentService;
 use eZ\Publish\API\Repository\ContentTypeService;
 use EzSystems\RepositoryForms\Content\View\ContentCreateDraftView;
+use EzSystems\RepositoryForms\Content\View\ContentCreateSuccessView;
 use EzSystems\RepositoryForms\Content\View\ContentCreateView;
+use EzSystems\RepositoryForms\Content\View\ContentEditSuccessView;
 use EzSystems\RepositoryForms\Content\View\ContentEditView;
 use EzSystems\RepositoryForms\Data\Content\CreateContentDraftData;
 use EzSystems\RepositoryForms\Form\ActionDispatcher\ActionDispatcherInterface;
@@ -44,9 +46,21 @@ class ContentEditController extends Controller
      *
      * @param \EzSystems\RepositoryForms\Content\View\ContentCreateView $view
      *
-     * @return \EzSystems\RepositoryForms\Content\View\ContentCreateView|\Symfony\Component\HttpFoundation\Response
+     * @return \EzSystems\RepositoryForms\Content\View\ContentCreateView
      */
-    public function createWithoutDraftAction(ContentCreateView $view)
+    public function createWithoutDraftAction(ContentCreateView $view): ContentCreateView
+    {
+        return $view;
+    }
+
+    /**
+     * @param \EzSystems\RepositoryForms\Content\View\ContentCreateSuccessView $view
+     *
+     * @return \EzSystems\RepositoryForms\Content\View\ContentCreateSuccessView
+     *
+     * @throws \eZ\Publish\API\Repository\Exceptions\BadStateException
+     */
+    public function createWithoutDraftSuccessAction(ContentCreateSuccessView $view): ContentCreateSuccessView
     {
         return $view;
     }
@@ -113,11 +127,23 @@ class ContentEditController extends Controller
     /**
      * @param \EzSystems\RepositoryForms\Content\View\ContentEditView $view
      *
-     * @return \EzSystems\RepositoryForms\Content\View\ContentEditView|\Symfony\Component\HttpFoundation\Response
+     * @return \EzSystems\RepositoryForms\Content\View\ContentEditView
      *
      * @throws \eZ\Publish\API\Repository\Exceptions\BadStateException
      */
-    public function editVersionDraftAction(ContentEditView $view)
+    public function editVersionDraftAction(ContentEditView $view): ContentEditView
+    {
+        return $view;
+    }
+
+    /**
+     * @param \EzSystems\RepositoryForms\Content\View\ContentEditSuccessView $view
+     *
+     * @return \EzSystems\RepositoryForms\Content\View\ContentEditSuccessView
+     *
+     * @throws \eZ\Publish\API\Repository\Exceptions\BadStateException
+     */
+    public function editVersionDraftSuccessAction(ContentEditSuccessView $view): ContentEditSuccessView
     {
         return $view;
     }
@@ -132,7 +158,7 @@ class ContentEditController extends Controller
      * @param string $language Language code to create the version in (eng-GB, ger-DE, ...))
      * @param int|null $locationId
      *
-     * @return \EzSystems\RepositoryForms\Content\View\ContentEditView|\Symfony\Component\HttpFoundation\Response
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function editContentDraftAction(
         $contentId,
