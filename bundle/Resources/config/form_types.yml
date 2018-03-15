@@ -5,3 +5,5 @@ services:
         public: false
 
     EzSystems\RepositoryForms\Form\Type\SwitcherType: ~
+
+    EzSystems\RepositoryForms\Form\Type\FieldType\BinaryBaseFieldType: ~

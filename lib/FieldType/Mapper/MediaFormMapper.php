@@ -15,19 +15,25 @@ use EzSystems\RepositoryForms\FieldType\DataTransformer\MediaValueTransformer;
 use EzSystems\RepositoryForms\FieldType\FieldDefinitionFormMapperInterface;
 use EzSystems\RepositoryForms\FieldType\FieldValueFormMapperInterface;
 use EzSystems\RepositoryForms\Form\Type\FieldType\MediaFieldType;
+use EzSystems\RepositoryForms\ConfigResolver\MaxUploadSize;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\Range;
 
 class MediaFormMapper implements FieldDefinitionFormMapperInterface, FieldValueFormMapperInterface
 {
     /** @var FieldTypeService */
     private $fieldTypeService;
 
-    public function __construct(FieldTypeService $fieldTypeService)
+    /** @var MaxUploadSize */
+    private $maxUploadSize;
+
+    public function __construct(FieldTypeService $fieldTypeService, MaxUploadSize $maxUploadSize)
     {
         $this->fieldTypeService = $fieldTypeService;
+        $this->maxUploadSize = $maxUploadSize;
     }
 
     public function mapFieldDefinitionForm(FormInterface $fieldDefinitionForm, FieldDefinitionData $data)
@@ -37,6 +43,16 @@ class MediaFormMapper implements FieldDefinitionFormMapperInterface, FieldValueF
                 'required' => false,
                 'property_path' => 'validatorConfiguration[FileSizeValidator][maxFileSize]',
                 'label' => 'field_definition.ezmedia.max_file_size',
+                'constraints' => [
+                    new Range([
+                        'min' => 0,
+                        'max' => $this->maxUploadSize->get(MaxUploadSize::MEGABYTES),
+                    ]),
+                ],
+                'attr' => [
+                    'min' => 0,
+                    'max' => $this->maxUploadSize->get(MaxUploadSize::MEGABYTES),
+                ],
             ])
             ->add('mediaType', ChoiceType::class, [
                 'choices' => [

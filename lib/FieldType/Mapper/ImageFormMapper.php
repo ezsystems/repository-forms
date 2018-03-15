@@ -14,19 +14,25 @@ use EzSystems\RepositoryForms\FieldType\DataTransformer\ImageValueTransformer;
 use EzSystems\RepositoryForms\FieldType\FieldDefinitionFormMapperInterface;
 use EzSystems\RepositoryForms\FieldType\FieldValueFormMapperInterface;
 use EzSystems\RepositoryForms\Form\Type\FieldType\ImageFieldType;
+use EzSystems\RepositoryForms\ConfigResolver\MaxUploadSize;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\OptionsResolver\Exception\AccessException;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\Range;
 
 class ImageFormMapper implements FieldDefinitionFormMapperInterface, FieldValueFormMapperInterface
 {
     /** @var FieldTypeService */
     private $fieldTypeService;
 
-    public function __construct(FieldTypeService $fieldTypeService)
+    /** @var MaxUploadSize */
+    private $maxUploadSize;
+
+    public function __construct(FieldTypeService $fieldTypeService, MaxUploadSize $maxUploadSize)
     {
         $this->fieldTypeService = $fieldTypeService;
+        $this->maxUploadSize = $maxUploadSize;
     }
 
     public function mapFieldDefinitionForm(FormInterface $fieldDefinitionForm, FieldDefinitionData $data)
@@ -36,6 +42,16 @@ class ImageFormMapper implements FieldDefinitionFormMapperInterface, FieldValueF
                 'required' => false,
                 'property_path' => 'validatorConfiguration[FileSizeValidator][maxFileSize]',
                 'label' => /** @Desc("Maximum file size (MB)") */ 'field_definition.ezimage.max_file_size',
+                'constraints' => [
+                    new Range([
+                        'min' => 0,
+                        'max' => $this->maxUploadSize->get(MaxUploadSize::MEGABYTES),
+                    ]),
+                ],
+                'attr' => [
+                    'min' => 0,
+                    'max' => $this->maxUploadSize->get(MaxUploadSize::MEGABYTES),
+                ],
             ]);
     }
 

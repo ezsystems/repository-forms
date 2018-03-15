@@ -345,3 +345,6 @@ services:
         class: '%ezrepoforms.form.type.url_edit.class%'
         tags:
             - { name: 'form.type', alias: 'ezrepoforms_url_edit' }
+
+    ezrepoforms.config_resolver.max_upload_size:
+        class: EzSystems\RepositoryForms\ConfigResolver\MaxUploadSize
