@@ -12,7 +12,7 @@
     <div class="ezbinaryfile-validator max-file-size{% if group_class is not empty %} {{ group_class }}{% endif %}">
         {{- form_label(form.maxSize) -}}
         {{- form_errors(form.maxSize) -}}
-        {{- form_widget(form.maxSize, { 'attr': { 'min': '0' }}) -}}
+        {{- form_widget(form.maxSize) -}}
     </div>
 {% endblock %}
 
@@ -95,7 +95,7 @@
     <div class="ezimage-validator max-file-size{% if group_class is not empty %} {{ group_class }}{% endif %}">
         {{- form_label(form.maxSize) -}}
         {{- form_errors(form.maxSize) -}}
-        {{- form_widget(form.maxSize, { 'attr': { 'min': '0' }}) -}}
+        {{- form_widget(form.maxSize) -}}
     </div>
 {% endblock %}
 
@@ -137,7 +137,7 @@
     <div class="ezmedia-validator max-file-size{% if group_class is not empty %} {{ group_class }}{% endif %}">
         {{- form_label(form.maxSize) -}}
         {{- form_errors(form.maxSize) -}}
-        {{- form_widget(form.maxSize, { 'attr': { 'min': '0' }}) -}}
+        {{- form_widget(form.maxSize) -}}
     </div>
 
     <div class="ezmedia-settings media-type{% if group_class is not empty %} {{ group_class }}{% endif %}">

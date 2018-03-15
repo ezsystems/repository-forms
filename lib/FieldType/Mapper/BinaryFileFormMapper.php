@@ -38,13 +38,13 @@ class BinaryFileFormMapper implements FieldDefinitionFormMapperInterface, FieldV
                 'constraints' => [
                     new Range([
                         'min' => 0,
-                        'max' => $this->getMaxUploadSize()
-                    ])
+                        'max' => $this->getMaxUploadSize(),
+                    ]),
                 ],
                 'attr' => [
                     'min' => 0,
-                    'max' => $this->getMaxUploadSize()
-                ]
+                    'max' => $this->getMaxUploadSize(),
+                ],
             ]);
     }
 
