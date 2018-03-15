@@ -6,6 +6,11 @@
       <note>The source node in most cases contains the sample message as written by the developer. If it looks like a dot-delimitted string such as "form.label.firstname", then the developer has not provided a default message.</note>
     </header>
     <body>
+      <trans-unit id="c10b0c448f6442d0a67d6787f458e09c823d79f7" resname="The user login '%login%' is used by another user. You must enter a unique login.">
+        <source>The user login '%login%' is used by another user. You must enter a unique login.</source>
+        <target state="new">The user login '%login%' is used by another user. You must enter a unique login.</target>
+        <note>key: The user login '%login%' is used by another user. You must enter a unique login.</note>
+      </trans-unit>
       <trans-unit id="facbff93edf91393ba1bb60212f504d35beae555" resname="ez.content_type.descriptions">
         <source>Content type description cannot exceed 255 characters.</source>
         <target>Content type description cannot exceed 255 characters.</target>
