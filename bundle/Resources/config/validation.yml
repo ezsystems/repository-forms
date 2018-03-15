@@ -97,6 +97,8 @@ EzSystems\RepositoryForms\Data\Content\ContentUpdateData:
             - Valid: ~
 
 EzSystems\RepositoryForms\Data\User\UserCreateData:
+    constraints:
+        - EzSystems\RepositoryForms\Validator\Constraints\UniqueUserLogin: ~
     properties:
         login:
             - NotBlank: ~
