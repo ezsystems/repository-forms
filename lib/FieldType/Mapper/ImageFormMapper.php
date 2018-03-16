@@ -35,7 +35,7 @@ class ImageFormMapper implements FieldDefinitionFormMapperInterface, FieldValueF
             ->add('maxSize', IntegerType::class, [
                 'required' => false,
                 'property_path' => 'validatorConfiguration[FileSizeValidator][maxFileSize]',
-                'label' => 'field_definition.ezimage.max_file_size',
+                'label' => /** @Desc("Maximum file size (MB)") */ 'field_definition.ezimage.max_file_size',
             ]);
     }
 
