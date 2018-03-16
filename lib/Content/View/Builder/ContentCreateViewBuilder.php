@@ -16,6 +16,7 @@ use eZ\Publish\Core\Base\Exceptions\InvalidArgumentException;
 use eZ\Publish\Core\MVC\Symfony\View\Builder\ViewBuilder;
 use eZ\Publish\Core\MVC\Symfony\View\Configurator;
 use eZ\Publish\Core\MVC\Symfony\View\ParametersInjector;
+use EzSystems\RepositoryForms\Content\View\ContentCreateSuccessView;
 use EzSystems\RepositoryForms\Content\View\ContentCreateView;
 use EzSystems\RepositoryForms\Form\ActionDispatcher\ActionDispatcherInterface;
 
@@ -63,7 +64,7 @@ class ContentCreateViewBuilder implements ViewBuilder
     /**
      * @param array $parameters
      *
-     * @return \EzSystems\RepositoryForms\Content\View\ContentCreateView
+     * @return \EzSystems\RepositoryForms\Content\View\ContentCreateSuccessView|\EzSystems\RepositoryForms\Content\View\ContentCreateView
      *
      * @throws \eZ\Publish\API\Repository\Exceptions\UnauthorizedException
      * @throws \eZ\Publish\API\Repository\Exceptions\NotFoundException
@@ -88,7 +89,7 @@ class ContentCreateViewBuilder implements ViewBuilder
             );
 
             if ($response = $this->contentActionDispatcher->getResponse()) {
-                $view->setResponse($response);
+                return new ContentCreateSuccessView($response);
             }
         }
 
