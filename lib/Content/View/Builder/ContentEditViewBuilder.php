@@ -40,7 +40,7 @@ class ContentEditViewBuilder implements ViewBuilder
     /** @var string */
     private $defaultTemplate;
 
-    /** @var ActionDispatcherInterface */
+    /** @var \EzSystems\RepositoryForms\Form\ActionDispatcher\ActionDispatcherInterface */
     private $contentActionDispatcher;
 
     public function __construct(
@@ -81,18 +81,21 @@ class ContentEditViewBuilder implements ViewBuilder
         $language = $this->resolveLanguage($parameters);
         $location = $this->resolveLocation($parameters);
         $content = $this->resolveContent($parameters, $location, $language);
-        $contentType = $this->loadContentType((int) $content->contentInfo->contentTypeId);
+        $contentInfo = $content->contentInfo;
+        $contentType = $this->loadContentType((int) $contentInfo->contentTypeId);
         $form = $parameters['form'];
+        $isPublished = null !== $contentInfo->mainLocationId && $contentInfo->published;
 
         if (!$content->getVersionInfo()->isDraft()) {
             throw new InvalidArgumentException('Version', 'status is not draft');
         }
 
-        if (null === $location) { // assume main location if no location was provided
-            $location = $this->loadLocation((int) $content->contentInfo->mainLocationId);
+        if (null === $location && $isPublished) {
+            // assume main location if no location was provided
+            $location = $this->loadLocation((int) $contentInfo->mainLocationId);
         }
 
-        if ($location->contentId !== $content->id) {
+        if (null !== $location && $location->contentId !== $content->id) {
             throw new InvalidArgumentException('Location', 'Provided location does not belong to selected content');
         }
 

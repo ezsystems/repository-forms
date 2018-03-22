@@ -9,11 +9,13 @@ namespace EzSystems\RepositoryForms\Form\Processor;
 
 use eZ\Publish\API\Repository\ContentService;
 use eZ\Publish\API\Repository\LocationService;
+use eZ\Publish\API\Repository\Values\Content\Content;
 use eZ\Publish\API\Repository\Values\Content\ContentStruct;
+use eZ\Publish\API\Repository\Values\Content\Location;
 use eZ\Publish\Core\Base\Exceptions\InvalidArgumentException;
 use EzSystems\RepositoryForms\Data\Content\ContentCreateData;
 use EzSystems\RepositoryForms\Data\Content\ContentUpdateData;
-use EzSystems\RepositoryForms\Data\NewnessChecker;
+use EzSystems\RepositoryForms\Data\NewnessCheckable;
 use EzSystems\RepositoryForms\Event\FormActionEvent;
 use EzSystems\RepositoryForms\Event\RepositoryFormEvents;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
@@ -65,12 +67,13 @@ class ContentFormProcessor implements EventSubscriberInterface
         $languageCode = $formConfig->getOption('languageCode');
         $draft = $this->saveDraft($data, $languageCode);
         $referrerLocation = $event->getOption('referrerLocation');
+        $contentLocation = $this->resolveLocation($draft, $referrerLocation, $data);
 
         $defaultUrl = $this->router->generate('ez_content_draft_edit', [
             'contentId' => $draft->id,
             'versionNo' => $draft->getVersionInfo()->versionNo,
             'language' => $languageCode,
-            'locationId' => null !== $referrerLocation ? $referrerLocation->id : null,
+            'locationId' => null !== $contentLocation ? $contentLocation->id : null,
         ]);
         $event->setResponse(new RedirectResponse($formConfig->getAction() ?: $defaultUrl));
     }
@@ -178,7 +181,7 @@ class ContentFormProcessor implements EventSubscriberInterface
     }
 
     /**
-     * @param ContentUpdateData|ContentCreateData|NewnessChecker $data
+     * @param \EzSystems\RepositoryForms\Data\Content\ContentUpdateData|\EzSystems\RepositoryForms\Data\Content\ContentCreateData $data
      *
      * @return string
      *
@@ -196,5 +199,21 @@ class ContentFormProcessor implements EventSubscriberInterface
         return $data->isNew()
             ? $data->mainLanguageCode
             : $data->contentDraft->getVersionInfo()->getContentInfo()->mainLanguageCode;
+    }
+
+    /**
+     * @param \eZ\Publish\API\Repository\Values\Content\Content $content
+     * @param \eZ\Publish\API\Repository\Values\Content\Location|null $referrerLocation
+     * @param \EzSystems\RepositoryForms\Data\NewnessCheckable $data
+     *
+     * @return \eZ\Publish\API\Repository\Values\Content\Location|null
+     */
+    private function resolveLocation(Content $content, ?Location $referrerLocation, NewnessCheckable $data): ?Location
+    {
+        if ($data->isNew() || (!$content->contentInfo->published && null === $content->contentInfo->mainLocationId)) {
+            return null; // no location exists until new content is published
+        }
+
+        return $referrerLocation ?? $this->locationService->loadLocation($content->contentInfo->mainLocationId);
     }
 }
