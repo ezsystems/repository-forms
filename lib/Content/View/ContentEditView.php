@@ -20,7 +20,7 @@ class ContentEditView extends BaseView implements ContentValueView, LocationValu
     /** @var \eZ\Publish\API\Repository\Values\Content\Content */
     private $content;
 
-    /** @var \eZ\Publish\API\Repository\Values\Content\Location */
+    /** @var \eZ\Publish\API\Repository\Values\Content\Location|null */
     private $location;
 
     /** @var \eZ\Publish\API\Repository\Values\Content\Language */
@@ -48,17 +48,17 @@ class ContentEditView extends BaseView implements ContentValueView, LocationValu
     }
 
     /**
-     * @param \eZ\Publish\API\Repository\Values\Content\Location $location
+     * @param \eZ\Publish\API\Repository\Values\Content\Location|null $location
      */
-    public function setLocation(Location $location)
+    public function setLocation(?Location $location)
     {
         $this->location = $location;
     }
 
     /**
-     * @return \eZ\Publish\API\Repository\Values\Content\Location
+     * @return \eZ\Publish\API\Repository\Values\Content\Location|null
      */
-    public function getLocation(): Location
+    public function getLocation(): ?Location
     {
         return $this->location;
     }

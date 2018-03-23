@@ -16,7 +16,8 @@ class ContentDispatcher extends AbstractActionDispatcher
     protected function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefined(['referrerLocation']);
-        $resolver->setAllowedTypes('referrerLocation', [Location::class, null]);
+        $resolver->setDefault('referrerLocation', null);
+        $resolver->setAllowedTypes('referrerLocation', [Location::class, 'null']);
     }
 
     protected function getActionEventBaseName()
