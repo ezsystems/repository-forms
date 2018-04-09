@@ -14,6 +14,7 @@ use eZ\Publish\API\Repository\ContentTypeService;
 use eZ\Publish\API\Repository\Values\ContentType\ContentTypeDraft;
 use eZ\Publish\API\Repository\Values\ContentType\FieldDefinitionCreateStruct;
 use eZ\Publish\Core\Helper\FieldsGroups\FieldsGroupsList;
+use eZ\Publish\Core\Repository\Values\ContentType\FieldDefinition;
 use EzSystems\RepositoryForms\Event\FormActionEvent;
 use EzSystems\RepositoryForms\Event\RepositoryFormEvents;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
@@ -170,7 +171,7 @@ class ContentTypeFormProcessor implements EventSubscriberInterface
         $startIndex,
         $fieldTypeIdentifier
     ) {
-        $fieldDefinitionIdentifiers = array_map(function ($fieldDefinition) {
+        $fieldDefinitionIdentifiers = array_map(function (FieldDefinition $fieldDefinition) {
             return $fieldDefinition->identifier;
         }, $contentTypeDraft->getFieldDefinitions());
 
