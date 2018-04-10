@@ -9,6 +9,7 @@
 namespace EzSystems\RepositoryForms\Validator\Constraints;
 
 use eZ\Publish\API\Repository\Values\ValueObject;
+use eZ\Publish\Core\Repository\Values\ContentType\FieldDefinition;
 use EzSystems\RepositoryForms\Data\FieldDefinitionData;
 
 /**
@@ -50,5 +51,40 @@ class FieldDefinitionDefaultValueValidator extends FieldValueValidator
     protected function generatePropertyPath($errorIndex, $errorTarget)
     {
         return 'defaultValue';
+    }
+
+    /**
+     * Returns the field definition $value refers to.
+     * FieldDefinition object is needed to validate field value against field settings.
+     *
+     * @param FieldData|ValueObject $value ValueObject holding the field value to validate, e.g. FieldDefinitionData.
+     *
+     * @throws \InvalidArgumentException If field definition cannot be retrieved.
+     *
+     * @return \eZ\Publish\API\Repository\Values\ContentType\FieldDefinition
+     */
+    protected function getFieldDefinition(ValueObject $value)
+    {
+        return $this->getUpdatedFieldDefinition($value);
+    }
+
+    /**
+     * This method overwrite a property fieldSettings in the FieldDefinition object to expose sent settings.
+     *
+     * @param \eZ\Publish\API\Repository\Values\ValueObject $value
+     *
+     * @return \eZ\Publish\Core\Repository\Values\ContentType\FieldDefinition
+     */
+    private function getUpdatedFieldDefinition(ValueObject $value): FieldDefinition
+    {
+        $oldFieldDef = $value->fieldDefinition;
+
+        $properties = [];
+        foreach ($oldFieldDef->attributes() as $property) {
+            $properties[$property] = $oldFieldDef->{$property};
+        }
+        $properties['fieldSettings'] = $value->fieldSettings;
+
+        return new FieldDefinition($properties);
     }
 }
