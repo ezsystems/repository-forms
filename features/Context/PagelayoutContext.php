@@ -12,6 +12,9 @@ use PHPUnit\Framework\Assert as Assertion;
 
 class PagelayoutContext extends RawMinkContext implements Context, SnippetAcceptingContext
 {
+    /** @var string Regex matching the way the Twig template name is inserted in debug mode */
+    const TWIG_DEBUG_STOP_REGEX = '<!-- STOP .*%s.* -->';
+
     /**
      * @var ConfigResolverInterface
      */
@@ -30,7 +33,7 @@ class PagelayoutContext extends RawMinkContext implements Context, SnippetAccept
      */
     public function aPagelayoutIsConfigured()
     {
-        $this->configResolver->hasParameter('pagelayout');
+        Assertion::assertTrue($this->configResolver->hasParameter('pagelayout'));
     }
 
     /**
@@ -38,9 +41,8 @@ class PagelayoutContext extends RawMinkContext implements Context, SnippetAccept
      */
     public function itIsRenderedUsingTheConfiguredPagelayout()
     {
-        Assertion::assertContains(
-            sprintf('<!-- STOP %s -->', $this->configResolver->getParameter('pagelayout')),
-            $this->getSession()->getPage()->getOuterHtml()
-        );
+        $pageLayout = $this->configResolver->getParameter('pagelayout');
+        $searchedPattern = sprintf(self::TWIG_DEBUG_STOP_REGEX, preg_quote($pageLayout, null));
+        Assertion::assertRegExp($searchedPattern, $this->getSession()->getPage()->getOuterHtml());
     }
 }
