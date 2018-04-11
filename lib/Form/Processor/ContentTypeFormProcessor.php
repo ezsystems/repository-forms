@@ -10,6 +10,7 @@ namespace EzSystems\RepositoryForms\Form\Processor;
 
 use eZ\Publish\API\Repository\ContentTypeService;
 use eZ\Publish\API\Repository\Values\ContentType\ContentTypeDraft;
+use eZ\Publish\API\Repository\Values\ContentType\FieldDefinition;
 use eZ\Publish\API\Repository\Values\ContentType\FieldDefinitionCreateStruct;
 use eZ\Publish\Core\Helper\FieldsGroups\FieldsGroupsList;
 use EzSystems\RepositoryForms\Event\FormActionEvent;
@@ -168,7 +169,9 @@ class ContentTypeFormProcessor implements EventSubscriberInterface
         $startIndex,
         $fieldTypeIdentifier
     ) {
-        $fieldDefinitionIdentifiers = array_column($contentTypeDraft->getFieldDefinitions(), 'identifier');
+        $fieldDefinitionIdentifiers = array_map(function (FieldDefinition $fieldDefinition) {
+            return $fieldDefinition->identifier;
+        }, $contentTypeDraft->getFieldDefinitions());
 
         do {
             $fieldDefinitionIdentifier = sprintf('new_%s_%d', $fieldTypeIdentifier, ++$startIndex);
