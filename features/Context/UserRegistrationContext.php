@@ -27,6 +27,9 @@ class UserRegistrationContext extends RawMinkContext implements Context, Snippet
 {
     use RepositoryContext;
 
+    /** @var string Regex matching the way the Twig template name is inserted in debug mode */
+    const TWIG_DEBUG_STOP_REGEX = '<!-- STOP .*%s.* -->';
+
     private static $password = 'publish';
 
     private static $language = 'eng-GB';
@@ -336,7 +339,8 @@ class UserRegistrationContext extends RawMinkContext implements Context, Snippet
     public function thePageIsRenderedUsingTheTemplateConfiguredIn($template)
     {
         $html = $this->getSession()->getPage()->getOuterHtml();
-        $found = (strpos($html, sprintf('<!-- STOP %s -->', $template)) !== false);
+        $searchedPattern = sprintf(self::TWIG_DEBUG_STOP_REGEX, preg_quote($template, null));
+        $found = preg_match($searchedPattern, $html) === 1;
 
         if (!$found && strpos($template, ':') === false) {
             $alternativeTemplate = sprintf(
@@ -344,7 +348,8 @@ class UserRegistrationContext extends RawMinkContext implements Context, Snippet
                 dirname($template),
                 basename($template)
             );
-            $found = (strpos($html, sprintf('<!-- STOP %s -->', $alternativeTemplate)) !== false);
+            $searchedPattern = sprintf(self::TWIG_DEBUG_STOP_REGEX, preg_quote($alternativeTemplate, null));
+            $found = preg_match($searchedPattern, $html) === 1;
         }
 
         Assert::assertTrue(
