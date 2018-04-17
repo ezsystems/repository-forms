@@ -8,7 +8,7 @@ Background:
 
 Scenario: The attributes of a user field have a form representation
     When I view the edit form for this field
-    Then the edit form should contain an identifiable widget for that field definition
+    Then the edit form should contain an identifiable widget for user field definition
      And it should contain the following set of labels, and input fields of the following types:
          | label | type |
          | Username | text |
@@ -19,4 +19,4 @@ Scenario: The attributes of a user field have a form representation
 Scenario: The input fields are flagged as required when the field definition is required
     Given the field definition is marked as required
      When I view the edit form for this field
-     Then the value input fields should be flagged as required
+     Then the value input fields for user field should be flagged as required

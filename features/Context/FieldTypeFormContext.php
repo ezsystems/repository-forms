@@ -7,7 +7,6 @@ namespace EzSystems\RepositoryForms\Features\Context;
 use Behat\Behat\Context\SnippetAcceptingContext;
 use Behat\Behat\Hook\Scope\BeforeScenarioScope;
 use Behat\Gherkin\Node\TableNode;
-use Behat\Mink\Element\NodeElement;
 use Behat\MinkExtension\Context\RawMinkContext;
 use eZ\Publish\API\Repository\Values\ContentType\FieldDefinitionCreateStruct;
 use eZ\Publish\API\Repository\Values\ContentType\FieldDefinitionUpdateStruct;
@@ -69,13 +68,13 @@ final class FieldTypeFormContext extends RawMinkContext implements SnippetAccept
     }
 
     /**
-     * @Then /^the edit form should contain an identifiable widget for that field definition$/
+     * @Then the edit form should contain an identifiable widget for :fieldTypeIdentifier field definition
      */
-    public function theEditFormShouldContainAFieldsetNamedAfterTheFieldDefinition()
+    public function theEditFormShouldContainAFieldsetNamedAfterTheFieldDefinition($fieldTypeIdentifier)
     {
         $this->assertSession()->elementTextContains(
             'css',
-            'form[name="ezrepoforms_content_edit"] label',
+            sprintf('form[name="ezrepoforms_%s"] label', $this->getFieldTypeSelector($fieldTypeIdentifier)),
             'Field'
         );
     }
@@ -101,43 +100,26 @@ final class FieldTypeFormContext extends RawMinkContext implements SnippetAccept
      */
     public function itShouldContainTheFollowingSetOfLabelsAndInputFieldsTypes(TableNode $table)
     {
-        $fieldsExpectations = $table->getColumnsHash();
-
         $inputNodeElements = $this->getSession()->getPage()->findAll(
             'css',
             sprintf(
-                'form[name="ezrepoforms_content_edit"] '
-                . 'div#ezrepoforms_content_edit_fieldsData_%s_value '
-                . 'input',
+                'form[name="ezrepoforms_user_create"] #ezrepoforms_user_create_fieldsData_%s_value input',
                 self::$fieldIdentifier
             )
         );
 
-        /** @var NodeElement $nodeElement */
-        foreach ($inputNodeElements as $nodeElement) {
-            foreach ($fieldsExpectations as $expectationId => $fieldExpectation) {
-                if ($fieldExpectation['type'] === $nodeElement->getAttribute('type')) {
-                    $inputId = $nodeElement->getAttribute('id');
+        $actualInputFields = [];
+        foreach ($inputNodeElements as $inputElement) {
+            $type = $inputElement->getAttribute('type');
+            $inputId = $inputElement->getAttribute('id');
+            $label = $this->getSession()->getPage()->find('css', sprintf('label[for=%s]', $inputId))->getText();
 
-                    $this->assertSession()->elementExists('css', "label[for=$inputId]");
-                    $this->assertSession()->elementTextContains(
-                        'css',
-                        "label[for=$inputId]",
-                        $fieldExpectation['label']
-                    );
-
-                    unset($fieldsExpectations[$expectationId]);
-                    reset($fieldsExpectations);
-                    break;
-                }
-            }
+            $actualInputFields[] = ['type' => $type, 'label' => $label];
         }
 
-        Assertion::assertEmpty(
-            $fieldsExpectations,
-            'The following input fields were not found:' .
-            implode(', ', array_map(function ($v) {return $v['label'];}, $fieldsExpectations))
-        );
+        foreach ($expectedInputFields = $table->getColumnsHash() as $inputField) {
+            Assertion::assertContains($inputField, $actualInputFields);
+        }
     }
 
     /**
@@ -153,24 +135,32 @@ final class FieldTypeFormContext extends RawMinkContext implements SnippetAccept
     }
 
     /**
-     * @Then /^the value input fields should be flagged as required$/
+     * @Then the value input fields for :fieldIdentifier field should be flagged as required
      */
-    public function theInputFieldsShouldBeFlaggedAsRequired()
+    public function theInputFieldsShouldBeFlaggedAsRequired($fieldTypeIdentifier)
     {
         $inputNodeElements = $this->getSession()->getPage()->findAll(
             'css',
             sprintf(
-                'input#ezrepoforms_content_edit_fieldsData_%s_value, '
-                . 'div#ezrepoforms_content_edit_fieldsData_%s_value input',
-                self::$fieldIdentifier,
+                'form[name="ezrepoforms_%1$s"] #ezrepoforms_%1$s_fieldsData_%2$s input',
+                $this->getFieldTypeSelector($fieldTypeIdentifier),
                 self::$fieldIdentifier
             )
         );
+
         Assertion::assertNotEmpty($inputNodeElements, 'The input field is not marked as required');
+
+        $exceptions = $this->getRequiredFieldTypeExceptions($fieldTypeIdentifier);
+
         foreach ($inputNodeElements as $inputNodeElement) {
+            $inputId = $inputNodeElement->getAttribute('id');
+            $label = $this->getSession()->getPage()->find('css', sprintf('label[for=%s]', $inputId))->getText();
+
+            $expectedState = array_key_exists($label, $exceptions) ? $exceptions[$label] : true;
+
             Assertion::assertEquals(
-                'required',
-                $inputNodeElement->getAttribute('required'),
+                $expectedState,
+                $inputNodeElement->hasAttribute('required'),
                 sprintf(
                     '%s input with id %s is not flagged as required',
                     $inputNodeElement->getAttribute('type'),
@@ -192,5 +182,23 @@ final class FieldTypeFormContext extends RawMinkContext implements SnippetAccept
             self::$fieldIdentifier,
             new FieldDefinitionUpdateStruct(['fieldSettings' => [$option => $value]])
         );
+    }
+
+    private function getFieldTypeSelector(string $fieldTypeIdentifier): string
+    {
+        if ($fieldTypeIdentifier === 'user') {
+            return 'user_create';
+        }
+
+        return 'content_edit';
+    }
+
+    private function getRequiredFieldTypeExceptions(string $fieldTypeIdentifier): array
+    {
+        if ($fieldTypeIdentifier === 'user') {
+            return ['Enabled' => false];
+        }
+
+        return [];
     }
 }

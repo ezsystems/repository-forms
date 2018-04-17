@@ -8,10 +8,10 @@ Background:
 
 Scenario: The attributes of the field have a form representation
     When I view the edit form for this field
-    Then the edit form should contain an identifiable widget for that field definition
+    Then the edit form should contain an identifiable widget for ezboolean field definition
      And it should contain a checkbox input field
 
 Scenario: The input fields are flagged as required when the field definition is required
     Given the field definition is required
      When I view the edit form for this field
-     Then the value input fields should be flagged as required
+     Then the value input fields for ezboolean field should be flagged as required
