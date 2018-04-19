@@ -5,6 +5,7 @@
  */
 namespace EzSystems\RepositoryForms\Form\Type\FieldType;
 
+use EzSystems\RepositoryForms\ConfigResolver\MaxUploadSize;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
@@ -19,6 +20,14 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 class BinaryBaseFieldType extends AbstractType
 {
+    /** @var MaxUploadSize */
+    private $maxUploadSize;
+
+    public function __construct(MaxUploadSize $maxUploadSize)
+    {
+        $this->maxUploadSize = $maxUploadSize;
+    }
+
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
@@ -37,7 +46,7 @@ class BinaryBaseFieldType extends AbstractType
                     'required' => $options['required'],
                     'constraints' => [
                         new Assert\File([
-                            'maxSize' => $this->getMaxUploadSize(),
+                            'maxSize' => $this->maxUploadSize->get(),
                         ]),
                     ],
                 ]
@@ -46,39 +55,11 @@ class BinaryBaseFieldType extends AbstractType
 
     public function buildView(FormView $view, FormInterface $form, array $options)
     {
-        $view->vars['max_upload_size'] = $this->getMaxUploadSize();
+        $view->vars['max_upload_size'] = $this->maxUploadSize->get();
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(['translation_domain' => 'ezrepoforms_fieldtype']);
-    }
-
-    private function getMaxUploadSize()
-    {
-        static $value = null;
-        if ($value === null) {
-            $value = $this->str2bytes(ini_get('upload_max_filesize'));
-        }
-
-        return $value;
-    }
-
-    private function str2bytes($str)
-    {
-        $str = strtoupper(trim($str));
-
-        $value = substr($str, 0, -1);
-        $unit = substr($str, -1);
-        switch ($unit) {
-            case 'G':
-                $value *= 1024;
-            case 'M':
-                $value *= 1024;
-            case 'K':
-                $value *= 1024;
-        }
-
-        return (int) $value;
     }
 }
