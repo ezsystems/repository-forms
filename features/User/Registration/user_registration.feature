@@ -50,11 +50,11 @@ Scenario: The user registration templates can be customized
       {% extends noLayout is defined and noLayout == true ? viewbaseLayout : pagelayout %}
 
       {% block content %}
-          {% import "EzSystemsRepositoryFormsBundle:Content:content_form.html.twig" as contentForms %}
-
           <section class="ez-content-edit">
-              {{ contentForms.display_form(form) }}
-          </section>
+            {{ form_start(form) }}
+            {{- form_widget(form.fieldsData) -}}
+            {{ form_end(form) }}
+           </section>
       {% endblock %}
       """
       And the following template in "src/AppBundle/Resources/views/user/registration_confirmation.html.twig":

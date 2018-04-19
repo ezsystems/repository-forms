@@ -223,7 +223,7 @@ class UserRegistrationContext extends RawMinkContext implements Context, Snippet
      */
     public function iClickOnTheRegisterButton()
     {
-        $this->getSession()->getPage()->pressButton('ezrepoforms_user_register[publish]');
+        $this->getSession()->getPage()->pressButton('ezrepoforms_user_register[register]');
         $this->assertSession()->statusCodeEquals(200);
     }
 
