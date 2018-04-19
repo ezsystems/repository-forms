@@ -140,7 +140,7 @@ final class ContentEdit extends MinkContext implements Context, SnippetAccepting
     public function thereIsARelevantErrorMessageLinkedToTheInvalidField()
     {
         $selector = sprintf(
-            '#ezrepoforms_content_edit_fieldsData_%s div.has-error ul li',
+            '#ezrepoforms_content_edit_fieldsData_%s div ul li',
             self::$constrainedFieldIdentifier
         );
 
