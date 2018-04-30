@@ -8,7 +8,6 @@
  */
 namespace EzSystems\RepositoryFormsBundle;
 
-use EzSystems\RepositoryForms\Security\UserRegisterPolicyProvider;
 use EzSystems\RepositoryFormsBundle\DependencyInjection\Compiler\FieldTypeFormMapperDispatcherPass;
 use EzSystems\RepositoryFormsBundle\DependencyInjection\Compiler\LimitationFormMapperPass;
 use EzSystems\RepositoryFormsBundle\DependencyInjection\Compiler\LimitationValueMapperPass;
@@ -33,7 +32,6 @@ class EzSystemsRepositoryFormsBundle extends Bundle
         $container->addCompilerPass(new ViewBuilderRegistryPass());
 
         $eZExtension = $container->getExtension('ezpublish');
-        $eZExtension->addPolicyProvider(new UserRegisterPolicyProvider());
         $eZExtension->addConfigParser(new UserRegistration());
         $eZExtension->addConfigParser(new ContentEdit());
         $eZExtension->addConfigParser(new UserEdit());
