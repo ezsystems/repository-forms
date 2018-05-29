@@ -14,12 +14,15 @@ use EzSystems\RepositoryForms\FieldType\DataTransformer\MultiSelectionValueTrans
 use EzSystems\RepositoryForms\FieldType\DataTransformer\SingleSelectionValueTransformer;
 use EzSystems\RepositoryForms\FieldType\FieldDefinitionFormMapperInterface;
 use EzSystems\RepositoryForms\FieldType\FieldValueFormMapperInterface;
+use EzSystems\RepositoryForms\Form\DataTransformer\SelectionOptionDefaultValueTransformer;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormEvents;
 
 class SelectionFormMapper implements FieldDefinitionFormMapperInterface, FieldValueFormMapperInterface
 {
@@ -34,6 +37,10 @@ class SelectionFormMapper implements FieldDefinitionFormMapperInterface, FieldVa
      */
     public function mapFieldDefinitionForm(FormInterface $fieldDefinitionForm, FieldDefinitionData $data)
     {
+        $this->prepareDefaultValueForForm($data);
+
+        $formConfig = $fieldDefinitionForm->getConfig();
+
         $fieldDefinitionForm
             ->add('isMultiple', CheckboxType::class, [
                 'required' => false,
@@ -51,7 +58,33 @@ class SelectionFormMapper implements FieldDefinitionFormMapperInterface, FieldVa
                 'required' => false,
                 'property_path' => 'fieldSettings[options]',
                 'label' => 'field_definition.ezselection.options',
-            ]);
+            ])
+            ->add(
+                $formConfig->getFormFactory()->createBuilder()
+                    ->create('defaults', CollectionType::class, [
+                        'entry_type' => CheckboxType::class,
+                        'entry_options' => [
+                            'required' => false,
+                            'attr' => ['class' => 'ezselection-option-is-default-checkbox'],
+                        ],
+                        'allow_add' => true,
+                        'allow_delete' => true,
+                        'delete_empty' => false,
+                        'prototype' => true,
+                        'prototype_name' => '__number__',
+                        'prototype_data' => false,
+                        'required' => false,
+                        'property_path' => 'fieldSettings[defaultValue]',
+                        'label' => 'field_definition.ezselection.defaults',
+                    ])
+                    ->addEventListener(FormEvents::PRE_SUBMIT, function (FormEvent $event) {
+                        // Adds empty checkboxes to form, so when validation fails ir still contains checkboxes for all options.
+                        $this->prepareDefaultValueCheckboxes($event->getForm());
+                    })
+                    ->addModelTransformer(new SelectionOptionDefaultValueTransformer($data->fieldSettings['options']))
+                    ->setAutoInitialize(false)
+                    ->getForm()
+            );
     }
 
     public function mapFieldValueForm(FormInterface $fieldForm, FieldData $data)
@@ -95,5 +128,37 @@ class SelectionFormMapper implements FieldDefinitionFormMapperInterface, FieldVa
             ->setDefaults([
                 'translation_domain' => 'ezrepoforms_content_type',
             ]);
+    }
+
+    /**
+     * Manipulates form data so number of checkboxes match number of options.
+     * @param FormInterface $form
+     */
+    private function prepareDefaultValueCheckboxes(FormInterface $form)
+    {
+        $parentForm = $form->getParent();
+        $options = $parentForm->get('options')->getData();
+        $defaultValues = [];
+
+        foreach ($options as $option) {
+            $defaultValues[] = false;
+        }
+
+        $form->setData($defaultValues);
+    }
+
+    /**
+     * Converts and set fieldSetting defaultValue to an array of booleans so it can be passed to form.
+     * @param FieldDefinitionData $data
+     */
+    private function prepareDefaultValueForForm(FieldDefinitionData $data)
+    {
+        $defaultValues = [];
+
+        foreach ($data->fieldSettings['options'] as $key => $option) {
+            $defaultValues[$key] = in_array($key, $data->fieldSettings['defaultValue']);
+        }
+
+        $data->fieldSettings['defaultValue'] = $defaultValues;
     }
 }
