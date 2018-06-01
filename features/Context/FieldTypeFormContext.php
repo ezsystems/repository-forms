@@ -34,23 +34,42 @@ final class FieldTypeFormContext extends RawMinkContext implements SnippetAccept
 
     /**
      * @Given a Content Type with a(n) :fieldTypeIdentifier field definition
+     * @Given a Content Type :contentTypeName with a(n) :fieldTypeIdentifier field definition
      */
-    public function aContentTypeWithAGivenFieldDefinition($fieldTypeIdentifier)
+    public function aContentTypeWithAGivenFieldDefinition($fieldTypeIdentifier, $contentTypeName = null)
     {
         if (isset(self::$fieldTypeIdentifierMap[$fieldTypeIdentifier])) {
             $fieldTypeIdentifier = self::$fieldTypeIdentifierMap[$fieldTypeIdentifier];
         }
 
         $contentTypeCreateStruct = $this->contentTypeContext->newContentTypeCreateStruct();
-        $contentTypeCreateStruct->addFieldDefinition(
-            new FieldDefinitionCreateStruct(
+        if (isset($contentTypeName)) {
+            $contentTypeCreateStruct->names = ['eng-GB' => $contentTypeName];
+        }
+
+        $fieldDefinition = [
+            'identifier' => self::$fieldIdentifier,
+            'fieldTypeIdentifier' => $fieldTypeIdentifier,
+            'names' => ['eng-GB' => 'Field'],
+        ];
+        if ($fieldTypeIdentifier === 'ezselection') {
+            $fieldDefinition = array_merge(
+                $fieldDefinition,
                 [
-                    'identifier' => self::$fieldIdentifier,
-                    'fieldTypeIdentifier' => $fieldTypeIdentifier,
-                    'names' => ['eng-GB' => 'Field'],
+                    'fieldSettings' => ['isMultiple' => false,
+                        'options' => [
+                            0 => 'A first',
+                            1 => 'Bielefeld',
+                            2 => 'Test-value',
+                            3 => 'Turtles',
+                            4 => 'Zombies',
+                        ],
+                    ],
                 ]
-            )
-        );
+            );
+        }
+
+        $contentTypeCreateStruct->addFieldDefinition(new FieldDefinitionCreateStruct($fieldDefinition));
         $this->contentTypeContext->createContentType($contentTypeCreateStruct);
     }
 
