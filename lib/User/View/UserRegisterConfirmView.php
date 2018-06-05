@@ -5,8 +5,11 @@
  */
 namespace EzSystems\RepositoryForms\User\View;
 
-use eZ\Publish\Core\MVC\Symfony\View\BaseView;
+use EzSystems\EzPlatformUser\View\UserRegisterConfirmView as BaseRegisterConfirmView;
 
-class UserRegisterConfirmView extends BaseView
+/**
+ * @deprecated Deprecated in 1.1 and will be removed in 2.0. Please use EzSystems\EzPlatformUser\View\UserRegisterConfirmView instead.
+ */
+class UserRegisterConfirmView extends BaseRegisterConfirmView
 {
 }

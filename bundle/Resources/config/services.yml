@@ -240,13 +240,7 @@ services:
             - { name: kernel.event_subscriber }
 
     ezrepoforms.form_processor.user_register:
-        class: "%ezrepoforms.form_processor.user_register.class%"
-        arguments:
-            - '@ezpublish.api.repository'
-            - '@ezpublish.api.service.user'
-            - '@router'
-        tags:
-            - { name: kernel.event_subscriber }
+        alias: EzSystems\EzPlatformUser\Form\Processor\UserRegisterFormProcessor
 
     ezrepoforms.form_processor.user:
         class: "%ezrepoforms.form_processor.user_cancel.class%"
@@ -286,36 +280,19 @@ services:
         parent: ezpublish.controller.base
 
     ezrepoforms.controller.user_register:
-        class: "%ezrepoforms.controller.user_register.class%"
-        arguments:
-            - "@ezrepoforms.form_data_mapper.user_register"
-            - "@ezrepoforms.action_dispatcher.user"
-        parent: ezpublish.controller.base
+        alias: EzSystems\EzPlatformUserBundle\Controller\UserRegisterController
 
     ez_content_edit:
         alias: ezrepoforms.controller.content_edit
 
     ezrepoforms.user_register.registration_group_loader.configurable:
-        class: "%ezrepoforms.user_register.registration_group_loader.configurable.class%"
-        arguments:
-            - "@ezpublish.api.repository"
-        calls:
-            - [setParam, ["groupId", "$user_registration.group_id$"]]
+        alias: EzSystems\EzPlatformUser\ConfigResolver\ConfigurableRegistrationGroupLoader
 
     ezrepoforms.user_register.registration_content_type_loader.configurable:
-        class: "%ezrepoforms.user_register.registration_content_type_loader.configurable.class%"
-        arguments:
-            - "@ezpublish.api.repository"
-        calls:
-            - [setParam, ["contentTypeIdentifier", "%ezrepoforms.user_content_type_identifier%"]]
+        alias: EzSystems\EzPlatformUser\ConfigResolver\ConfigurableRegistrationContentTypeLoader
 
     ezrepoforms.form_data_mapper.user_register:
-        class: "%ezrepoforms.form_data_mapper.user_register.class%"
-        arguments:
-            - "@ezrepoforms.user_register.registration_content_type_loader.configurable"
-            - "@ezrepoforms.user_register.registration_group_loader.configurable"
-        calls:
-            - [setParam, ["language", "@=service('ezpublish.config.resolver').getParameter('languages', null, null)[0]"]]
+        alias: EzSystems\EzPlatformUser\Form\DataMapper\UserRegisterMapper
 
     ezrepoforms.view_templates_listener:
         class: "%ezrepoforms.view_templates_listener.class%"
@@ -324,8 +301,8 @@ services:
         calls:
             - [setViewTemplate, ['EzSystems\RepositoryForms\User\View\UserCreateView', "$user_edit.templates.create$"]]
             - [setViewTemplate, ['EzSystems\RepositoryForms\User\View\UserUpdateView', "$user_edit.templates.update$"]]
-            - [setViewTemplate, ['EzSystems\RepositoryForms\User\View\UserRegisterFormView', "$user_registration.templates.form$"]]
-            - [setViewTemplate, ['EzSystems\RepositoryForms\User\View\UserRegisterConfirmView', "$user_registration.templates.confirmation$"]]
+            - [setViewTemplate, ['EzSystems\EzPlatformUser\View\UserRegisterFormView', "$user_registration.templates.form$"]]
+            - [setViewTemplate, ['EzSystems\EzPlatformUser\View\UserRegisterConfirmView', "$user_registration.templates.confirmation$"]]
             - [setViewTemplate, ['EzSystems\RepositoryForms\Content\View\ContentCreateDraftView', "$content_edit.templates.create_draft$"]]
             - [setPagelayout, ["$pagelayout$"]]
 

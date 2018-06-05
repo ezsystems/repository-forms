@@ -7,28 +7,12 @@
  */
 namespace EzSystems\RepositoryForms\User;
 
-use Symfony\Component\OptionsResolver\OptionsResolver;
+use EzSystems\EzPlatformUser\ConfigResolver\ConfigurableRegistrationGroupLoader as BaseConfigurableRegistrationGroupLoader;
 
 /**
  * Loads the registration user group from a configured, injected group ID.
+ * @deprecated Deprecated in 1.1 and will be removed in 2.0. Please use \EzSystems\EzPlatformUser\ConfigResolver\ConfigurableRegistrationGroupLoader instead.
  */
-class ConfigurableRegistrationGroupLoader extends ConfigurableSudoRepositoryLoader implements RegistrationGroupLoader
+class ConfigurableRegistrationGroupLoader extends BaseConfigurableRegistrationGroupLoader
 {
-    public function loadGroup()
-    {
-        return $this->sudo(
-            function () {
-                return $this->getRepository()
-                    ->getUserService()
-                    ->loadUserGroup(
-                        $this->getParam('groupId')
-                    );
-            }
-        );
-    }
-
-    protected function configureOptions(OptionsResolver $optionsResolver)
-    {
-        $optionsResolver->setRequired('groupId');
-    }
 }

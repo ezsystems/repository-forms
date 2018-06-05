@@ -7,29 +7,12 @@
  */
 namespace EzSystems\RepositoryForms\User;
 
-use Symfony\Component\OptionsResolver\OptionsResolver;
+use EzSystems\EzPlatformUser\ConfigResolver\ConfigurableRegistrationContentTypeLoader as BaseConfigurableRegistrationContentTypeLoader;
 
 /**
  * Loads the registration content type from a configured, injected content type identifier.
+ * @deprecated Deprecated in 1.1 and will be removed in 2.0. Please use \EzSystems\EzPlatformUser\ConfigResolver\ConfigurableRegistrationContentTypeLoader instead.
  */
-class ConfigurableRegistrationContentTypeLoader extends ConfigurableSudoRepositoryLoader implements RegistrationContentTypeLoader
+class ConfigurableRegistrationContentTypeLoader extends BaseConfigurableRegistrationContentTypeLoader
 {
-    public function loadContentType()
-    {
-        return $this->sudo(
-            function () {
-                return
-                    $this->getRepository()
-                        ->getContentTypeService()
-                        ->loadContentTypeByIdentifier(
-                            $this->getParam('contentTypeIdentifier')
-                        );
-            }
-        );
-    }
-
-    protected function configureOptions(OptionsResolver $optionsResolver)
-    {
-        $optionsResolver->setRequired('contentTypeIdentifier');
-    }
 }
