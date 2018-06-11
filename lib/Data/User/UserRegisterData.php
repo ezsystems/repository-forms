@@ -8,6 +8,11 @@
  */
 namespace EzSystems\RepositoryForms\Data\User;
 
-class UserRegisterData extends UserCreateData
+use EzSystems\EzPlatformUser\Form\Data\UserRegisterData as BaseUserRegisterData;
+
+/**
+ * @deprecated Deprecated in 1.1 and will be removed in 2.0. Please use \EzSystems\EzPlatformUser\Form\Data\UserRegisterData instead.
+ */
+class UserRegisterData extends BaseUserRegisterData
 {
 }

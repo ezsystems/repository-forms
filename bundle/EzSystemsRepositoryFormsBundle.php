@@ -17,7 +17,6 @@ use EzSystems\RepositoryFormsBundle\DependencyInjection\Configuration\Parser\Con
 use EzSystems\RepositoryFormsBundle\DependencyInjection\Configuration\Parser\ContentEditView;
 use EzSystems\RepositoryFormsBundle\DependencyInjection\Configuration\Parser\LimitationValueTemplates;
 use EzSystems\RepositoryFormsBundle\DependencyInjection\Configuration\Parser\UserEdit;
-use EzSystems\RepositoryFormsBundle\DependencyInjection\Configuration\Parser\UserRegistration;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
@@ -32,7 +31,6 @@ class EzSystemsRepositoryFormsBundle extends Bundle
         $container->addCompilerPass(new ViewBuilderRegistryPass());
 
         $eZExtension = $container->getExtension('ezpublish');
-        $eZExtension->addConfigParser(new UserRegistration());
         $eZExtension->addConfigParser(new ContentEdit());
         $eZExtension->addConfigParser(new UserEdit());
         $eZExtension->addConfigParser(new LimitationValueTemplates());

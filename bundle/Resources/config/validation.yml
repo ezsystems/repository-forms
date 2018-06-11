@@ -112,11 +112,6 @@ EzSystems\RepositoryForms\Data\User\UserUpdateData:
         fieldsData:
             - Valid: ~
 
-EzSystems\RepositoryForms\Data\User\UserRegisterData:
-    properties:
-        fieldsData:
-            - Valid: ~
-
 EzSystems\RepositoryForms\Data\User\UserAccountFieldData:
     properties:
         username:
