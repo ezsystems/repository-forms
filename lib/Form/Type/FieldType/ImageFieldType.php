@@ -44,6 +44,9 @@ class ImageFieldType extends AbstractType
 
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults(['translation_domain' => 'ezrepoforms_fieldtype']);
+        $resolver->setDefaults([
+            'translation_domain' => 'ezrepoforms_fieldtype',
+            'error_bubbling' => false,
+        ]);
     }
 }
