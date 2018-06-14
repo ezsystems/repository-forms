@@ -9,10 +9,15 @@ use eZ\Publish\API\Repository\ContentService;
 use eZ\Publish\API\Repository\ContentTypeService;
 use eZ\Publish\API\Repository\Exceptions\NotFoundException;
 use eZ\Publish\API\Repository\Values\ContentType\ContentType;
+use eZ\Publish\Core\Repository\Repository;
+use EzSystems\EzPlatformAdminUi\Form\Factory\FormFactory;
 use EzSystems\RepositoryFormsBundle\Controller\UserController;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpKernel\Event\FilterControllerEvent;
+use Symfony\Component\HttpKernel\Event\GetResponseEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
+use Symfony\Component\Routing\Router;
 
 /**
  * Sets proper controller on content edit.
@@ -21,6 +26,8 @@ class UserEditListener implements EventSubscriberInterface
 {
     const CONTENT_CREATE_ROUTE = 'ez_content_create_no_draft';
     const CONTENT_EDIT_ROUTE = 'ez_content_draft_edit';
+    const CONTENT_BASE_EDIT_ROUTE = 'ezplatform.content.edit';
+    const CONTENT_BASE_CREATE_ROUTE = 'ezplatform.content.create';
     const USER_FIELD_TYPE = 'ezuser';
 
     /** @var ContentTypeService */
@@ -32,24 +39,46 @@ class UserEditListener implements EventSubscriberInterface
     /** @var UserController */
     protected $userController;
 
+    /** @var \eZ\Publish\Core\Repository\Repository */
+    private $repository;
+
+    /** @var \Symfony\Component\Routing\Router */
+    private $router;
+
+    /** @var \EzSystems\EzPlatformAdminUi\Form\Factory\FormFactory */
+    private $formFactory;
+
     /**
-     * @param ContentTypeService $contentTypeService
-     * @param ContentService $contentService
-     * @param UserController $userController
+     * @param \eZ\Publish\API\Repository\ContentTypeService $contentTypeService
+     * @param \eZ\Publish\API\Repository\ContentService $contentService
+     * @param \EzSystems\RepositoryFormsBundle\Controller\UserController $userController
+     * @param \eZ\Publish\Core\Repository\Repository $repository
+     * @param \Symfony\Component\Routing\Router $router
+     * @param \EzSystems\EzPlatformAdminUi\Form\Factory\FormFactory $formFactory
      */
     public function __construct(
         ContentTypeService $contentTypeService,
         ContentService $contentService,
-        UserController $userController
+        UserController $userController,
+        Repository $repository,
+        Router $router,
+        FormFactory $formFactory
     ) {
         $this->contentTypeService = $contentTypeService;
         $this->contentService = $contentService;
         $this->userController = $userController;
+        $this->repository = $repository;
+        $this->router = $router;
+        $this->formFactory = $formFactory;
     }
 
     public static function getSubscribedEvents()
     {
         return [
+            KernelEvents::REQUEST => [
+                ['beforeUserControllerCreate', 20],
+                ['beforeUserControllerEdit', 30],
+            ],
             KernelEvents::CONTROLLER => [
                 ['onControllerUserCreate', 20],
                 ['onControllerUserEdit', 30],
@@ -57,6 +86,89 @@ class UserEditListener implements EventSubscriberInterface
         ];
     }
 
+    /**
+     * @param \Symfony\Component\HttpKernel\Event\GetResponseEvent $event
+     *
+     * @throws \Exception
+     */
+    public function beforeUserControllerCreate(GetResponseEvent $event)
+    {
+        $request = $event->getRequest();
+        if (self::CONTENT_BASE_CREATE_ROUTE === $request->attributes->get('_route')) {
+            $form = $this->formFactory->contentEdit(null, 'content_create');
+            $this->repository->sudo(function () use ($form, $request) {
+                $form->handleRequest($request);
+            });
+
+            if ($form->isValid()) {
+                /** @var \EzSystems\EzPlatformAdminUi\Form\Data\Content\Draft\ContentCreateData $data */
+                $data = $form->getData();
+                $contentType = $data->getContentType();
+                $isUserBasedContentType = $this->hasUserField($contentType);
+
+                if (!$isUserBasedContentType) {
+                    return;
+                }
+
+                $response = new RedirectResponse(
+                    $this->router->generate('ez_content_create_no_draft', [
+                        'contentTypeIdentifier' => $contentType->identifier,
+                        'language' => $data->getLanguage()->languageCode,
+                        'parentLocationId' => $data->getParentLocation()->id,
+                    ])
+                );
+                $event->setResponse($response);
+            }
+        }
+    }
+
+    /**
+     * @param \Symfony\Component\HttpKernel\Event\GetResponseEvent $event
+     *
+     * @throws \Exception
+     */
+    public function beforeUserControllerEdit(GetResponseEvent $event)
+    {
+        $request = $event->getRequest();
+        if (self::CONTENT_BASE_EDIT_ROUTE === $request->attributes->get('_route')) {
+            $form = $this->formFactory->contentEdit(null, 'content_edit');
+            $this->repository->sudo(function () use ($form, $request) {
+                $form->handleRequest($request);
+            });
+
+            if ($form->isValid()) {
+                /** @var \EzSystems\EzPlatformAdminUi\Form\Data\Content\Draft\ContentEditData $data */
+                $data = $form->getData();
+                $location = $data->getLocation();
+                $contentId = $location->contentInfo->id;
+
+                try {
+                    $contentType = $this->contentTypeService->loadContentType($location->contentInfo->contentTypeId);
+                    $isUserBasedContentType = $this->hasUserField($contentType);
+                } catch (NotFoundException $e) {
+                    return;
+                }
+
+                if (!$isUserBasedContentType) {
+                    return;
+                }
+
+                $response = new RedirectResponse(
+                    $this->router->generate('ez_content_draft_edit', [
+                        'contentId' => $contentId,
+                        'versionNo' => $data->getVersionInfo()->versionNo,
+                        'language' => $data->getLanguage()->languageCode,
+                        'locationId' => $location->id,
+                    ])
+                );
+                $event->setResponse($response);
+            }
+        }
+    }
+
+    /**
+     * @param \Symfony\Component\HttpKernel\Event\FilterControllerEvent $event
+     */
     public function onControllerUserCreate(FilterControllerEvent $event)
     {
         $request = $event->getRequest();
@@ -82,6 +194,11 @@ class UserEditListener implements EventSubscriberInterface
         }
     }
 
+    /**
+     * @param \Symfony\Component\HttpKernel\Event\FilterControllerEvent $event
+     *
+     * @throws \eZ\Publish\API\Repository\Exceptions\UnauthorizedException
+     */
     public function onControllerUserEdit(FilterControllerEvent $event)
     {
         $request = $event->getRequest();
