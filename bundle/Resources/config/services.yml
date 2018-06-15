@@ -320,7 +320,6 @@ services:
             - "@ezpublish.api.service.content_type"
             - "@ezpublish.api.service.content"
             - "@ezrepoforms.controller.user"
-            - '@ezpublish.api.inner_repository'
             - '@router.default'
             - '@EzSystems\EzPlatformAdminUi\Form\Factory\FormFactory'
         tags:

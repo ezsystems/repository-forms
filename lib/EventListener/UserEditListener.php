@@ -9,7 +9,6 @@ use eZ\Publish\API\Repository\ContentService;
 use eZ\Publish\API\Repository\ContentTypeService;
 use eZ\Publish\API\Repository\Exceptions\NotFoundException;
 use eZ\Publish\API\Repository\Values\ContentType\ContentType;
-use eZ\Publish\Core\Repository\Repository;
 use EzSystems\EzPlatformAdminUi\Form\Factory\FormFactory;
 use EzSystems\RepositoryFormsBundle\Controller\UserController;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
@@ -39,9 +38,6 @@ class UserEditListener implements EventSubscriberInterface
     /** @var UserController */
     protected $userController;
 
-    /** @var \eZ\Publish\Core\Repository\Repository */
-    private $repository;
-
     /** @var \Symfony\Component\Routing\Router */
     private $router;
 
@@ -52,7 +48,6 @@ class UserEditListener implements EventSubscriberInterface
      * @param \eZ\Publish\API\Repository\ContentTypeService $contentTypeService
      * @param \eZ\Publish\API\Repository\ContentService $contentService
      * @param \EzSystems\RepositoryFormsBundle\Controller\UserController $userController
-     * @param \eZ\Publish\Core\Repository\Repository $repository
      * @param \Symfony\Component\Routing\Router $router
      * @param \EzSystems\EzPlatformAdminUi\Form\Factory\FormFactory $formFactory
      */
@@ -60,14 +55,12 @@ class UserEditListener implements EventSubscriberInterface
         ContentTypeService $contentTypeService,
         ContentService $contentService,
         UserController $userController,
-        Repository $repository,
         Router $router,
         FormFactory $formFactory
     ) {
         $this->contentTypeService = $contentTypeService;
         $this->contentService = $contentService;
         $this->userController = $userController;
-        $this->repository = $repository;
         $this->router = $router;
         $this->formFactory = $formFactory;
     }
@@ -76,8 +69,8 @@ class UserEditListener implements EventSubscriberInterface
     {
         return [
             KernelEvents::REQUEST => [
-                ['beforeUserControllerCreate', 20],
-                ['beforeUserControllerEdit', 30],
+                ['beforeUserControllerCreate', -20],
+                ['beforeUserControllerEdit', -30],
             ],
             KernelEvents::CONTROLLER => [
                 ['onControllerUserCreate', 20],
@@ -96,9 +89,7 @@ class UserEditListener implements EventSubscriberInterface
         $request = $event->getRequest();
         if (self::CONTENT_BASE_CREATE_ROUTE === $request->attributes->get('_route')) {
             $form = $this->formFactory->contentEdit(null, 'content_create');
-            $this->repository->sudo(function () use ($form, $request) {
-                $form->handleRequest($request);
-            });
+            $form->handleRequest($request);
 
             if ($form->isValid()) {
                 /** @var \EzSystems\EzPlatformAdminUi\Form\Data\Content\Draft\ContentCreateData $data */
@@ -132,9 +123,7 @@ class UserEditListener implements EventSubscriberInterface
         $request = $event->getRequest();
         if (self::CONTENT_BASE_EDIT_ROUTE === $request->attributes->get('_route')) {
             $form = $this->formFactory->contentEdit(null, 'content_edit');
-            $this->repository->sudo(function () use ($form, $request) {
-                $form->handleRequest($request);
-            });
+            $form->handleRequest($request);
 
             if ($form->isValid()) {
                 /** @var \EzSystems\EzPlatformAdminUi\Form\Data\Content\Draft\ContentEditData $data */
