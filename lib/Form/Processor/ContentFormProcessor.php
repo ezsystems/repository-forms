@@ -37,6 +37,11 @@ class ContentFormProcessor implements EventSubscriberInterface
     /** @var \Symfony\Component\Routing\RouterInterface */
     private $router;
 
+    /**
+     * @param \eZ\Publish\API\Repository\ContentService $contentService
+     * @param \eZ\Publish\API\Repository\LocationService $locationService
+     * @param \Symfony\Component\Routing\RouterInterface $router
+     */
     public function __construct(
         ContentService $contentService,
         LocationService $locationService,
@@ -47,7 +52,10 @@ class ContentFormProcessor implements EventSubscriberInterface
         $this->router = $router;
     }
 
-    public static function getSubscribedEvents()
+    /**
+     * @return array
+     */
+    public static function getSubscribedEvents(): array
     {
         return [
             RepositoryFormEvents::CONTENT_PUBLISH => ['processPublish', 10],
@@ -57,7 +65,18 @@ class ContentFormProcessor implements EventSubscriberInterface
         ];
     }
 
-    public function processSaveDraft(FormActionEvent $event)
+    /**
+     * @param \EzSystems\RepositoryForms\Event\FormActionEvent $event
+     *
+     * @throws \eZ\Publish\API\Repository\Exceptions\BadStateException
+     * @throws \eZ\Publish\API\Repository\Exceptions\ContentFieldValidationException
+     * @throws \eZ\Publish\API\Repository\Exceptions\ContentValidationException
+     * @throws \eZ\Publish\API\Repository\Exceptions\InvalidArgumentException
+     * @throws \eZ\Publish\API\Repository\Exceptions\NotFoundException
+     * @throws \eZ\Publish\API\Repository\Exceptions\UnauthorizedException
+     * @throws \eZ\Publish\Core\Base\Exceptions\InvalidArgumentException
+     */
+    public function processSaveDraft(FormActionEvent $event): void
     {
         /** @var \EzSystems\RepositoryForms\Data\Content\ContentCreateData|\EzSystems\RepositoryForms\Data\Content\ContentUpdateData $data */
         $data = $event->getData();
@@ -65,6 +84,7 @@ class ContentFormProcessor implements EventSubscriberInterface
 
         $formConfig = $form->getConfig();
         $languageCode = $formConfig->getOption('languageCode');
+
         $draft = $this->saveDraft($data, $languageCode);
         $referrerLocation = $event->getOption('referrerLocation');
         $contentLocation = $this->resolveLocation($draft, $referrerLocation, $data);
@@ -78,13 +98,24 @@ class ContentFormProcessor implements EventSubscriberInterface
         $event->setResponse(new RedirectResponse($formConfig->getAction() ?: $defaultUrl));
     }
 
-    public function processPublish(FormActionEvent $event)
+    /**
+     * @param \EzSystems\RepositoryForms\Event\FormActionEvent $event
+     *
+     * @throws \eZ\Publish\API\Repository\Exceptions\BadStateException
+     * @throws \eZ\Publish\API\Repository\Exceptions\ContentFieldValidationException
+     * @throws \eZ\Publish\API\Repository\Exceptions\ContentValidationException
+     * @throws \eZ\Publish\API\Repository\Exceptions\InvalidArgumentException
+     * @throws \eZ\Publish\API\Repository\Exceptions\UnauthorizedException
+     * @throws \eZ\Publish\Core\Base\Exceptions\InvalidArgumentException
+     */
+    public function processPublish(FormActionEvent $event): void
     {
         /** @var \EzSystems\RepositoryForms\Data\Content\ContentCreateData|\EzSystems\RepositoryForms\Data\Content\ContentUpdateData $data */
         $data = $event->getData();
         $form = $event->getForm();
 
         $draft = $this->saveDraft($data, $form->getConfig()->getOption('languageCode'));
+
         $content = $this->contentService->publishVersion($draft->versionInfo);
 
         // Redirect to the provided URL. Defaults to URLAlias of the published content.
@@ -96,7 +127,13 @@ class ContentFormProcessor implements EventSubscriberInterface
         $event->setResponse(new RedirectResponse($redirectUrl));
     }
 
-    public function processCancel(FormActionEvent $event)
+    /**
+     * @param \EzSystems\RepositoryForms\Event\FormActionEvent $event
+     *
+     * @throws \eZ\Publish\API\Repository\Exceptions\BadStateException
+     * @throws \eZ\Publish\API\Repository\Exceptions\UnauthorizedException
+     */
+    public function processCancel(FormActionEvent $event): void
     {
         /** @var \EzSystems\RepositoryForms\Data\Content\ContentCreateData|\EzSystems\RepositoryForms\Data\Content\ContentUpdateData $data */
         $data = $event->getData();
@@ -133,7 +170,13 @@ class ContentFormProcessor implements EventSubscriberInterface
         $event->setResponse(new RedirectResponse($url));
     }
 
-    public function processCreateDraft(FormActionEvent $event)
+    /**
+     * @param \EzSystems\RepositoryForms\Event\FormActionEvent $event
+     *
+     * @throws \eZ\Publish\API\Repository\Exceptions\NotFoundException
+     * @throws \eZ\Publish\API\Repository\Exceptions\UnauthorizedException
+     */
+    public function processCreateDraft(FormActionEvent $event): void
     {
         /** @var $createContentDraft \EzSystems\RepositoryForms\Data\Content\CreateContentDraftData */
         $createContentDraft = $event->getData();
@@ -158,9 +201,17 @@ class ContentFormProcessor implements EventSubscriberInterface
      *
      * @param ContentStruct|\EzSystems\RepositoryForms\Data\Content\ContentCreateData|\EzSystems\RepositoryForms\Data\Content\ContentUpdateData $data
      * @param $languageCode
+     *
      * @return \eZ\Publish\API\Repository\Values\Content\Content
+     *
+     * @throws \eZ\Publish\API\Repository\Exceptions\BadStateException
+     * @throws \eZ\Publish\API\Repository\Exceptions\ContentFieldValidationException
+     * @throws \eZ\Publish\API\Repository\Exceptions\ContentValidationException
+     * @throws \eZ\Publish\API\Repository\Exceptions\InvalidArgumentException
+     * @throws \eZ\Publish\API\Repository\Exceptions\UnauthorizedException
+     * @throws \eZ\Publish\Core\Base\Exceptions\InvalidArgumentException
      */
-    private function saveDraft(ContentStruct $data, $languageCode)
+    private function saveDraft(ContentStruct $data, $languageCode): Content
     {
         $mainLanguageCode = $this->resolveMainLanguageCode($data);
         foreach ($data->fieldsData as $fieldDefIdentifier => $fieldData) {
@@ -168,9 +219,11 @@ class ContentFormProcessor implements EventSubscriberInterface
                 continue;
             }
 
-            $data->setField($fieldDefIdentifier, $fieldData->value, $languageCode);
+            /* comparing value, not references */
+            if ($fieldData->value != $fieldData->field->value) {
+                $data->setField($fieldDefIdentifier, $fieldData->value, $languageCode);
+            }
         }
-
         if ($data->isNew()) {
             $contentDraft = $this->contentService->createContent($data, $data->getLocationStructs());
         } else {
@@ -207,6 +260,9 @@ class ContentFormProcessor implements EventSubscriberInterface
      * @param \EzSystems\RepositoryForms\Data\NewnessCheckable $data
      *
      * @return \eZ\Publish\API\Repository\Values\Content\Location|null
+     *
+     * @throws \eZ\Publish\API\Repository\Exceptions\NotFoundException
+     * @throws \eZ\Publish\API\Repository\Exceptions\UnauthorizedException
      */
     private function resolveLocation(Content $content, ?Location $referrerLocation, NewnessCheckable $data): ?Location
     {
