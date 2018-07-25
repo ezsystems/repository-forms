@@ -43,6 +43,13 @@ class BinaryFileValueTransformer extends AbstractBinaryBaseTransformer implement
      */
     public function reverseTransform($value)
     {
-        return $this->getReverseTransformedValue($value);
+        /** @var Value $valueObject */
+        $valueObject = $this->getReverseTransformedValue($value);
+
+        if ($this->fieldType->isEmptyValue($valueObject)) {
+            return $valueObject;
+        }
+
+        return $valueObject;
     }
 }
