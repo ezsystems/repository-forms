@@ -9,6 +9,7 @@ namespace EzSystems\RepositoryForms\Form\Processor;
 
 use eZ\Publish\API\Repository\ContentService;
 use eZ\Publish\API\Repository\LocationService;
+use eZ\Publish\API\Repository\URLAliasService;
 use eZ\Publish\API\Repository\Values\Content\Content;
 use eZ\Publish\API\Repository\Values\Content\ContentStruct;
 use eZ\Publish\API\Repository\Values\Content\Location;
@@ -20,7 +21,6 @@ use EzSystems\RepositoryForms\Event\FormActionEvent;
 use EzSystems\RepositoryForms\Event\RepositoryFormEvents;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
-use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Routing\RouterInterface;
 
 /**
@@ -37,14 +37,19 @@ class ContentFormProcessor implements EventSubscriberInterface
     /** @var \Symfony\Component\Routing\RouterInterface */
     private $router;
 
+    /** @var \eZ\Publish\API\Repository\URLAliasService */
+    private $URLAliasService;
+
     public function __construct(
         ContentService $contentService,
         LocationService $locationService,
-        RouterInterface $router
+        RouterInterface $router,
+        URLAliasService $URLAliasService
     ) {
         $this->contentService = $contentService;
         $this->locationService = $locationService;
         $this->router = $router;
+        $this->URLAliasService = $URLAliasService;
     }
 
     public static function getSubscribedEvents()
@@ -87,13 +92,21 @@ class ContentFormProcessor implements EventSubscriberInterface
         $draft = $this->saveDraft($data, $form->getConfig()->getOption('languageCode'));
         $content = $this->contentService->publishVersion($draft->versionInfo);
 
-        // Redirect to the provided URL. Defaults to URLAlias of the published content.
-        $redirectUrl = $form['redirectUrlAfterPublish']->getData() ?: $this->router->generate(
-            '_ezpublishLocation', [
-                'locationId' => $content->contentInfo->mainLocationId,
-            ]
-        );
+        $location = $this->locationService->loadLocation($content->contentInfo->mainLocationId);
+
+        $redirectUrl = $form['redirectUrlAfterPublish']->getData() ?: $this->getSystemUrl($location, [$content->versionInfo->initialLanguageCode]);
         $event->setResponse(new RedirectResponse($redirectUrl));
+        $event->setLocationToRedirect($location);
+    }
+
+    private function getSystemUrl(Location $location, array $prioritizedLanguageList): string
+    {
+        return $this->URLAliasService->reverseLookup(
+            $location,
+            null,
+            true,
+            $prioritizedLanguageList
+        )->path;
     }
 
     public function processCancel(FormActionEvent $event)
@@ -102,11 +115,15 @@ class ContentFormProcessor implements EventSubscriberInterface
         $data = $event->getData();
 
         if ($data->isNew()) {
-            $response = new RedirectResponse($this->router->generate(
-                '_ezpublishLocation',
-                ['locationId' => $data->getLocationStructs()[0]->parentLocationId]
-            ));
+            /** @var Location $referrerLocation */
+            $referrerLocation = $event->getOption('referrerLocation');
+            $url = $this->getSystemUrl(
+                $referrerLocation,
+                [$data->mainLanguageCode, $referrerLocation->contentInfo->mainLanguageCode]
+            );
+            $response = new RedirectResponse($url);
             $event->setResponse($response);
+            $event->setLocationToRedirect($referrerLocation);
 
             return;
         }
@@ -125,12 +142,15 @@ class ContentFormProcessor implements EventSubscriberInterface
             $this->contentService->deleteVersion($versionInfo);
         }
 
-        $url = $this->router->generate(
-            '_ezpublishLocation',
-            ['locationId' => $redirectionLocationId],
-            UrlGeneratorInterface::ABSOLUTE_URL
+        $locationToRedirect = $this->locationService->loadLocation($redirectionLocationId);
+
+        $url = $this->getSystemUrl(
+            $locationToRedirect,
+            [$data->mainLanguageCode, $locationToRedirect->contentInfo->mainLanguageCode]
         );
+
         $event->setResponse(new RedirectResponse($url));
+        $event->setLocationToRedirect($locationToRedirect);
     }
 
     public function processCreateDraft(FormActionEvent $event)

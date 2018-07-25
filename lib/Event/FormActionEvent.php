@@ -8,6 +8,7 @@
  */
 namespace EzSystems\RepositoryForms\Event;
 
+use eZ\Publish\API\Repository\Values\Content\Location;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Response;
@@ -35,11 +36,15 @@ class FormActionEvent extends FormEvent
      */
     private $response;
 
+    /** @var \eZ\Publish\API\Repository\Values\Content\Location|null */
+    private $locationToRedirect;
+
     public function __construct(FormInterface $form, $data, $clickedButton, array $options = [])
     {
         parent::__construct($form, $data);
         $this->clickedButton = $clickedButton;
         $this->options = $options;
+        $this->locationToRedirect = null;
     }
 
     /**
@@ -102,5 +107,21 @@ class FormActionEvent extends FormEvent
     public function hasResponse()
     {
         return $this->response !== null;
+    }
+
+    /**
+     * @return \eZ\Publish\API\Repository\Values\Content\Location|null
+     */
+    public function getLocationToRedirect(): ?Location
+    {
+        return $this->locationToRedirect;
+    }
+
+    /**
+     * @param \eZ\Publish\API\Repository\Values\Content\Location $locationToRedirect
+     */
+    public function setLocationToRedirect(Location $locationToRedirect): void
+    {
+        $this->locationToRedirect = $locationToRedirect;
     }
 }
