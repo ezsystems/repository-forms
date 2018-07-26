@@ -49,9 +49,6 @@ class UserRegistrationContext extends RawMinkContext implements Context, Snippet
      */
     private $yamlConfigurationContext;
 
-    /**
-     * @injectService $repository @ezpublish.api.repository
-     */
     public function __construct(Repository $repository)
     {
         $this->setRepository($repository);

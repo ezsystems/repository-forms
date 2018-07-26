@@ -7,8 +7,11 @@ repository-forms:
                 - vendor/ezsystems/repository-forms/features/ContentEdit
             contexts:
                 - EzSystems\RepositoryForms\Features\Context\ContentEdit
-                - EzSystems\RepositoryForms\Features\Context\ContentType
-                - EzSystems\RepositoryForms\Features\Context\PagelayoutContext
+                - EzSystems\RepositoryForms\Features\Context\ContentType:
+                    repository: '@ezpublish.api.repository'
+                    contentTypeService: '@ezpublish.api.service.content_type'
+                - EzSystems\RepositoryForms\Features\Context\PagelayoutContext:
+                    configResolver: '@ezpublish.config.resolver'
         fieldtype_form:
             paths:
                 - vendor/ezsystems/repository-forms/features/FieldTypeForm
@@ -20,6 +23,7 @@ repository-forms:
             paths:
                 - vendor/ezsystems/repository-forms/features/User/Registration
             contexts:
-                - EzSystems\RepositoryForms\Features\Context\UserRegistrationContext
+                - EzSystems\RepositoryForms\Features\Context\UserRegistrationContext:
+                    repository: '@ezpublish.api.repository' 
                 - Behat\MinkExtension\Context\MinkContext
                 - eZ\Bundle\EzPublishCoreBundle\Features\Context\YamlConfigurationContext

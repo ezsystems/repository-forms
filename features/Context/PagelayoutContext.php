@@ -20,9 +20,6 @@ class PagelayoutContext extends RawMinkContext implements Context, SnippetAccept
      */
     private $configResolver;
 
-    /**
-     * @injectService $configResolver @ezpublish.config.resolver
-     */
     public function __construct(ConfigResolverInterface $configResolver)
     {
         $this->configResolver = $configResolver;
