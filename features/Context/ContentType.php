@@ -15,8 +15,10 @@ use eZ\Publish\API\Repository\Values\ContentType\ContentTypeCreateStruct;
 use eZ\Publish\API\Repository\Values\ContentType\FieldDefinitionUpdateStruct;
 use EzSystems\PlatformBehatBundle\Context\RepositoryContext;
 use PHPUnit\Framework\Assert as Assertion;
+use Symfony\Component\DependencyInjection\ContainerAwareInterface;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
-final class ContentType extends RawMinkContext implements Context, SnippetAcceptingContext
+final class ContentType extends RawMinkContext implements Context, SnippetAcceptingContext, ContainerAwareInterface
 {
     use RepositoryContext;
 
@@ -29,14 +31,11 @@ final class ContentType extends RawMinkContext implements Context, SnippetAccept
      */
     private $currentContentType;
 
-    /**
-     * @injectService $repository @ezpublish.api.repository
-     * @injectService $contentTypeService @ezpublish.api.service.content_type
-     */
-    public function __construct(Repository $repository, ContentTypeService $contentTypeService)
+    public function setContainer(ContainerInterface $container = null)
     {
-        $this->setRepository($repository);
-        $this->contentTypeService = $contentTypeService;
+        $this->container = $container;
+        $this->setRepository($this->container->getParameter('@ezpublish.api.repository'));
+        $this->contentTypeService = $this->container->getParameter('@ezpublish.api.service.content_type');
     }
 
     /**
