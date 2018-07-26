@@ -163,3 +163,8 @@ services:
             - { name: ez.fieldFormMapper.value, fieldType: ezemail }
         calls:
             - [setFormType, ['Symfony\Component\Form\Extension\Core\Type\EmailType']]
+
+    EzSystems\RepositoryForms\FieldType\Mapper\ImageAssetFormMapper:
+        tags:
+            - { name: ez.fieldFormMapper.definition, fieldType: ezimageasset }
+            - { name: ez.fieldFormMapper.value, fieldType: ezimageasset }
