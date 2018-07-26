@@ -9,8 +9,10 @@ use Behat\Behat\Context\SnippetAcceptingContext;
 use Behat\MinkExtension\Context\RawMinkContext;
 use eZ\Publish\Core\MVC\ConfigResolverInterface;
 use PHPUnit\Framework\Assert as Assertion;
+use Symfony\Component\DependencyInjection\ContainerAwareInterface;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
-class PagelayoutContext extends RawMinkContext implements Context, SnippetAcceptingContext
+class PagelayoutContext extends RawMinkContext implements Context, SnippetAcceptingContext, ContainerAwareInterface
 {
     /** @var string Regex matching the way the Twig template name is inserted in debug mode */
     const TWIG_DEBUG_STOP_REGEX = '<!-- STOP .*%s.* -->';
@@ -20,9 +22,10 @@ class PagelayoutContext extends RawMinkContext implements Context, SnippetAccept
      */
     private $configResolver;
 
-    public function __construct(ConfigResolverInterface $configResolver)
+    public function setContainer(ContainerInterface $container = null)
     {
-        $this->configResolver = $configResolver;
+        $this->container = $container;
+        $this->configResolver = $this->container->getParameter('@ezpublish.config.resolver');
     }
 
     /**

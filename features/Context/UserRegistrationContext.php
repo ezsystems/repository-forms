@@ -22,8 +22,10 @@ use EzSystems\PlatformBehatBundle\Context\RepositoryContext;
 use PHPUnit\Framework\Assert;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Yaml\Yaml;
+use Symfony\Component\DependencyInjection\ContainerAwareInterface;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
-class UserRegistrationContext extends RawMinkContext implements Context, SnippetAcceptingContext
+class UserRegistrationContext extends RawMinkContext implements Context, SnippetAcceptingContext, ContainerAwareInterface
 {
     use RepositoryContext;
 
@@ -44,14 +46,17 @@ class UserRegistrationContext extends RawMinkContext implements Context, Snippet
      */
     private $customUserGroup;
 
+    private $container;
+
     /**
      * @var YamlConfigurationContext
      */
     private $yamlConfigurationContext;
 
-    public function __construct(Repository $repository)
+    public function setContainer(ContainerInterface $container = null)
     {
-        $this->setRepository($repository);
+        $this->container = $container;
+        $this->setRepository($this->container->getParameter('@ezpublish.api.repository'));
     }
 
     /** @BeforeScenario */
