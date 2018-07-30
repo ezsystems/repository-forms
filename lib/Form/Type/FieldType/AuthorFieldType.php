@@ -6,6 +6,8 @@
  */
 namespace EzSystems\RepositoryForms\Form\Type\FieldType;
 
+use eZ\Publish\API\Repository\Exceptions\NotFoundException;
+use eZ\Publish\API\Repository\Repository;
 use eZ\Publish\Core\FieldType\Author\Author;
 use eZ\Publish\Core\FieldType\Author\Value;
 use EzSystems\RepositoryForms\Form\Type\FieldType\Author\AuthorCollectionType;
@@ -22,6 +24,16 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class AuthorFieldType extends AbstractType
 {
+    /**
+     * @var \eZ\Publish\API\Repository\Repository
+     */
+    private $repository;
+
+    public function __construct(Repository $repository)
+    {
+        $this->repository = $repository;
+    }
+
     public function getName()
     {
         return $this->getBlockPrefix();
@@ -54,7 +66,7 @@ class AuthorFieldType extends AbstractType
     {
         return new CallbackTransformer(function (Value $value) {
             if (0 === $value->authors->count()) {
-                $value->authors->append(new Author());
+                $value->authors->append($this->fetchLoggedAuthor());
             }
 
             return $value;
@@ -78,5 +90,29 @@ class AuthorFieldType extends AbstractType
                 }
             )
         );
+    }
+
+    /**
+     * Returns currently logged user data, or empty Author object if none was found.
+     *
+     * @return Author
+     */
+    private function fetchLoggedAuthor()
+    {
+        $author = new Author();
+
+        try {
+            $permissionResolver = $this->repository->getPermissionResolver();
+            $userService = $this->repository->getUserService();
+            $loggedUserId = $permissionResolver->getCurrentUserReference()->getUserId();
+            $loggedUserData = $userService->loadUser($loggedUserId);
+
+            $author->name = $loggedUserData->getName();
+            $author->email = $loggedUserData->email;
+        } catch (NotFoundException $e) {
+            //Do nothing
+        }
+
+        return $author;
     }
 }
