@@ -14,6 +14,7 @@ use eZ\Publish\API\Repository\Values\Content\Content;
 use eZ\Publish\API\Repository\Values\Content\ContentStruct;
 use eZ\Publish\API\Repository\Values\Content\Location;
 use eZ\Publish\Core\Base\Exceptions\InvalidArgumentException;
+use eZ\Publish\Core\MVC\Symfony\SiteAccess;
 use EzSystems\RepositoryForms\Data\Content\ContentCreateData;
 use EzSystems\RepositoryForms\Data\Content\ContentUpdateData;
 use EzSystems\RepositoryForms\Data\NewnessCheckable;
@@ -39,23 +40,28 @@ class ContentFormProcessor implements EventSubscriberInterface
 
     /** @var \eZ\Publish\API\Repository\URLAliasService */
     private $urlAliasService;
+    /** @var \eZ\Publish\Core\MVC\Symfony\SiteAccess */
+    private $siteaccess;
 
     /**
      * @param \eZ\Publish\API\Repository\ContentService $contentService
      * @param \eZ\Publish\API\Repository\LocationService $locationService
      * @param \Symfony\Component\Routing\RouterInterface $router
      * @param \eZ\Publish\API\Repository\URLAliasService $urlAliasService
+     * @param \eZ\Publish\Core\MVC\Symfony\SiteAccess $siteaccess
      */
     public function __construct(
         ContentService $contentService,
         LocationService $locationService,
         RouterInterface $router,
-        URLAliasService $urlAliasService
+        URLAliasService $urlAliasService,
+        SiteAccess $siteaccess
     ) {
         $this->contentService = $contentService;
         $this->locationService = $locationService;
         $this->router = $router;
         $this->urlAliasService = $urlAliasService;
+        $this->siteaccess = $siteaccess;
     }
 
     /**
@@ -125,7 +131,7 @@ class ContentFormProcessor implements EventSubscriberInterface
 
         $location = $this->locationService->loadLocation($content->contentInfo->mainLocationId);
 
-        $redirectUrl = $form['redirectUrlAfterPublish']->getData() ?: $this->getSystemUrl($location, [$content->versionInfo->initialLanguageCode]);
+        $redirectUrl = $form['redirectUrlAfterPublish']->getData() ?: $this->getSystemUrlWithProperSiteaccess($location, [$content->versionInfo->initialLanguageCode]);
         $event->setResponse(new RedirectResponse($redirectUrl));
     }
 
@@ -137,9 +143,9 @@ class ContentFormProcessor implements EventSubscriberInterface
      *
      * @throws \eZ\Publish\API\Repository\Exceptions\NotFoundException
      */
-    private function getSystemUrl(Location $location, array $prioritizedLanguageList): string
+    private function getSystemUrlWithProperSiteaccess(Location $location, array $prioritizedLanguageList): string
     {
-        return $this->urlAliasService->reverseLookup(
+        return '/' . $this->siteaccess->name . $this->urlAliasService->reverseLookup(
             $location,
             null,
             true,
@@ -163,7 +169,7 @@ class ContentFormProcessor implements EventSubscriberInterface
             $parentLocation = $this->locationService->loadLocation(
                 $data->getLocationStructs()[0]->parentLocationId
             );
-            $url = $this->getSystemUrl(
+            $url = $this->getSystemUrlWithProperSiteaccess(
                 $parentLocation,
                 [$data->mainLanguageCode, $parentLocation->contentInfo->mainLanguageCode]
             );
@@ -189,7 +195,7 @@ class ContentFormProcessor implements EventSubscriberInterface
 
         $locationToRedirect = $this->locationService->loadLocation($redirectionLocationId);
 
-        $url = $this->getSystemUrl(
+        $url = $this->getSystemUrlWithProperSiteaccess(
             $locationToRedirect,
             [$locationToRedirect->contentInfo->mainLanguageCode]
         );
