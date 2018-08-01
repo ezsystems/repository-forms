@@ -191,7 +191,7 @@ class ContentFormProcessor implements EventSubscriberInterface
 
         $url = $this->getSystemUrl(
             $locationToRedirect,
-            [$data->mainLanguageCode, $locationToRedirect->contentInfo->mainLanguageCode]
+            [$locationToRedirect->contentInfo->mainLanguageCode]
         );
 
         $event->setResponse(new RedirectResponse($url));
