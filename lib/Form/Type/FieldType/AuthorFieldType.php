@@ -24,26 +24,37 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class AuthorFieldType extends AbstractType
 {
-    /**
-     * @var \eZ\Publish\API\Repository\Repository
-     */
+    /** @var \eZ\Publish\API\Repository\Repository */
     private $repository;
 
+    /**
+     * @param \eZ\Publish\API\Repository\Repository $repository
+     */
     public function __construct(Repository $repository)
     {
         $this->repository = $repository;
     }
 
+    /**
+     * @return string
+     */
     public function getName()
     {
         return $this->getBlockPrefix();
     }
 
+    /**
+     * @return string
+     */
     public function getBlockPrefix()
     {
         return 'ezplatform_fieldtype_ezauthor';
     }
 
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param array
+     */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
@@ -52,6 +63,9 @@ class AuthorFieldType extends AbstractType
             ->addEventListener(FormEvents::POST_SUBMIT, [$this, 'filterOutEmptyAuthors']);
     }
 
+    /**
+     * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
+     */
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(['data_class' => Value::class]);
@@ -60,7 +74,7 @@ class AuthorFieldType extends AbstractType
     /**
      * Returns a view transformer which handles empty row needed to display add/remove buttons.
      *
-     * @return DataTransformerInterface
+     * @return \Symfony\Component\Form\DataTransformerInterface
      */
     public function getViewTransformer(): DataTransformerInterface
     {
@@ -76,7 +90,7 @@ class AuthorFieldType extends AbstractType
     }
 
     /**
-     * @param FormEvent $event
+     * @param \Symfony\Component\Form\FormEvent $event
      */
     public function filterOutEmptyAuthors(FormEvent $event)
     {
@@ -95,9 +109,9 @@ class AuthorFieldType extends AbstractType
     /**
      * Returns currently logged user data, or empty Author object if none was found.
      *
-     * @return Author
+     * @return \eZ\Publish\Core\FieldType\Author\Author
      */
-    private function fetchLoggedAuthor()
+    private function fetchLoggedAuthor(): Author
     {
         $author = new Author();
 
