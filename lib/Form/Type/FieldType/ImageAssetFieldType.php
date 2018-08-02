@@ -23,8 +23,10 @@ class ImageAssetFieldType extends AbstractType
 {
     /** @var \eZ\Publish\API\Repository\ContentService */
     private $contentService;
+
     /** @var \eZ\Publish\Core\FieldType\ImageAsset\Mapper */
     private $assetMapper;
+
     /** @var \EzSystems\RepositoryForms\ConfigResolver\MaxUploadSize */
     private $maxUploadSize;
 
@@ -57,11 +59,7 @@ class ImageAssetFieldType extends AbstractType
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder
-            ->add(
-                'destinationContentId',
-                HiddenType::class
-            );
+        $builder->add('destinationContentId', HiddenType::class);
     }
 
     public function buildView(FormView $view, FormInterface $form, array $options)

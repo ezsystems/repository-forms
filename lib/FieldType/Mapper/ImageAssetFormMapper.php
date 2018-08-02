@@ -11,29 +11,30 @@ namespace EzSystems\RepositoryForms\FieldType\Mapper;
 use eZ\Publish\API\Repository\FieldTypeService;
 use eZ\Publish\Core\FieldType\ImageAsset\Value;
 use EzSystems\RepositoryForms\Data\Content\FieldData;
-use EzSystems\RepositoryForms\Data\FieldDefinitionData;
 use EzSystems\RepositoryForms\FieldType\DataTransformer\ImageAssetValueTransformer;
-use EzSystems\RepositoryForms\FieldType\FieldDefinitionFormMapperInterface;
 use EzSystems\RepositoryForms\FieldType\FieldValueFormMapperInterface;
 use EzSystems\RepositoryForms\Form\Type\FieldType\ImageAssetFieldType;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class ImageAssetFormMapper implements FieldDefinitionFormMapperInterface, FieldValueFormMapperInterface
+class ImageAssetFormMapper implements FieldValueFormMapperInterface
 {
     /** @var \eZ\Publish\API\Repository\FieldTypeService */
     private $fieldTypeService;
 
+    /**
+     * @param \eZ\Publish\API\Repository\FieldTypeService $fieldTypeService
+     */
     public function __construct(FieldTypeService $fieldTypeService)
     {
         $this->fieldTypeService = $fieldTypeService;
     }
 
-    public function mapFieldDefinitionForm(FormInterface $fieldDefinitionForm, FieldDefinitionData $data)
-    {
-    }
-
-    public function mapFieldValueForm(FormInterface $fieldForm, FieldData $data)
+    /**
+     * @param \Symfony\Component\Form\FormInterface $fieldForm
+     * @param \EzSystems\RepositoryForms\Data\Content\FieldData $data
+     */
+    public function mapFieldValueForm(FormInterface $fieldForm, FieldData $data): void
     {
         $fieldDefinition = $data->fieldDefinition;
         $formConfig = $fieldForm->getConfig();
@@ -60,9 +61,10 @@ class ImageAssetFormMapper implements FieldDefinitionFormMapperInterface, FieldV
 
     /**
      * Fake method to set the translation domain for the extractor.
+     *
      * @param OptionsResolver $resolver
      */
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver
             ->setDefaults([
