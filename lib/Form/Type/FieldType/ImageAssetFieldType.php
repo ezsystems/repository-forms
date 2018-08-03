@@ -10,7 +10,7 @@ namespace EzSystems\RepositoryForms\Form\Type\FieldType;
 use eZ\Publish\API\Repository\ContentService;
 use eZ\Publish\API\Repository\Exceptions\NotFoundException;
 use eZ\Publish\API\Repository\Exceptions\UnauthorizedException;
-use eZ\Publish\Core\FieldType\ImageAsset\Mapper;
+use eZ\Publish\Core\FieldType\ImageAsset\AssetMapper;
 use EzSystems\RepositoryForms\ConfigResolver\MaxUploadSize;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
@@ -24,7 +24,7 @@ class ImageAssetFieldType extends AbstractType
     /** @var \eZ\Publish\API\Repository\ContentService */
     private $contentService;
 
-    /** @var \eZ\Publish\Core\FieldType\ImageAsset\Mapper */
+    /** @var \eZ\Publish\Core\FieldType\ImageAsset\AssetMapper */
     private $assetMapper;
 
     /** @var \EzSystems\RepositoryForms\ConfigResolver\MaxUploadSize */
@@ -32,10 +32,10 @@ class ImageAssetFieldType extends AbstractType
 
     /**
      * @param \eZ\Publish\API\Repository\ContentService $contentService
-     * @param \eZ\Publish\Core\FieldType\ImageAsset\Mapper $mapper
+     * @param \eZ\Publish\Core\FieldType\ImageAsset\AssetMapper $mapper
      * @param \EzSystems\RepositoryForms\ConfigResolver\MaxUploadSize $maxUploadSize
      */
-    public function __construct(ContentService $contentService, Mapper $mapper, MaxUploadSize $maxUploadSize)
+    public function __construct(ContentService $contentService, AssetMapper $mapper, MaxUploadSize $maxUploadSize)
     {
         $this->contentService = $contentService;
         $this->maxUploadSize = $maxUploadSize;
