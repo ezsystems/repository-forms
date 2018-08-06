@@ -13,11 +13,14 @@ use eZ\Publish\API\Repository\Exceptions\UnauthorizedException;
 use eZ\Publish\Core\FieldType\ImageAsset\AssetMapper;
 use EzSystems\RepositoryForms\ConfigResolver\MaxUploadSize;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints as Assert;
 
 class ImageAssetFieldType extends AbstractType
 {
@@ -52,14 +55,32 @@ class ImageAssetFieldType extends AbstractType
         return 'ezplatform_fieldtype_ezimageasset';
     }
 
-    public function getParent()
-    {
-        return BinaryBaseFieldType::class;
-    }
-
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('destinationContentId', HiddenType::class);
+        $builder
+            ->add('destinationContentId', HiddenType::class)
+            ->add(
+                'remove',
+                CheckboxType::class,
+                [
+                    'label' => /** @Desc("Remove") */ 'content.field_type.binary_base.remove',
+                    'mapped' => false,
+                ]
+            )
+            ->add(
+                'file',
+                FileType::class,
+                [
+                    'label' => /** @Desc("File") */ 'content.field_type.binary_base.file',
+                    'required' => $options['required'],
+                    'constraints' => [
+                        new Assert\File([
+                            'maxSize' => $this->getMaxFileSize(),
+                        ]),
+                    ],
+                    'mapped' => false,
+                ]
+            );
     }
 
     public function buildView(FormView $view, FormInterface $form, array $options)
