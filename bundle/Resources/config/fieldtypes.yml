@@ -166,5 +166,4 @@ services:
 
     EzSystems\RepositoryForms\FieldType\Mapper\ImageAssetFormMapper:
         tags:
-            - { name: ez.fieldFormMapper.definition, fieldType: ezimageasset }
             - { name: ez.fieldFormMapper.value, fieldType: ezimageasset }
