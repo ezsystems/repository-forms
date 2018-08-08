@@ -25,11 +25,11 @@ matrix:
       env: BEHAT_OPTS="--profile=repository-forms" PHP_IMAGE=ezsystems/php:7.0-v1
 
 # test only master (+ Pull requests)
-branches:
-  only:
-    - master
-    - /^\d.\d+$/
-    - "/^feature-/"
+#branches:
+#  only:
+#    - master
+#    - /^\d.\d+$/
+#    - "/^feature-/"
 
 before_install:
   - echo 'memory_limit = -1' >> ~/.phpenv/versions/$(phpenv version-name)/etc/conf.d/travis.ini
