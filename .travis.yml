@@ -25,11 +25,11 @@ matrix:
       env: BEHAT_OPTS="--profile=repository-forms" PHP_IMAGE=ezsystems/php:7.0-v1
 
 # test only master (+ Pull requests)
-branches:
-  only:
-    - master
-    - /^\d.\d+$/
-    - "/^feature-/"
+#branches:
+#  only:
+#    - master
+#    - /^\d.\d+$/
+#    - "/^feature-/"
 
 before_install:
   - echo 'memory_limit = -1' >> ~/.phpenv/versions/$(phpenv version-name)/etc/conf.d/travis.ini
@@ -44,6 +44,7 @@ before_script:
   - TEST_TIMEZONE=${TEST_TIMEZONES["`shuf -i 0-2 -n 1`"]}
 
 # execute phpunit or behat as the script command
+# certification 1.7.8
 script:
   - if [ "$TEST_CONFIG" != "" ] ; then php -d date.timezone=$TEST_TIMEZONE -d memory_limit=-1 bin/phpunit -c $TEST_CONFIG ; fi
   - if [ "$BEHAT_OPTS" != "" ] ; then cd "$HOME/build/ezplatform"; docker-compose exec --user www-data app sh -c "bin/behat $BEHAT_OPTS" ; fi
