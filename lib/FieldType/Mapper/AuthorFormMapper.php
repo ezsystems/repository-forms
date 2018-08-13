@@ -35,8 +35,8 @@ class AuthorFormMapper implements FieldDefinitionFormMapperInterface, FieldValue
                 ChoiceType::class,
                 [
                     'choices' => [
+                        'field_definition.ezauthor.default_user_empty' => Type::DEFAULT_VALUE_EMPTY,
                         'field_definition.ezauthor.default_user_current' => Type::DEFAULT_CURRENT_USER,
-                        'field_definition.ezauthor.default_user_empty' => Type::DEFAULT_EMPTY,
                     ],
                     'choices_as_values' => true,
                     'expanded' => true,

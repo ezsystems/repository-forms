@@ -8,6 +8,7 @@ namespace EzSystems\RepositoryForms\Form\Type\FieldType;
 
 use eZ\Publish\API\Repository\Exceptions\NotFoundException;
 use eZ\Publish\API\Repository\Repository;
+use eZ\Publish\Core\FieldType\Author\Type as AuthorType;
 use eZ\Publish\Core\FieldType\Author\Author;
 use eZ\Publish\Core\FieldType\Author\Value;
 use EzSystems\RepositoryForms\Form\Type\FieldType\Author\AuthorCollectionType;
@@ -87,7 +88,7 @@ class AuthorFieldType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => Value::class,
-            'default_author' => 1,
+            'default_author' => AuthorType::DEFAULT_VALUE_EMPTY,
         ])->setAllowedTypes('default_author', 'integer');
     }
 
@@ -100,10 +101,10 @@ class AuthorFieldType extends AbstractType
     {
         return new CallbackTransformer(function (Value $value) {
             if (0 === $value->authors->count()) {
-                if ($this->defaultAuthor === -1) {
-                    $value->authors->append(new Author());
-                } else {
+                if ($this->defaultAuthor === AuthorType::DEFAULT_CURRENT_USER) {
                     $value->authors->append($this->fetchLoggedAuthor());
+                } else {
+                    $value->authors->append(new Author());
                 }
             }
 
