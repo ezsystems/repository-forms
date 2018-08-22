@@ -2,7 +2,7 @@
 /**
  * @license For full copyright and license information view LICENSE file distributed with this source code.
  */
-namespace EzSystems\RepositoryForms\Features\Context;
+namespace EzSystems\RepositoryForms\Behat\Context;
 
 use Behat\Behat\Context\Context;
 use Behat\Behat\Context\SnippetAcceptingContext;
@@ -10,7 +10,7 @@ use Behat\Behat\Hook\Scope\BeforeScenarioScope;
 use Behat\MinkExtension\Context\MinkContext;
 use eZ\Publish\API\Repository\Values\ContentType\FieldDefinitionCreateStruct;
 
-final class ContentEdit extends MinkContext implements Context, SnippetAcceptingContext
+final class ContentEditContext extends MinkContext implements Context, SnippetAcceptingContext
 {
     /**
      * Name of the content that was created using the edit form. Used to validate that the content was created.
@@ -19,7 +19,7 @@ final class ContentEdit extends MinkContext implements Context, SnippetAccepting
     private $createdContentName;
 
     /**
-     * @var \EzSystems\RepositoryForms\Features\Context\ContentType
+     * @var \EzSystems\RepositoryForms\Behat\Context\ContentTypeContext
      */
     private $contentTypeContext;
 
@@ -34,7 +34,7 @@ final class ContentEdit extends MinkContext implements Context, SnippetAccepting
     {
         $environment = $scope->getEnvironment();
 
-        $this->contentTypeContext = $environment->getContext('EzSystems\RepositoryForms\Features\Context\ContentType');
+        $this->contentTypeContext = $environment->getContext('EzSystems\RepositoryForms\Behat\Context\ContentTypeContext');
     }
 
     /**
@@ -75,9 +75,9 @@ final class ContentEdit extends MinkContext implements Context, SnippetAccepting
     public function thatIHavePermissionToCreateFolders()
     {
         $this->visit('/login');
-        $this->fillField('Username', 'admin');
-        $this->fillField('Password', 'publish');
-        $this->pressButton('Login');
+        $this->fillField('_username', 'admin');
+        $this->fillField('_password', 'publish');
+        $this->getSession()->getPage()->find('css', 'form')->submit();
     }
 
     /**

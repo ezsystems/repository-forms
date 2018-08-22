@@ -2,7 +2,7 @@
 /**
  * @license For full copyright and license information view LICENSE file distributed with this source code.
  */
-namespace EzSystems\RepositoryForms\Features\Context;
+namespace EzSystems\RepositoryForms\Behat\Context;
 
 use Behat\Behat\Context\SnippetAcceptingContext;
 use Behat\Behat\Hook\Scope\BeforeScenarioScope;
@@ -22,14 +22,14 @@ final class FieldTypeFormContext extends RawMinkContext implements SnippetAccept
         'selection' => 'ezselection',
     ];
 
-    /** @var \EzSystems\RepositoryForms\Features\Context\ContentType */
+    /** @var \EzSystems\RepositoryForms\Behat\Context\ContentTypeContext */
     private $contentTypeContext;
 
     /** @BeforeScenario */
     public function gatherContexts(BeforeScenarioScope $scope)
     {
         $environment = $scope->getEnvironment();
-        $this->contentTypeContext = $environment->getContext('EzSystems\RepositoryForms\Features\Context\ContentType');
+        $this->contentTypeContext = $environment->getContext('EzSystems\RepositoryForms\Behat\Context\ContentTypeContext');
     }
 
     /**

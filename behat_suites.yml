@@ -6,20 +6,21 @@ repository-forms:
             paths:
                 - vendor/ezsystems/repository-forms/features/ContentEdit
             contexts:
-                - EzSystems\RepositoryForms\Features\Context\ContentEdit
-                - EzSystems\RepositoryForms\Features\Context\ContentType
-                - EzSystems\RepositoryForms\Features\Context\PagelayoutContext
+                - EzSystems\RepositoryForms\Behat\Context\ContentEditContext
+                - EzSystems\RepositoryForms\Behat\Context\ContentTypeContext
+                - EzSystems\RepositoryForms\Behat\Context\PagelayoutContext
         fieldtype_form:
             paths:
                 - vendor/ezsystems/repository-forms/features/FieldTypeForm
             contexts:
-                - EzSystems\RepositoryForms\Features\Context\ContentType
-                - EzSystems\RepositoryForms\Features\Context\FieldTypeFormContext
-                - EzSystems\RepositoryForms\Features\Context\SelectionFieldTypeFormContext
+                - EzSystems\RepositoryForms\Behat\Context\ContentTypeContext
+                - EzSystems\RepositoryForms\Behat\Context\FieldTypeFormContext
+                - EzSystems\RepositoryForms\Behat\Context\SelectionFieldTypeFormContext
         user_registration:
             paths:
                 - vendor/ezsystems/repository-forms/features/User/Registration
             contexts:
-                - EzSystems\RepositoryForms\Features\Context\UserRegistrationContext
+                - EzSystems\RepositoryForms\Behat\Context\UserRegistrationContext
                 - Behat\MinkExtension\Context\MinkContext
                 - eZ\Bundle\EzPublishCoreBundle\Features\Context\YamlConfigurationContext
+                - EzSystems\EzPlatformAdminUi\Behat\Helper\Hooks

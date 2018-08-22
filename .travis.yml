@@ -5,6 +5,7 @@ language: php
 env:
   global:
     # For functional tests
+    - PHP_IMAGE=ezsystems/php:7.1-v1
     - COMPOSE_FILE="doc/docker/base-dev.yml:doc/docker/selenium.yml"
     - SYMFONY_ENV=behat
     - SYMFONY_DEBUG=1

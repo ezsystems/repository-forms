@@ -2,7 +2,7 @@
 /**
  * @license For full copyright and license information view LICENSE file distributed with this source code.
  */
-namespace EzSystems\RepositoryForms\Features\Context;
+namespace EzSystems\RepositoryForms\Behat\Context;
 
 use Behat\Behat\Context\Context;
 use Behat\Behat\Context\SnippetAcceptingContext;
@@ -41,7 +41,10 @@ class PagelayoutContext extends RawMinkContext implements Context, SnippetAccept
      */
     public function itIsRenderedUsingTheConfiguredPagelayout()
     {
-        $pageLayout = $this->configResolver->getParameter('pagelayout');
+        //$pageLayout = $this->configResolver->getParameter('pagelayout');
+
+        $pageLayout = str_replace('@ezdesign', 'app/Resources/views/themes/tastefulplanet', $this->configResolver->getParameter('pagelayout', null, 'site'));
+
         $searchedPattern = sprintf(self::TWIG_DEBUG_STOP_REGEX, preg_quote($pageLayout, null));
         Assertion::assertRegExp($searchedPattern, $this->getSession()->getPage()->getOuterHtml());
     }
