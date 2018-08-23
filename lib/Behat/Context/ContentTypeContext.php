@@ -2,7 +2,7 @@
 /**
  * @license For full copyright and license information view LICENSE file distributed with this source code.
  */
-namespace EzSystems\RepositoryForms\Features\Context;
+namespace EzSystems\RepositoryForms\Behat\Context;
 
 use Behat\Behat\Context\Context;
 use Behat\Behat\Context\SnippetAcceptingContext;
@@ -16,7 +16,7 @@ use eZ\Publish\API\Repository\Values\ContentType\FieldDefinitionUpdateStruct;
 use EzSystems\PlatformBehatBundle\Context\RepositoryContext;
 use PHPUnit\Framework\Assert as Assertion;
 
-final class ContentType extends RawMinkContext implements Context, SnippetAcceptingContext
+final class ContentTypeContext extends RawMinkContext implements Context, SnippetAcceptingContext
 {
     use RepositoryContext;
 
