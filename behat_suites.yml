@@ -9,6 +9,7 @@ repository-forms:
                 - EzSystems\RepositoryForms\Behat\Context\ContentEditContext
                 - EzSystems\RepositoryForms\Behat\Context\ContentTypeContext
                 - EzSystems\RepositoryForms\Behat\Context\PagelayoutContext
+                - EzSystems\EzPlatformAdminUi\Behat\Helper\Hooks
         fieldtype_form:
             paths:
                 - vendor/ezsystems/repository-forms/features/FieldTypeForm
