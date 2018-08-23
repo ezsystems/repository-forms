@@ -5,7 +5,7 @@
  * @copyright Copyright (C) eZ Systems AS. All rights reserved.
  * @license For full copyright and license information view LICENSE file distributed with this source code.
  */
-namespace EzSystems\RepositoryForms\Features\Context;
+namespace EzSystems\RepositoryForms\Behat\Context;
 
 use Behat\Behat\Context\Context;
 use Behat\Behat\Context\SnippetAcceptingContext;
@@ -18,6 +18,7 @@ use eZ\Publish\API\Repository\Values\User\Role;
 use eZ\Publish\API\Repository\Values\User\User;
 use eZ\Publish\API\Repository\Values\User\UserGroup;
 use eZ\Publish\Core\Repository\Values\User\RoleCreateStruct;
+use EzSystems\EzPlatformAdminUi\Behat\Helper\EzEnvironmentConstants;
 use EzSystems\PlatformBehatBundle\Context\RepositoryContext;
 use PHPUnit\Framework\Assert as Assertion;
 use Symfony\Component\Filesystem\Filesystem;
@@ -128,8 +129,12 @@ class UserRegistrationContext extends RawMinkContext implements Context, Snippet
 
         $roleService = $this->getRepository()->getRoleService();
         $roleCreateStruct = new RoleCreateStruct(['identifier' => $roleIdentifier]);
-        $roleCreateStruct->addPolicy($roleService->newPolicyCreateStruct('user', 'login'));
-        $roleCreateStruct->addPolicy($roleService->newPolicyCreateStruct('content', 'read'));
+
+        $policiesSet = explode(',', EzEnvironmentConstants::get('CREATE_REGISTRATION_ROLE_POLICIES'));
+        foreach ($policiesSet as $policy) {
+            [$module, $function] = explode('/', $policy);
+            $roleCreateStruct->addPolicy($roleService->newPolicyCreateStruct($module, $function));
+        }
 
         if ($withUserRegisterPolicy === true) {
             $roleCreateStruct->addPolicy($roleService->newPolicyCreateStruct('user', 'register'));
@@ -156,9 +161,9 @@ class UserRegistrationContext extends RawMinkContext implements Context, Snippet
     {
         $this->visitPath('/login');
         $page = $this->getSession()->getPage();
-        $page->fillField('username', $user->login);
-        $page->fillField('password', self::$password);
-        $page->findButton('Login')->press();
+        $page->fillField('_username', $user->login);
+        $page->fillField('_password', self::$password);
+        $this->getSession()->getPage()->find('css', 'form')->submit();
         $this->assertSession()->statusCodeEquals(200);
     }
 
@@ -240,7 +245,7 @@ class UserRegistrationContext extends RawMinkContext implements Context, Snippet
      */
     public function iSeeARegistrationConfirmationMessage()
     {
-        $this->assertSession()->pageTextContains('Your account has been created');
+        $this->assertSession()->pageTextContains(EzEnvironmentConstants::get('REGISTRATION_CONFIRMATION_MESSAGE'));
     }
 
     /**
