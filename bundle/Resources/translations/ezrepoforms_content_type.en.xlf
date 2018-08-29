@@ -171,6 +171,21 @@
         <target>Description</target>
         <note>key: field_definition.description</note>
       </trans-unit>
+      <trans-unit id="f64d0d1be6b62d75f7c77bf08ec560abd3addfb4" resname="field_definition.ezauthor.default_user_current">
+        <source>Current User</source>
+        <target>Current User</target>
+        <note>key: field_definition.ezauthor.default_user_current</note>
+      </trans-unit>
+      <trans-unit id="904471ac6da01e95b90c1f0f8ec7740b59931e6b" resname="field_definition.ezauthor.default_user_empty">
+        <source>Empty</source>
+        <target>Empty</target>
+        <note>key: field_definition.ezauthor.default_user_empty</note>
+      </trans-unit>
+      <trans-unit id="60b0ee9222a502c38adf1be704d4984564190e8e" resname="field_definition.ezauthor.default_author">
+        <source>Default value</source>
+        <target>Default value</target>
+        <note>key: field_definition.ezauthor.default_author</note>
+      </trans-unit>
       <trans-unit id="41f781284e4bae2abbb6cfdf1126cc90b48dd35b" resname="field_definition.ezbinaryfile.max_file_size">
         <source>Maximum file size (MB)</source>
         <target>Maximum file size (MB)</target>

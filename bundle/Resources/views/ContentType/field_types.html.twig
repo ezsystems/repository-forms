@@ -212,6 +212,14 @@
     </div>
 {% endblock %}
 
+{% block ezauthor_field_definition_edit %}
+    <div class="ezauthor-settings default-author{% if group_class is not empty %} {{ group_class }}{% endif %}">
+        {{- form_label(form.defaultAuthor) -}}
+        {{- form_errors(form.defaultAuthor) -}}
+        {{- form_widget(form.defaultAuthor) -}}
+    </div>
+{% endblock %}
+
 {% block ezselection_field_definition_edit %}
     <div class="ezselection-settings is-multiple{% if group_class is not empty %} {{ group_class }}{% endif %}">
         {{- form_label(form.isMultiple) -}}

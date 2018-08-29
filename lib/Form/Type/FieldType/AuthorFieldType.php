@@ -8,6 +8,7 @@ namespace EzSystems\RepositoryForms\Form\Type\FieldType;
 
 use eZ\Publish\API\Repository\Exceptions\NotFoundException;
 use eZ\Publish\API\Repository\Repository;
+use eZ\Publish\Core\FieldType\Author\Type as AuthorType;
 use eZ\Publish\Core\FieldType\Author\Author;
 use eZ\Publish\Core\FieldType\Author\Value;
 use EzSystems\RepositoryForms\Form\Type\FieldType\Author\AuthorCollectionType;
@@ -18,6 +19,8 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\FormInterface;
+use Symfony\Component\Form\FormView;
 
 /**
  * Form Type representing ezauthor field type.
@@ -26,6 +29,9 @@ class AuthorFieldType extends AbstractType
 {
     /** @var \eZ\Publish\API\Repository\Repository */
     private $repository;
+
+    /** @var int */
+    private $defaultAuthor;
 
     /**
      * @param \eZ\Publish\API\Repository\Repository $repository
@@ -57,6 +63,8 @@ class AuthorFieldType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $this->defaultAuthor = $options['default_author'];
+
         $builder
             ->add('authors', AuthorCollectionType::class, [])
             ->addViewTransformer($this->getViewTransformer())
@@ -64,11 +72,24 @@ class AuthorFieldType extends AbstractType
     }
 
     /**
+     * @param \Symfony\Component\Form\FormView $view
+     * @param \Symfony\Component\Form\FormInterface $form
+     * @param array $options
+     */
+    public function buildView(FormView $view, FormInterface $form, array $options)
+    {
+        $view->vars['attr']['default-author'] = $options['default_author'];
+    }
+
+    /**
      * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
      */
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults(['data_class' => Value::class]);
+        $resolver->setDefaults([
+            'data_class' => Value::class,
+            'default_author' => AuthorType::DEFAULT_VALUE_EMPTY,
+        ])->setAllowedTypes('default_author', 'integer');
     }
 
     /**
@@ -80,7 +101,11 @@ class AuthorFieldType extends AbstractType
     {
         return new CallbackTransformer(function (Value $value) {
             if (0 === $value->authors->count()) {
-                $value->authors->append($this->fetchLoggedAuthor());
+                if ($this->defaultAuthor === AuthorType::DEFAULT_CURRENT_USER) {
+                    $value->authors->append($this->fetchLoggedAuthor());
+                } else {
+                    $value->authors->append(new Author());
+                }
             }
 
             return $value;
