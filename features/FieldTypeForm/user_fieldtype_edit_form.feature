@@ -18,5 +18,5 @@ Scenario: The attributes of a user field have a form representation
 
 Scenario: The input fields are flagged as required when the field definition is required
     Given the field definition is marked as required
-     When I view the edit form for this field
+     When I view the edit user form for this field
      Then the value input fields for user field should be flagged as required
