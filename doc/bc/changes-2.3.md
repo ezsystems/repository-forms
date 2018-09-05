@@ -8,4 +8,4 @@ Changes affecting version compatibility with former or future versions.
 
   As part of it :
    - `\EzSystems\RepositoryForms\EventListener\UserEditListener` was removed 
-   - New routes were introduced `ez_user_create` and `ez_user_update`
+   - Existing routes `ez_user_create` and `ez_user_update` were changed in order to comply with new flow
