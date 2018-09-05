@@ -45,4 +45,6 @@ ez_user_update:
     path: /user/update/{contentId}/{versionNo}/{language}
     defaults:
         _controller: "ezrepoforms.controller.user:editAction"
+    options:
+        expose: true
 
