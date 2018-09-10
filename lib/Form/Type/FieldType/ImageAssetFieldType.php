@@ -85,7 +85,7 @@ class ImageAssetFieldType extends AbstractType
 
     public function buildView(FormView $view, FormInterface $form, array $options)
     {
-        $view->vars['image'] = null;
+        $view->vars['destination_content'] = null;
 
         if ($view->vars['value']['destinationContentId']) {
             try {
@@ -93,7 +93,7 @@ class ImageAssetFieldType extends AbstractType
                     $view->vars['value']['destinationContentId']
                 );
 
-                $view->vars['image'] = $this->assetMapper->getAssetValue($content);
+                $view->vars['destination_content'] = $content;
             } catch (NotFoundException | UnauthorizedException $exception) {
             }
         }
