@@ -35,7 +35,10 @@ class ImageAssetValueTransformer extends AbstractBinaryBaseTransformer implement
 
         return array_merge(
             $this->getDefaultProperties(),
-            ['destinationContentId' => $value->destinationContentId]
+            [
+                'destinationContentId' => $value->destinationContentId,
+                'alternativeText' => $value->alternativeText,
+            ]
         );
     }
 
@@ -58,6 +61,6 @@ class ImageAssetValueTransformer extends AbstractBinaryBaseTransformer implement
             );
         }
 
-        return new Value($value['destinationContentId']);
+        return new Value($value['destinationContentId'], $value['alternativeText']);
     }
 }

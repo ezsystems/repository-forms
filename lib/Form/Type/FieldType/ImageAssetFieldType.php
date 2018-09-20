@@ -16,6 +16,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
@@ -79,6 +80,13 @@ class ImageAssetFieldType extends AbstractType
                         ]),
                     ],
                     'mapped' => false,
+                ]
+            )
+            ->add(
+                'alternativeText',
+                TextType::class,
+                [
+                    'label' => /** @Desc("Alternative text") */ 'content.field_type.ezimageasset.alternative_text',
                 ]
             );
     }

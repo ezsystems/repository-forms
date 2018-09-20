@@ -61,6 +61,11 @@
         <target>Width</target>
         <note>key: content.field_type.ezmedia.width</note>
       </trans-unit>
+      <trans-unit id="56f2bad53d241371a48f88accc3ef08a9bc643b6" resname="content.field_type.ezimageasset.alternative_text">
+        <source>Alternative text</source>
+        <target>Alternative text</target>
+        <note>key: content.field_type.ezimageasset.alternative_text</note>
+      </trans-unit>
     </body>
   </file>
 </xliff>
