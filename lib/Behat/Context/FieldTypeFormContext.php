@@ -87,6 +87,19 @@ final class FieldTypeFormContext extends RawMinkContext implements SnippetAccept
     }
 
     /**
+     * @When /^I view the edit user form for this field$/
+     */
+    public function iEditOrCreateContentOfUserType()
+    {
+        $this->visitPath(
+            sprintf(
+                '/user/create/%s/eng-GB/2',
+                $this->contentTypeContext->getCurrentContentType()->identifier
+            )
+        );
+    }
+
+    /**
      * @Then the edit form should contain an identifiable widget for :fieldTypeIdentifier field definition
      */
     public function theEditFormShouldContainAFieldsetNamedAfterTheFieldDefinition($fieldTypeIdentifier)
@@ -156,7 +169,7 @@ final class FieldTypeFormContext extends RawMinkContext implements SnippetAccept
     /**
      * @Then the value input fields for :fieldIdentifier field should be flagged as required
      */
-    public function theInputFieldsShouldBeFlaggedAsRequired($fieldTypeIdentifier)
+    public function theInputFieldsShouldBeFlaggedAsRequired(string $fieldTypeIdentifier)
     {
         $inputNodeElements = $this->getSession()->getPage()->findAll(
             'css',

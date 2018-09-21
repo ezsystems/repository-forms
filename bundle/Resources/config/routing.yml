@@ -37,11 +37,14 @@ ez_user_register_confirmation:
         _controller: "ezrepoforms.controller.user_register:registerConfirmAction"
 
 ez_user_create:
-    path: /user/create
+    path: /user/create/{contentTypeIdentifier}/{language}/{parentLocationId}
     defaults:
         _controller: "ezrepoforms.controller.user:createAction"
 
 ez_user_update:
-    path: /user/update
+    path: /user/update/{contentId}/{versionNo}/{language}
     defaults:
-        _controller: "ezrepoforms.controller.user:updateAction"
+        _controller: "ezrepoforms.controller.user:editAction"
+    options:
+        expose: true
+
