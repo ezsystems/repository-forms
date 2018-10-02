@@ -14,7 +14,7 @@ Scenario: The attributes of a user field have a form representation
          | Username | text |
          | Password | password |
          | Confirm password | password |
-         | E-mail | email |
+         | Email | email |
 
 Scenario: The input fields are flagged as required when the field definition is required
     Given the field definition is marked as required
