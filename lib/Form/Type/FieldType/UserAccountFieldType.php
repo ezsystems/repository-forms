@@ -35,19 +35,19 @@ class UserAccountFieldType extends AbstractType
 
         $builder
             ->add('username', TextType::class, [
-                'label' => 'content.field_type.ezuser.username',
+                'label' => /** @Desc("Username") */ 'content.field_type.ezuser.username',
                 'required' => true,
                 'attr' => $isUpdateForm ? ['disabled' => 'disabled'] : [],
             ])
             ->add('password', RepeatedType::class, [
                 'type' => PasswordType::class,
                 'required' => !$isUpdateForm,
-                'first_options' => ['label' => 'content.field_type.ezuser.password'],
-                'second_options' => ['label' => 'content.field_type.ezuser.password_confirm'],
+                'first_options' => ['label' => /** @Desc("Password") */ 'content.field_type.ezuser.password'],
+                'second_options' => ['label' => /** @Desc("Confirm password") */ 'content.field_type.ezuser.password_confirm'],
             ])
             ->add('email', EmailType::class, [
                 'required' => true,
-                'label' => 'content.field_type.ezuser.email',
+                'label' => /** @Desc("Email") */ 'content.field_type.ezuser.email',
             ]);
 
         if (in_array($options['intent'], ['create', 'update'], true)) {

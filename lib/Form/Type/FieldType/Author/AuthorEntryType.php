@@ -61,7 +61,7 @@ class AuthorEntryType extends AbstractType
                 'email',
                 EmailType::class,
                 [
-                    'label' => /** @Desc("E-mail") */
+                    'label' => /** @Desc("Email") */
                         'content.field_type.ezauthor.email',
                     'required' => $options['required'],
                 ]

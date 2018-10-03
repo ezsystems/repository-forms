@@ -12,8 +12,8 @@
         <note>key: content.cancel_button</note>
       </trans-unit>
       <trans-unit id="db5d6f82fe5ba6f40d1d159dca89c659c76aad06" resname="content.field_type.ezauthor.email">
-        <source>E-mail</source>
-        <target>E-mail</target>
+        <source>Email</source>
+        <target>Email</target>
         <note>key: content.field_type.ezauthor.email</note>
       </trans-unit>
       <trans-unit id="05fe48833d61c38f4c532c34c4b6fdad323e1fe1" resname="content.field_type.ezauthor.name">
@@ -32,8 +32,8 @@
         <note>key: content.field_type.ezurl.text</note>
       </trans-unit>
       <trans-unit id="7a3eb3ea13db1c9d6a0bd64c7d249a45e7b83b52" resname="content.field_type.ezuser.email">
-        <source>E-mail</source>
-        <target>E-mail</target>
+        <source>Email</source>
+        <target>Email</target>
         <note>key: content.field_type.ezuser.email</note>
       </trans-unit>
       <trans-unit id="8ac4ec40153c80fd39d2051802e30ebffb6f1fe1" resname="content.field_type.ezuser.enabled">
