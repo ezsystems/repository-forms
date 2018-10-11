@@ -9,7 +9,6 @@ namespace EzSystems\RepositoryForms\Form\Processor;
 
 use eZ\Publish\API\Repository\ContentService;
 use eZ\Publish\API\Repository\LocationService;
-use eZ\Publish\API\Repository\URLAliasService;
 use eZ\Publish\API\Repository\Values\Content\Content;
 use eZ\Publish\API\Repository\Values\Content\ContentStruct;
 use eZ\Publish\API\Repository\Values\Content\Location;
@@ -21,6 +20,7 @@ use EzSystems\RepositoryForms\Event\FormActionEvent;
 use EzSystems\RepositoryForms\Event\RepositoryFormEvents;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Routing\RouterInterface;
 
 /**
@@ -37,9 +37,6 @@ class ContentFormProcessor implements EventSubscriberInterface
     /** @var \Symfony\Component\Routing\RouterInterface */
     private $router;
 
-    /** @var \eZ\Publish\API\Repository\URLAliasService */
-    private $urlAliasService;
-
     /**
      * @param \eZ\Publish\API\Repository\ContentService $contentService
      * @param \eZ\Publish\API\Repository\LocationService $locationService
@@ -49,13 +46,11 @@ class ContentFormProcessor implements EventSubscriberInterface
     public function __construct(
         ContentService $contentService,
         LocationService $locationService,
-        RouterInterface $router,
-        URLAliasService $urlAliasService
+        RouterInterface $router
     ) {
         $this->contentService = $contentService;
         $this->locationService = $locationService;
         $this->router = $router;
-        $this->urlAliasService = $urlAliasService;
     }
 
     /**
@@ -110,7 +105,6 @@ class ContentFormProcessor implements EventSubscriberInterface
      * @throws \eZ\Publish\API\Repository\Exceptions\ContentFieldValidationException
      * @throws \eZ\Publish\API\Repository\Exceptions\ContentValidationException
      * @throws \eZ\Publish\API\Repository\Exceptions\InvalidArgumentException
-     * @throws \eZ\Publish\API\Repository\Exceptions\NotFoundException
      * @throws \eZ\Publish\API\Repository\Exceptions\UnauthorizedException
      * @throws \eZ\Publish\Core\Base\Exceptions\InvalidArgumentException
      */
@@ -123,35 +117,19 @@ class ContentFormProcessor implements EventSubscriberInterface
         $draft = $this->saveDraft($data, $form->getConfig()->getOption('languageCode'));
         $content = $this->contentService->publishVersion($draft->versionInfo);
 
-        $location = $this->locationService->loadLocation($content->contentInfo->mainLocationId);
+        $redirectUrl = $form['redirectUrlAfterPublish']->getData() ?: $this->router->generate(
+            '_ezpublishLocation', [
+                'locationId' => $content->contentInfo->mainLocationId,
+            ]
+        );
 
-        $redirectUrl = $form['redirectUrlAfterPublish']->getData() ?: $this->getSystemUrl($location, [$content->versionInfo->initialLanguageCode]);
         $event->setResponse(new RedirectResponse($redirectUrl));
-    }
-
-    /**
-     * @param \eZ\Publish\API\Repository\Values\Content\Location $location
-     * @param array $prioritizedLanguageList
-     *
-     * @return string
-     *
-     * @throws \eZ\Publish\API\Repository\Exceptions\NotFoundException
-     */
-    private function getSystemUrl(Location $location, array $prioritizedLanguageList): string
-    {
-        return $this->urlAliasService->reverseLookup(
-            $location,
-            null,
-            true,
-            $prioritizedLanguageList
-        )->path;
     }
 
     /**
      * @param \EzSystems\RepositoryForms\Event\FormActionEvent $event
      *
      * @throws \eZ\Publish\API\Repository\Exceptions\BadStateException
-     * @throws \eZ\Publish\API\Repository\Exceptions\NotFoundException
      * @throws \eZ\Publish\API\Repository\Exceptions\UnauthorizedException
      */
     public function processCancel(FormActionEvent $event)
@@ -160,14 +138,10 @@ class ContentFormProcessor implements EventSubscriberInterface
         $data = $event->getData();
 
         if ($data->isNew()) {
-            $parentLocation = $this->locationService->loadLocation(
-                $data->getLocationStructs()[0]->parentLocationId
-            );
-            $url = $this->getSystemUrl(
-                $parentLocation,
-                [$data->mainLanguageCode, $parentLocation->contentInfo->mainLanguageCode]
-            );
-            $response = new RedirectResponse($url);
+            $response = new RedirectResponse($this->router->generate(
+                '_ezpublishLocation',
+                ['locationId' => $data->getLocationStructs()[0]->parentLocationId]
+            ));
             $event->setResponse($response);
 
             return;
@@ -187,11 +161,10 @@ class ContentFormProcessor implements EventSubscriberInterface
             $this->contentService->deleteVersion($versionInfo);
         }
 
-        $locationToRedirect = $this->locationService->loadLocation($redirectionLocationId);
-
-        $url = $this->getSystemUrl(
-            $locationToRedirect,
-            [$locationToRedirect->contentInfo->mainLanguageCode]
+        $url = $this->router->generate(
+            '_ezpublishLocation',
+            ['locationId' => $redirectionLocationId],
+            UrlGeneratorInterface::ABSOLUTE_URL
         );
 
         $event->setResponse(new RedirectResponse($url));
