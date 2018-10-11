@@ -208,7 +208,6 @@ services:
             - '@ezpublish.api.service.content'
             - '@ezpublish.api.service.location'
             - '@router'
-            - '@ezpublish.api.service.url_alias'
         tags:
             - { name: kernel.event_subscriber }
 
@@ -250,6 +249,10 @@ services:
         arguments: ["@ezpublish.api.service.content_type"]
         tags:
             - { name: kernel.event_subscriber }
+
+    EzSystems\RepositoryForms\Form\Processor\SystemUrlRedirectProcessor:
+        autowire: true
+        autoconfigure: true
 
     # Controllers
     ezrepoforms.controller.content_edit:
