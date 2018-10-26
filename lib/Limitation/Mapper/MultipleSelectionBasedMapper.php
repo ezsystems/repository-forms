@@ -9,6 +9,7 @@ namespace EzSystems\RepositoryForms\Limitation\Mapper;
 
 use eZ\Publish\API\Repository\Values\User\Limitation;
 use EzSystems\RepositoryForms\Limitation\LimitationFormMapperInterface;
+use EzSystems\RepositoryForms\Translation\LimitationTranslationExtractor;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormInterface;
 
@@ -28,7 +29,7 @@ abstract class MultipleSelectionBasedMapper implements LimitationFormMapperInter
     {
         $options = $this->getChoiceFieldOptions() + [
             'multiple' => true,
-            'label' => $data->getIdentifier(),
+            'label' => LimitationTranslationExtractor::identifierToLabel($data->getIdentifier()),
             'required' => false,
         ];
         $choices = $this->getSelectionChoices();
