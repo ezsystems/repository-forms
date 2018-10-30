@@ -96,7 +96,7 @@ class ContentCreateViewFilter implements EventSubscriberInterface
             $contentType,
             [
                 'mainLanguageCode' => $languageCode,
-                'parentLocation' => $this->locationService->newLocationCreateStruct($location->id),
+                'parentLocation' => $this->locationService->newLocationCreateStruct($location->id, $contentType),
             ]
         );
     }
