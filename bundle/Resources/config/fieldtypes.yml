@@ -140,6 +140,7 @@ services:
 
     EzSystems\RepositoryForms\FieldType\Mapper\UserAccountFieldValueFormMapper:
         tags:
+            - { name: ez.fieldFormMapper.definition, fieldType: ezuser }
             - { name: ez.fieldFormMapper.value, fieldType: ezuser }
 
     EzSystems\RepositoryForms\FieldType\Mapper\UrlFormMapper:

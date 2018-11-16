@@ -10,22 +10,29 @@ namespace EzSystems\RepositoryForms\FieldType\Mapper;
 
 use eZ\Publish\Core\FieldType\User\Value as ApiUserValue;
 use EzSystems\RepositoryForms\Data\Content\FieldData;
+use EzSystems\RepositoryForms\Data\FieldDefinitionData;
 use EzSystems\RepositoryForms\Data\User\UserAccountFieldData;
+use EzSystems\RepositoryForms\FieldType\FieldDefinitionFormMapperInterface;
 use EzSystems\RepositoryForms\FieldType\FieldValueFormMapperInterface;
+use EzSystems\RepositoryForms\Form\Type\FieldDefinition\User\PasswordConstraintCheckboxType;
 use EzSystems\RepositoryForms\Form\Type\FieldType\UserAccountFieldType;
+use EzSystems\RepositoryForms\Validator\Constraints\Password;
+use EzSystems\RepositoryForms\Validator\Constraints\UserAccountPassword;
 use Symfony\Component\Form\CallbackTransformer;
 use Symfony\Component\Form\Exception\AlreadySubmittedException;
 use Symfony\Component\Form\Exception\LogicException;
 use Symfony\Component\Form\Exception\UnexpectedTypeException;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\OptionsResolver\Exception\AccessException;
 use Symfony\Component\OptionsResolver\Exception\InvalidOptionsException;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\Range;
 
 /**
  * Maps a user FieldType.
  */
-final class UserAccountFieldValueFormMapper implements FieldValueFormMapperInterface
+final class UserAccountFieldValueFormMapper implements FieldValueFormMapperInterface, FieldDefinitionFormMapperInterface
 {
     /**
      * Maps Field form to current FieldType based on the configured form type (self::$formType).
@@ -54,11 +61,47 @@ final class UserAccountFieldValueFormMapper implements FieldValueFormMapperInter
                         'required' => true,
                         'label' => $label,
                         'intent' => $formIntent,
+                        'constraints' => [
+                            new UserAccountPassword(['contentType' => $rootForm->getData()->contentType]),
+                        ],
                     ])
                     ->addModelTransformer($this->getModelTransformer())
                     ->setAutoInitialize(false)
                     ->getForm()
             );
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function mapFieldDefinitionForm(FormInterface $fieldDefinitionForm, FieldDefinitionData $data)
+    {
+        $propertyPathPrefix = 'validatorConfiguration[PasswordValueValidator]';
+
+        $fieldDefinitionForm->add('requireAtLeastOneUpperCaseCharacter', PasswordConstraintCheckboxType::class, [
+            'property_path' => $propertyPathPrefix . '[requireAtLeastOneUpperCaseCharacter]',
+        ]);
+
+        $fieldDefinitionForm->add('requireAtLeastOneLowerCaseCharacter', PasswordConstraintCheckboxType::class, [
+            'property_path' => $propertyPathPrefix . '[requireAtLeastOneLowerCaseCharacter]',
+        ]);
+
+        $fieldDefinitionForm->add('requireAtLeastOneNumericCharacter', PasswordConstraintCheckboxType::class, [
+            'property_path' => $propertyPathPrefix . '[requireAtLeastOneNumericCharacter]',
+        ]);
+
+        $fieldDefinitionForm->add('requireAtLeastOneNonAlphanumericCharacter', PasswordConstraintCheckboxType::class, [
+            'property_path' => $propertyPathPrefix . '[requireAtLeastOneNonAlphanumericCharacter]',
+        ]);
+
+        $fieldDefinitionForm->add('minLength', IntegerType::class, [
+            'required' => false,
+            'property_path' => $propertyPathPrefix . '[minLength]',
+            'label' => 'field_definition.ezuser.min_length',
+            'constraints' => [
+                new Range(['min' => 0, 'max' => 255]),
+            ],
+        ]);
     }
 
     /**

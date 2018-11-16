@@ -8,6 +8,7 @@
  */
 namespace EzSystems\RepositoryForms\Data\User;
 
+use eZ\Publish\API\Repository\Values\ContentType\ContentType;
 use eZ\Publish\API\Repository\Values\User\User;
 use eZ\Publish\API\Repository\Values\User\UserUpdateStruct;
 use EzSystems\RepositoryForms\Data\Content\ContentData;
@@ -26,6 +27,11 @@ class UserUpdateData extends UserUpdateStruct implements NewnessCheckable
      * @var User
      */
     public $user;
+
+    /**
+     * @var ContentType
+     */
+    public $contentType;
 
     public function isNew()
     {
