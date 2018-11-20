@@ -14,6 +14,7 @@ use eZ\Publish\API\Repository\Exceptions\NotFoundException;
 use eZ\Publish\API\Repository\Exceptions\UnauthorizedException;
 use eZ\Publish\API\Repository\LanguageService;
 use eZ\Publish\API\Repository\LocationService;
+use eZ\Publish\API\Repository\PermissionResolver;
 use eZ\Publish\API\Repository\UserService;
 use eZ\Publish\Core\Base\Exceptions\BadStateException;
 use eZ\Publish\Core\Base\Exceptions\InvalidArgumentException;
@@ -33,6 +34,7 @@ use Symfony\Component\OptionsResolver\Exception\MissingOptionsException;
 use Symfony\Component\OptionsResolver\Exception\NoSuchOptionException;
 use Symfony\Component\OptionsResolver\Exception\OptionDefinitionException;
 use Symfony\Component\OptionsResolver\Exception\UndefinedOptionsException;
+use eZ\Publish\Core\Base\Exceptions\UnauthorizedException as CoreUnauthorizedException;
 
 class UserController extends Controller
 {
@@ -51,18 +53,23 @@ class UserController extends Controller
     /** @var ActionDispatcherInterface */
     private $userActionDispatcher;
 
+    /** @var \eZ\Publish\API\Repository\PermissionResolver */
+    private $permissionResolver;
+
     public function __construct(
         ContentTypeService $contentTypeService,
         UserService $userService,
         LocationService $locationService,
         LanguageService $languageService,
-        ActionDispatcherInterface $userActionDispatcher
+        ActionDispatcherInterface $userActionDispatcher,
+        PermissionResolver $permissionResolver
     ) {
         $this->contentTypeService = $contentTypeService;
         $this->userService = $userService;
         $this->locationService = $locationService;
         $this->languageService = $languageService;
         $this->userActionDispatcher = $userActionDispatcher;
+        $this->permissionResolver = $permissionResolver;
     }
 
     /**
@@ -149,6 +156,9 @@ class UserController extends Controller
         Request $request
     ) {
         $user = $this->userService->loadUser($contentId);
+        if (!$this->permissionResolver->canUser('content', 'edit', $user)) {
+            throw new CoreUnauthorizedException('content', 'edit', ['userId' => $contentId]);
+        }
         $contentType = $this->contentTypeService->loadContentType($user->contentInfo->contentTypeId);
 
         $userUpdate = (new UserUpdateMapper())->mapToFormData($user, $contentType, [
