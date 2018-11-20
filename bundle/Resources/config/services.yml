@@ -270,6 +270,7 @@ services:
             - "@ezpublish.api.service.location"
             - "@ezpublish.api.service.language"
             - "@ezrepoforms.action_dispatcher.user"
+            - '@eZ\Publish\API\Repository\PermissionResolver'
         parent: ezpublish.controller.base
 
     ezrepoforms.controller.user_register:
