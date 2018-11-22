@@ -16,6 +16,7 @@ use eZ\Publish\API\Repository\Values\User\Limitation;
 use EzSystems\RepositoryForms\Limitation\DataTransformer\UDWBasedValueTransformer;
 use EzSystems\RepositoryForms\Limitation\LimitationFormMapperInterface;
 use EzSystems\RepositoryForms\Limitation\LimitationValueMapperInterface;
+use EzSystems\RepositoryForms\Translation\LimitationTranslationExtractor;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\FormInterface;
 
@@ -69,7 +70,7 @@ class UDWBasedMapper implements LimitationFormMapperInterface, LimitationValueMa
             $form->getConfig()->getFormFactory()->createBuilder()
                 ->create('limitationValues', HiddenType::class, [
                     'required' => false,
-                    'label' => $data->getIdentifier(),
+                    'label' => LimitationTranslationExtractor::identifierToLabel($data->getIdentifier()),
                 ])
                 ->addModelTransformer(new UDWBasedValueTransformer())
                 // Deactivate auto-initialize as we're not on the root form.

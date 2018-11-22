@@ -77,7 +77,7 @@ class LimitationType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => '\eZ\Publish\API\Repository\Values\User\Limitation',
-            'translation_domain' => 'ezrepoforms_role',
+            'translation_domain' => 'ezrepoforms_policies',
         ]);
     }
 

@@ -23,8 +23,6 @@ class LimitationTranslationExtractor implements ExtractorInterface
     private $policyMap;
 
     /**
-     * LimitationTranslationExtractor constructor.
-     *
      * @param array $policyMap
      */
     public function __construct(array $policyMap)
@@ -50,6 +48,16 @@ class LimitationTranslationExtractor implements ExtractorInterface
         }
 
         return $catalogue;
+    }
+
+    /**
+     * @param string $limitationIdentifier
+     *
+     * @return string
+     */
+    public static function identifierToLabel(string $limitationIdentifier): string
+    {
+        return self::MESSAGE_ID_PREFIX . strtolower($limitationIdentifier);
     }
 
     /**
