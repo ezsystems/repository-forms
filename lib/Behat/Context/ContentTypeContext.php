@@ -53,6 +53,32 @@ final class ContentTypeContext extends RawMinkContext implements Context, Snippe
     }
 
     /**
+     * @Given I remove :fieldIdentifier field from :contentTypeIdentifier Content Type
+     */
+    public function iRemoveFieldFromContentType($fieldIdentifier, $contentTypeIdentifier)
+    {
+        $contentType = $this->contentTypeService->loadContentTypeByIdentifier($contentTypeIdentifier);
+        $contentTypeDraft = $this->contentTypeService->createContentTypeDraft($contentType);
+
+        $fieldDefinition = $contentTypeDraft->getFieldDefinition($fieldIdentifier);
+        $this->contentTypeService->removeFieldDefinition($contentTypeDraft, $fieldDefinition);
+
+        $this->contentTypeService->publishContentTypeDraft($contentTypeDraft);
+    }
+
+    public function addFieldsTo($contentTypeIdentifier, array $fieldDefinitions)
+    {
+        $contentType = $this->contentTypeService->loadContentTypeByIdentifier($contentTypeIdentifier);
+        $contentTypeDraft = $this->contentTypeService->createContentTypeDraft($contentType);
+
+        foreach ($fieldDefinitions as $definition) {
+            $this->contentTypeService->addFieldDefinition($contentTypeDraft, $definition);
+        }
+
+        $this->contentTypeService->publishContentTypeDraft($contentTypeDraft);
+    }
+
+    /**
      * @return \eZ\Publish\API\Repository\Values\ContentType\ContentType
      *
      * @throws \Exception if no current content type has been defined in the context
