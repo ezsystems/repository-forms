@@ -39,7 +39,8 @@ class TextBlockFormMapper implements FieldDefinitionFormMapperInterface, FieldVa
         $fieldDefinition = $data->fieldDefinition;
         $formConfig = $fieldForm->getConfig();
         $names = $fieldDefinition->getNames();
-        $label = $fieldDefinition->getName($formConfig->getOption('mainLanguageCode')) ?: reset($names);
+        $label = $fieldDefinition->getName($formConfig->getOption('languageCode'))
+            ?: $fieldDefinition->getName($formConfig->getOption('mainLanguageCode'));
 
         $fieldForm
             ->add(
@@ -49,7 +50,7 @@ class TextBlockFormMapper implements FieldDefinitionFormMapperInterface, FieldVa
                         TextBlockFieldType::class,
                         [
                             'required' => $fieldDefinition->isRequired,
-                            'label' => $label,
+                            'label' => $label ?? reset($names),
                             'rows' => $data->fieldDefinition->fieldSettings['textRows'],
                         ]
                     )

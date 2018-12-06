@@ -33,6 +33,13 @@ class ContentTypeData extends ContentTypeUpdateStruct implements NewnessCheckabl
      */
     protected $fieldDefinitionsData = [];
 
+    /**
+     * Language Code of currently edited contentTypeDraft.
+     *
+     * @var string|null
+     */
+    public $usedLanguageCode = null;
+
     protected function getIdentifierValue()
     {
         return $this->contentTypeDraft->identifier;
@@ -41,6 +48,20 @@ class ContentTypeData extends ContentTypeUpdateStruct implements NewnessCheckabl
     public function addFieldDefinitionData(FieldDefinitionData $fieldDefinitionData)
     {
         $this->fieldDefinitionsData[] = $fieldDefinitionData;
+    }
+
+    public function replaceFieldDefinitionData(string $fieldDefinitionIdentifier, FieldDefinitionData $fieldDefinitionData)
+    {
+        $currentFieldDefinition = array_filter(
+            $this->fieldDefinitionsData,
+            function (FieldDefinitionData $fieldDefinitionData) use ($fieldDefinitionIdentifier) {
+                return $fieldDefinitionIdentifier === $fieldDefinitionData->identifier;
+            }
+        );
+
+        $keyToReplace = array_keys($currentFieldDefinition);
+
+        $this->fieldDefinitionsData[$keyToReplace[0]] = $fieldDefinitionData;
     }
 
     /**

@@ -8,6 +8,7 @@
  */
 namespace EzSystems\RepositoryForms\Form\Type\ContentType;
 
+use EzSystems\RepositoryForms\Data\ContentTypeData;
 use EzSystems\RepositoryForms\Form\DataTransformer\TranslatablePropertyTransformer;
 use EzSystems\RepositoryForms\Form\Type\FieldDefinition\FieldDefinitionType;
 use Symfony\Component\Form\AbstractType;
@@ -16,6 +17,9 @@ use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormEvents;
+use Symfony\Component\Form\FormInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
@@ -95,6 +99,61 @@ class ContentTypeUpdateType extends AbstractType
             ->add('publishContentType', SubmitType::class, [
                 'label' => 'content_type.publish',
                 'disabled' => !$hasFieldDefinition,
-            ]);
+            ])
+            ->addEventListener(FormEvents::PRE_SET_DATA, [$this, 'onPreSetData'])
+            ->addEventListener(FormEvents::PRE_SUBMIT, [$this, 'onPreSubmit'])
+        ;
+    }
+
+    public function onPreSetData(FormEvent $event)
+    {
+        $form = $event->getForm();
+
+        /** @var ContentTypeData $data */
+        $data = $event->getData();
+        if ($data->mainLanguageCode === $data->usedLanguageCode) {
+            return;
+        }
+        $this->disableNotTranslatableFields($form);
+    }
+
+    public function onPreSubmit(FormEvent $event)
+    {
+        /** @var ContentTypeData$contentTypeData */
+        $contentTypeData = $event->getForm()->getData();
+        if ($contentTypeData->mainLanguageCode === $contentTypeData->usedLanguageCode) {
+            return;
+        }
+        $this->disableNotTranslatableFields($event->getForm());
+    }
+
+    /**
+     * @param $form
+     */
+    private function disableNotTranslatableFields(FormInterface $form): void
+    {
+        $toDisableList = [
+            'identifier',
+            'nameSchema',
+            'urlAliasSchema',
+            'isContainer',
+            'defaultSortField',
+            'defaultSortOrder',
+            'defaultAlwaysAvailable',
+            'fieldTypeSelection',
+            'addFieldDefinition',
+            'removeFieldDefinition',
+        ];
+
+        foreach ($toDisableList as $toDisable) {
+            $field = $form->get($toDisable);
+            $type = $field->getConfig()->getType()->getInnerType();
+            $form->remove($toDisable);
+            $form->add(
+                $toDisable,
+                get_class($type),
+                array_merge($field->getConfig()->getOptions(), ['disabled' => true])
+            );
+        }
     }
 }

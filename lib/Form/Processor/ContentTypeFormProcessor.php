@@ -12,6 +12,7 @@ use eZ\Publish\API\Repository\ContentTypeService;
 use eZ\Publish\API\Repository\Values\ContentType\ContentTypeDraft;
 use eZ\Publish\API\Repository\Values\ContentType\FieldDefinition;
 use eZ\Publish\API\Repository\Values\ContentType\FieldDefinitionCreateStruct;
+use eZ\Publish\Core\Base\Exceptions\InvalidArgumentException;
 use eZ\Publish\Core\Helper\FieldsGroups\FieldsGroupsList;
 use EzSystems\RepositoryForms\Event\FormActionEvent;
 use EzSystems\RepositoryForms\Event\RepositoryFormEvents;
@@ -92,6 +93,14 @@ class ContentTypeFormProcessor implements EventSubscriberInterface
         // Reload the draft, to make sure we include any changes made in the current form submit
         $contentTypeDraft = $this->contentTypeService->loadContentTypeDraft($event->getData()->contentTypeDraft->id);
         $fieldTypeIdentifier = $event->getForm()->get('fieldTypeSelection')->getData();
+
+        $targetLanguageCode = $event->getForm()->getConfig()->getOption('languageCode');
+        if ($contentTypeDraft->mainLanguageCode !== $targetLanguageCode) {
+            throw new InvalidArgumentException(
+                'languageCode',
+                'FieldDefinitions can be only added to main language translation'
+            );
+        }
 
         $maxFieldPos = 0;
         foreach ($contentTypeDraft->fieldDefinitions as $existingFieldDef) {
