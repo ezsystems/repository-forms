@@ -16,7 +16,6 @@ use EzSystems\RepositoryForms\FieldType\FieldDefinitionFormMapperInterface;
 use EzSystems\RepositoryForms\FieldType\FieldValueFormMapperInterface;
 use EzSystems\RepositoryForms\Form\Type\FieldDefinition\User\PasswordConstraintCheckboxType;
 use EzSystems\RepositoryForms\Form\Type\FieldType\UserAccountFieldType;
-use EzSystems\RepositoryForms\Validator\Constraints\Password;
 use EzSystems\RepositoryForms\Validator\Constraints\UserAccountPassword;
 use Symfony\Component\Form\CallbackTransformer;
 use Symfony\Component\Form\Exception\AlreadySubmittedException;
