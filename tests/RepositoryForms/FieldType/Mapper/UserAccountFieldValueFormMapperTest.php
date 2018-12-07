@@ -7,6 +7,7 @@
  */
 namespace EzSystems\RepositoryForms\Tests\FieldType\Mapper;
 
+use eZ\Publish\API\Repository\Values\ContentType\ContentType;
 use eZ\Publish\Core\Repository\Values\ContentType\FieldDefinition;
 use EzSystems\RepositoryForms\FieldType\Mapper\UserAccountFieldValueFormMapper;
 use Symfony\Component\Form\FormConfigInterface;
@@ -19,6 +20,15 @@ class UserAccountFieldValueFormMapperTest extends BaseMapperTest
         parent::setUp();
 
         $formRoot = $this->getMockBuilder(FormInterface::class)->getMock();
+        $formRoot->expects($this->once())
+            ->method('getData')
+            ->willReturnCallback(function () {
+                $data = new \stdClass();
+                $data->contentType = $this->createMock(ContentType::class);
+
+                return $data;
+            });
+
         $userEditForm = $this->getMockBuilder(FormInterface::class)->getMock();
         $config = $this->getMockBuilder(FormConfigInterface::class)->getMock();
 

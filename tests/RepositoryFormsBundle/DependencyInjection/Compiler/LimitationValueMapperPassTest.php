@@ -37,7 +37,7 @@ class LimitationValueMapperPassTest extends AbstractCompilerPassTestCase
         $def->addTag(LimitationValueMapperPass::LIMITATION_VALUE_MAPPER_TAG, [
             'limitationType' => 'limitation',
         ]);
-        $def->setClass(get_class($this->createMock(LimitationValueMapperInterface::class)));
+        $def->setClass(\get_class($this->createMock(LimitationValueMapperInterface::class)));
         $this->setDefinition($limitationValueMapperServiceId, $def);
 
         $this->compile();
