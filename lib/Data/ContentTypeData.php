@@ -61,7 +61,7 @@ class ContentTypeData extends ContentTypeUpdateStruct implements NewnessCheckabl
 
         $keyToReplace = array_keys($currentFieldDefinition);
 
-        $this->fieldDefinitionsData[$keyToReplace[0]] = $fieldDefinitionData;
+        $this->fieldDefinitionsData[key($currentFieldDefinition)] = $fieldDefinitionData; 
     }
 
     /**
