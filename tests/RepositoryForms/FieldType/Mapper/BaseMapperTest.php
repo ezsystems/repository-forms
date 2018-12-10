@@ -27,10 +27,6 @@ abstract class BaseMapperTest extends TestCase
             ->willReturn($this->getMockBuilder(FieldType::class)->getMock());
 
         $this->config = $this->getMockBuilder(FormConfigInterface::class)->getMock();
-        $this->config->expects($this->once())
-            ->method('getOption')
-            ->with('mainLanguageCode')
-            ->willReturn('eng-GB');
 
         $formFactory = $this->getMockBuilder(FormFactoryInterface::class)
             ->setMethods(['addModelTransformer', 'setAutoInitialize', 'getForm'])

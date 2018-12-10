@@ -31,10 +31,10 @@ class ContentTypeDraftMapper implements FormDataMapperInterface
         $params = $optionsResolver->resolve($params);
 
         /** @var \eZ\Publish\API\Repository\Values\Content\Language $language */
-        $language = $params['language'];
+        $language = $params['language'] ?? null;
 
         /** @var \eZ\Publish\API\Repository\Values\Content\Language|null $baseLanguage */
-        $baseLanguage = $params['baseLanguage'];
+        $baseLanguage = $params['baseLanguage'] ?? null;
 
         $contentTypeData = new ContentTypeData(['contentTypeDraft' => $contentTypeDraft]);
         if (!$contentTypeData->isNew()) {
