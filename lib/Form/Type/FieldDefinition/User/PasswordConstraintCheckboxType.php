@@ -19,14 +19,7 @@ class PasswordConstraintCheckboxType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        $builder->addModelTransformer(new CallbackTransformer(
-            function ($value) {
-                return (bool)$value;
-            },
-            function ($value) {
-                return (bool)$value;
-            }
-        ));
+        $builder->addModelTransformer(new CallbackTransformer('boolval', 'boolval'));
     }
 
     /**
@@ -43,6 +36,7 @@ class PasswordConstraintCheckboxType extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
+            'data' => 'boolean',
             'required' => false,
             'translation_domain' => 'ezrepoforms_content_type',
         ]);

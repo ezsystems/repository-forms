@@ -11,8 +11,8 @@ class Password extends Constraint
     /** @var string */
     public $message = 'ez.user.password.invalid';
 
-    /** @var \eZ\Publish\API\Repository\Values\ContentType\ContentType */
-    public $contentType = null;
+    /** @var \eZ\Publish\API\Repository\Values\ContentType\ContentType|null */
+    public $contentType;
 
     /**
      * {@inheritdoc}
