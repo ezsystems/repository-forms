@@ -114,7 +114,7 @@ class ContentTypeFormProcessorTest extends TestCase
         $contentTypeDraft = new ContentTypeDraft([
             'innerContentType' => new ContentType([
                 'fieldDefinitions' => $existingFieldDefinitions,
-                'mainLanguageCode' => $languageCode
+                'mainLanguageCode' => $languageCode,
             ]),
         ]);
         $expectedNewFieldDefIdentifier = sprintf(
@@ -137,7 +137,6 @@ class ContentTypeFormProcessorTest extends TestCase
 
         $formConfig = $this->createMock(FormConfigInterface::class);
         $formConfig
-            ->expects($this->once())
             ->method('getOption')
             ->with('languageCode')
             ->willReturn($languageCode);

@@ -38,7 +38,7 @@ class ContentTypeData extends ContentTypeUpdateStruct implements NewnessCheckabl
      *
      * @var string|null
      */
-    public $usedLanguageCode = null;
+    public $languageCode = null;
 
     protected function getIdentifierValue()
     {

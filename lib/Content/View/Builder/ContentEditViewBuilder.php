@@ -178,7 +178,6 @@ class ContentEditViewBuilder implements ViewBuilder
      * Loads ContentType with id $contentTypeId.
      *
      * @param int $contentTypeId
-     *
      * @param string $languageCode
      *
      * @return \eZ\Publish\API\Repository\Values\ContentType\ContentType

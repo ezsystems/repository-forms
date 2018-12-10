@@ -52,7 +52,7 @@ class ContentTypeDraftMapper implements FormDataMapperInterface
         $contentTypeData->names = $contentTypeDraft->getNames();
         $contentTypeData->descriptions = $contentTypeDraft->getDescriptions();
 
-        $contentTypeData->usedLanguageCode = $language ? $language->languageCode : $contentTypeDraft->mainLanguageCode;
+        $contentTypeData->languageCode = $language ? $language->languageCode : $contentTypeDraft->mainLanguageCode;
 
         if ($baseLanguage && $language) {
             $contentTypeData->names[$language->languageCode] = $contentTypeDraft->getName($baseLanguage->languageCode);

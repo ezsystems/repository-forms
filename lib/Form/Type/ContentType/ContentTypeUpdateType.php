@@ -107,21 +107,19 @@ class ContentTypeUpdateType extends AbstractType
 
     public function onPreSetData(FormEvent $event)
     {
-        $form = $event->getForm();
-
         /** @var ContentTypeData $data */
         $data = $event->getData();
-        if ($data->mainLanguageCode === $data->usedLanguageCode) {
+        if ($data->mainLanguageCode === $data->languageCode) {
             return;
         }
-        $this->disableNotTranslatableFields($form);
+        $this->disableNotTranslatableFields($event->getForm());
     }
 
     public function onPreSubmit(FormEvent $event)
     {
-        /** @var ContentTypeData$contentTypeData */
+        /** @var ContentTypeData $contentTypeData */
         $contentTypeData = $event->getForm()->getData();
-        if ($contentTypeData->mainLanguageCode === $contentTypeData->usedLanguageCode) {
+        if ($contentTypeData->mainLanguageCode === $contentTypeData->languageCode) {
             return;
         }
         $this->disableNotTranslatableFields($event->getForm());
