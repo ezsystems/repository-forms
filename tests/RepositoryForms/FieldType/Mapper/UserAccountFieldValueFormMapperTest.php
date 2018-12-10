@@ -52,7 +52,6 @@ class UserAccountFieldValueFormMapperTest extends BaseMapperTest
                 ['mainLanguageCode', null, 'eng-GB'],
             ]);
 
-
         $mapper->mapFieldValueForm($this->fieldForm, $this->data);
     }
 
