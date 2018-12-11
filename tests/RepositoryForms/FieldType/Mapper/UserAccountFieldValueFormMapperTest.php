@@ -20,15 +20,13 @@ class UserAccountFieldValueFormMapperTest extends BaseMapperTest
     {
         parent::setUp();
 
+        $data = new UserCreateData();
+        $data->contentType = $this->createMock(ContentType::class);
+
         $formRoot = $this->getMockBuilder(FormInterface::class)->getMock();
         $formRoot
             ->method('getData')
-            ->willReturnCallback(function () {
-                $data = new UserCreateData();
-                $data->contentType = $this->createMock(ContentType::class);
-
-                return $data;
-            });
+            ->willReturn($data);
 
         $userEditForm = $this->getMockBuilder(FormInterface::class)->getMock();
         $config = $this->getMockBuilder(FormConfigInterface::class)->getMock();

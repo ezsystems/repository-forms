@@ -43,6 +43,9 @@ class PasswordValidator extends ConstraintValidator
         }
     }
 
+    /**
+     * @return \EzSystems\RepositoryForms\Validator\ValidationErrorsProcessor
+     */
     protected function createValidationErrorsProcessor(): ValidationErrorsProcessor
     {
         return new ValidationErrorsProcessor($this->context);

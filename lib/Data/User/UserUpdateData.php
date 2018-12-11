@@ -8,28 +8,25 @@
  */
 namespace EzSystems\RepositoryForms\Data\User;
 
-use eZ\Publish\API\Repository\Values\ContentType\ContentType;
-use eZ\Publish\API\Repository\Values\User\User;
 use eZ\Publish\API\Repository\Values\User\UserUpdateStruct;
 use EzSystems\RepositoryForms\Data\Content\ContentData;
-use EzSystems\RepositoryForms\Data\Content\FieldData;
 use EzSystems\RepositoryForms\Data\NewnessCheckable;
 
 /**
- * @property-read FieldData[] $fieldsData
- * @property-read User $user
+ * @property-read \EzSystems\RepositoryForms\Data\Content\FieldData[] $fieldsData
+ * @property-read \eZ\Publish\API\Repository\Values\User\User $user
  */
 class UserUpdateData extends UserUpdateStruct implements NewnessCheckable
 {
     use ContentData;
 
     /**
-     * @var User
+     * @var \eZ\Publish\API\Repository\Values\User\User
      */
     public $user;
 
     /**
-     * @var ContentType
+     * @var \eZ\Publish\API\Repository\Values\ContentType\ContentType
      */
     public $contentType;
 
