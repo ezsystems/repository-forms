@@ -142,7 +142,7 @@ final class ContentEdit extends MinkContext implements Context, SnippetAccepting
         $selector = sprintf('div.ezfield-identifier-%s ul li', self::$constrainedFieldIdentifier);
 
         $this->assertSession()->elementExists('css', $selector);
-        $this->assertSession()->elementTextContains('css', $selector, 'The string can not be shorter than 5 characters.');
+        $this->assertSession()->elementTextContains('css', $selector, 'The string cannot be shorter than 5 characters.');
     }
 
     /**
