@@ -9,7 +9,7 @@
 namespace EzSystems\RepositoryForms\Validator\Constraints;
 
 use eZ\Publish\API\Repository\FieldTypeService;
-use eZ\Publish\API\Repository\Values\Translation\Plural;
+use EzSystems\RepositoryForms\Validator\ValidationErrorsProcessor;
 use Symfony\Component\Validator\ConstraintValidator;
 
 abstract class FieldTypeValidator extends ConstraintValidator
@@ -29,23 +29,8 @@ abstract class FieldTypeValidator extends ConstraintValidator
      */
     protected function processValidationErrors(array $validationErrors)
     {
-        if (empty($validationErrors)) {
-            return;
-        }
-
-        foreach ($validationErrors as $i => $error) {
-            $message = $error->getTranslatableMessage();
-            /** @var \Symfony\Component\Validator\Violation\ConstraintViolationBuilderInterface $violationBuilder */
-            $violationBuilder = $this->context->buildViolation($message instanceof Plural ? $message->plural : $message->message);
-            $violationBuilder->setParameters($message->values);
-
-            $propertyPath = $this->generatePropertyPath($i, $error->getTarget());
-            if ($propertyPath) {
-                $violationBuilder->atPath($propertyPath);
-            }
-
-            $violationBuilder->addViolation();
-        }
+        $validationErrorsProcessor = $this->createValidationErrorProcessor();
+        $validationErrorsProcessor->processValidationErrors($validationErrors);
     }
 
     /**
@@ -63,5 +48,15 @@ abstract class FieldTypeValidator extends ConstraintValidator
     protected function generatePropertyPath($errorIndex, $errorTarget)
     {
         return '';
+    }
+
+    /**
+     * @return \EzSystems\RepositoryForms\Validator\ValidationErrorsProcessor
+     */
+    private function createValidationErrorProcessor(): ValidationErrorsProcessor
+    {
+        return new ValidationErrorsProcessor($this->context, function ($index, $target) {
+            return $this->generatePropertyPath($index, $target);
+        });
     }
 }

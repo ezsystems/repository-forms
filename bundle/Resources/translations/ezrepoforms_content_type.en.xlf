@@ -451,6 +451,31 @@
         <target>Use seconds</target>
         <note>key: field_definition.eztime.use_seconds</note>
       </trans-unit>
+      <trans-unit id="39ba847b3d5f6c06e6f42fe1b6c68300972b7cd9" resname="field_definition.ezuser.require_at_least_one_upper_case_character">
+        <source>Password must contain at least one uppercase letter</source>
+        <target>Password must contain at least one uppercase letter</target>
+        <note>key: field_definition.ezuser.require_at_least_one_upper_case_character</note>
+      </trans-unit>
+      <trans-unit id="28fc07f891f7d4347c73dbd8d112bf83f7dbd356" resname="field_definition.ezuser.require_at_least_one_lower_case_character">
+        <source>Password must contain at least one lowercase letter</source>
+        <target>Password must contain at least one lowercase letter</target>
+        <note>key: field_definition.ezuser.require_at_least_one_lower_case_character</note>
+      </trans-unit>
+      <trans-unit id="e6a7a2c03aeadbc72a6a7d32324a902cda64f0d0" resname="field_definition.ezuser.require_at_least_one_numeric_character">
+        <source>Password must contain at least one number</source>
+        <target>Password must contain at least one number</target>
+        <note>key: field_definition.ezuser.require_at_least_one_numeric_character</note>
+      </trans-unit>
+      <trans-unit id="2e7543e8b47d315472e5eababf1d5de80f406c68" resname="field_definition.ezuser.require_at_least_one_non_alphanumeric_character">
+        <source>Password must contain at least one non-alphanumeric character</source>
+        <target>Password must contain at least one non-alphanumeric character</target>
+        <note>key: field_definition.ezuser.require_at_least_one_non_alphanumeric_character</note>
+      </trans-unit>
+      <trans-unit id="09f53c8e49ff9cb20bf81f483095af473410937b" resname="field_definition.ezuser.min_length">
+        <source>Minimum password length</source>
+        <target>Minimum password length</target>
+        <note>key: field_definition.ezuser.min_length</note>
+      </trans-unit>
       <trans-unit id="92d9243bb9fac540233dc376b41a3bcd41615ccc" resname="field_definition.field_group">
         <source>Category</source>
         <target>Category</target>

@@ -47,7 +47,12 @@ class UserUpdateMapper
         $this->configureOptions($optionsResolver);
         $params = $optionsResolver->resolve($params);
 
-        $data = new UserUpdateData(['user' => $user, 'enabled' => $user->enabled]);
+        $data = new UserUpdateData([
+            'user' => $user,
+            'enabled' => $user->enabled,
+            'contentType' => $contentType,
+        ]);
+
         $fields = $user->getFieldsByLanguage($params['languageCode']);
         foreach ($contentType->fieldDefinitions as $fieldDef) {
             $field = $fields[$fieldDef->identifier];

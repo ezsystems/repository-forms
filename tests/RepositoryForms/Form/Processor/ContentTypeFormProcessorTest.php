@@ -118,7 +118,7 @@ class ContentTypeFormProcessorTest extends TestCase
         $expectedNewFieldDefIdentifier = sprintf(
             'new_%s_%d',
             $fieldTypeIdentifier,
-            count($existingFieldDefinitions) + 1
+            \count($existingFieldDefinitions) + 1
         );
 
         $fieldTypeSelectionForm = $this->createMock(FormInterface::class);
