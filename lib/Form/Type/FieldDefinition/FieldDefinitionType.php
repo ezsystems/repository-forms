@@ -20,7 +20,6 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
-use Symfony\Component\Form\FormInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
@@ -60,7 +59,7 @@ class FieldDefinitionType extends AbstractType
             ->setDefaults([
                 'data_class' => 'EzSystems\RepositoryForms\Data\FieldDefinitionData',
                 'translation_domain' => 'ezrepoforms_content_type',
-                'mainLanguageCode' => null
+                'mainLanguageCode' => null,
             ])
             ->setDefined(['mainLanguageCode'])
             ->setAllowedTypes('mainLanguageCode', ['null', 'string'])

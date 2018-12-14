@@ -8,7 +8,6 @@
  */
 namespace EzSystems\RepositoryForms\Form\Type\ContentType;
 
-use EzSystems\RepositoryForms\Data\ContentTypeData;
 use EzSystems\RepositoryForms\Form\DataTransformer\TranslatablePropertyTransformer;
 use EzSystems\RepositoryForms\Form\Type\FieldDefinition\FieldDefinitionType;
 use Symfony\Component\Form\AbstractType;
@@ -17,9 +16,6 @@ use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\Form\FormEvent;
-use Symfony\Component\Form\FormEvents;
-use Symfony\Component\Form\FormInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
@@ -43,7 +39,7 @@ class ContentTypeUpdateType extends AbstractType
             ->setDefaults([
                 'data_class' => 'EzSystems\RepositoryForms\Data\ContentTypeData',
                 'translation_domain' => 'ezrepoforms_content_type',
-                'mainLanguageCode' => null
+                'mainLanguageCode' => null,
             ])
             ->setDefined(['mainLanguageCode'])
             ->setAllowedTypes('mainLanguageCode', ['null', 'string'])
