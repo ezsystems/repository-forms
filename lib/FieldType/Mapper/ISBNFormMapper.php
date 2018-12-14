@@ -21,6 +21,7 @@ class ISBNFormMapper implements FieldDefinitionFormMapperInterface, FieldValueFo
 {
     public function mapFieldDefinitionForm(FormInterface $fieldDefinitionForm, FieldDefinitionData $fieldDefinition)
     {
+        $isTranslation = $fieldDefinition->contentTypeData->languageCode !== $fieldDefinition->contentTypeData->mainLanguageCode;
         $defaultValueForm = $fieldDefinitionForm
             ->getConfig()
             ->getFormFactory()
@@ -28,6 +29,7 @@ class ISBNFormMapper implements FieldDefinitionFormMapperInterface, FieldValueFo
             ->create('defaultValue', ISBNFieldType::class, [
                 'required' => false,
                 'label' => 'field_definition.ezisbn.default_value',
+                'disabled' => $isTranslation,
             ])
             ->setAutoInitialize(false)
             ->getForm();
@@ -38,6 +40,7 @@ class ISBNFormMapper implements FieldDefinitionFormMapperInterface, FieldValueFo
                     'required' => false,
                     'property_path' => 'fieldSettings[isISBN13]',
                     'label' => 'field_definition.ezisbn.is_isbn13',
+                    'disabled' => $isTranslation,
                 ]
             )
             ->add($defaultValueForm);

@@ -24,6 +24,7 @@ class FloatFormMapper implements FieldDefinitionFormMapperInterface, FieldValueF
 {
     public function mapFieldDefinitionForm(FormInterface $fieldDefinitionForm, FieldDefinitionData $fieldDefinition)
     {
+        $isTranslation = $fieldDefinition->contentTypeData->languageCode !== $fieldDefinition->contentTypeData->mainLanguageCode;
         $defaultValueForm = $fieldDefinitionForm
             ->getConfig()
             ->getFormFactory()
@@ -31,6 +32,7 @@ class FloatFormMapper implements FieldDefinitionFormMapperInterface, FieldValueF
             ->create('defaultValue', FloatFieldType::class, [
                 'required' => false,
                 'label' => 'field_definition.ezfloat.default_value',
+                'disabled' => $isTranslation,
             ])
             ->setAutoInitialize(false)
             ->getForm();
@@ -41,6 +43,7 @@ class FloatFormMapper implements FieldDefinitionFormMapperInterface, FieldValueF
                     'required' => false,
                     'property_path' => 'validatorConfiguration[FloatValueValidator][minFloatValue]',
                     'label' => 'field_definition.ezfloat.min_value',
+                    'disabled' => $isTranslation,
                 ]
             )
             ->add(
@@ -48,6 +51,7 @@ class FloatFormMapper implements FieldDefinitionFormMapperInterface, FieldValueF
                     'required' => false,
                     'property_path' => 'validatorConfiguration[FloatValueValidator][maxFloatValue]',
                     'label' => 'field_definition.ezfloat.max_value',
+                    'disabled' => $isTranslation,
                 ]
             )
             ->add($defaultValueForm);

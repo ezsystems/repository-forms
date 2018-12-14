@@ -38,6 +38,7 @@ class MediaFormMapper implements FieldDefinitionFormMapperInterface, FieldValueF
 
     public function mapFieldDefinitionForm(FormInterface $fieldDefinitionForm, FieldDefinitionData $data)
     {
+        $isTranslation = $data->contentTypeData->languageCode !== $data->contentTypeData->mainLanguageCode;
         $fieldDefinitionForm
             ->add('maxSize', IntegerType::class, [
                 'required' => false,
@@ -53,6 +54,7 @@ class MediaFormMapper implements FieldDefinitionFormMapperInterface, FieldValueF
                     'min' => 0,
                     'max' => $this->maxUploadSize->get(MaxUploadSize::MEGABYTES),
                 ],
+                'disabled' => $isTranslation,
             ])
             ->add('mediaType', ChoiceType::class, [
                 'choices' => [
@@ -68,6 +70,7 @@ class MediaFormMapper implements FieldDefinitionFormMapperInterface, FieldValueF
                 'required' => true,
                 'property_path' => 'fieldSettings[mediaType]',
                 'label' => 'field_definition.ezmedia.media_type',
+                'disabled' => $isTranslation,
             ]);
     }
 

@@ -33,6 +33,7 @@ class PageFormMapper implements FieldDefinitionFormMapperInterface
     public function mapFieldDefinitionForm(FormInterface $fieldDefinitionForm, FieldDefinitionData $data)
     {
         $availableLayouts = $this->pageService->getAvailableZoneLayouts();
+        $isTranslation = $data->contentTypeData->languageCode !== $data->contentTypeData->mainLanguageCode;
 
         $fieldDefinitionForm
             ->add('defaultLayout', ChoiceType::class, [
@@ -43,6 +44,7 @@ class PageFormMapper implements FieldDefinitionFormMapperInterface
                 'required' => false,
                 'property_path' => 'fieldSettings[defaultLayout]',
                 'label' => 'field_definition.ezpage.default_layout',
+                'disabled' => $isTranslation,
             ]);
     }
 

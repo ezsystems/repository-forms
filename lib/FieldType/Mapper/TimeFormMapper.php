@@ -26,6 +26,7 @@ class TimeFormMapper implements FieldDefinitionFormMapperInterface, FieldValueFo
 {
     public function mapFieldDefinitionForm(FormInterface $fieldDefinitionForm, FieldDefinitionData $data)
     {
+        $isTranslation = $data->contentTypeData->languageCode !== $data->contentTypeData->mainLanguageCode;
         $fieldDefinitionForm
             ->add(
                 'useSeconds',
@@ -34,6 +35,7 @@ class TimeFormMapper implements FieldDefinitionFormMapperInterface, FieldValueFo
                     'required' => false,
                     'property_path' => 'fieldSettings[useSeconds]',
                     'label' => 'field_definition.eztime.use_seconds',
+                    'disabled' => $isTranslation,
                 ]
             )
             ->add(
@@ -49,6 +51,7 @@ class TimeFormMapper implements FieldDefinitionFormMapperInterface, FieldValueFo
                     'required' => true,
                     'property_path' => 'fieldSettings[defaultType]',
                     'label' => 'field_definition.eztime.default_type',
+                    'disabled' => $isTranslation,
                 ]
             );
     }

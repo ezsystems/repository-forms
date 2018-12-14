@@ -37,6 +37,7 @@ class ImageFormMapper implements FieldDefinitionFormMapperInterface, FieldValueF
 
     public function mapFieldDefinitionForm(FormInterface $fieldDefinitionForm, FieldDefinitionData $data)
     {
+        $isTranslation = $data->contentTypeData->languageCode !== $data->contentTypeData->mainLanguageCode;
         $fieldDefinitionForm
             ->add('maxSize', IntegerType::class, [
                 'required' => false,
@@ -52,6 +53,7 @@ class ImageFormMapper implements FieldDefinitionFormMapperInterface, FieldValueF
                     'min' => 0,
                     'max' => $this->maxUploadSize->get(MaxUploadSize::MEGABYTES),
                 ],
+                'disabled' => $isTranslation,
             ]);
     }
 

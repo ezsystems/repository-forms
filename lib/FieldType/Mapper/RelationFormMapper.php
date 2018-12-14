@@ -20,6 +20,7 @@ class RelationFormMapper extends AbstractRelationFormMapper
 {
     public function mapFieldDefinitionForm(FormInterface $fieldDefinitionForm, FieldDefinitionData $data)
     {
+        $isTranslation = $data->contentTypeData->languageCode !== $data->contentTypeData->mainLanguageCode;
         $fieldDefinitionForm
             ->add('selectionRoot', HiddenType::class, [
                 'required' => false,
@@ -34,6 +35,7 @@ class RelationFormMapper extends AbstractRelationFormMapper
                 'required' => false,
                 'property_path' => 'fieldSettings[selectionContentTypes]',
                 'label' => 'field_definition.ezobjectrelation.selection_content_types',
+                'disabled' => $isTranslation,
             ]);
     }
 

@@ -24,12 +24,14 @@ class TextBlockFormMapper implements FieldDefinitionFormMapperInterface, FieldVa
 {
     public function mapFieldDefinitionForm(FormInterface $fieldDefinitionForm, FieldDefinitionData $data)
     {
+        $isTranslation = $data->contentTypeData->languageCode !== $data->contentTypeData->mainLanguageCode;
         $fieldDefinitionForm
             ->add(
                 'textRows', IntegerType::class, [
                     'required' => false,
                     'property_path' => 'fieldSettings[textRows]',
                     'label' => 'field_definition.eztext.text_rows',
+                    'disabled' => $isTranslation,
                 ]
             );
     }

@@ -21,11 +21,13 @@ class RelationListFormMapper extends AbstractRelationFormMapper
 {
     public function mapFieldDefinitionForm(FormInterface $fieldDefinitionForm, FieldDefinitionData $data)
     {
+        $isTranslation = $data->contentTypeData->languageCode !== $data->contentTypeData->mainLanguageCode;
         $fieldDefinitionForm
             ->add('selectionDefaultLocation', HiddenType::class, [
                 'required' => false,
                 'property_path' => 'fieldSettings[selectionDefaultLocation]',
                 'label' => 'field_definition.ezobjectrelationlist.selection_default_location',
+                'disabled' => $isTranslation,
             ])
             ->add('selectionContentTypes', ChoiceType::class, [
                 'choices' => $this->getContentTypesHash(),
@@ -35,12 +37,14 @@ class RelationListFormMapper extends AbstractRelationFormMapper
                 'required' => false,
                 'property_path' => 'fieldSettings[selectionContentTypes]',
                 'label' => 'field_definition.ezobjectrelationlist.selection_content_types',
+                'disabled' => $isTranslation,
             ])
             ->add('selectionLimit', IntegerType::class, [
                 'required' => false,
                 'empty_data' => 0,
                 'property_path' => 'validatorConfiguration[RelationListValueValidator][selectionLimit]',
                 'label' => /** @Desc("Selection limit") */ 'field_definition.ezobjectrelationlist.selection_limit',
+                'disabled' => $isTranslation,
             ]);
     }
 

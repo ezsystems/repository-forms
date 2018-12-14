@@ -21,6 +21,7 @@ class CountryFormMapper implements FieldDefinitionFormMapperInterface, FieldValu
 {
     public function mapFieldDefinitionForm(FormInterface $fieldDefinitionForm, FieldDefinitionData $data)
     {
+        $isTranslation = $data->contentTypeData->languageCode !== $data->contentTypeData->mainLanguageCode;
         $fieldDefinitionForm
             ->add(
                 'isMultiple',
@@ -28,6 +29,7 @@ class CountryFormMapper implements FieldDefinitionFormMapperInterface, FieldValu
                     'required' => false,
                     'property_path' => 'fieldSettings[isMultiple]',
                     'label' => 'field_definition.ezcountry.is_multiple',
+                    'disabled' => $isTranslation,
                 ]
             )
             ->add(
@@ -41,6 +43,7 @@ class CountryFormMapper implements FieldDefinitionFormMapperInterface, FieldValu
                             'expanded' => false,
                             'required' => false,
                             'label' => 'field_definition.ezcountry.default_value',
+                            'disabled' => $isTranslation,
                         ]
                     )
                     // Deactivate auto-initialize as we're not on the root form.

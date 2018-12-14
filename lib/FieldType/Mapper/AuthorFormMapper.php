@@ -29,6 +29,7 @@ class AuthorFormMapper implements FieldDefinitionFormMapperInterface, FieldValue
      */
     public function mapFieldDefinitionForm(FormInterface $fieldDefinitionForm, FieldDefinitionData $data)
     {
+        $isTranslation = $data->contentTypeData->languageCode !== $data->contentTypeData->mainLanguageCode;
         $fieldDefinitionForm
             ->add(
                 'defaultAuthor',
@@ -44,6 +45,7 @@ class AuthorFormMapper implements FieldDefinitionFormMapperInterface, FieldValue
                     'property_path' => 'fieldSettings[defaultAuthor]',
                     'label' => 'field_definition.ezauthor.default_author',
                     'translation_domain' => 'ezrepoforms_content_type',
+                    'disabled' => $isTranslation,
                 ]
             );
     }

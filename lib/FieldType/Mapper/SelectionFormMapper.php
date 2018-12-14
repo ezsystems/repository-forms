@@ -32,11 +32,13 @@ class SelectionFormMapper implements FieldDefinitionFormMapperInterface, FieldVa
      */
     public function mapFieldDefinitionForm(FormInterface $fieldDefinitionForm, FieldDefinitionData $data)
     {
+        $isTranslation = $data->contentTypeData->languageCode !== $data->contentTypeData->mainLanguageCode;
         $fieldDefinitionForm
             ->add('isMultiple', CheckboxType::class, [
                 'required' => false,
                 'property_path' => 'fieldSettings[isMultiple]',
                 'label' => 'field_definition.ezselection.is_multiple',
+                'disabled' => $isTranslation,
             ])
             ->add('options', CollectionType::class, [
                 'entry_type' => TextType::class,
@@ -49,6 +51,7 @@ class SelectionFormMapper implements FieldDefinitionFormMapperInterface, FieldVa
                 'required' => false,
                 'property_path' => 'fieldSettings[options]',
                 'label' => 'field_definition.ezselection.options',
+                'disabled' => $isTranslation,
             ]);
     }
 

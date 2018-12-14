@@ -24,6 +24,7 @@ class IntegerFormMapper implements FieldDefinitionFormMapperInterface, FieldValu
 {
     public function mapFieldDefinitionForm(FormInterface $fieldDefinitionForm, FieldDefinitionData $fieldDefinition)
     {
+        $isTranslation = $fieldDefinition->contentTypeData->languageCode !== $fieldDefinition->contentTypeData->mainLanguageCode;
         $defaultValueForm = $fieldDefinitionForm
             ->getConfig()
             ->getFormFactory()
@@ -41,6 +42,7 @@ class IntegerFormMapper implements FieldDefinitionFormMapperInterface, FieldValu
                     'required' => false,
                     'property_path' => 'validatorConfiguration[IntegerValueValidator][minIntegerValue]',
                     'label' => 'field_definition.ezinteger.min_value',
+                    'disabled' => $isTranslation,
                 ]
             )
             ->add(
@@ -48,6 +50,7 @@ class IntegerFormMapper implements FieldDefinitionFormMapperInterface, FieldValu
                     'required' => false,
                     'property_path' => 'validatorConfiguration[IntegerValueValidator][maxIntegerValue]',
                     'label' => 'field_definition.ezinteger.max_value',
+                    'disabled' => $isTranslation,
                 ]
             )
             ->add($defaultValueForm);

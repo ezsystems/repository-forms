@@ -23,6 +23,7 @@ class CheckboxFormMapper implements FieldDefinitionFormMapperInterface, FieldVal
 {
     public function mapFieldDefinitionForm(FormInterface $fieldDefinitionForm, FieldDefinitionData $fieldDefinition)
     {
+        $isTranslation = $fieldDefinition->contentTypeData->languageCode !== $fieldDefinition->contentTypeData->mainLanguageCode;
         $defaultValueForm = $fieldDefinitionForm
             ->getConfig()
             ->getFormFactory()
@@ -30,6 +31,7 @@ class CheckboxFormMapper implements FieldDefinitionFormMapperInterface, FieldVal
             ->create('defaultValue', CheckboxFieldType::class, [
                 'required' => false,
                 'label' => /** @Desc("Default value") */'field_definition.ezboolean.default_value',
+                'disabled' => $isTranslation,
             ])
             ->setAutoInitialize(false)
             ->getForm();

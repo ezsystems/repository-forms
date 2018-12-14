@@ -25,6 +25,7 @@ class DateFormMapper implements FieldDefinitionFormMapperInterface, FieldValueFo
 {
     public function mapFieldDefinitionForm(FormInterface $fieldDefinitionForm, FieldDefinitionData $data)
     {
+        $isTranslation = $data->contentTypeData->languageCode !== $data->contentTypeData->mainLanguageCode;
         $fieldDefinitionForm
             ->add(
                 'defaultType',
@@ -40,6 +41,7 @@ class DateFormMapper implements FieldDefinitionFormMapperInterface, FieldValueFo
                     'property_path' => 'fieldSettings[defaultType]',
                     'label' => 'field_definition.ezdate.default_type',
                     'translation_domain' => 'ezrepoforms_content_type',
+                    'disabled' => $isTranslation,
                 ]
             );
     }
