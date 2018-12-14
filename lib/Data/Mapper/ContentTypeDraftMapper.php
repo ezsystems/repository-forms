@@ -8,9 +8,11 @@
  */
 namespace EzSystems\RepositoryForms\Data\Mapper;
 
+use eZ\Publish\API\Repository\Values\Content\Language;
 use eZ\Publish\API\Repository\Values\ValueObject;
 use EzSystems\RepositoryForms\Data\ContentTypeData;
 use EzSystems\RepositoryForms\Data\FieldDefinitionData;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class ContentTypeDraftMapper implements FormDataMapperInterface
 {
@@ -24,6 +26,16 @@ class ContentTypeDraftMapper implements FormDataMapperInterface
      */
     public function mapToFormData(ValueObject $contentTypeDraft, array $params = [])
     {
+        $optionsResolver = new OptionsResolver();
+        $this->configureOptions($optionsResolver);
+        $params = $optionsResolver->resolve($params);
+
+        /** @var \eZ\Publish\API\Repository\Values\Content\Language $language */
+        $language = $params['language'] ?? null;
+
+        /** @var \eZ\Publish\API\Repository\Values\Content\Language|null $baseLanguage */
+        $baseLanguage = $params['baseLanguage'] ?? null;
+
         $contentTypeData = new ContentTypeData(['contentTypeDraft' => $contentTypeDraft]);
         if (!$contentTypeData->isNew()) {
             $contentTypeData->identifier = $contentTypeDraft->identifier;
@@ -40,13 +52,27 @@ class ContentTypeDraftMapper implements FormDataMapperInterface
         $contentTypeData->names = $contentTypeDraft->getNames();
         $contentTypeData->descriptions = $contentTypeDraft->getDescriptions();
 
+        $contentTypeData->languageCode = $language ? $language->languageCode : $contentTypeDraft->mainLanguageCode;
+
+        if ($baseLanguage && $language) {
+            $contentTypeData->names[$language->languageCode] = $contentTypeDraft->getName($baseLanguage->languageCode);
+            $contentTypeData->descriptions[$language->languageCode] = $contentTypeDraft->getDescription($baseLanguage->languageCode);
+        }
+
         foreach ($contentTypeDraft->fieldDefinitions as $fieldDef) {
+            $names = $fieldDef->getNames();
+            $descriptions = $fieldDef->getDescriptions();
+            if ($baseLanguage && $language) {
+                $names[$language->languageCode] = $fieldDef->getName($baseLanguage->languageCode);
+                $descriptions[$language->languageCode] = $fieldDef->getDescription($baseLanguage->languageCode);
+            }
+
             $contentTypeData->addFieldDefinitionData(new FieldDefinitionData([
                 'fieldDefinition' => $fieldDef,
                 'contentTypeData' => $contentTypeData,
                 'identifier' => $fieldDef->identifier,
-                'names' => $fieldDef->getNames(),
-                'descriptions' => $fieldDef->getDescriptions(),
+                'names' => $names,
+                'descriptions' => $descriptions,
                 'fieldGroup' => $fieldDef->fieldGroup,
                 'position' => $fieldDef->position,
                 'isTranslatable' => $fieldDef->isTranslatable,
@@ -61,5 +87,20 @@ class ContentTypeDraftMapper implements FormDataMapperInterface
         $contentTypeData->sortFieldDefinitions();
 
         return $contentTypeData;
+    }
+
+    /**
+     * @param \Symfony\Component\OptionsResolver\OptionsResolver $optionsResolver
+     *
+     * @throws \Symfony\Component\OptionsResolver\Exception\UndefinedOptionsException
+     * @throws \Symfony\Component\OptionsResolver\Exception\AccessException
+     */
+    private function configureOptions(OptionsResolver $optionsResolver)
+    {
+        $optionsResolver
+            ->setDefined(['language'])
+            ->setDefined(['baseLanguage'])
+            ->setAllowedTypes('baseLanguage', ['null', Language::class])
+            ->setAllowedTypes('language', Language::class);
     }
 }

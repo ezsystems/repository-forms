@@ -32,11 +32,13 @@ class SelectionFormMapper implements FieldDefinitionFormMapperInterface, FieldVa
      */
     public function mapFieldDefinitionForm(FormInterface $fieldDefinitionForm, FieldDefinitionData $data)
     {
+        $isTranslation = $data->contentTypeData->languageCode !== $data->contentTypeData->mainLanguageCode;
         $fieldDefinitionForm
             ->add('isMultiple', CheckboxType::class, [
                 'required' => false,
                 'property_path' => 'fieldSettings[isMultiple]',
                 'label' => 'field_definition.ezselection.is_multiple',
+                'disabled' => $isTranslation,
             ])
             ->add('options', CollectionType::class, [
                 'entry_type' => TextType::class,
@@ -49,6 +51,7 @@ class SelectionFormMapper implements FieldDefinitionFormMapperInterface, FieldVa
                 'required' => false,
                 'property_path' => 'fieldSettings[options]',
                 'label' => 'field_definition.ezselection.options',
+                'disabled' => $isTranslation,
             ]);
     }
 
@@ -57,7 +60,8 @@ class SelectionFormMapper implements FieldDefinitionFormMapperInterface, FieldVa
         $fieldDefinition = $data->fieldDefinition;
         $formConfig = $fieldForm->getConfig();
         $names = $fieldDefinition->getNames();
-        $label = $fieldDefinition->getName($formConfig->getOption('languageCode')) ?: reset($names);
+        $label = $fieldDefinition->getName($formConfig->getOption('languageCode'))
+            ?: $fieldDefinition->getName($formConfig->getOption('mainLanguageCode'));
 
         $fieldForm
             ->add(
@@ -67,7 +71,7 @@ class SelectionFormMapper implements FieldDefinitionFormMapperInterface, FieldVa
                         SelectionFieldType::class,
                         [
                             'required' => $fieldDefinition->isRequired,
-                            'label' => $label,
+                            'label' => $label ?? reset($names),
                             'multiple' => $fieldDefinition->fieldSettings['isMultiple'],
                             'choices' => array_flip($fieldDefinition->fieldSettings['options']),
                         ]

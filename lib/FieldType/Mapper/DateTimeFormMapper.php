@@ -27,11 +27,13 @@ class DateTimeFormMapper implements FieldDefinitionFormMapperInterface, FieldVal
 {
     public function mapFieldDefinitionForm(FormInterface $fieldDefinitionForm, FieldDefinitionData $data)
     {
+        $isTranslation = $data->contentTypeData->languageCode !== $data->contentTypeData->mainLanguageCode;
         $fieldDefinitionForm
             ->add('useSeconds', CheckboxType::class, [
                 'required' => false,
                 'property_path' => 'fieldSettings[useSeconds]',
                 'label' => 'field_definition.ezdatetime.use_seconds',
+                'disabled' => $isTranslation,
             ])
             ->add('defaultType', ChoiceType::class, [
                 'choices' => [
@@ -44,11 +46,13 @@ class DateTimeFormMapper implements FieldDefinitionFormMapperInterface, FieldVal
                 'required' => true,
                 'property_path' => 'fieldSettings[defaultType]',
                 'label' => 'field_definition.ezdatetime.default_type',
+                'disabled' => $isTranslation,
             ])
             ->add('dateInterval', DateTimeIntervalType::class, [
                 'required' => false,
                 'property_path' => 'fieldSettings[dateInterval]',
                 'label' => 'field_definition.ezdatetime.date_interval',
+                'disabled' => $isTranslation,
             ]);
     }
 
@@ -58,7 +62,8 @@ class DateTimeFormMapper implements FieldDefinitionFormMapperInterface, FieldVal
         $fieldSettings = $fieldDefinition->getFieldSettings();
         $formConfig = $fieldForm->getConfig();
         $names = $fieldDefinition->getNames();
-        $label = $fieldDefinition->getName($formConfig->getOption('mainLanguageCode')) ?: reset($names);
+        $label = $fieldDefinition->getName($formConfig->getOption('languageCode'))
+            ?: $fieldDefinition->getName($formConfig->getOption('mainLanguageCode'));
 
         $fieldForm
             ->add(
@@ -69,7 +74,7 @@ class DateTimeFormMapper implements FieldDefinitionFormMapperInterface, FieldVal
                         [
                             'with_seconds' => $fieldSettings['useSeconds'],
                             'required' => $fieldDefinition->isRequired,
-                            'label' => $label,
+                            'label' => $label ?? reset($names),
                         ]
                     )
                     ->setAutoInitialize(false)

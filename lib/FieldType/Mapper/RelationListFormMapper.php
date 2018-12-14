@@ -21,11 +21,13 @@ class RelationListFormMapper extends AbstractRelationFormMapper
 {
     public function mapFieldDefinitionForm(FormInterface $fieldDefinitionForm, FieldDefinitionData $data)
     {
+        $isTranslation = $data->contentTypeData->languageCode !== $data->contentTypeData->mainLanguageCode;
         $fieldDefinitionForm
             ->add('selectionDefaultLocation', HiddenType::class, [
                 'required' => false,
                 'property_path' => 'fieldSettings[selectionDefaultLocation]',
                 'label' => 'field_definition.ezobjectrelationlist.selection_default_location',
+                'disabled' => $isTranslation,
             ])
             ->add('selectionContentTypes', ChoiceType::class, [
                 'choices' => $this->getContentTypesHash(),
@@ -35,12 +37,14 @@ class RelationListFormMapper extends AbstractRelationFormMapper
                 'required' => false,
                 'property_path' => 'fieldSettings[selectionContentTypes]',
                 'label' => 'field_definition.ezobjectrelationlist.selection_content_types',
+                'disabled' => $isTranslation,
             ])
             ->add('selectionLimit', IntegerType::class, [
                 'required' => false,
                 'empty_data' => 0,
                 'property_path' => 'validatorConfiguration[RelationListValueValidator][selectionLimit]',
                 'label' => /** @Desc("Selection limit") */ 'field_definition.ezobjectrelationlist.selection_limit',
+                'disabled' => $isTranslation,
             ]);
     }
 
@@ -49,7 +53,8 @@ class RelationListFormMapper extends AbstractRelationFormMapper
         $fieldDefinition = $data->fieldDefinition;
         $formConfig = $fieldForm->getConfig();
         $names = $fieldDefinition->getNames();
-        $label = $fieldDefinition->getName($formConfig->getOption('mainLanguageCode')) ?: reset($names);
+        $label = $fieldDefinition->getName($formConfig->getOption('languageCode'))
+            ?: $fieldDefinition->getName($formConfig->getOption('mainLanguageCode'));
 
         $fieldForm
             ->add(
@@ -59,7 +64,7 @@ class RelationListFormMapper extends AbstractRelationFormMapper
                         RelationListFieldType::class,
                         [
                             'required' => $fieldDefinition->isRequired,
-                            'label' => $label,
+                            'label' => $label ?? reset($names),
                         ]
                     )
                     ->setAutoInitialize(false)

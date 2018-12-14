@@ -24,18 +24,21 @@ class TextLineFormMapper implements FieldDefinitionFormMapperInterface, FieldVal
 {
     public function mapFieldDefinitionForm(FormInterface $fieldDefinitionForm, FieldDefinitionData $data)
     {
+        $isTranslation = $data->contentTypeData->languageCode !== $data->contentTypeData->mainLanguageCode;
         $fieldDefinitionForm
             ->add('minLength', IntegerType::class, [
                 'required' => false,
                 'property_path' => 'validatorConfiguration[StringLengthValidator][minStringLength]',
                 'label' => 'field_definition.ezstring.min_length',
                 'attr' => ['min' => 0],
+                'disabled' => $isTranslation,
             ])
             ->add('maxLength', IntegerType::class, [
                 'required' => false,
                 'property_path' => 'validatorConfiguration[StringLengthValidator][maxStringLength]',
                 'label' => 'field_definition.ezstring.max_length',
                 'attr' => ['min' => 0],
+                'disabled' => $isTranslation,
             ])
             ->add(
                 $fieldDefinitionForm
@@ -43,6 +46,7 @@ class TextLineFormMapper implements FieldDefinitionFormMapperInterface, FieldVal
                     ->create('defaultValue', TextLineFieldType::class, [
                         'required' => false,
                         'label' => 'field_definition.ezstring.default_value',
+                        'disabled' => $isTranslation,
                     ])
                     ->setAutoInitialize(false)
                     ->getForm()
@@ -55,7 +59,8 @@ class TextLineFormMapper implements FieldDefinitionFormMapperInterface, FieldVal
         $formConfig = $fieldForm->getConfig();
         $validatorConfiguration = $fieldDefinition->getValidatorConfiguration();
         $names = $fieldDefinition->getNames();
-        $label = $fieldDefinition->getName($formConfig->getOption('mainLanguageCode')) ?: reset($names);
+        $label = $fieldDefinition->getName($formConfig->getOption('languageCode'))
+            ?: $fieldDefinition->getName($formConfig->getOption('mainLanguageCode'));
 
         $fieldForm
             ->add(
@@ -65,7 +70,7 @@ class TextLineFormMapper implements FieldDefinitionFormMapperInterface, FieldVal
                         TextLineFieldType::class,
                         [
                             'required' => $fieldDefinition->isRequired,
-                            'label' => $label,
+                            'label' => $label ?? reset($names),
                             'min' => $validatorConfiguration['StringLengthValidator']['minStringLength'],
                             'max' => $validatorConfiguration['StringLengthValidator']['maxStringLength'],
                         ]

@@ -54,6 +54,13 @@ class UserAccountFieldValueFormMapperTest extends BaseMapperTest
             ->with('fieldDefinition')
             ->willReturn($fieldDefinition);
 
+        $this->config
+            ->method('getOption')
+            ->willReturnMap([
+                ['languageCode', null, 'eng-GB'],
+                ['mainLanguageCode', null, 'eng-GB'],
+            ]);
+
         $mapper->mapFieldValueForm($this->fieldForm, $this->data);
     }
 
@@ -67,6 +74,11 @@ class UserAccountFieldValueFormMapperTest extends BaseMapperTest
             ->method('__get')
             ->with('fieldDefinition')
             ->willReturn($fieldDefinition);
+
+        $this->config
+            ->method('getOption')
+            ->with('languageCode')
+            ->willReturn('eng-GB');
 
         $mapper->mapFieldValueForm($this->fieldForm, $this->data);
     }

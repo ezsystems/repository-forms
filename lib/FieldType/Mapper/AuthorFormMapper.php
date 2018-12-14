@@ -29,6 +29,7 @@ class AuthorFormMapper implements FieldDefinitionFormMapperInterface, FieldValue
      */
     public function mapFieldDefinitionForm(FormInterface $fieldDefinitionForm, FieldDefinitionData $data)
     {
+        $isTranslation = $data->contentTypeData->languageCode !== $data->contentTypeData->mainLanguageCode;
         $fieldDefinitionForm
             ->add(
                 'defaultAuthor',
@@ -44,6 +45,7 @@ class AuthorFormMapper implements FieldDefinitionFormMapperInterface, FieldValue
                     'property_path' => 'fieldSettings[defaultAuthor]',
                     'label' => 'field_definition.ezauthor.default_author',
                     'translation_domain' => 'ezrepoforms_content_type',
+                    'disabled' => $isTranslation,
                 ]
             );
     }
@@ -58,7 +60,8 @@ class AuthorFormMapper implements FieldDefinitionFormMapperInterface, FieldValue
         $fieldSettings = $fieldDefinition->getFieldSettings();
         $formConfig = $fieldForm->getConfig();
         $names = $fieldDefinition->getNames();
-        $label = $fieldDefinition->getName($formConfig->getOption('mainLanguageCode')) ?: reset($names);
+        $label = $fieldDefinition->getName($formConfig->getOption('languageCode'))
+            ?: $fieldDefinition->getName($formConfig->getOption('mainLanguageCode'));
 
         $fieldForm
             ->add(
@@ -66,7 +69,7 @@ class AuthorFormMapper implements FieldDefinitionFormMapperInterface, FieldValue
                     ->create('value', AuthorFieldType::class, [
                         'default_author' => $fieldSettings['defaultAuthor'],
                         'required' => $fieldDefinition->isRequired,
-                        'label' => $label,
+                        'label' => $label ?? reset($names),
                     ])
                     ->setAutoInitialize(false)
                     ->getForm()

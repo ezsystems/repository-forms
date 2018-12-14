@@ -37,6 +37,7 @@ class ImageFormMapper implements FieldDefinitionFormMapperInterface, FieldValueF
 
     public function mapFieldDefinitionForm(FormInterface $fieldDefinitionForm, FieldDefinitionData $data)
     {
+        $isTranslation = $data->contentTypeData->languageCode !== $data->contentTypeData->mainLanguageCode;
         $fieldDefinitionForm
             ->add('maxSize', IntegerType::class, [
                 'required' => false,
@@ -52,6 +53,7 @@ class ImageFormMapper implements FieldDefinitionFormMapperInterface, FieldValueF
                     'min' => 0,
                     'max' => $this->maxUploadSize->get(MaxUploadSize::MEGABYTES),
                 ],
+                'disabled' => $isTranslation,
             ]);
     }
 
@@ -61,7 +63,8 @@ class ImageFormMapper implements FieldDefinitionFormMapperInterface, FieldValueF
         $formConfig = $fieldForm->getConfig();
         $fieldType = $this->fieldTypeService->getFieldType($fieldDefinition->fieldTypeIdentifier);
         $names = $fieldDefinition->getNames();
-        $label = $fieldDefinition->getName($formConfig->getOption('mainLanguageCode')) ?: reset($names);
+        $label = $fieldDefinition->getName($formConfig->getOption('languageCode'))
+            ?: $fieldDefinition->getName($formConfig->getOption('mainLanguageCode'));
 
         $fieldForm
             ->add(
@@ -71,7 +74,7 @@ class ImageFormMapper implements FieldDefinitionFormMapperInterface, FieldValueF
                         ImageFieldType::class,
                         [
                             'required' => $fieldDefinition->isRequired,
-                            'label' => $label,
+                            'label' => $label ?? reset($names),
                         ]
                     )
                     ->addModelTransformer(new ImageValueTransformer($fieldType, $data->value, Value::class))

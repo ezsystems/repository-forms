@@ -38,6 +38,7 @@ class MediaFormMapper implements FieldDefinitionFormMapperInterface, FieldValueF
 
     public function mapFieldDefinitionForm(FormInterface $fieldDefinitionForm, FieldDefinitionData $data)
     {
+        $isTranslation = $data->contentTypeData->languageCode !== $data->contentTypeData->mainLanguageCode;
         $fieldDefinitionForm
             ->add('maxSize', IntegerType::class, [
                 'required' => false,
@@ -53,6 +54,7 @@ class MediaFormMapper implements FieldDefinitionFormMapperInterface, FieldValueF
                     'min' => 0,
                     'max' => $this->maxUploadSize->get(MaxUploadSize::MEGABYTES),
                 ],
+                'disabled' => $isTranslation,
             ])
             ->add('mediaType', ChoiceType::class, [
                 'choices' => [
@@ -68,6 +70,7 @@ class MediaFormMapper implements FieldDefinitionFormMapperInterface, FieldValueF
                 'required' => true,
                 'property_path' => 'fieldSettings[mediaType]',
                 'label' => 'field_definition.ezmedia.media_type',
+                'disabled' => $isTranslation,
             ]);
     }
 
@@ -77,7 +80,8 @@ class MediaFormMapper implements FieldDefinitionFormMapperInterface, FieldValueF
         $formConfig = $fieldForm->getConfig();
         $fieldType = $this->fieldTypeService->getFieldType($fieldDefinition->fieldTypeIdentifier);
         $names = $fieldDefinition->getNames();
-        $label = $fieldDefinition->getName($formConfig->getOption('mainLanguageCode')) ?: reset($names);
+        $label = $fieldDefinition->getName($formConfig->getOption('languageCode'))
+            ?: $fieldDefinition->getName($formConfig->getOption('mainLanguageCode'));
 
         $fieldForm
             ->add(
@@ -87,7 +91,7 @@ class MediaFormMapper implements FieldDefinitionFormMapperInterface, FieldValueF
                         MediaFieldType::class,
                         [
                             'required' => $fieldDefinition->isRequired,
-                            'label' => $label,
+                            'label' => $label ?? reset($names),
                         ]
                     )
                     ->addModelTransformer(new MediaValueTransformer($fieldType, $data->value, Value::class))

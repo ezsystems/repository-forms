@@ -82,7 +82,7 @@ class ContentEditViewBuilder implements ViewBuilder
         $location = $this->resolveLocation($parameters);
         $content = $this->resolveContent($parameters, $location, $language);
         $contentInfo = $content->contentInfo;
-        $contentType = $this->loadContentType((int) $contentInfo->contentTypeId);
+        $contentType = $this->loadContentType((int) $contentInfo->contentTypeId, $language->languageCode);
         $form = $parameters['form'];
         $isPublished = null !== $contentInfo->mainLocationId && $contentInfo->published;
 
@@ -178,14 +178,15 @@ class ContentEditViewBuilder implements ViewBuilder
      * Loads ContentType with id $contentTypeId.
      *
      * @param int $contentTypeId
+     * @param string $languageCode
      *
      * @return \eZ\Publish\API\Repository\Values\ContentType\ContentType
      *
      * @throws \eZ\Publish\API\Repository\Exceptions\NotFoundException
      */
-    private function loadContentType(int $contentTypeId): ContentType
+    private function loadContentType(int $contentTypeId, string $languageCode): ContentType
     {
-        return $this->repository->getContentTypeService()->loadContentType($contentTypeId);
+        return $this->repository->getContentTypeService()->loadContentType($contentTypeId, [$languageCode]);
     }
 
     /**

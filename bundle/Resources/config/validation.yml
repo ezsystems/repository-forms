@@ -25,11 +25,11 @@ EzSystems\RepositoryForms\Data\ContentTypeData:
                 choices: [0, 1]
         names:
             - Expression:
-                expression: "value and value[this.mainLanguageCode] matches '/^.{1,255}$/'"
+                expression: "value and value[this.languageCode] matches '/^.{1,255}$/'"
                 message: "ez.content_type.names"
         descriptions:
             - Expression:
-                expression: "!value or value[this.mainLanguageCode] matches '/^.{0,255}$/'"
+                expression: "!value or value[this.languageCode] matches '/^.{0,255}$/'"
                 message: "ez.content_type.descriptions"
         fieldDefinitionsData:
             - Valid: ~
@@ -50,11 +50,11 @@ EzSystems\RepositoryForms\Data\FieldDefinitionData:
                 message: "ez.content_type.identifier.pattern"
         names:
             - Expression:
-                expression: "value and value[this.contentTypeData.mainLanguageCode] matches '/^.{1,255}$/'"
+                expression: "value and value[this.contentTypeData.languageCode] matches '/^.{1,255}$/'"
                 message: "ez.field_definition.names"
         descriptions:
             - Expression:
-                expression: "!value or value[this.contentTypeData.mainLanguageCode] matches '/^.{0,255}$/'"
+                expression: "!value or value[this.contentTypeData.languageCode] matches '/^.{0,255}$/'"
                 message: "ez.field_definition.descriptions"
         position:
             - Type:

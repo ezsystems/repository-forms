@@ -20,6 +20,7 @@ use EzSystems\RepositoryForms\Event\FormActionEvent;
 use EzSystems\RepositoryForms\Event\RepositoryFormEvents;
 use EzSystems\RepositoryForms\Form\Processor\ContentTypeFormProcessor;
 use PHPUnit\Framework\TestCase;
+use Symfony\Component\Form\FormConfigInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\Routing\RouterInterface;
@@ -113,6 +114,7 @@ class ContentTypeFormProcessorTest extends TestCase
         $contentTypeDraft = new ContentTypeDraft([
             'innerContentType' => new ContentType([
                 'fieldDefinitions' => $existingFieldDefinitions,
+                'mainLanguageCode' => $languageCode,
             ]),
         ]);
         $expectedNewFieldDefIdentifier = sprintf(
@@ -132,6 +134,17 @@ class ContentTypeFormProcessorTest extends TestCase
             ->method('get')
             ->with('fieldTypeSelection')
             ->willReturn($fieldTypeSelectionForm);
+
+        $formConfig = $this->createMock(FormConfigInterface::class);
+        $formConfig
+            ->method('getOption')
+            ->with('languageCode')
+            ->willReturn($languageCode);
+
+        $mainForm
+            ->expects($this->once())
+            ->method('getConfig')
+            ->willReturn($formConfig);
 
         $expectedFieldDefCreateStruct = new FieldDefinitionCreateStruct([
             'fieldTypeIdentifier' => $fieldTypeIdentifier,

@@ -59,7 +59,10 @@ class FieldDefinitionType extends AbstractType
             ->setDefaults([
                 'data_class' => 'EzSystems\RepositoryForms\Data\FieldDefinitionData',
                 'translation_domain' => 'ezrepoforms_content_type',
+                'mainLanguageCode' => null,
             ])
+            ->setDefined(['mainLanguageCode'])
+            ->setAllowedTypes('mainLanguageCode', ['null', 'string'])
             ->setRequired(['languageCode']);
     }
 
@@ -71,12 +74,26 @@ class FieldDefinitionType extends AbstractType
         }
 
         $translatablePropertyTransformer = new TranslatablePropertyTransformer($options['languageCode']);
+        $isTranslation = $options['languageCode'] !== $options['mainLanguageCode'];
+
         $builder
             ->add(
-                $builder->create('name', TextType::class, ['property_path' => 'names', 'label' => 'field_definition.name'])
+                $builder->create('name',
+                    TextType::class,
+                    [
+                        'property_path' => 'names',
+                        'label' => 'field_definition.name',
+                    ])
                     ->addModelTransformer($translatablePropertyTransformer)
             )
-            ->add('identifier', TextType::class, ['label' => 'field_definition.identifier'])
+            ->add(
+                'identifier',
+                TextType::class,
+                [
+                    'label' => 'field_definition.identifier',
+                    'disabled' => $isTranslation,
+                ]
+            )
             ->add(
                 $builder->create('description', TextType::class, [
                     'property_path' => 'descriptions',
@@ -85,19 +102,34 @@ class FieldDefinitionType extends AbstractType
                 ])
                     ->addModelTransformer($translatablePropertyTransformer)
             )
-            ->add('isRequired', CheckboxType::class, ['required' => false, 'label' => 'field_definition.is_required'])
-            ->add('isTranslatable', CheckboxType::class, ['required' => false, 'label' => 'field_definition.is_translatable'])
+            ->add('isRequired', CheckboxType::class, [
+                'required' => false,
+                'label' => 'field_definition.is_required',
+                'disabled' => $isTranslation,
+            ])
+            ->add('isTranslatable', CheckboxType::class, [
+                'required' => false,
+                'label' => 'field_definition.is_translatable',
+                'disabled' => $isTranslation,
+            ])
             ->add(
-                'fieldGroup',
-                ChoiceType::class, [
+                'fieldGroup', ChoiceType::class, [
                     'choices' => $fieldsGroups,
                     'choices_as_values' => true,
                     'required' => false,
                     'label' => 'field_definition.field_group',
+                    'disabled' => $isTranslation,
                 ]
             )
-            ->add('position', IntegerType::class, ['label' => 'field_definition.position'])
-            ->add('selected', CheckboxType::class, ['required' => false, 'mapped' => false]);
+            ->add('position', IntegerType::class, [
+                'label' => 'field_definition.position',
+                'disabled' => $isTranslation,
+            ])
+            ->add('selected', CheckboxType::class, [
+                'required' => false,
+                'mapped' => false,
+                'disabled' => $isTranslation,
+            ]);
 
         // Hook on form generation for specific FieldType needs
         $builder->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) {
@@ -106,10 +138,11 @@ class FieldDefinitionType extends AbstractType
             $form = $event->getForm();
             $fieldTypeIdentifier = $data->getFieldTypeIdentifier();
             $fieldType = $this->fieldTypeService->getFieldType($fieldTypeIdentifier);
+            $isTranslation = $data->contentTypeData->languageCode !== $data->contentTypeData->mainLanguageCode;
             // isSearchable field should be present only if the FieldType allows it.
             $form->add('isSearchable', CheckboxType::class, [
                 'required' => false,
-                'disabled' => !$fieldType->isSearchable(),
+                'disabled' => !$fieldType->isSearchable() || $isTranslation,
                 'label' => 'field_definition.is_searchable',
             ]);
 

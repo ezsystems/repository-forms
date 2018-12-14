@@ -40,7 +40,8 @@ class ImageAssetFormMapper implements FieldValueFormMapperInterface
         $formConfig = $fieldForm->getConfig();
         $names = $fieldDefinition->getNames();
         $fieldType = $this->fieldTypeService->getFieldType($fieldDefinition->fieldTypeIdentifier);
-        $label = $fieldDefinition->getName($formConfig->getOption('mainLanguageCode')) ?: reset($names);
+        $label = $fieldDefinition->getName($formConfig->getOption('languageCode'))
+            ?: $fieldDefinition->getName($formConfig->getOption('mainLanguageCode'));
 
         $fieldForm
             ->add(
@@ -50,7 +51,7 @@ class ImageAssetFormMapper implements FieldValueFormMapperInterface
                         ImageAssetFieldType::class,
                         [
                             'required' => $fieldDefinition->isRequired,
-                            'label' => $label,
+                            'label' => $label ?? reset($names),
                         ]
                     )
                     ->addModelTransformer(new ImageAssetValueTransformer($fieldType, $data->value, Value::class))

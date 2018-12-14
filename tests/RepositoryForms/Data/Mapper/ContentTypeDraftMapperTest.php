@@ -110,6 +110,7 @@ class ContentTypeDraftMapperTest extends TestCase
             'defaultAlwaysAvailable' => $contentTypeDraft->defaultAlwaysAvailable,
             'names' => $contentTypeDraft->getNames(),
             'descriptions' => $contentTypeDraft->getDescriptions(),
+            'languageCode' => $contentTypeDraft->mainLanguageCode,
         ]);
         $expectedFieldDefData1 = new FieldDefinitionData([
             'fieldDefinition' => $fieldDef1,
