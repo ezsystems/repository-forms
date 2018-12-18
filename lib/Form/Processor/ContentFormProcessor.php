@@ -117,6 +117,9 @@ class ContentFormProcessor implements EventSubscriberInterface
         $draft = $this->saveDraft($data, $form->getConfig()->getOption('languageCode'));
         $content = $this->contentService->publishVersion($draft->versionInfo);
 
+        $event->setPayload('draft', $draft);
+        $event->setPayload('content', $content);
+
         $redirectUrl = $form['redirectUrlAfterPublish']->getData() ?: $this->router->generate(
             '_ezpublishLocation', [
                 'locationId' => $content->contentInfo->mainLocationId,
@@ -156,6 +159,8 @@ class ContentFormProcessor implements EventSubscriberInterface
             $parentLocation = $this->locationService->loadParentLocationsForDraftContent($versionInfo)[0];
             $redirectionLocationId = $parentLocation->id;
             $this->contentService->deleteContent($contentInfo);
+
+            $event->setPayload('parentLocation', $parentLocation);
         } else {
             $redirectionLocationId = $contentInfo->mainLocationId;
             $this->contentService->deleteVersion($versionInfo);
@@ -185,6 +190,10 @@ class ContentFormProcessor implements EventSubscriberInterface
         $versionInfo = $this->contentService->loadVersionInfo($contentInfo, $createContentDraft->fromVersionNo);
         $contentDraft = $this->contentService->createContentDraft($contentInfo, $versionInfo);
         $referrerLocation = $event->getOption('referrerLocation');
+
+        $event->setPayload('contentInfo', $contentInfo);
+        $event->setPayload('versionInfo', $versionInfo);
+        $event->setPayload('contentDraft', $contentDraft);
 
         $contentEditUrl = $this->router->generate('ez_content_draft_edit', [
             'contentId' => $contentDraft->id,
