@@ -89,6 +89,9 @@ class ContentFormProcessor implements EventSubscriberInterface
         $referrerLocation = $event->getOption('referrerLocation');
         $contentLocation = $this->resolveLocation($draft, $referrerLocation, $data);
 
+        $event->setPayload('content', $draft);
+        $event->setPayload('is_new', $draft->contentInfo->isDraft());
+
         $defaultUrl = $this->router->generate('ez_content_draft_edit', [
             'contentId' => $draft->id,
             'versionNo' => $draft->getVersionInfo()->versionNo,
@@ -116,6 +119,9 @@ class ContentFormProcessor implements EventSubscriberInterface
 
         $draft = $this->saveDraft($data, $form->getConfig()->getOption('languageCode'));
         $content = $this->contentService->publishVersion($draft->versionInfo);
+
+        $event->setPayload('content', $content);
+        $event->setPayload('is_new', $draft->contentInfo->isDraft());
 
         $redirectUrl = $form['redirectUrlAfterPublish']->getData() ?: $this->router->generate(
             '_ezpublishLocation', [
@@ -151,6 +157,8 @@ class ContentFormProcessor implements EventSubscriberInterface
         $contentInfo = $content->contentInfo;
         $versionInfo = $data->contentDraft->getVersionInfo();
 
+        $event->setPayload('content', $content);
+
         // if there is only one version you have to remove whole content instead of a version itself
         if (1 === count($this->contentService->loadVersions($contentInfo))) {
             $parentLocation = $this->locationService->loadParentLocationsForDraftContent($versionInfo)[0];
@@ -185,6 +193,9 @@ class ContentFormProcessor implements EventSubscriberInterface
         $versionInfo = $this->contentService->loadVersionInfo($contentInfo, $createContentDraft->fromVersionNo);
         $contentDraft = $this->contentService->createContentDraft($contentInfo, $versionInfo);
         $referrerLocation = $event->getOption('referrerLocation');
+
+        $event->setPayload('content', $contentDraft);
+        $event->setPayload('is_new', $contentDraft->contentInfo->isDraft());
 
         $contentEditUrl = $this->router->generate('ez_content_draft_edit', [
             'contentId' => $contentDraft->id,
