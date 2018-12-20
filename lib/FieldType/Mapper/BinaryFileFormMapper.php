@@ -13,6 +13,7 @@ use EzSystems\RepositoryForms\Data\FieldDefinitionData;
 use EzSystems\RepositoryForms\FieldType\DataTransformer\BinaryFileValueTransformer;
 use EzSystems\RepositoryForms\FieldType\FieldDefinitionFormMapperInterface;
 use EzSystems\RepositoryForms\FieldType\FieldValueFormMapperInterface;
+use EzSystems\RepositoryForms\FieldType\TranslatableLabel;
 use EzSystems\RepositoryForms\Form\Type\FieldType\BinaryFileFieldType;
 use EzSystems\RepositoryForms\ConfigResolver\MaxUploadSize;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
@@ -21,6 +22,8 @@ use Symfony\Component\Validator\Constraints\Range;
 
 class BinaryFileFormMapper implements FieldDefinitionFormMapperInterface, FieldValueFormMapperInterface
 {
+    use TranslatableLabel;
+
     /** @var FieldTypeService */
     private $fieldTypeService;
 
@@ -62,8 +65,6 @@ class BinaryFileFormMapper implements FieldDefinitionFormMapperInterface, FieldV
         $formConfig = $fieldForm->getConfig();
         $fieldType = $this->fieldTypeService->getFieldType($fieldDefinition->fieldTypeIdentifier);
         $names = $fieldDefinition->getNames();
-        $label = $fieldDefinition->getName($formConfig->getOption('languageCode'))
-            ?: $fieldDefinition->getName($formConfig->getOption('mainLanguageCode'));
 
         $fieldForm
             ->add(
@@ -73,7 +74,7 @@ class BinaryFileFormMapper implements FieldDefinitionFormMapperInterface, FieldV
                         BinaryFileFieldType::class,
                         [
                             'required' => $fieldDefinition->isRequired,
-                            'label' => $label ?? reset($names),
+                            'label' => $this->resolveLabel($names, $formConfig->getOption('formLanguageCodes')),
                         ]
                     )
                     ->addModelTransformer(new BinaryFileValueTransformer($fieldType, $data->value, Value::class))

@@ -12,6 +12,7 @@ use EzSystems\RepositoryForms\Data\Content\FieldData;
 use EzSystems\RepositoryForms\Data\FieldDefinitionData;
 use EzSystems\RepositoryForms\FieldType\FieldDefinitionFormMapperInterface;
 use EzSystems\RepositoryForms\FieldType\FieldValueFormMapperInterface;
+use EzSystems\RepositoryForms\FieldType\TranslatableLabel;
 use EzSystems\RepositoryForms\Form\Type\FieldType\TextLineFieldType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\FormInterface;
@@ -22,6 +23,8 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class TextLineFormMapper implements FieldDefinitionFormMapperInterface, FieldValueFormMapperInterface
 {
+    use TranslatableLabel;
+
     public function mapFieldDefinitionForm(FormInterface $fieldDefinitionForm, FieldDefinitionData $data)
     {
         $isTranslation = $data->contentTypeData->languageCode !== $data->contentTypeData->mainLanguageCode;
@@ -59,8 +62,6 @@ class TextLineFormMapper implements FieldDefinitionFormMapperInterface, FieldVal
         $formConfig = $fieldForm->getConfig();
         $validatorConfiguration = $fieldDefinition->getValidatorConfiguration();
         $names = $fieldDefinition->getNames();
-        $label = $fieldDefinition->getName($formConfig->getOption('languageCode'))
-            ?: $fieldDefinition->getName($formConfig->getOption('mainLanguageCode'));
 
         $fieldForm
             ->add(
@@ -70,7 +71,7 @@ class TextLineFormMapper implements FieldDefinitionFormMapperInterface, FieldVal
                         TextLineFieldType::class,
                         [
                             'required' => $fieldDefinition->isRequired,
-                            'label' => $label ?? reset($names),
+                            'label' => $this->resolveLabel($names, $formConfig->getOption('formLanguageCodes')),
                             'min' => $validatorConfiguration['StringLengthValidator']['minStringLength'],
                             'max' => $validatorConfiguration['StringLengthValidator']['maxStringLength'],
                         ]

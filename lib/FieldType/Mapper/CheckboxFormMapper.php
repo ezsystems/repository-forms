@@ -12,6 +12,7 @@ use EzSystems\RepositoryForms\Data\Content\FieldData;
 use EzSystems\RepositoryForms\Data\FieldDefinitionData;
 use EzSystems\RepositoryForms\FieldType\FieldDefinitionFormMapperInterface;
 use EzSystems\RepositoryForms\FieldType\FieldValueFormMapperInterface;
+use EzSystems\RepositoryForms\FieldType\TranslatableLabel;
 use EzSystems\RepositoryForms\Form\Type\FieldType\CheckboxFieldType;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -21,6 +22,8 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class CheckboxFormMapper implements FieldDefinitionFormMapperInterface, FieldValueFormMapperInterface
 {
+    use TranslatableLabel;
+
     public function mapFieldDefinitionForm(FormInterface $fieldDefinitionForm, FieldDefinitionData $fieldDefinition)
     {
         $isTranslation = $fieldDefinition->contentTypeData->languageCode !== $fieldDefinition->contentTypeData->mainLanguageCode;
@@ -44,8 +47,6 @@ class CheckboxFormMapper implements FieldDefinitionFormMapperInterface, FieldVal
         $fieldDefinition = $data->fieldDefinition;
         $formConfig = $fieldForm->getConfig();
         $names = $fieldDefinition->getNames();
-        $label = $fieldDefinition->getName($formConfig->getOption('languageCode'))
-            ?: $fieldDefinition->getName($formConfig->getOption('mainLanguageCode'));
 
         $fieldForm
             ->add(
@@ -55,7 +56,7 @@ class CheckboxFormMapper implements FieldDefinitionFormMapperInterface, FieldVal
                         CheckboxFieldType::class,
                         [
                             'required' => $fieldDefinition->isRequired,
-                            'label' => $label ?? reset($names),
+                            'label' => $this->resolveLabel($names, $formConfig->getOption('formLanguageCodes')),
                         ]
                     )
                     ->setAutoInitialize(false)

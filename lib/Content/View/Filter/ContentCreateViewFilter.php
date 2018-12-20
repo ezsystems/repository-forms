@@ -12,6 +12,7 @@ use eZ\Publish\API\Repository\ContentTypeService;
 use eZ\Publish\API\Repository\LocationService;
 use eZ\Publish\API\Repository\Values\Content\Location;
 use eZ\Publish\API\Repository\Values\ContentType\ContentType;
+use eZ\Publish\Core\MVC\Symfony\Locale\UserLanguagePreferenceProvider;
 use eZ\Publish\Core\MVC\Symfony\View\Event\FilterViewBuilderParametersEvent;
 use eZ\Publish\Core\MVC\Symfony\View\ViewEvents;
 use EzSystems\RepositoryForms\Data\Content\ContentCreateData;
@@ -31,20 +32,25 @@ class ContentCreateViewFilter implements EventSubscriberInterface
 
     /** @var \Symfony\Component\Form\FormFactoryInterface */
     private $formFactory;
+    /** @var \eZ\Publish\Core\MVC\Symfony\Locale\UserLanguagePreferenceProvider */
+    private $languagePreferenceProvider;
 
     /**
      * @param \eZ\Publish\API\Repository\LocationService $locationService
      * @param \eZ\Publish\API\Repository\ContentTypeService $contentTypeService
      * @param \Symfony\Component\Form\FormFactoryInterface $formFactory
+     * @param \eZ\Publish\Core\MVC\Symfony\Locale\UserLanguagePreferenceProvider $languagePreferenceProvider
      */
     public function __construct(
         LocationService $locationService,
         ContentTypeService $contentTypeService,
-        FormFactoryInterface $formFactory
+        FormFactoryInterface $formFactory,
+        UserLanguagePreferenceProvider $languagePreferenceProvider
     ) {
         $this->locationService = $locationService;
         $this->contentTypeService = $contentTypeService;
         $this->formFactory = $formFactory;
+        $this->languagePreferenceProvider = $languagePreferenceProvider;
     }
 
     public static function getSubscribedEvents()
@@ -73,7 +79,11 @@ class ContentCreateViewFilter implements EventSubscriberInterface
         $location = $this->locationService->loadLocation($request->attributes->get('parentLocationId'));
 
         $contentCreateData = $this->resolveContentCreateData($contentType, $location, $languageCode);
-        $form = $this->resolveContentCreateForm($contentCreateData, $languageCode);
+        $form = $this->resolveContentCreateForm(
+            $contentCreateData,
+            $languageCode,
+            $this->languagePreferenceProvider->getPreferredLanguages()
+        );
 
         $event->getParameters()->add(['form' => $form->handleRequest($request)]);
     }
@@ -105,17 +115,19 @@ class ContentCreateViewFilter implements EventSubscriberInterface
      * @param \EzSystems\RepositoryForms\Data\Content\ContentCreateData $contentCreateData
      * @param string $languageCode
      *
-     * @return \Symfony\Component\Form\FormInterface
+     * @param array $preferredLanguages
      *
-     * @throws \Symfony\Component\OptionsResolver\Exception\InvalidOptionsException
+     * @return \Symfony\Component\Form\FormInterface
      */
     private function resolveContentCreateForm(
         ContentCreateData $contentCreateData,
-        string $languageCode
+        string $languageCode,
+        array $preferredLanguages
     ): FormInterface {
         return $this->formFactory->create(ContentEditType::class, $contentCreateData, [
             'languageCode' => $languageCode,
             'mainLanguageCode' => $languageCode,
+            'formLanguageCodes' => $preferredLanguages,
             'drafts_enabled' => true,
         ]);
     }

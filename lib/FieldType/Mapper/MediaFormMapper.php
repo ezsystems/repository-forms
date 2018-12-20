@@ -14,6 +14,7 @@ use EzSystems\RepositoryForms\Data\FieldDefinitionData;
 use EzSystems\RepositoryForms\FieldType\DataTransformer\MediaValueTransformer;
 use EzSystems\RepositoryForms\FieldType\FieldDefinitionFormMapperInterface;
 use EzSystems\RepositoryForms\FieldType\FieldValueFormMapperInterface;
+use EzSystems\RepositoryForms\FieldType\TranslatableLabel;
 use EzSystems\RepositoryForms\Form\Type\FieldType\MediaFieldType;
 use EzSystems\RepositoryForms\ConfigResolver\MaxUploadSize;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -24,6 +25,8 @@ use Symfony\Component\Validator\Constraints\Range;
 
 class MediaFormMapper implements FieldDefinitionFormMapperInterface, FieldValueFormMapperInterface
 {
+    use TranslatableLabel;
+
     /** @var FieldTypeService */
     private $fieldTypeService;
 
@@ -80,8 +83,6 @@ class MediaFormMapper implements FieldDefinitionFormMapperInterface, FieldValueF
         $formConfig = $fieldForm->getConfig();
         $fieldType = $this->fieldTypeService->getFieldType($fieldDefinition->fieldTypeIdentifier);
         $names = $fieldDefinition->getNames();
-        $label = $fieldDefinition->getName($formConfig->getOption('languageCode'))
-            ?: $fieldDefinition->getName($formConfig->getOption('mainLanguageCode'));
 
         $fieldForm
             ->add(
@@ -91,7 +92,7 @@ class MediaFormMapper implements FieldDefinitionFormMapperInterface, FieldValueF
                         MediaFieldType::class,
                         [
                             'required' => $fieldDefinition->isRequired,
-                            'label' => $label ?? reset($names),
+                            'label' => $this->resolveLabel($names, $formConfig->getOption('formLanguageCodes')),
                         ]
                     )
                     ->addModelTransformer(new MediaValueTransformer($fieldType, $data->value, Value::class))

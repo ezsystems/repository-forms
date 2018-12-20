@@ -12,6 +12,7 @@ use EzSystems\RepositoryForms\Data\Content\FieldData;
 use EzSystems\RepositoryForms\Data\FieldDefinitionData;
 use EzSystems\RepositoryForms\FieldType\FieldDefinitionFormMapperInterface;
 use EzSystems\RepositoryForms\FieldType\FieldValueFormMapperInterface;
+use EzSystems\RepositoryForms\FieldType\TranslatableLabel;
 use EzSystems\RepositoryForms\Form\Type\FieldType\FloatFieldType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\FormInterface;
@@ -22,6 +23,8 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class FloatFormMapper implements FieldDefinitionFormMapperInterface, FieldValueFormMapperInterface
 {
+    use TranslatableLabel;
+
     public function mapFieldDefinitionForm(FormInterface $fieldDefinitionForm, FieldDefinitionData $fieldDefinition)
     {
         $isTranslation = $fieldDefinition->contentTypeData->languageCode !== $fieldDefinition->contentTypeData->mainLanguageCode;
@@ -63,8 +66,6 @@ class FloatFormMapper implements FieldDefinitionFormMapperInterface, FieldValueF
         $formConfig = $fieldForm->getConfig();
         $validatorConfiguration = $fieldDefinition->getValidatorConfiguration();
         $names = $fieldDefinition->getNames();
-        $label = $fieldDefinition->getName($formConfig->getOption('languageCode'))
-            ?: $fieldDefinition->getName($formConfig->getOption('mainLanguageCode'));
 
         $fieldForm
             ->add(
@@ -74,7 +75,7 @@ class FloatFormMapper implements FieldDefinitionFormMapperInterface, FieldValueF
                         FloatFieldType::class,
                         [
                             'required' => $fieldDefinition->isRequired,
-                            'label' => $label ?? reset($names),
+                            'label' => $this->resolveLabel($names, $formConfig->getOption('formLanguageCodes')),
                             'min' => $validatorConfiguration['FloatValueValidator']['minFloatValue'],
                             'max' => $validatorConfiguration['FloatValueValidator']['maxFloatValue'],
                         ]

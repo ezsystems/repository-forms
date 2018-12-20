@@ -10,6 +10,7 @@ namespace EzSystems\RepositoryForms\FieldType\Mapper;
 
 use EzSystems\RepositoryForms\Data\Content\FieldData;
 use EzSystems\RepositoryForms\FieldType\FieldValueFormMapperInterface;
+use EzSystems\RepositoryForms\FieldType\TranslatableLabel;
 use EzSystems\RepositoryForms\Form\Type\FieldType\UrlFieldType;
 use Symfony\Component\Form\FormInterface;
 
@@ -18,6 +19,8 @@ use Symfony\Component\Form\FormInterface;
  */
 class UrlFormMapper implements FieldValueFormMapperInterface
 {
+    use TranslatableLabel;
+
     /**
      * @param FormInterface $fieldForm
      * @param FieldData $data
@@ -27,15 +30,13 @@ class UrlFormMapper implements FieldValueFormMapperInterface
         $fieldDefinition = $data->fieldDefinition;
         $formConfig = $fieldForm->getConfig();
         $names = $fieldDefinition->getNames();
-        $label = $fieldDefinition->getName($formConfig->getOption('languageCode'))
-            ?: $fieldDefinition->getName($formConfig->getOption('mainLanguageCode'));
 
         $fieldForm
             ->add(
                 $formConfig->getFormFactory()->createBuilder()
                     ->create('value', UrlFieldType::class, [
                         'required' => $fieldDefinition->isRequired,
-                        'label' => $label ?? reset($names),
+                        'label' => $this->resolveLabel($names, $formConfig->getOption('formLanguageCodes')),
                     ])
                     ->setAutoInitialize(false)
                     ->getForm()

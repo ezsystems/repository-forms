@@ -12,6 +12,7 @@ use eZ\Publish\API\Repository\FieldTypeService;
 use EzSystems\RepositoryForms\Data\Content\FieldData;
 use EzSystems\RepositoryForms\FieldType\DataTransformer\FieldValueTransformer;
 use EzSystems\RepositoryForms\FieldType\FieldValueFormMapperInterface;
+use EzSystems\RepositoryForms\FieldType\TranslatableLabel;
 use Symfony\Component\Form\FormInterface;
 
 /**
@@ -32,6 +33,8 @@ use Symfony\Component\Form\FormInterface;
  */
 final class FormTypeBasedFieldValueFormMapper implements FieldValueFormMapperInterface
 {
+    use TranslatableLabel;
+
     /**
      * The FormType used by the mapper. Example: '\Symfony\Component\Form\Extension\Core\Type\TextType'.
      * @var string
@@ -64,8 +67,6 @@ final class FormTypeBasedFieldValueFormMapper implements FieldValueFormMapperInt
         $fieldDefinition = $data->fieldDefinition;
         $formConfig = $fieldForm->getConfig();
         $names = $fieldDefinition->getNames();
-        $label = $fieldDefinition->getName($formConfig->getOption('languageCode'))
-            ?: $fieldDefinition->getName($formConfig->getOption('mainLanguageCode'));
 
         $fieldForm
             ->add(
@@ -75,7 +76,7 @@ final class FormTypeBasedFieldValueFormMapper implements FieldValueFormMapperInt
                         $this->formType,
                         [
                             'required' => $fieldDefinition->isRequired,
-                            'label' => $label ?? reset($names),
+                            'label' => $this->resolveLabel($names, $formConfig->getOption('formLanguageCodes')),
                         ]
                     )
                     ->addModelTransformer(new FieldValueTransformer($this->fieldTypeService->getFieldType($fieldDefinition->fieldTypeIdentifier)))

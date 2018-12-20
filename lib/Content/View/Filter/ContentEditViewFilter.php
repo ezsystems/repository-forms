@@ -12,6 +12,7 @@ use eZ\Publish\API\Repository\ContentService;
 use eZ\Publish\API\Repository\ContentTypeService;
 use eZ\Publish\API\Repository\Values\Content\Content;
 use eZ\Publish\API\Repository\Values\ContentType\ContentType;
+use eZ\Publish\Core\MVC\Symfony\Locale\UserLanguagePreferenceProvider;
 use eZ\Publish\Core\MVC\Symfony\View\Event\FilterViewBuilderParametersEvent;
 use eZ\Publish\Core\MVC\Symfony\View\ViewEvents;
 use EzSystems\RepositoryForms\Data\Content\ContentUpdateData;
@@ -32,19 +33,25 @@ class ContentEditViewFilter implements EventSubscriberInterface
     /** @var \Symfony\Component\Form\FormFactoryInterface */
     private $formFactory;
 
+    /** @var \eZ\Publish\Core\MVC\Symfony\Locale\UserLanguagePreferenceProvider */
+    private $languagePreferenceProvider;
+
     /**
      * @param \eZ\Publish\API\Repository\ContentService $contentService
      * @param \eZ\Publish\API\Repository\ContentTypeService $contentTypeService
      * @param \Symfony\Component\Form\FormFactoryInterface $formFactory
+     * @param \eZ\Publish\Core\MVC\Symfony\Locale\UserLanguagePreferenceProvider $languagePreferenceProvider
      */
     public function __construct(
         ContentService $contentService,
         ContentTypeService $contentTypeService,
-        FormFactoryInterface $formFactory
+        FormFactoryInterface $formFactory,
+        UserLanguagePreferenceProvider $languagePreferenceProvider
     ) {
         $this->contentService = $contentService;
         $this->contentTypeService = $contentTypeService;
         $this->formFactory = $formFactory;
+        $this->languagePreferenceProvider = $languagePreferenceProvider;
     }
 
     public static function getSubscribedEvents()
@@ -75,7 +82,12 @@ class ContentEditViewFilter implements EventSubscriberInterface
         $contentType = $this->contentTypeService->loadContentType($contentDraft->contentInfo->contentTypeId);
 
         $contentUpdate = $this->resolveContentEditData($contentDraft, $languageCode, $contentType);
-        $form = $this->resolveContentEditForm($contentUpdate, $languageCode, $contentDraft);
+        $form = $this->resolveContentEditForm(
+            $contentUpdate,
+            $languageCode,
+            $contentDraft,
+            $this->languagePreferenceProvider->getPreferredLanguages()
+        );
 
         $event->getParameters()->add(['form' => $form->handleRequest($request)]);
     }
@@ -104,15 +116,15 @@ class ContentEditViewFilter implements EventSubscriberInterface
      * @param \EzSystems\RepositoryForms\Data\Content\ContentUpdateData $contentUpdate
      * @param string $languageCode
      * @param \eZ\Publish\API\Repository\Values\Content\Content $content
+     * @param array $preferredLanguages
      *
      * @return \Symfony\Component\Form\FormInterface
-     *
-     * @throws \Symfony\Component\OptionsResolver\Exception\InvalidOptionsException
      */
     private function resolveContentEditForm(
         ContentUpdateData $contentUpdate,
         string $languageCode,
-        Content $content
+        Content $content,
+        array $preferredLanguages
     ): FormInterface {
         return $this->formFactory->create(
             ContentEditType::class,
@@ -120,6 +132,7 @@ class ContentEditViewFilter implements EventSubscriberInterface
             [
                 'languageCode' => $languageCode,
                 'mainLanguageCode' => $content->contentInfo->mainLanguageCode,
+                'formLanguageCodes' => $preferredLanguages,
                 'drafts_enabled' => true,
             ]
         );

@@ -13,6 +13,7 @@ use EzSystems\RepositoryForms\Data\Content\FieldData;
 use EzSystems\RepositoryForms\Data\FieldDefinitionData;
 use EzSystems\RepositoryForms\FieldType\FieldDefinitionFormMapperInterface;
 use EzSystems\RepositoryForms\FieldType\FieldValueFormMapperInterface;
+use EzSystems\RepositoryForms\FieldType\TranslatableLabel;
 use EzSystems\RepositoryForms\Form\Type\FieldType\AuthorFieldType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormInterface;
@@ -23,6 +24,8 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class AuthorFormMapper implements FieldDefinitionFormMapperInterface, FieldValueFormMapperInterface
 {
+    use TranslatableLabel;
+
     /**
      * @param \Symfony\Component\Form\FormInterface $fieldDefinitionForm
      * @param \EzSystems\RepositoryForms\Data\FieldDefinitionData $data
@@ -60,8 +63,6 @@ class AuthorFormMapper implements FieldDefinitionFormMapperInterface, FieldValue
         $fieldSettings = $fieldDefinition->getFieldSettings();
         $formConfig = $fieldForm->getConfig();
         $names = $fieldDefinition->getNames();
-        $label = $fieldDefinition->getName($formConfig->getOption('languageCode'))
-            ?: $fieldDefinition->getName($formConfig->getOption('mainLanguageCode'));
 
         $fieldForm
             ->add(
@@ -69,7 +70,7 @@ class AuthorFormMapper implements FieldDefinitionFormMapperInterface, FieldValue
                     ->create('value', AuthorFieldType::class, [
                         'default_author' => $fieldSettings['defaultAuthor'],
                         'required' => $fieldDefinition->isRequired,
-                        'label' => $label ?? reset($names),
+                        'label' => $this->resolveLabel($names, $formConfig->getOption('formLanguageCodes')),
                     ])
                     ->setAutoInitialize(false)
                     ->getForm()

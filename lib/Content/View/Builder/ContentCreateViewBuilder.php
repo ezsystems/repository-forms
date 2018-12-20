@@ -13,6 +13,7 @@ use eZ\Publish\API\Repository\Values\Content\Language;
 use eZ\Publish\API\Repository\Values\Content\Location;
 use eZ\Publish\API\Repository\Values\ContentType\ContentType;
 use eZ\Publish\Core\Base\Exceptions\InvalidArgumentException;
+use eZ\Publish\Core\MVC\Symfony\Locale\UserLanguagePreferenceProvider;
 use eZ\Publish\Core\MVC\Symfony\View\Builder\ViewBuilder;
 use eZ\Publish\Core\MVC\Symfony\View\Configurator;
 use eZ\Publish\Core\MVC\Symfony\View\ParametersInjector;
@@ -42,18 +43,23 @@ class ContentCreateViewBuilder implements ViewBuilder
     /** @var ActionDispatcherInterface */
     private $contentActionDispatcher;
 
+    /** @var \eZ\Publish\Core\MVC\Symfony\Locale\UserLanguagePreferenceProvider */
+    private $languagePreferenceProvider;
+
     public function __construct(
         Repository $repository,
         Configurator $viewConfigurator,
         ParametersInjector $viewParametersInjector,
         $defaultTemplate,
-        ActionDispatcherInterface $contentActionDispatcher
+        ActionDispatcherInterface $contentActionDispatcher,
+        UserLanguagePreferenceProvider $languagePreferenceProvider
     ) {
         $this->repository = $repository;
         $this->viewConfigurator = $viewConfigurator;
         $this->viewParametersInjector = $viewParametersInjector;
         $this->defaultTemplate = $defaultTemplate;
         $this->contentActionDispatcher = $contentActionDispatcher;
+        $this->languagePreferenceProvider = $languagePreferenceProvider;
     }
 
     public function matches($argument)
@@ -77,7 +83,7 @@ class ContentCreateViewBuilder implements ViewBuilder
 
         $language = $this->resolveLanguage($parameters);
         $location = $this->resolveLocation($parameters);
-        $contentType = $this->resolveContentType($parameters, $language);
+        $contentType = $this->resolveContentType($parameters, $this->languagePreferenceProvider->getPreferredLanguages());
         $form = $parameters['form'];
 
         if ($form->isValid() && null !== $form->getClickedButton()) {
@@ -187,21 +193,21 @@ class ContentCreateViewBuilder implements ViewBuilder
 
     /**
      * @param array $parameters
-     * @param \eZ\Publish\API\Repository\Values\Content\Language $language
+     * @param array $languageCodes
      *
      * @return \eZ\Publish\API\Repository\Values\ContentType\ContentType
      *
      * @throws \eZ\Publish\API\Repository\Exceptions\NotFoundException
-     * @throws \eZ\Publish\API\Repository\Exceptions\InvalidArgumentException
+     * @throws \eZ\Publish\Core\Base\Exceptions\InvalidArgumentException
      */
-    private function resolveContentType(array $parameters, Language $language): ContentType
+    private function resolveContentType(array $parameters, array $languageCodes): ContentType
     {
         if (isset($parameters['contentType'])) {
             return $parameters['contentType'];
         }
 
         if (isset($parameters['contentTypeIdentifier'])) {
-            return $this->loadContentType($parameters['contentTypeIdentifier'], [$language->languageCode]);
+            return $this->loadContentType($parameters['contentTypeIdentifier'], $languageCodes);
         }
 
         throw new InvalidArgumentException(

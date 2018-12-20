@@ -13,12 +13,15 @@ use eZ\Publish\Core\FieldType\ImageAsset\Value;
 use EzSystems\RepositoryForms\Data\Content\FieldData;
 use EzSystems\RepositoryForms\FieldType\DataTransformer\ImageAssetValueTransformer;
 use EzSystems\RepositoryForms\FieldType\FieldValueFormMapperInterface;
+use EzSystems\RepositoryForms\FieldType\TranslatableLabel;
 use EzSystems\RepositoryForms\Form\Type\FieldType\ImageAssetFieldType;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class ImageAssetFormMapper implements FieldValueFormMapperInterface
 {
+    use TranslatableLabel;
+
     /** @var \eZ\Publish\API\Repository\FieldTypeService */
     private $fieldTypeService;
 
@@ -40,8 +43,6 @@ class ImageAssetFormMapper implements FieldValueFormMapperInterface
         $formConfig = $fieldForm->getConfig();
         $names = $fieldDefinition->getNames();
         $fieldType = $this->fieldTypeService->getFieldType($fieldDefinition->fieldTypeIdentifier);
-        $label = $fieldDefinition->getName($formConfig->getOption('languageCode'))
-            ?: $fieldDefinition->getName($formConfig->getOption('mainLanguageCode'));
 
         $fieldForm
             ->add(
@@ -51,7 +52,7 @@ class ImageAssetFormMapper implements FieldValueFormMapperInterface
                         ImageAssetFieldType::class,
                         [
                             'required' => $fieldDefinition->isRequired,
-                            'label' => $label ?? reset($names),
+                            'label' => $this->resolveLabel($names, $formConfig->getOption('formLanguageCodes')),
                         ]
                     )
                     ->addModelTransformer(new ImageAssetValueTransformer($fieldType, $data->value, Value::class))
