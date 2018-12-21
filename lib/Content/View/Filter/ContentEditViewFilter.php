@@ -12,7 +12,7 @@ use eZ\Publish\API\Repository\ContentService;
 use eZ\Publish\API\Repository\ContentTypeService;
 use eZ\Publish\API\Repository\Values\Content\Content;
 use eZ\Publish\API\Repository\Values\ContentType\ContentType;
-use eZ\Publish\Core\MVC\Symfony\Locale\UserLanguagePreferenceProvider;
+use eZ\Publish\Core\MVC\Symfony\Locale\UserLanguagePreferenceProviderInterface;
 use eZ\Publish\Core\MVC\Symfony\View\Event\FilterViewBuilderParametersEvent;
 use eZ\Publish\Core\MVC\Symfony\View\ViewEvents;
 use EzSystems\RepositoryForms\Data\Content\ContentUpdateData;
@@ -33,20 +33,20 @@ class ContentEditViewFilter implements EventSubscriberInterface
     /** @var \Symfony\Component\Form\FormFactoryInterface */
     private $formFactory;
 
-    /** @var \eZ\Publish\Core\MVC\Symfony\Locale\UserLanguagePreferenceProvider */
+    /** @var \eZ\Publish\Core\MVC\Symfony\Locale\UserLanguagePreferenceProviderInterface */
     private $languagePreferenceProvider;
 
     /**
      * @param \eZ\Publish\API\Repository\ContentService $contentService
      * @param \eZ\Publish\API\Repository\ContentTypeService $contentTypeService
      * @param \Symfony\Component\Form\FormFactoryInterface $formFactory
-     * @param \eZ\Publish\Core\MVC\Symfony\Locale\UserLanguagePreferenceProvider $languagePreferenceProvider
+     * @param \eZ\Publish\Core\MVC\Symfony\Locale\UserLanguagePreferenceProviderInterface $languagePreferenceProvider
      */
     public function __construct(
         ContentService $contentService,
         ContentTypeService $contentTypeService,
         FormFactoryInterface $formFactory,
-        UserLanguagePreferenceProvider $languagePreferenceProvider
+        UserLanguagePreferenceProviderInterface $languagePreferenceProvider
     ) {
         $this->contentService = $contentService;
         $this->contentTypeService = $contentTypeService;
