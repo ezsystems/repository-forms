@@ -32,6 +32,7 @@ class ContentCreateViewFilter implements EventSubscriberInterface
 
     /** @var \Symfony\Component\Form\FormFactoryInterface */
     private $formFactory;
+
     /** @var \eZ\Publish\Core\MVC\Symfony\Locale\UserLanguagePreferenceProvider */
     private $languagePreferenceProvider;
 
@@ -73,16 +74,17 @@ class ContentCreateViewFilter implements EventSubscriberInterface
 
         $request = $event->getRequest();
         $languageCode = $request->attributes->get('language');
+
         $contentType = $this->contentTypeService->loadContentTypeByIdentifier(
-            $request->attributes->get('contentTypeIdentifier')
+            $request->attributes->get('contentTypeIdentifier'),
+            $this->languagePreferenceProvider->getPreferredLanguages()
         );
         $location = $this->locationService->loadLocation($request->attributes->get('parentLocationId'));
 
         $contentCreateData = $this->resolveContentCreateData($contentType, $location, $languageCode);
         $form = $this->resolveContentCreateForm(
             $contentCreateData,
-            $languageCode,
-            $this->languagePreferenceProvider->getPreferredLanguages()
+            $languageCode
         );
 
         $event->getParameters()->add(['form' => $form->handleRequest($request)]);
@@ -115,19 +117,15 @@ class ContentCreateViewFilter implements EventSubscriberInterface
      * @param \EzSystems\RepositoryForms\Data\Content\ContentCreateData $contentCreateData
      * @param string $languageCode
      *
-     * @param array $preferredLanguages
-     *
      * @return \Symfony\Component\Form\FormInterface
      */
     private function resolveContentCreateForm(
         ContentCreateData $contentCreateData,
-        string $languageCode,
-        array $preferredLanguages
+        string $languageCode
     ): FormInterface {
         return $this->formFactory->create(ContentEditType::class, $contentCreateData, [
             'languageCode' => $languageCode,
             'mainLanguageCode' => $languageCode,
-            'formLanguageCodes' => $preferredLanguages,
             'drafts_enabled' => true,
         ]);
     }

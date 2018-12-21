@@ -10,7 +10,6 @@ namespace EzSystems\RepositoryForms\FieldType\Mapper;
 
 use EzSystems\RepositoryForms\Data\Content\FieldData;
 use EzSystems\RepositoryForms\FieldType\FieldValueFormMapperInterface;
-use EzSystems\RepositoryForms\FieldType\TranslatableLabel;
 use EzSystems\RepositoryForms\Form\Type\FieldType\KeywordFieldType;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -20,13 +19,10 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class KeywordFormMapper implements FieldValueFormMapperInterface
 {
-    use TranslatableLabel;
-
     public function mapFieldValueForm(FormInterface $fieldForm, FieldData $data)
     {
         $fieldDefinition = $data->fieldDefinition;
         $formConfig = $fieldForm->getConfig();
-        $names = $fieldDefinition->getNames();
 
         $fieldForm
             ->add(
@@ -36,7 +32,7 @@ class KeywordFormMapper implements FieldValueFormMapperInterface
                         KeywordFieldType::class,
                         [
                             'required' => $fieldDefinition->isRequired,
-                            'label' => $this->resolveLabel($names, $formConfig->getOption('formLanguageCodes')),
+                            'label' => $fieldDefinition->getName(),
                         ]
                     )
                     ->setAutoInitialize(false)

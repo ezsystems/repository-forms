@@ -12,7 +12,6 @@ use EzSystems\RepositoryForms\Data\Content\FieldData;
 use EzSystems\RepositoryForms\Data\FieldDefinitionData;
 use EzSystems\RepositoryForms\FieldType\FieldDefinitionFormMapperInterface;
 use EzSystems\RepositoryForms\FieldType\FieldValueFormMapperInterface;
-use EzSystems\RepositoryForms\FieldType\TranslatableLabel;
 use EzSystems\RepositoryForms\Form\Type\FieldType\ISBNFieldType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\FormInterface;
@@ -20,8 +19,6 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class ISBNFormMapper implements FieldDefinitionFormMapperInterface, FieldValueFormMapperInterface
 {
-    use TranslatableLabel;
-
     public function mapFieldDefinitionForm(FormInterface $fieldDefinitionForm, FieldDefinitionData $fieldDefinition)
     {
         $isTranslation = $fieldDefinition->contentTypeData->languageCode !== $fieldDefinition->contentTypeData->mainLanguageCode;
@@ -53,7 +50,6 @@ class ISBNFormMapper implements FieldDefinitionFormMapperInterface, FieldValueFo
     {
         $fieldDefinition = $data->fieldDefinition;
         $formConfig = $fieldForm->getConfig();
-        $names = $fieldDefinition->getNames();
 
         $fieldForm
             ->add(
@@ -63,7 +59,7 @@ class ISBNFormMapper implements FieldDefinitionFormMapperInterface, FieldValueFo
                         ISBNFieldType::class,
                         [
                             'required' => $fieldDefinition->isRequired,
-                            'label' => $this->resolveLabel($names, $formConfig->getOption('formLanguageCodes')),
+                            'label' => $fieldDefinition->getName(),
                         ]
                     )
                     ->setAutoInitialize(false)

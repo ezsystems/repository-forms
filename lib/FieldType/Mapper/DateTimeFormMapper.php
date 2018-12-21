@@ -13,7 +13,6 @@ use EzSystems\RepositoryForms\Data\Content\FieldData;
 use EzSystems\RepositoryForms\Data\FieldDefinitionData;
 use EzSystems\RepositoryForms\FieldType\FieldDefinitionFormMapperInterface;
 use EzSystems\RepositoryForms\FieldType\FieldValueFormMapperInterface;
-use EzSystems\RepositoryForms\FieldType\TranslatableLabel;
 use EzSystems\RepositoryForms\Form\Type\DateTimeIntervalType;
 use EzSystems\RepositoryForms\Form\Type\FieldType\DateTimeFieldType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
@@ -26,8 +25,6 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class DateTimeFormMapper implements FieldDefinitionFormMapperInterface, FieldValueFormMapperInterface
 {
-    use TranslatableLabel;
-
     public function mapFieldDefinitionForm(FormInterface $fieldDefinitionForm, FieldDefinitionData $data)
     {
         $isTranslation = $data->contentTypeData->languageCode !== $data->contentTypeData->mainLanguageCode;
@@ -64,7 +61,6 @@ class DateTimeFormMapper implements FieldDefinitionFormMapperInterface, FieldVal
         $fieldDefinition = $data->fieldDefinition;
         $fieldSettings = $fieldDefinition->getFieldSettings();
         $formConfig = $fieldForm->getConfig();
-        $names = $fieldDefinition->getNames();
 
         $fieldForm
             ->add(
@@ -75,7 +71,7 @@ class DateTimeFormMapper implements FieldDefinitionFormMapperInterface, FieldVal
                         [
                             'with_seconds' => $fieldSettings['useSeconds'],
                             'required' => $fieldDefinition->isRequired,
-                            'label' => $this->resolveLabel($names, $formConfig->getOption('formLanguageCodes')),
+                            'label' => $fieldDefinition->getName(),
                         ]
                     )
                     ->setAutoInitialize(false)

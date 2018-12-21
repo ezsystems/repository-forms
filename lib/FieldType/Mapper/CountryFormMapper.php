@@ -12,7 +12,6 @@ use EzSystems\RepositoryForms\Data\Content\FieldData;
 use EzSystems\RepositoryForms\Data\FieldDefinitionData;
 use EzSystems\RepositoryForms\FieldType\FieldDefinitionFormMapperInterface;
 use EzSystems\RepositoryForms\FieldType\FieldValueFormMapperInterface;
-use EzSystems\RepositoryForms\FieldType\TranslatableLabel;
 use EzSystems\RepositoryForms\Form\Type\FieldType\CountryFieldType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\FormInterface;
@@ -20,8 +19,6 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class CountryFormMapper implements FieldDefinitionFormMapperInterface, FieldValueFormMapperInterface
 {
-    use TranslatableLabel;
-
     public function mapFieldDefinitionForm(FormInterface $fieldDefinitionForm, FieldDefinitionData $data)
     {
         $isTranslation = $data->contentTypeData->languageCode !== $data->contentTypeData->mainLanguageCode;
@@ -59,7 +56,6 @@ class CountryFormMapper implements FieldDefinitionFormMapperInterface, FieldValu
         $fieldDefinition = $data->fieldDefinition;
         $fieldSettings = $fieldDefinition->getFieldSettings();
         $formConfig = $fieldForm->getConfig();
-        $names = $fieldDefinition->getNames();
 
         $fieldForm
             ->add(
@@ -67,7 +63,7 @@ class CountryFormMapper implements FieldDefinitionFormMapperInterface, FieldValu
                     ->create('value', CountryFieldType::class, [
                         'multiple' => $fieldSettings['isMultiple'],
                         'required' => $fieldDefinition->isRequired,
-                        'label' => $this->resolveLabel($names, $formConfig->getOption('formLanguageCodes')),
+                        'label' => $fieldDefinition->getName(),
                     ])
                     ->setAutoInitialize(false)
                     ->getForm()

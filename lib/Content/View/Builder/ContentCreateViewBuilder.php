@@ -150,7 +150,7 @@ class ContentCreateViewBuilder implements ViewBuilder
      * Loads ContentType with identifier $contentTypeIdentifier.
      *
      * @param string $contentTypeIdentifier
-     * @param array $prioritizedLanguages
+     * @param string[] $prioritizedLanguages
      *
      * @return \eZ\Publish\API\Repository\Values\ContentType\ContentType
      *
@@ -198,7 +198,7 @@ class ContentCreateViewBuilder implements ViewBuilder
      * @return \eZ\Publish\API\Repository\Values\ContentType\ContentType
      *
      * @throws \eZ\Publish\API\Repository\Exceptions\NotFoundException
-     * @throws \eZ\Publish\Core\Base\Exceptions\InvalidArgumentException
+     * @throws \eZ\Publish\API\Repository\Exceptions\InvalidArgumentException
      */
     private function resolveContentType(array $parameters, array $languageCodes): ContentType
     {

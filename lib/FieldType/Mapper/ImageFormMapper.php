@@ -13,7 +13,6 @@ use EzSystems\RepositoryForms\Data\FieldDefinitionData;
 use EzSystems\RepositoryForms\FieldType\DataTransformer\ImageValueTransformer;
 use EzSystems\RepositoryForms\FieldType\FieldDefinitionFormMapperInterface;
 use EzSystems\RepositoryForms\FieldType\FieldValueFormMapperInterface;
-use EzSystems\RepositoryForms\FieldType\TranslatableLabel;
 use EzSystems\RepositoryForms\Form\Type\FieldType\ImageFieldType;
 use EzSystems\RepositoryForms\ConfigResolver\MaxUploadSize;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
@@ -24,8 +23,6 @@ use Symfony\Component\Validator\Constraints\Range;
 
 class ImageFormMapper implements FieldDefinitionFormMapperInterface, FieldValueFormMapperInterface
 {
-    use TranslatableLabel;
-
     /** @var FieldTypeService */
     private $fieldTypeService;
 
@@ -65,7 +62,6 @@ class ImageFormMapper implements FieldDefinitionFormMapperInterface, FieldValueF
         $fieldDefinition = $data->fieldDefinition;
         $formConfig = $fieldForm->getConfig();
         $fieldType = $this->fieldTypeService->getFieldType($fieldDefinition->fieldTypeIdentifier);
-        $names = $fieldDefinition->getNames();
 
         $fieldForm
             ->add(
@@ -75,7 +71,7 @@ class ImageFormMapper implements FieldDefinitionFormMapperInterface, FieldValueF
                         ImageFieldType::class,
                         [
                             'required' => $fieldDefinition->isRequired,
-                            'label' => $this->resolveLabel($names, $formConfig->getOption('formLanguageCodes')),
+                            'label' => $fieldDefinition->getName(),
                         ]
                     )
                     ->addModelTransformer(new ImageValueTransformer($fieldType, $data->value, Value::class))

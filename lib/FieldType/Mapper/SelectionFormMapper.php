@@ -12,7 +12,6 @@ use EzSystems\RepositoryForms\Data\Content\FieldData;
 use EzSystems\RepositoryForms\Data\FieldDefinitionData;
 use EzSystems\RepositoryForms\FieldType\FieldDefinitionFormMapperInterface;
 use EzSystems\RepositoryForms\FieldType\FieldValueFormMapperInterface;
-use EzSystems\RepositoryForms\FieldType\TranslatableLabel;
 use EzSystems\RepositoryForms\Form\Type\FieldType\SelectionFieldType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
@@ -22,8 +21,6 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class SelectionFormMapper implements FieldDefinitionFormMapperInterface, FieldValueFormMapperInterface
 {
-    use TranslatableLabel;
-
     /**
      * Selection items can be added and removed, the collection field type is used for this.
      * - An empty field is always present, if this is filled it will become a new entry.
@@ -62,7 +59,6 @@ class SelectionFormMapper implements FieldDefinitionFormMapperInterface, FieldVa
     {
         $fieldDefinition = $data->fieldDefinition;
         $formConfig = $fieldForm->getConfig();
-        $names = $fieldDefinition->getNames();
 
         $fieldForm
             ->add(
@@ -72,7 +68,7 @@ class SelectionFormMapper implements FieldDefinitionFormMapperInterface, FieldVa
                         SelectionFieldType::class,
                         [
                             'required' => $fieldDefinition->isRequired,
-                            'label' => $this->resolveLabel($names, $formConfig->getOption('formLanguageCodes')),
+                            'label' => $fieldDefinition->getName(),
                             'multiple' => $fieldDefinition->fieldSettings['isMultiple'],
                             'choices' => array_flip($fieldDefinition->fieldSettings['options']),
                         ]

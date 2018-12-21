@@ -10,7 +10,6 @@ namespace EzSystems\RepositoryForms\FieldType\Mapper;
 
 use EzSystems\RepositoryForms\Data\Content\FieldData;
 use EzSystems\RepositoryForms\Data\FieldDefinitionData;
-use EzSystems\RepositoryForms\FieldType\TranslatableLabel;
 use EzSystems\RepositoryForms\Form\Type\FieldType\RelationListFieldType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
@@ -20,8 +19,6 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class RelationListFormMapper extends AbstractRelationFormMapper
 {
-    use TranslatableLabel;
-
     public function mapFieldDefinitionForm(FormInterface $fieldDefinitionForm, FieldDefinitionData $data)
     {
         $isTranslation = $data->contentTypeData->languageCode !== $data->contentTypeData->mainLanguageCode;
@@ -55,7 +52,6 @@ class RelationListFormMapper extends AbstractRelationFormMapper
     {
         $fieldDefinition = $data->fieldDefinition;
         $formConfig = $fieldForm->getConfig();
-        $names = $fieldDefinition->getNames();
 
         $fieldForm
             ->add(
@@ -65,7 +61,7 @@ class RelationListFormMapper extends AbstractRelationFormMapper
                         RelationListFieldType::class,
                         [
                             'required' => $fieldDefinition->isRequired,
-                            'label' => $this->resolveLabel($names, $formConfig->getOption('formLanguageCodes')),
+                            'label' => $fieldDefinition->getName(),
                         ]
                     )
                     ->setAutoInitialize(false)

@@ -45,8 +45,7 @@ class ContentFieldType extends AbstractType
                 'data_class' => '\EzSystems\RepositoryForms\Data\Content\FieldData',
                 'translation_domain' => 'ezrepoforms_content',
             ])
-            ->setRequired(['languageCode', 'mainLanguageCode'])
-            ->setDefined(['formLanguageCodes']);
+            ->setRequired(['languageCode', 'mainLanguageCode']);
     }
 
     public function buildView(FormView $view, FormInterface $form, array $options)

@@ -39,7 +39,6 @@ class BaseContentType extends AbstractType
                 'entry_options' => [
                     'languageCode' => $options['languageCode'],
                     'mainLanguageCode' => $options['mainLanguageCode'],
-                    'formLanguageCodes' => $options['formLanguageCodes'] ?? [$options['languageCode']],
                 ],
             ])
             ->add('redirectUrlAfterPublish', HiddenType::class, [
@@ -57,7 +56,6 @@ class BaseContentType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver
-            ->setRequired(['languageCode', 'mainLanguageCode'])
-            ->setDefined(['formLanguageCodes']);
+            ->setRequired(['languageCode', 'mainLanguageCode']);
     }
 }

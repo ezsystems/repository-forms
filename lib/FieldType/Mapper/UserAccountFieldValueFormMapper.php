@@ -14,7 +14,6 @@ use EzSystems\RepositoryForms\Data\FieldDefinitionData;
 use EzSystems\RepositoryForms\Data\User\UserAccountFieldData;
 use EzSystems\RepositoryForms\FieldType\FieldDefinitionFormMapperInterface;
 use EzSystems\RepositoryForms\FieldType\FieldValueFormMapperInterface;
-use EzSystems\RepositoryForms\FieldType\TranslatableLabel;
 use EzSystems\RepositoryForms\Form\Type\FieldDefinition\User\PasswordConstraintCheckboxType;
 use EzSystems\RepositoryForms\Form\Type\FieldType\UserAccountFieldType;
 use EzSystems\RepositoryForms\Validator\Constraints\UserAccountPassword;
@@ -34,8 +33,6 @@ use Symfony\Component\Validator\Constraints\Range;
  */
 final class UserAccountFieldValueFormMapper implements FieldValueFormMapperInterface, FieldDefinitionFormMapperInterface
 {
-    use TranslatableLabel;
-
     /**
      * Maps Field form to current FieldType based on the configured form type (self::$formType).
      *
@@ -53,14 +50,13 @@ final class UserAccountFieldValueFormMapper implements FieldValueFormMapperInter
         $formConfig = $fieldForm->getConfig();
         $rootForm = $fieldForm->getRoot()->getRoot();
         $formIntent = $rootForm->getConfig()->getOption('intent');
-        $names = $fieldDefinition->getNames();
 
         $fieldForm
             ->add(
                 $formConfig->getFormFactory()->createBuilder()
                     ->create('value', UserAccountFieldType::class, [
                         'required' => true,
-                        'label' => $this->resolveLabel($names, $formConfig->getOption('formLanguageCodes')),
+                        'label' => $fieldDefinition->getName(),
                         'intent' => $formIntent,
                         'constraints' => [
                             new UserAccountPassword(['contentType' => $rootForm->getData()->contentType]),
