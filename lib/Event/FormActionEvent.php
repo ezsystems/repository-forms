@@ -35,11 +35,26 @@ class FormActionEvent extends FormEvent
      */
     private $response;
 
-    public function __construct(FormInterface $form, $data, $clickedButton, array $options = [])
+    /**
+     * Additional payload populated for event listeners next in priority.
+     *
+     * @var array
+     */
+    private $payloads;
+
+    /**
+     * @param \Symfony\Component\Form\FormInterface $form
+     * @param $data
+     * @param $clickedButton
+     * @param array $options
+     * @param array $payloads
+     */
+    public function __construct(FormInterface $form, $data, $clickedButton, array $options = [], array $payloads = [])
     {
         parent::__construct($form, $data);
         $this->clickedButton = $clickedButton;
         $this->options = $options;
+        $this->payloads = $payloads;
     }
 
     /**
@@ -102,5 +117,50 @@ class FormActionEvent extends FormEvent
     public function hasResponse()
     {
         return $this->response !== null;
+    }
+
+    /**
+     * @return array
+     */
+    public function getPayloads(): array
+    {
+        return $this->payloads;
+    }
+
+    /**
+     * @param array $payloads
+     */
+    public function setPayloads(array $payloads): void
+    {
+        $this->payloads = $payloads;
+    }
+
+    /**
+     * @param string $name
+     *
+     * @return bool
+     */
+    public function hasPayload(string $name): bool
+    {
+        return isset($this->payloads[$name]);
+    }
+
+    /**
+     * @param string $name
+     *
+     * @return mixed
+     */
+    public function getPayload(string $name)
+    {
+        return $this->payloads[$name];
+    }
+
+    /**
+     * @param string $name
+     * @param mixed $payload
+     */
+    public function setPayload(string $name, $payload): void
+    {
+        $this->payloads[$name] = $payload;
     }
 }
