@@ -59,9 +59,6 @@ class AuthorFormMapper implements FieldDefinitionFormMapperInterface, FieldValue
         $fieldDefinition = $data->fieldDefinition;
         $fieldSettings = $fieldDefinition->getFieldSettings();
         $formConfig = $fieldForm->getConfig();
-        $names = $fieldDefinition->getNames();
-        $label = $fieldDefinition->getName($formConfig->getOption('languageCode'))
-            ?: $fieldDefinition->getName($formConfig->getOption('mainLanguageCode'));
 
         $fieldForm
             ->add(
@@ -69,7 +66,7 @@ class AuthorFormMapper implements FieldDefinitionFormMapperInterface, FieldValue
                     ->create('value', AuthorFieldType::class, [
                         'default_author' => $fieldSettings['defaultAuthor'],
                         'required' => $fieldDefinition->isRequired,
-                        'label' => $label ?? reset($names),
+                        'label' => $fieldDefinition->getName(),
                     ])
                     ->setAutoInitialize(false)
                     ->getForm()

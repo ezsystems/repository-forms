@@ -55,6 +55,7 @@ class BaseContentType extends AbstractType
 
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setRequired(['languageCode', 'mainLanguageCode']);
+        $resolver
+            ->setRequired(['languageCode', 'mainLanguageCode']);
     }
 }

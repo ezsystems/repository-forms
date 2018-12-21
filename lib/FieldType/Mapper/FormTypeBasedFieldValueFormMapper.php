@@ -63,9 +63,6 @@ final class FormTypeBasedFieldValueFormMapper implements FieldValueFormMapperInt
     {
         $fieldDefinition = $data->fieldDefinition;
         $formConfig = $fieldForm->getConfig();
-        $names = $fieldDefinition->getNames();
-        $label = $fieldDefinition->getName($formConfig->getOption('languageCode'))
-            ?: $fieldDefinition->getName($formConfig->getOption('mainLanguageCode'));
 
         $fieldForm
             ->add(
@@ -75,7 +72,7 @@ final class FormTypeBasedFieldValueFormMapper implements FieldValueFormMapperInt
                         $this->formType,
                         [
                             'required' => $fieldDefinition->isRequired,
-                            'label' => $label ?? reset($names),
+                            'label' => $fieldDefinition->getName(),
                         ]
                     )
                     ->addModelTransformer(new FieldValueTransformer($this->fieldTypeService->getFieldType($fieldDefinition->fieldTypeIdentifier)))

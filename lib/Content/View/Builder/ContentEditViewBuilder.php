@@ -14,6 +14,7 @@ use eZ\Publish\API\Repository\Values\Content\Language;
 use eZ\Publish\API\Repository\Values\Content\Location;
 use eZ\Publish\API\Repository\Values\ContentType\ContentType;
 use eZ\Publish\Core\Base\Exceptions\InvalidArgumentException;
+use eZ\Publish\Core\MVC\Symfony\Locale\UserLanguagePreferenceProviderInterface;
 use eZ\Publish\Core\MVC\Symfony\View\Builder\ViewBuilder;
 use eZ\Publish\Core\MVC\Symfony\View\Configurator;
 use eZ\Publish\Core\MVC\Symfony\View\ParametersInjector;
@@ -43,18 +44,31 @@ class ContentEditViewBuilder implements ViewBuilder
     /** @var \EzSystems\RepositoryForms\Form\ActionDispatcher\ActionDispatcherInterface */
     private $contentActionDispatcher;
 
+    /** @var \eZ\Publish\Core\MVC\Symfony\Locale\UserLanguagePreferenceProviderInterface */
+    private $languagePreferenceProvider;
+
+    /**
+     * @param \eZ\Publish\API\Repository\Repository $repository
+     * @param \eZ\Publish\Core\MVC\Symfony\View\Configurator $viewConfigurator
+     * @param \eZ\Publish\Core\MVC\Symfony\View\ParametersInjector $viewParametersInjector
+     * @param string $defaultTemplate
+     * @param \EzSystems\RepositoryForms\Form\ActionDispatcher\ActionDispatcherInterface $contentActionDispatcher
+     * @param \eZ\Publish\Core\MVC\Symfony\Locale\UserLanguagePreferenceProviderInterface $languagePreferenceProvider
+     */
     public function __construct(
         Repository $repository,
         Configurator $viewConfigurator,
         ParametersInjector $viewParametersInjector,
         string $defaultTemplate,
-        ActionDispatcherInterface $contentActionDispatcher
+        ActionDispatcherInterface $contentActionDispatcher,
+        UserLanguagePreferenceProviderInterface $languagePreferenceProvider
     ) {
         $this->repository = $repository;
         $this->viewConfigurator = $viewConfigurator;
         $this->viewParametersInjector = $viewParametersInjector;
         $this->defaultTemplate = $defaultTemplate;
         $this->contentActionDispatcher = $contentActionDispatcher;
+        $this->languagePreferenceProvider = $languagePreferenceProvider;
     }
 
     public function matches($argument)
@@ -82,7 +96,7 @@ class ContentEditViewBuilder implements ViewBuilder
         $location = $this->resolveLocation($parameters);
         $content = $this->resolveContent($parameters, $location, $language);
         $contentInfo = $content->contentInfo;
-        $contentType = $this->loadContentType((int) $contentInfo->contentTypeId, $language->languageCode);
+        $contentType = $this->loadContentType((int) $contentInfo->contentTypeId, $this->languagePreferenceProvider->getPreferredLanguages());
         $form = $parameters['form'];
         $isPublished = null !== $contentInfo->mainLocationId && $contentInfo->published;
 
@@ -178,15 +192,15 @@ class ContentEditViewBuilder implements ViewBuilder
      * Loads ContentType with id $contentTypeId.
      *
      * @param int $contentTypeId
-     * @param string $languageCode
+     * @param string[] $languageCodes
      *
      * @return \eZ\Publish\API\Repository\Values\ContentType\ContentType
      *
      * @throws \eZ\Publish\API\Repository\Exceptions\NotFoundException
      */
-    private function loadContentType(int $contentTypeId, string $languageCode): ContentType
+    private function loadContentType(int $contentTypeId, array $languageCodes): ContentType
     {
-        return $this->repository->getContentTypeService()->loadContentType($contentTypeId, [$languageCode]);
+        return $this->repository->getContentTypeService()->loadContentType($contentTypeId, $languageCodes);
     }
 
     /**

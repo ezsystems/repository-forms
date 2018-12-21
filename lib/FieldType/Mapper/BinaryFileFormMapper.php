@@ -61,9 +61,6 @@ class BinaryFileFormMapper implements FieldDefinitionFormMapperInterface, FieldV
         $fieldDefinition = $data->fieldDefinition;
         $formConfig = $fieldForm->getConfig();
         $fieldType = $this->fieldTypeService->getFieldType($fieldDefinition->fieldTypeIdentifier);
-        $names = $fieldDefinition->getNames();
-        $label = $fieldDefinition->getName($formConfig->getOption('languageCode'))
-            ?: $fieldDefinition->getName($formConfig->getOption('mainLanguageCode'));
 
         $fieldForm
             ->add(
@@ -73,7 +70,7 @@ class BinaryFileFormMapper implements FieldDefinitionFormMapperInterface, FieldV
                         BinaryFileFieldType::class,
                         [
                             'required' => $fieldDefinition->isRequired,
-                            'label' => $label ?? reset($names),
+                            'label' => $fieldDefinition->getName(),
                         ]
                     )
                     ->addModelTransformer(new BinaryFileValueTransformer($fieldType, $data->value, Value::class))

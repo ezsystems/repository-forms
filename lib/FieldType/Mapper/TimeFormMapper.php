@@ -61,9 +61,6 @@ class TimeFormMapper implements FieldDefinitionFormMapperInterface, FieldValueFo
         $fieldDefinition = $data->fieldDefinition;
         $fieldSettings = $fieldDefinition->getFieldSettings();
         $formConfig = $fieldForm->getConfig();
-        $names = $fieldDefinition->getNames();
-        $label = $fieldDefinition->getName($formConfig->getOption('languageCode'))
-            ?: $fieldDefinition->getName($formConfig->getOption('mainLanguageCode'));
 
         $fieldForm
             ->add(
@@ -71,7 +68,7 @@ class TimeFormMapper implements FieldDefinitionFormMapperInterface, FieldValueFo
                     ->create('value', TimeFieldType::class, [
                         'with_seconds' => $fieldSettings['useSeconds'],
                         'required' => $fieldDefinition->isRequired,
-                        'label' => $label ?? reset($names),
+                        'label' => $fieldDefinition->getName(),
                     ])
                     ->setAutoInitialize(false)
                     ->getForm()

@@ -50,16 +50,13 @@ final class UserAccountFieldValueFormMapper implements FieldValueFormMapperInter
         $formConfig = $fieldForm->getConfig();
         $rootForm = $fieldForm->getRoot()->getRoot();
         $formIntent = $rootForm->getConfig()->getOption('intent');
-        $names = $fieldDefinition->getNames();
-        $label = $fieldDefinition->getName($formConfig->getOption('languageCode'))
-            ?: $fieldDefinition->getName($formConfig->getOption('mainLanguageCode'));
 
         $fieldForm
             ->add(
                 $formConfig->getFormFactory()->createBuilder()
                     ->create('value', UserAccountFieldType::class, [
                         'required' => true,
-                        'label' => $label,
+                        'label' => $fieldDefinition->getName(),
                         'intent' => $formIntent,
                         'constraints' => [
                             new UserAccountPassword(['contentType' => $rootForm->getData()->contentType]),
