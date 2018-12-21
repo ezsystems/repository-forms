@@ -38,7 +38,7 @@
       </trans-unit>
       <trans-unit id="8ac4ec40153c80fd39d2051802e30ebffb6f1fe1" resname="content.field_type.ezuser.enabled">
         <source>Enabled</source>
-        <target state="new">Enabled</target>
+        <target>Enabled</target>
         <note>key: content.field_type.ezuser.enabled</note>
       </trans-unit>
       <trans-unit id="4c65e5d17516c19e311161e374bbd39f053b5e6b" resname="content.field_type.ezuser.password">

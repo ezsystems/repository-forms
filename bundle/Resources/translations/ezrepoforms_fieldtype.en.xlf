@@ -36,6 +36,11 @@
         <target>Alternative text</target>
         <note>key: content.field_type.ezimage.alternative_text</note>
       </trans-unit>
+      <trans-unit id="5da12c12b4df6790c55fb4d0b11f72fa621b0d1f" resname="content.field_type.ezimageasset.alternative_text">
+        <source>Alternative text</source>
+        <target>Alternative text</target>
+        <note>key: content.field_type.ezimageasset.alternative_text</note>
+      </trans-unit>
       <trans-unit id="7162d22b1be8aaa634e57fa94cc2664026be4390" resname="content.field_type.ezmedia.autoplay">
         <source>Auto play</source>
         <target>Auto play</target>
@@ -60,11 +65,6 @@
         <source>Width</source>
         <target>Width</target>
         <note>key: content.field_type.ezmedia.width</note>
-      </trans-unit>
-      <trans-unit id="56f2bad53d241371a48f88accc3ef08a9bc643b6" resname="content.field_type.ezimageasset.alternative_text">
-        <source>Alternative text</source>
-        <target>Alternative text</target>
-        <note>key: content.field_type.ezimageasset.alternative_text</note>
       </trans-unit>
     </body>
   </file>
