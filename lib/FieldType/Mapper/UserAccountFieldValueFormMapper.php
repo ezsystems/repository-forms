@@ -91,6 +91,10 @@ final class UserAccountFieldValueFormMapper implements FieldValueFormMapperInter
             'property_path' => $propertyPathPrefix . '[requireAtLeastOneNonAlphanumericCharacter]',
         ]);
 
+        $fieldDefinitionForm->add('isNotBlacklisted', PasswordConstraintCheckboxType::class, [
+            'property_path' => $propertyPathPrefix . '[isNotBlacklisted]',
+        ]);
+
         $fieldDefinitionForm->add('minLength', IntegerType::class, [
             'required' => false,
             'property_path' => $propertyPathPrefix . '[minLength]',

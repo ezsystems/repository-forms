@@ -476,6 +476,11 @@
         <target>Password must contain at least one uppercase letter</target>
         <note>key: field_definition.ezuser.require_at_least_one_upper_case_character</note>
       </trans-unit>
+      <trans-unit id="02117afe75568d5a63e5da52556f0d83c1321330" resname="field_definition.ezuser.is_not_blacklisted">
+        <source>Password is not blacklisted</source>
+        <target>Password is not blacklisted</target>
+        <note>key: field_definition.ezuser.is_not_blacklisted</note>
+      </trans-unit>
       <trans-unit id="92d9243bb9fac540233dc376b41a3bcd41615ccc" resname="field_definition.field_group">
         <source>Category</source>
         <target>Category</target>
