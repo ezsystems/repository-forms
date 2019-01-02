@@ -103,7 +103,10 @@ class ContentCreateViewBuilder implements ViewBuilder
             );
 
             if ($response = $this->contentActionDispatcher->getResponse()) {
-                return new ContentCreateSuccessView($response);
+                $view = new ContentCreateSuccessView($response);
+                $view->setLocation($location);
+
+                return $view;
             }
         }
 

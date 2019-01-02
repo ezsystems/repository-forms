@@ -7,12 +7,17 @@ declare(strict_types=1);
 
 namespace EzSystems\RepositoryForms\Content\View;
 
+use eZ\Publish\API\Repository\Values\Content\Location;
 use eZ\Publish\Core\MVC\Symfony\View\BaseView;
+use eZ\Publish\Core\MVC\Symfony\View\LocationValueView;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Controller\ControllerReference;
 
-class ContentCreateSuccessView extends BaseView
+class ContentCreateSuccessView extends BaseView implements LocationValueView
 {
+    /** @var \eZ\Publish\API\Repository\Values\Content\Location|null */
+    private $location;
+
     /**
      * @param \Symfony\Component\HttpFoundation\Response $response
      *
@@ -24,5 +29,21 @@ class ContentCreateSuccessView extends BaseView
 
         $this->setResponse($response);
         $this->setControllerReference(new ControllerReference('ez_content_edit:createWithoutDraftSuccessAction'));
+    }
+
+    /**
+     * @param \eZ\Publish\API\Repository\Values\Content\Location|null $location
+     */
+    public function setLocation(?Location $location)
+    {
+        $this->location = $location;
+    }
+
+    /**
+     * @return \eZ\Publish\API\Repository\Values\Content\Location|null
+     */
+    public function getLocation(): ?Location
+    {
+        return $this->location;
     }
 }

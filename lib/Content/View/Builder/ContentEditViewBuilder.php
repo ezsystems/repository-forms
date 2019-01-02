@@ -122,7 +122,10 @@ class ContentEditViewBuilder implements ViewBuilder
             );
 
             if ($response = $this->contentActionDispatcher->getResponse()) {
-                return new ContentEditSuccessView($response);
+                $view = new ContentEditSuccessView($response);
+                $view->setLocation($location);
+
+                return $view;
             }
         }
 
