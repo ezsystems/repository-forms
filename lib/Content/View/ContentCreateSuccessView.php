@@ -32,9 +32,9 @@ class ContentCreateSuccessView extends BaseView implements LocationValueView
     }
 
     /**
-     * @param \eZ\Publish\API\Repository\Values\Content\Location|null $location
+     * @param \eZ\Publish\API\Repository\Values\Content\Location $location
      */
-    public function setLocation(?Location $location)
+    public function setLocation(Location $location)
     {
         $this->location = $location;
     }
