@@ -30,7 +30,7 @@ class UDWBasedValueViewTransformer implements DataTransformerInterface
 
     public function transform($value)
     {
-        if ($value === null) {
+        if (!is_array($value)) {
             return null;
         }
 
