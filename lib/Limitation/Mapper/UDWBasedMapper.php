@@ -14,6 +14,7 @@ use eZ\Publish\API\Repository\Values\Content\Query\Criterion\Ancestor;
 use eZ\Publish\API\Repository\Values\Content\Query\SortClause\Location\Path;
 use eZ\Publish\API\Repository\Values\User\Limitation;
 use EzSystems\RepositoryForms\Limitation\DataTransformer\UDWBasedValueTransformer;
+use EzSystems\RepositoryForms\Limitation\DataTransformer\UDWBasedValueViewTransformer;
 use EzSystems\RepositoryForms\Limitation\LimitationFormMapperInterface;
 use EzSystems\RepositoryForms\Limitation\LimitationValueMapperInterface;
 use EzSystems\RepositoryForms\Translation\LimitationTranslationExtractor;
@@ -67,12 +68,14 @@ class UDWBasedMapper implements LimitationFormMapperInterface, LimitationValueMa
     {
         $form->add(
             // Creating from FormBuilder as we need to add a DataTransformer.
-            $form->getConfig()->getFormFactory()->createBuilder()
+            $form->getConfig()->getFormFactory()
+                ->createBuilder()
                 ->create('limitationValues', HiddenType::class, [
                     'required' => false,
                     'label' => LimitationTranslationExtractor::identifierToLabel($data->getIdentifier()),
                 ])
-                ->addModelTransformer(new UDWBasedValueTransformer())
+                ->addViewTransformer(new UDWBasedValueViewTransformer($this->locationService))
+                ->addModelTransformer(new UDWBasedValueTransformer($this->locationService))
                 // Deactivate auto-initialize as we're not on the root form.
                 ->setAutoInitialize(false)->getForm()
         );
