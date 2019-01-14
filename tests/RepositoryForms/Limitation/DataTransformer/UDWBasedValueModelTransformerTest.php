@@ -39,7 +39,7 @@ class UDWBasedValueModelTransformerTest extends TestCase
     {
         $this->locationService
             ->method('loadLocation')
-            ->willReturnCallback(function($id) {
+            ->willReturnCallback(function ($id) {
                 return $this->createLocation($id);
             });
 
@@ -49,19 +49,19 @@ class UDWBasedValueModelTransformerTest extends TestCase
     public function dataProviderForTransform(): array
     {
         return [
-            [ null, null ],
+            [null, null],
             [
                 [
                     '/1/2/54/',
                     '/1/2/54/56/',
-                    '/1/2/54/58/'
+                    '/1/2/54/58/',
                 ],
                 [
                     $this->createLocation(54),
                     $this->createLocation(56),
                     $this->createLocation(58),
-                ]
-            ]
+                ],
+            ],
         ];
     }
 
@@ -101,15 +101,15 @@ class UDWBasedValueModelTransformerTest extends TestCase
     public function dataProviderForReverseTransform(): array
     {
         return [
-            [ null, null ],
+            [null, null],
             [
                 [
                     $this->createLocation(54),
                     $this->createLocation(56),
                     $this->createLocation(58),
                 ],
-                [ 54, 56, 58 ],
-            ]
+                [54, 56, 58],
+            ],
         ];
     }
 
