@@ -78,7 +78,7 @@ class LimitationValueRenderingExtensionTest extends FileSystemTwigIntegrationTes
     /**
      * @see \eZ\Publish\Core\MVC\Symfony\Templating\Tests\Twig\Extension\FileSystemTwigIntegrationTestCase::doIntegrationTest
      */
-    protected function doIntegrationTest($file, $message, $condition, $templates, $exception, $outputs)
+    protected function doIntegrationTest($file, $message, $condition, $templates, $exception, $outputs, $deprecation = '')
     {
         if (!$outputs) {
             $this->markTestSkipped('no legacy tests to run');
