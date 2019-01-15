@@ -122,9 +122,10 @@ class UserRegistrationContext extends RawMinkContext implements Context, Snippet
      */
     private function createRegistrationRole($withUserRegisterPolicy = true)
     {
+        /** @noinspection NonSecureUniqidUsageInspection */
         $roleIdentifier = uniqid(
             'anonymous_role_' . ($withUserRegisterPolicy ? 'with' : 'without') . '_register',
-            true
+            false
         );
 
         $roleService = $this->getRepository()->getRoleService();
