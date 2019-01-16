@@ -18,7 +18,7 @@ matrix:
     - php: 7.1
       env: TEST_CONFIG="phpunit.xml.dist"
     - php: 7.1
-      env: BEHAT_OPTS="--profile=repository-forms" PHP_IMAGE=ezsystems/php:7.1-v1
+      env: BEHAT_OPTS="--profile=repository-forms --parallel-process=4" PHP_IMAGE=ezsystems/php:7.1-v1
     # 7.2
     - php: 7.2
       env: TEST_CONFIG="phpunit.xml.dist"

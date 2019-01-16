@@ -3,15 +3,17 @@ Feature: TextLine field value edit form
     As an integrator
     I want the ezuser field form to implement the FieldType's behaviour
 
-Background:
+  Background:
     Given a Content Type with a textline field definition
 
-Scenario: The attributes of a textline field have a form representation
+  @parallel-scenario
+  Scenario: The attributes of a textline field have a form representation
     When I view the edit form for this field
     Then the edit form should contain an identifiable widget for textline field definition
-     And it should contain a text input field
+      And it should contain a text input field
 
-Scenario: The input fields are flagged as required when the field definition is required
+  @parallel-scenario
+  Scenario: The input fields are flagged as required when the field definition is required
     Given the field definition is required
-     When I view the edit form for this field
-     Then the value input fields for textline field should be flagged as required
+    When I view the edit form for this field
+    Then the value input fields for textline field should be flagged as required
