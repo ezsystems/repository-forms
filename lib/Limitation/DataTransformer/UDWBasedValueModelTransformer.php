@@ -62,9 +62,7 @@ class UDWBasedValueModelTransformer implements DataTransformerInterface
             return null;
         }
 
-        return array_map(function (Location $location) {
-            return $location->id;
-        }, $value);
+        return array_column($value, 'id');
     }
 
     /**

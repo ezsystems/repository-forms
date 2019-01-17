@@ -116,6 +116,10 @@ class UDWBasedValueViewTransformerTest extends TestCase
             ->method('__get')
             ->with('id')
             ->willReturn($id);
+        $location
+            ->method('__isset')
+            ->with('id')
+            ->willReturn(true);
 
         return $location;
     }

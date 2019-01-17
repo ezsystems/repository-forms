@@ -39,9 +39,7 @@ class UDWBasedValueViewTransformer implements DataTransformerInterface
             return null;
         }
 
-        return implode(self::DELIMITER, array_map(function (Location $location) {
-            return $location->id;
-        }, $value));
+        return implode(self::DELIMITER, array_column($value, 'id'));
     }
 
     /**
