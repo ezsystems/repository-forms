@@ -96,7 +96,7 @@ class UserRegistrationContext extends RawMinkContext implements Context, Snippet
     private function createUserWithRole(Role $role)
     {
         $userService = $this->getRepository()->getUserService();
-        $username = uniqid($role->identifier);
+        $username = uniqid($role->identifier, true);
         $createStruct = $userService->newUserCreateStruct(
             $username,
             $username . '@example.com',
@@ -124,7 +124,8 @@ class UserRegistrationContext extends RawMinkContext implements Context, Snippet
     private function createRegistrationRole($withUserRegisterPolicy = true)
     {
         $roleIdentifier = uniqid(
-            'anonymous_role_' . ($withUserRegisterPolicy ? 'with' : 'without') . '_register'
+            'anonymous_role_' . ($withUserRegisterPolicy ? 'with' : 'without') . '_register',
+            true
         );
 
         $roleService = $this->getRepository()->getRoleService();
@@ -213,7 +214,7 @@ class UserRegistrationContext extends RawMinkContext implements Context, Snippet
     {
         $page = $this->getSession()->getPage();
 
-        $this->registrationUsername = uniqid('registration_username_');
+        $this->registrationUsername = uniqid('registration_username_', true);
 
         $page->fillField('ezrepoforms_user_register[fieldsData][first_name][value]', 'firstname');
         $page->fillField('ezrepoforms_user_register[fieldsData][last_name][value]', 'firstname');
@@ -264,7 +265,7 @@ class UserRegistrationContext extends RawMinkContext implements Context, Snippet
         $userService = $this->getRepository()->getUserService();
 
         $groupCreateStruct = $userService->newUserGroupCreateStruct(self::$language);
-        $groupCreateStruct->setField('name', uniqid('User registration group '));
+        $groupCreateStruct->setField('name', uniqid('User registration group ', true));
         $this->customUserGroup = $userService->createUserGroup(
             $groupCreateStruct,
             $userService->loadUserGroup(self::$groupId)

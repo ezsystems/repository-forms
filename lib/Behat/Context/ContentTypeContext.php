@@ -120,7 +120,7 @@ final class ContentTypeContext extends RawMinkContext implements Context, Snippe
     public function newContentTypeCreateStruct($identifier = null)
     {
         return $this->contentTypeService->newContentTypeCreateStruct(
-            $identifier ?: $identifier = 'content_type_' . uniqid()
+            $identifier ?: $identifier = uniqid('content_type_', true)
         );
     }
 
