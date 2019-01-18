@@ -19,7 +19,7 @@ Feature: User registration form
       And I see a registration confirmation message
       And the user account has been created
 
-  @parallel-scenario
+  @parallel-wait
   Scenario: The user group where registered users are created can be customized
     Given a User Group
       And the following user registration group configuration:
