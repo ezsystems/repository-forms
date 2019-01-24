@@ -30,6 +30,9 @@ class MediaFormMapper implements FieldDefinitionFormMapperInterface, FieldValueF
     /** @var MaxUploadSize */
     private $maxUploadSize;
 
+    const ACCEPT_VIDEO = 'video/*';
+    const ACCEPT_AUDIO = 'audio/*';
+
     public function __construct(FieldTypeService $fieldTypeService, MaxUploadSize $maxUploadSize)
     {
         $this->fieldTypeService = $fieldTypeService;
@@ -79,6 +82,10 @@ class MediaFormMapper implements FieldDefinitionFormMapperInterface, FieldValueF
         $names = $fieldDefinition->getNames();
         $label = $fieldDefinition->getName($formConfig->getOption('mainLanguageCode')) ?: reset($names);
 
+        $acceptedFormat = Type::TYPE_HTML5_AUDIO === $fieldDefinition->fieldSettings->mediaType
+            ? self::ACCEPT_AUDIO
+            : self::ACCEPT_VIDEO;
+
         $fieldForm
             ->add(
                 $formConfig->getFormFactory()->createBuilder()
@@ -88,6 +95,9 @@ class MediaFormMapper implements FieldDefinitionFormMapperInterface, FieldValueF
                         [
                             'required' => $fieldDefinition->isRequired,
                             'label' => $label,
+                            'attr' => [
+                                'accept' => $acceptedFormat,
+                            ],
                         ]
                     )
                     ->addModelTransformer(new MediaValueTransformer($fieldType, $data->value, Value::class))
