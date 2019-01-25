@@ -51,9 +51,7 @@ class UDWBasedValueViewTransformer implements DataTransformerInterface
         }
 
         try {
-            return array_map(function ($id) {
-                return $this->locationService->loadLocation($id);
-            }, explode(self::DELIMITER, $value));
+            return array_map([$this->locationService, 'loadLocation'], explode(self::DELIMITER, $value));
         } catch (NotFoundException | UnauthorizedException $e) {
             throw new TransformationFailedException($e->getMessage(), $e->getCode(), $e);
         }
