@@ -8,48 +8,9 @@
  */
 namespace EzSystems\RepositoryForms\Limitation\DataTransformer;
 
-use Symfony\Component\Form\DataTransformerInterface;
-
 /**
- * DataTransformer for UDWBasedMapper.
- * Needed to display the form field correctly and transform it back to an appropriate value object.
+ * @deprecated since v2.5.0. Use \EzSystems\RepositoryForms\Limitation\DataTransformer\UDWBasedValueModelTransformer instead.
  */
-class UDWBasedValueTransformer implements DataTransformerInterface
+class UDWBasedValueTransformer extends UDWBasedValueModelTransformer
 {
-    public function transform($value)
-    {
-        if (!is_array($value)) {
-            return null;
-        }
-
-        $locations = [];
-        foreach ($value as $key => $path) {
-            $locations[] = $this->extractLocationIdFromPath($path);
-        }
-
-        return implode(',', $locations);
-    }
-
-    public function reverseTransform($value)
-    {
-        if (!is_string($value)) {
-            return null;
-        }
-
-        return explode(',', $value);
-    }
-
-    /**
-     * Extracts and returns an item id from a path, e.g. /1/2/58 => 58.
-     *
-     * @param string $path
-     *
-     * @return mixed
-     */
-    private function extractLocationIdFromPath($path)
-    {
-        $pathParts = explode('/', trim($path, '/'));
-
-        return array_pop($pathParts);
-    }
 }
