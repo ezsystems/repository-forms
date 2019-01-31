@@ -12,14 +12,12 @@ use EzSystems\RepositoryForms\Data\Content\FieldData;
 use EzSystems\RepositoryForms\Data\FieldDefinitionData;
 use EzSystems\RepositoryForms\FieldType\FieldDefinitionFormMapperInterface;
 use EzSystems\RepositoryForms\FieldType\FieldValueFormMapperInterface;
-use EzSystems\RepositoryForms\Form\DataTransformer\TranslatablePropertyTransformer;
+use EzSystems\RepositoryForms\Form\DataTransformer\MultilingualSelectionTransformer;
+use EzSystems\RepositoryForms\Form\EventListener\SelectionMultilingualOptionsDataListener;
 use EzSystems\RepositoryForms\Form\Type\FieldType\SelectionFieldType;
-use Symfony\Component\Form\DataTransformerInterface;
-use Symfony\Component\Form\Exception\TransformationFailedException;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -40,75 +38,52 @@ class SelectionFormMapper implements FieldDefinitionFormMapperInterface, FieldVa
         $isTranslation = $data->contentTypeData->languageCode !== $data->contentTypeData->mainLanguageCode;
         $options = $fieldDefinitionForm->getConfig()->getOptions();
         $languageCode = $options['languageCode'];
-        $mainLanguageCode = $options['mainLanguageCode'];
+        $isMultilingual = isset($data->fieldDefinition->fieldSettings['multilingualOptions']);
+        $optionFieldName = $isMultilingual ? 'multilingualOptions' : 'options';
 
-        $translatablePropertyTransformer = new TranslatablePropertyTransformer($options['languageCode']);
         $fieldDefinitionForm
             ->add('isMultiple', CheckboxType::class, [
                 'required' => false,
                 'property_path' => 'fieldSettings[isMultiple]',
                 'label' => 'field_definition.ezselection.is_multiple',
                 'disabled' => $isTranslation,
-            ])
-            ->add(
-                $fieldDefinitionForm->getConfig()->getFormFactory()->createBuilder()
-                ->create('options', CollectionType::class, [
-                    'entry_type' => TextType::class,
-                    'entry_options' => ['required' => false],
-                    'allow_add' => true,
-                    'allow_delete' => true,
-                    'delete_empty' => false,
-                    'prototype' => true,
-                    'prototype_name' => '__number__',
-                    'required' => false,
-                    'property_path' => 'fieldSettings[options]',
-                    'label' => 'field_definition.ezselection.options',
-                ])
+            ]);
+
+        $formBuilder = $fieldDefinitionForm->getConfig()->getFormFactory()->createBuilder();
+
+        $optionField = $formBuilder->create($optionFieldName, CollectionType::class, [
+            'entry_type' => TextType::class,
+            'entry_options' => ['required' => false],
+            'allow_add' => true,
+            'allow_delete' => true,
+            'delete_empty' => false,
+            'prototype' => true,
+            'prototype_name' => '__number__',
+            'required' => false,
+            'property_path' => 'fieldSettings[' . $optionFieldName . ']',
+            'label' => 'field_definition.ezselection.options',
+        ]);
+
+        if ($isMultilingual) {
+            $dataListener = new SelectionMultilingualOptionsDataListener($languageCode);
+            $dataTransformer = new MultilingualSelectionTransformer($languageCode);
+
+            $optionField
                 ->addEventListener(
                     FormEvents::PRE_SET_DATA,
-                    function (FormEvent $event) use ($data, $languageCode, $mainLanguageCode) {
+                    [$dataListener, 'setLanguageOptions'],
+                    10
+                )
+                ->addModelTransformer(
+                    $dataTransformer
+                );
+        }
 
-                        $stubData = [$languageCode => []];
-                        if (isset($data->fieldSettings['options'][$mainLanguageCode])) {
-                            $stubData = $data->fieldSettings['options'][$mainLanguageCode];
-                        }
-                        if (isset($data->fieldSettings['options'][$languageCode])) {
-                            $stubData = $data->fieldSettings['options'][$languageCode];
-                        }
-
-                        $event->setData($stubData);
-                }, 10)
-                ->addModelTransformer(new class($languageCode, $data) implements DataTransformerInterface {
-
-                    /** @var string */
-                    private $languageCode;
-
-                    /** @var \EzSystems\RepositoryForms\Data\FieldDefinitionData */
-                    private $data;
-
-                    public function __construct(string $languageCode, FieldDefinitionData $data)
-                    {
-                        $this->languageCode = $languageCode;
-                        $this->data = $data;
-                    }
-
-                    public function transform($value)
-                    {
-                        return $value;
-                    }
-
-                    public function reverseTransform($value)
-                    {
-                        if (!$value) {
-                            return null;
-                        }
-
-                        return array_merge($this->data->fieldSettings['options'], [$this->languageCode => $value]);
-                    }
-                })
+        $fieldDefinitionForm->add(
+            $optionField
                 ->setAutoInitialize(false)
                 ->getForm()
-            );
+        );
     }
 
     public function mapFieldValueForm(FormInterface $fieldForm, FieldData $data)
@@ -119,12 +94,12 @@ class SelectionFormMapper implements FieldDefinitionFormMapperInterface, FieldVa
 
         $choices = $fieldDefinition->fieldSettings['options'];
 
-        if (!empty($fieldDefinition->fieldSettings['options'][$fieldDefinition->mainLanguageCode])) {
-            $choices = $fieldDefinition->fieldSettings['options'][$fieldDefinition->mainLanguageCode];
+        if (!empty($fieldDefinition->fieldSettings['multilingualOptions'][$fieldDefinition->mainLanguageCode])) {
+            $choices = $fieldDefinition->fieldSettings['multilingualOptions'][$fieldDefinition->mainLanguageCode];
         }
 
-        if (!empty($fieldDefinition->fieldSettings['options'][$languageCode])) {
-            $choices = $fieldDefinition->fieldSettings['options'][$languageCode];
+        if (!empty($fieldDefinition->fieldSettings['multilingualOptions'][$languageCode])) {
+            $choices = $fieldDefinition->fieldSettings['multilingualOptions'][$languageCode];
         }
 
         $fieldForm

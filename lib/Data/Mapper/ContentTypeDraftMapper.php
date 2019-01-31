@@ -62,9 +62,15 @@ class ContentTypeDraftMapper implements FormDataMapperInterface
         foreach ($contentTypeDraft->fieldDefinitions as $fieldDef) {
             $names = $fieldDef->getNames();
             $descriptions = $fieldDef->getDescriptions();
+            $fieldSettings = $fieldDef->getFieldSettings();
+
             if ($baseLanguage && $language) {
                 $names[$language->languageCode] = $fieldDef->getName($baseLanguage->languageCode);
                 $descriptions[$language->languageCode] = $fieldDef->getDescription($baseLanguage->languageCode);
+
+                if (isset($fieldDef->fieldSettings['multilingualOptions'][$baseLanguage->languageCode])) {
+                    $fieldSettings['multilingualOptions'][$language->languageCode] = $fieldDef->fieldSettings['multilingualOptions'][$baseLanguage->languageCode];
+                }
             }
 
             $contentTypeData->addFieldDefinitionData(new FieldDefinitionData([
@@ -79,7 +85,7 @@ class ContentTypeDraftMapper implements FormDataMapperInterface
                 'isRequired' => $fieldDef->isRequired,
                 'isInfoCollector' => $fieldDef->isInfoCollector,
                 'validatorConfiguration' => $fieldDef->getValidatorConfiguration(),
-                'fieldSettings' => $fieldDef->getFieldSettings(),
+                'fieldSettings' => $fieldSettings,
                 'defaultValue' => $fieldDef->defaultValue,
                 'isSearchable' => $fieldDef->isSearchable,
             ]));
