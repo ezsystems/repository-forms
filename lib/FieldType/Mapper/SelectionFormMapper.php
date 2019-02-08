@@ -66,7 +66,7 @@ class SelectionFormMapper implements FieldDefinitionFormMapperInterface, FieldVa
 
         if ($isMultilingual) {
             $dataListener = new SelectionMultilingualOptionsDataListener($languageCode);
-            $dataTransformer = new MultilingualSelectionTransformer($languageCode);
+            $dataTransformer = new MultilingualSelectionTransformer($languageCode, $data);
 
             $optionField
                 ->addEventListener(
