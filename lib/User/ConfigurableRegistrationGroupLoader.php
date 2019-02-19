@@ -11,7 +11,7 @@ use EzSystems\EzPlatformUser\ConfigResolver\ConfigurableRegistrationGroupLoader 
 
 /**
  * Loads the registration user group from a configured, injected group ID.
- * @deprecated Deprecated in 1.5 and will be removed in 2.0. Please use \EzSystems\EzPlatformUser\ConfigResolver\ConfigurableRegistrationGroupLoader instead.
+ * @deprecated Deprecated in 2.5 and will be removed in 3.0. Please use \EzSystems\EzPlatformUser\ConfigResolver\ConfigurableRegistrationGroupLoader instead.
  */
 class ConfigurableRegistrationGroupLoader extends BaseConfigurableRegistrationGroupLoader
 {
