@@ -8,6 +8,7 @@
 namespace EzSystems\RepositoryForms\User;
 
 use EzSystems\RepositoryForms\ConfigResolver\ConfigurableSudoRepositoryLoader as BaseConfigurableSudoRepositoryLoader;
+
 /**
  * A repository data loader that uses the sudo() method.
  *

@@ -5,7 +5,7 @@
  */
 namespace EzSystems\RepositoryForms\User\View;
 
-use EzSystems\EzPlatformUser\View\UserRegisterConfirmView as BaseRegisterConfirmView;
+use EzSystems\EzPlatformUser\View\ForgotPassword\UserRegisterConfirmView as BaseRegisterConfirmView;
 
 /**
  * @deprecated Deprecated in 1.1 and will be removed in 2.0. Please use EzSystems\EzPlatformUser\View\UserRegisterConfirmView instead.

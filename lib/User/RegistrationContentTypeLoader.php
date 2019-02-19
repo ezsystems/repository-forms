@@ -11,7 +11,7 @@ use EzSystems\EzPlatformUser\ConfigResolver\RegistrationContentTypeLoader as Bas
 
 /**
  * Loads the content type used by user registration.
- * @deprecated Deprecated in 1.1 and will be removed in 2.0. Please use \EzSystems\EzPlatformUser\ConfigResolver\RegistrationContentTypeLoader instead.
+ * @deprecated Deprecated in 1.5 and will be removed in 2.0. Please use \EzSystems\EzPlatformUser\ConfigResolver\RegistrationContentTypeLoader instead.
  */
 interface RegistrationContentTypeLoader extends BaseRegistrationContentTypeLoader
 {

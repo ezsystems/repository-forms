@@ -10,7 +10,7 @@ namespace EzSystems\RepositoryFormsBundle\Controller;
 use EzSystems\EzPlatformUserBundle\Controller\UserRegisterController as BaseUserRegisterController;
 
 /**
- * @deprecated Deprecated in 1.1 and will be removed in 2.0. Please use \EzSystems\EzPlatformUserBundle\Controller\UserRegisterController instead.
+ * @deprecated Deprecated in 1.5 and will be removed in 2.0. Please use \EzSystems\EzPlatformUserBundle\Controller\UserRegisterController instead.
  */
 class UserRegisterController extends BaseUserRegisterController
 {

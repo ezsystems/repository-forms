@@ -11,7 +11,7 @@ use EzSystems\EzPlatformUser\Form\Processor\UserRegisterFormProcessor as BaseUse
 
 /**
  * Listens for and processes User register events.
- * @deprecated Deprecated in 1.1 and will be removed in 2.0. Please use \EzSystems\EzPlatformUser\Form\Processor\UserRegisterFormProcessor instead.
+ * @deprecated Deprecated in 1.5 and will be removed in 2.0. Please use \EzSystems\EzPlatformUser\Form\Processor\UserRegisterFormProcessor instead.
  */
 class UserRegisterFormProcessor extends BaseUserRegisterFormProcessor
 {

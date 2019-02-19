@@ -11,7 +11,7 @@ use EzSystems\EzPlatformUser\Form\Type\UserRegisterType as BaseUserRegisterType;
  * Form type for content edition (create/update).
  * Underlying data will be either \EzSystems\RepositoryForms\Data\Content\ContentCreateData or \EzSystems\RepositoryForms\Data\Content\ContentUpdateData
  * depending on the context (create or update).
- * @deprecated Deprecated in 1.1 and will be removed in 2.0. Please use \EzSystems\EzPlatformUser\Form\Type\UserRegisterType instead.
+ * @deprecated Deprecated in 1.5 and will be removed in 2.0. Please use \EzSystems\EzPlatformUser\Form\Type\UserRegisterType instead.
  */
 class UserRegisterType extends BaseUserRegisterType
 {
