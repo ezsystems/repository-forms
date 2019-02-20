@@ -94,12 +94,10 @@ class SelectionFormMapper implements FieldDefinitionFormMapperInterface, FieldVa
 
         $choices = $fieldDefinition->fieldSettings['options'];
 
-        if (!empty($fieldDefinition->fieldSettings['multilingualOptions'][$fieldDefinition->mainLanguageCode])) {
-            $choices = $fieldDefinition->fieldSettings['multilingualOptions'][$fieldDefinition->mainLanguageCode];
-        }
-
         if (!empty($fieldDefinition->fieldSettings['multilingualOptions'][$languageCode])) {
             $choices = $fieldDefinition->fieldSettings['multilingualOptions'][$languageCode];
+        } elseif (!empty($fieldDefinition->fieldSettings['multilingualOptions'][$fieldDefinition->mainLanguageCode])) {
+            $choices = $fieldDefinition->fieldSettings['multilingualOptions'][$fieldDefinition->mainLanguageCode];
         }
 
         $fieldForm
