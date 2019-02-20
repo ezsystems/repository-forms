@@ -16,6 +16,7 @@ use eZ\Publish\Core\FieldType\Value;
 use EzSystems\RepositoryForms\Data\ContentTypeData;
 use EzSystems\RepositoryForms\Data\FieldDefinitionData;
 use EzSystems\RepositoryForms\Data\Mapper\ContentTypeDraftMapper;
+use EzSystems\RepositoryForms\Event\FieldDefinitionMappingEvent;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
@@ -163,7 +164,30 @@ class ContentTypeDraftMapperTest extends TestCase
         ]);
         $expectedContentTypeData->addFieldDefinitionData($expectedFieldDefData2);
 
-        $eventDispatcher = $this->getMockBuilder(EventDispatcherInterface::class)->getMock();
-        self::assertEquals($expectedContentTypeData, (new ContentTypeDraftMapper($eventDispatcher))->mapToFormData($contentTypeDraft));
+        $eventDispatcherMock = $this->getMockBuilder(EventDispatcherInterface::class)->getMock();
+        $eventDispatcherMock
+            ->method('dispatch')
+            ->with(FieldDefinitionMappingEvent::NAME, $this->isInstanceOf(FieldDefinitionMappingEvent::class))
+            ->willReturnCallback(function (string $eventName, FieldDefinitionMappingEvent $event) {
+                $fieldDefinitionData = $event->getFieldDefinitionData();
+                $fieldDefinition = $event->getFieldDefinition();
+
+                $fieldDefinitionData->identifier = $fieldDefinition->identifier;
+                $fieldDefinitionData->names = $fieldDefinition->getNames();
+                $fieldDefinitionData->descriptions = $fieldDefinition->getDescriptions();
+                $fieldDefinitionData->fieldGroup = $fieldDefinition->fieldGroup;
+                $fieldDefinitionData->position = $fieldDefinition->position;
+                $fieldDefinitionData->isTranslatable = $fieldDefinition->isTranslatable;
+                $fieldDefinitionData->isRequired = $fieldDefinition->isRequired;
+                $fieldDefinitionData->isInfoCollector = $fieldDefinition->isInfoCollector;
+                $fieldDefinitionData->validatorConfiguration = $fieldDefinition->getValidatorConfiguration();
+                $fieldDefinitionData->fieldSettings = $fieldDefinition->getFieldSettings();
+                $fieldDefinitionData->defaultValue = $fieldDefinition->defaultValue;
+                $fieldDefinitionData->isSearchable = $fieldDefinition->isSearchable;
+
+                $event->setFieldDefinitionData($fieldDefinitionData);
+            });
+
+        self::assertEquals($expectedContentTypeData, (new ContentTypeDraftMapper($eventDispatcherMock))->mapToFormData($contentTypeDraft));
     }
 }

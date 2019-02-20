@@ -5,6 +5,7 @@ imports:
     - {resource: fieldtypes.yml}
     - {resource: form_types.yml}
     - {resource: views.yml}
+    - {resource: events.yml}
 
 parameters:
     ezrepoforms.field_type_form_mapper.dispatcher.class: EzSystems\RepositoryForms\FieldType\FieldTypeFormMapperDispatcher
@@ -357,11 +358,6 @@ services:
 
     ezrepoforms.config_resolver.max_upload_size:
         alias: EzSystems\RepositoryForms\ConfigResolver\MaxUploadSize
-
-    EzSystems\RepositoryForms\EventListener\EzSelectionMultilingualOptions:
-        autowire: true
-        autoconfigure: true
-        public: false
 
     EzSystems\RepositoryForms\Data\Mapper\ContentTypeDraftMapper:
         autowire: true
