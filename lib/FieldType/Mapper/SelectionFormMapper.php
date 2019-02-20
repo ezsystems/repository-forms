@@ -32,6 +32,9 @@ class SelectionFormMapper implements FieldDefinitionFormMapperInterface, FieldVa
      *   This can be improved using a template override with javascript code.
      * - The prototype_name option is for the empty field which is used for new items. If not
      *   using javascript, it must be unique.
+     * - Data for 'options' field can now be supplied either by `options` property_path or by
+     *   `multilingualOptions` if those are provided.
+     *   `multilingualOptions` is an array with keys equal to used languageCodes.
      */
     public function mapFieldDefinitionForm(FormInterface $fieldDefinitionForm, FieldDefinitionData $data)
     {
@@ -39,7 +42,7 @@ class SelectionFormMapper implements FieldDefinitionFormMapperInterface, FieldVa
         $options = $fieldDefinitionForm->getConfig()->getOptions();
         $languageCode = $options['languageCode'];
         $isMultilingual = isset($data->fieldDefinition->fieldSettings['multilingualOptions']);
-        $optionFieldName = $isMultilingual ? 'multilingualOptions' : 'options';
+        $dataPropertyPathName = $isMultilingual ? 'multilingualOptions' : 'options';
 
         $fieldDefinitionForm
             ->add('isMultiple', CheckboxType::class, [
@@ -51,7 +54,7 @@ class SelectionFormMapper implements FieldDefinitionFormMapperInterface, FieldVa
 
         $formBuilder = $fieldDefinitionForm->getConfig()->getFormFactory()->createBuilder();
 
-        $optionField = $formBuilder->create($optionFieldName, CollectionType::class, [
+        $optionField = $formBuilder->create('options', CollectionType::class, [
             'entry_type' => TextType::class,
             'entry_options' => ['required' => false],
             'allow_add' => true,
@@ -60,7 +63,7 @@ class SelectionFormMapper implements FieldDefinitionFormMapperInterface, FieldVa
             'prototype' => true,
             'prototype_name' => '__number__',
             'required' => false,
-            'property_path' => 'fieldSettings[' . $optionFieldName . ']',
+            'property_path' => 'fieldSettings[' . $dataPropertyPathName . ']',
             'label' => 'field_definition.ezselection.options',
         ]);
 
