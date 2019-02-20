@@ -357,3 +357,13 @@ services:
 
     ezrepoforms.config_resolver.max_upload_size:
         alias: EzSystems\RepositoryForms\ConfigResolver\MaxUploadSize
+
+    EzSystems\RepositoryForms\EventListener\EzSelectionMultilingualOptions:
+        autowire: true
+        autoconfigure: true
+        public: false
+
+    EzSystems\RepositoryForms\Data\Mapper\ContentTypeDraftMapper:
+        autowire: true
+        autoconfigure: true
+        public: false

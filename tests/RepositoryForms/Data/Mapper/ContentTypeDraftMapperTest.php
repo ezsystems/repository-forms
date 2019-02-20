@@ -17,6 +17,7 @@ use EzSystems\RepositoryForms\Data\ContentTypeData;
 use EzSystems\RepositoryForms\Data\FieldDefinitionData;
 use EzSystems\RepositoryForms\Data\Mapper\ContentTypeDraftMapper;
 use PHPUnit\Framework\TestCase;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 class ContentTypeDraftMapperTest extends TestCase
 {
@@ -162,6 +163,7 @@ class ContentTypeDraftMapperTest extends TestCase
         ]);
         $expectedContentTypeData->addFieldDefinitionData($expectedFieldDefData2);
 
-        self::assertEquals($expectedContentTypeData, (new ContentTypeDraftMapper())->mapToFormData($contentTypeDraft));
+        $eventDispatcher = $this->getMockBuilder(EventDispatcherInterface::class)->getMock();
+        self::assertEquals($expectedContentTypeData, (new ContentTypeDraftMapper($eventDispatcher))->mapToFormData($contentTypeDraft));
     }
 }

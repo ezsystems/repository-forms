@@ -12,10 +12,24 @@ use eZ\Publish\API\Repository\Values\Content\Language;
 use eZ\Publish\API\Repository\Values\ValueObject;
 use EzSystems\RepositoryForms\Data\ContentTypeData;
 use EzSystems\RepositoryForms\Data\FieldDefinitionData;
+use EzSystems\RepositoryForms\Event\FieldDefinitionSettingsTranslateEvent;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class ContentTypeDraftMapper implements FormDataMapperInterface
 {
+    /** @var \Symfony\Component\EventDispatcher\EventDispatcherInterface */
+    private $eventDispatcher;
+
+    /**
+     * @param \Symfony\Component\EventDispatcher\EventDispatcherInterface $eventDispatcher
+     */
+    public function __construct(
+        EventDispatcherInterface $eventDispatcher
+    ) {
+        $this->eventDispatcher = $eventDispatcher;
+    }
+
     /**
      * Maps a ValueObject from eZ content repository to a data usable as underlying form data (e.g. create/update struct).
      *
@@ -68,9 +82,19 @@ class ContentTypeDraftMapper implements FormDataMapperInterface
                 $names[$language->languageCode] = $fieldDef->getName($baseLanguage->languageCode);
                 $descriptions[$language->languageCode] = $fieldDef->getDescription($baseLanguage->languageCode);
 
-                if (isset($fieldDef->fieldSettings['multilingualOptions'][$baseLanguage->languageCode])) {
-                    $fieldSettings['multilingualOptions'][$language->languageCode] = $fieldDef->fieldSettings['multilingualOptions'][$baseLanguage->languageCode];
-                }
+                $event = new FieldDefinitionSettingsTranslateEvent(
+                    $fieldDef->fieldTypeIdentifier,
+                    $fieldSettings,
+                    $baseLanguage->languageCode,
+                    $language->languageCode
+                );
+
+                $this->eventDispatcher->dispatch(
+                    FieldDefinitionSettingsTranslateEvent::NAME,
+                    $event
+                );
+
+                $fieldSettings = $event->getFieldSettings();
             }
 
             $contentTypeData->addFieldDefinitionData(new FieldDefinitionData([
