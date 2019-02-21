@@ -7,7 +7,10 @@
  */
 namespace EzSystems\RepositoryForms\User;
 
-use EzSystems\RepositoryForms\ConfigResolver\ConfigurableSudoRepositoryLoader as BaseConfigurableSudoRepositoryLoader;
+use Closure;
+use eZ\Publish\API\Repository\Repository;
+use OutOfBoundsException;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
  * A repository data loader that uses the sudo() method.
@@ -19,8 +22,58 @@ use EzSystems\RepositoryForms\ConfigResolver\ConfigurableSudoRepositoryLoader as
  * The repository can be accessed using getRepository().
  *
  * ** Use with care**.
- * @deprecated Deprecated in 1.1 and will be removed in 2.0. Please use \EzSystems\RepositoryForms\ConfigResolver\ConfigurableSudoRepositoryLoader instead.
+ * @deprecated Deprecated in 2.5 and will be removed in 3.0. Please use \EzSystems\RepositoryForms\ConfigResolver\ConfigurableSudoRepositoryLoader instead.
  */
-abstract class ConfigurableSudoRepositoryLoader extends BaseConfigurableSudoRepositoryLoader
+abstract class ConfigurableSudoRepositoryLoader
 {
+    /**
+     * @var Repository
+     */
+    private $repository;
+
+    /**
+     * @var array
+     */
+    private $params = [];
+
+    public function __construct(Repository $repository, $params = null)
+    {
+        $this->repository = $repository;
+        $this->params = $params;
+    }
+
+    public function setParam($name, $value)
+    {
+        $this->params[$name] = $value;
+
+        return $this;
+    }
+
+    protected function getParam($name)
+    {
+        if (!isset($this->params[$name])) {
+            throw new OutOfBoundsException("No such param '$name'");
+        }
+
+        return $this->params[$name];
+    }
+
+    /**
+     * @return Repository
+     */
+    protected function getRepository()
+    {
+        return $this->repository;
+    }
+
+    protected function sudo(Closure $callback)
+    {
+        $resolver = new OptionsResolver();
+        $this->configureOptions($resolver);
+        $this->params = $resolver->resolve($this->params);
+
+        return $this->repository->sudo($callback);
+    }
+
+    abstract protected function configureOptions(OptionsResolver $optionsResolver);
 }

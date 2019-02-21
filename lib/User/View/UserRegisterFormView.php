@@ -5,10 +5,10 @@
  */
 namespace EzSystems\RepositoryForms\User\View;
 
-use EzSystems\EzPlatformUser\View\ForgotPassword\UserRegisterFormView as BaseUserRegisterFormView;
+use EzSystems\EzPlatformUser\View\Register\FormView as BaseUserRegisterFormView;
 
 /**
- * @deprecated Deprecated in 1.1 and will be removed in 2.0. Please use EzSystems\EzPlatformUser\View\UserRegisterFormView instead.
+ * @deprecated Deprecated in 2.5 and will be removed in 3.0. Please use EzSystems\EzPlatformUser\View\UserRegisterFormView instead.
  */
 class UserRegisterFormView extends BaseUserRegisterFormView
 {

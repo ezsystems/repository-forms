@@ -7,11 +7,43 @@
  */
 namespace EzSystems\RepositoryFormsBundle\Controller;
 
+use eZ\Bundle\EzPublishCoreBundle\Controller;
 use EzSystems\EzPlatformUserBundle\Controller\UserRegisterController as BaseUserRegisterController;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @deprecated Deprecated in 2.5 and will be removed in 3.0. Please use \EzSystems\EzPlatformUserBundle\Controller\UserRegisterController instead.
  */
-class UserRegisterController extends BaseUserRegisterController
+class UserRegisterController extends Controller
 {
+    /** @var \EzSystems\EzPlatformUserBundle\Controller\UserRegisterController */
+    private $userRegisterController;
+
+    /**
+     * @param \EzSystems\EzPlatformUserBundle\Controller\UserRegisterController $userRegisterController
+     */
+    public function __construct(BaseUserRegisterController $userRegisterController)
+    {
+        $this->userRegisterController = $userRegisterController;
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return \EzSystems\EzPlatformUser\View\Register\FormView|\Symfony\Component\HttpFoundation\Response|null
+     */
+    public function registerAction(Request $request)
+    {
+        return $this->userRegisterController->registerAction($request);
+    }
+
+    /**
+     * @return \EzSystems\EzPlatformUser\View\Register\ConfirmView
+     *
+     * @throws \eZ\Publish\Core\Base\Exceptions\InvalidArgumentType
+     */
+    public function registerConfirmAction()
+    {
+        return $this->userRegisterController->registerConfirmAction();
+    }
 }
