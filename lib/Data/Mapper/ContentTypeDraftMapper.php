@@ -12,10 +12,24 @@ use eZ\Publish\API\Repository\Values\Content\Language;
 use eZ\Publish\API\Repository\Values\ValueObject;
 use EzSystems\RepositoryForms\Data\ContentTypeData;
 use EzSystems\RepositoryForms\Data\FieldDefinitionData;
+use EzSystems\RepositoryForms\Event\FieldDefinitionMappingEvent;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class ContentTypeDraftMapper implements FormDataMapperInterface
 {
+    /** @var \Symfony\Component\EventDispatcher\EventDispatcherInterface */
+    private $eventDispatcher;
+
+    /**
+     * @param \Symfony\Component\EventDispatcher\EventDispatcherInterface $eventDispatcher
+     */
+    public function __construct(
+        EventDispatcherInterface $eventDispatcher
+    ) {
+        $this->eventDispatcher = $eventDispatcher;
+    }
+
     /**
      * Maps a ValueObject from eZ content repository to a data usable as underlying form data (e.g. create/update struct).
      *
@@ -60,29 +74,23 @@ class ContentTypeDraftMapper implements FormDataMapperInterface
         }
 
         foreach ($contentTypeDraft->fieldDefinitions as $fieldDef) {
-            $names = $fieldDef->getNames();
-            $descriptions = $fieldDef->getDescriptions();
-            if ($baseLanguage && $language) {
-                $names[$language->languageCode] = $fieldDef->getName($baseLanguage->languageCode);
-                $descriptions[$language->languageCode] = $fieldDef->getDescription($baseLanguage->languageCode);
-            }
-
-            $contentTypeData->addFieldDefinitionData(new FieldDefinitionData([
+            $fieldDefinitionData = new FieldDefinitionData([
                 'fieldDefinition' => $fieldDef,
                 'contentTypeData' => $contentTypeData,
-                'identifier' => $fieldDef->identifier,
-                'names' => $names,
-                'descriptions' => $descriptions,
-                'fieldGroup' => $fieldDef->fieldGroup,
-                'position' => $fieldDef->position,
-                'isTranslatable' => $fieldDef->isTranslatable,
-                'isRequired' => $fieldDef->isRequired,
-                'isInfoCollector' => $fieldDef->isInfoCollector,
-                'validatorConfiguration' => $fieldDef->getValidatorConfiguration(),
-                'fieldSettings' => $fieldDef->getFieldSettings(),
-                'defaultValue' => $fieldDef->defaultValue,
-                'isSearchable' => $fieldDef->isSearchable,
-            ]));
+            ]);
+
+            $event = new FieldDefinitionMappingEvent(
+                $fieldDefinitionData,
+                $baseLanguage,
+                $language
+            );
+
+            $this->eventDispatcher->dispatch(
+                FieldDefinitionMappingEvent::NAME,
+                $event
+            );
+
+            $contentTypeData->addFieldDefinitionData($event->getFieldDefinitionData());
         }
         $contentTypeData->sortFieldDefinitions();
 
