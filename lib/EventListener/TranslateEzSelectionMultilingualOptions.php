@@ -18,7 +18,10 @@ class TranslateEzSelectionMultilingualOptions implements EventSubscriberInterfac
         return [FieldDefinitionMappingEvent::NAME => ['setMultilingualOptions', 30]];
     }
 
-    public function setMultilingualOptions(FieldDefinitionMappingEvent $event)
+    /**
+     * @param \EzSystems\RepositoryForms\Event\FieldDefinitionMappingEvent $event
+     */
+    public function setMultilingualOptions(FieldDefinitionMappingEvent $event): void
     {
         $fieldDefinition = $event->getFieldDefinitionData()->fieldDefinition;
         if ('ezselection' !== $fieldDefinition->fieldTypeIdentifier) {

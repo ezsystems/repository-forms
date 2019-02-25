@@ -28,12 +28,7 @@ class SelectionMultilingualOptionsDataListener
      */
     public function setLanguageOptions(FormEvent $event): void
     {
-        $languageOptions = [];
         $data = $event->getData();
-        if (isset($data[$this->languageCode])) {
-            $languageOptions = $data[$this->languageCode];
-        }
-
-        $event->setData($languageOptions);
+        $event->setData($data[$this->languageCode] ?? []);
     }
 }

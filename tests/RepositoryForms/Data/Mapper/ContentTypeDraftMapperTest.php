@@ -164,7 +164,7 @@ class ContentTypeDraftMapperTest extends TestCase
         ]);
         $expectedContentTypeData->addFieldDefinitionData($expectedFieldDefData2);
 
-        $eventDispatcherMock = $this->getMockBuilder(EventDispatcherInterface::class)->getMock();
+        $eventDispatcherMock = $this->createMock(EventDispatcherInterface::class);
         $eventDispatcherMock
             ->method('dispatch')
             ->with(FieldDefinitionMappingEvent::NAME, $this->isInstanceOf(FieldDefinitionMappingEvent::class))

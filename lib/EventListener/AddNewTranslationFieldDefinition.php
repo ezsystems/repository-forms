@@ -18,7 +18,10 @@ class AddNewTranslationFieldDefinition implements EventSubscriberInterface
         return [FieldDefinitionMappingEvent::NAME => ['addNewTranslation', 40]];
     }
 
-    public function addNewTranslation(FieldDefinitionMappingEvent $event)
+    /**
+     * @param \EzSystems\RepositoryForms\Event\FieldDefinitionMappingEvent $event
+     */
+    public function addNewTranslation(FieldDefinitionMappingEvent $event): void
     {
         $baseLanguage = $event->getBaseLanguage();
         $targetLanguage = $event->getTargetLanguage();
