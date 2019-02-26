@@ -11,8 +11,8 @@ namespace EzSystems\RepositoryForms\FieldType\Mapper;
 use EzSystems\RepositoryForms\Data\Content\FieldData;
 use EzSystems\RepositoryForms\Data\FieldDefinitionData;
 use EzSystems\RepositoryForms\Form\Type\FieldType\RelationListFieldType;
+use EzSystems\RepositoryForms\Form\Type\LocationType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -22,7 +22,7 @@ class RelationListFormMapper extends AbstractRelationFormMapper
     public function mapFieldDefinitionForm(FormInterface $fieldDefinitionForm, FieldDefinitionData $data)
     {
         $fieldDefinitionForm
-            ->add('selectionDefaultLocation', HiddenType::class, [
+            ->add('selectionDefaultLocation', LocationType::class, [
                 'required' => false,
                 'property_path' => 'fieldSettings[selectionDefaultLocation]',
                 'label' => 'field_definition.ezobjectrelationlist.selection_default_location',
