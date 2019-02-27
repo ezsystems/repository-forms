@@ -7,6 +7,7 @@ namespace EzSystems\RepositoryForms\Form\Type\FieldType;
 
 use eZ\Publish\API\Repository\ContentService;
 use eZ\Publish\API\Repository\ContentTypeService;
+use eZ\Publish\API\Repository\Values\Content\Location;
 use eZ\Publish\Core\FieldType\Relation\Value;
 use EzSystems\RepositoryForms\FieldType\DataTransformer\RelationValueTransformer;
 use Symfony\Component\Form\AbstractType;
@@ -60,6 +61,7 @@ class RelationFieldType extends AbstractType
     public function finishView(FormView $view, FormInterface $form, array $options)
     {
         $view->vars['relations'] = [];
+        $view->vars['default_location'] = $options['default_location'];
 
         /** @var Value $data */
         $data = $form->getData();
@@ -84,6 +86,9 @@ class RelationFieldType extends AbstractType
                 'min' => 1,
                 'step' => 1,
             ],
+            'default_location' => null,
         ]);
+
+        $resolver->setAllowedTypes('default_location', ['null', Location::class]);
     }
 }
