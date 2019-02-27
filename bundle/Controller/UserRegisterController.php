@@ -31,6 +31,9 @@ class UserRegisterController extends Controller
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return \EzSystems\EzPlatformUser\View\Register\FormView|\Symfony\Component\HttpFoundation\Response|null
+     *
+     * @throws \eZ\Publish\Core\Base\Exceptions\InvalidArgumentType
+     * @throws \Symfony\Component\HttpKernel\Exception\UnauthorizedHttpException
      */
     public function registerAction(Request $request)
     {
