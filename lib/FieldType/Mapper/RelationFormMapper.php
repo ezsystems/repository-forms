@@ -50,6 +50,9 @@ class RelationFormMapper extends AbstractRelationFormMapper
                     ->create('value', RelationFieldType::class, [
                         'required' => $fieldDefinition->isRequired,
                         'label' => $label,
+                        'default_location' => $this->loadDefaultLocationForSelection(
+                            $fieldDefinition->getFieldSettings()['selectionRoot']
+                        ),
                     ])
                     ->setAutoInitialize(false)
                     ->getForm()
