@@ -7,6 +7,7 @@ namespace EzSystems\RepositoryForms\Form\Type\FieldType;
 
 use eZ\Publish\API\Repository\ContentService;
 use eZ\Publish\API\Repository\ContentTypeService;
+use eZ\Publish\API\Repository\Values\Content\Location;
 use eZ\Publish\Core\FieldType\RelationList\Value;
 use EzSystems\RepositoryForms\FieldType\DataTransformer\RelationListValueTransformer;
 use Symfony\Component\Form\AbstractType;
@@ -14,6 +15,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
  * Form Type representing ezobjectrelationlist field type.
@@ -59,6 +61,7 @@ class RelationListFieldType extends AbstractType
     public function finishView(FormView $view, FormInterface $form, array $options)
     {
         $view->vars['relations'] = [];
+        $view->vars['default_location'] = $options['default_location'];
 
         /** @var Value $data */
         $data = $form->getData();
@@ -76,5 +79,17 @@ class RelationListFieldType extends AbstractType
                 'contentType' => $contentType,
             ];
         }
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function configureOptions(OptionsResolver $resolver): void
+    {
+        $resolver->setDefaults([
+            'default_location' => null,
+        ]);
+
+        $resolver->setAllowedTypes('default_location', ['null', Location::class]);
     }
 }
