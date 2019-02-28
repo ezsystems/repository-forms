@@ -41,7 +41,6 @@ parameters:
     ezrepoforms.form_processor.content.class: EzSystems\RepositoryForms\Form\Processor\ContentFormProcessor
     ezrepoforms.form_processor.user_create.class: EzSystems\RepositoryForms\Form\Processor\User\UserCreateFormProcessor
     ezrepoforms.form_processor.user_update.class: EzSystems\RepositoryForms\Form\Processor\User\UserUpdateFormProcessor
-    ezrepoforms.form_processor.user_register.class: EzSystems\RepositoryForms\Form\Processor\User\UserRegisterFormProcessor
     ezrepoforms.form_processor.user_cancel.class: EzSystems\RepositoryForms\Form\Processor\User\UserCancelFormProcessor
 
     ezrepoforms.controller.content_edit.class: EzSystems\RepositoryFormsBundle\Controller\ContentEditController
@@ -240,15 +239,6 @@ services:
         tags:
             - { name: kernel.event_subscriber }
 
-    ezrepoforms.form_processor.user_register:
-        class: "%ezrepoforms.form_processor.user_register.class%"
-        arguments:
-            - '@ezpublish.api.repository'
-            - '@ezpublish.api.service.user'
-            - '@router'
-        tags:
-            - { name: kernel.event_subscriber }
-
     ezrepoforms.form_processor.user:
         class: "%ezrepoforms.form_processor.user_cancel.class%"
         arguments:
@@ -288,35 +278,30 @@ services:
 
     ezrepoforms.controller.user_register:
         class: "%ezrepoforms.controller.user_register.class%"
-        arguments:
-            - "@ezrepoforms.form_data_mapper.user_register"
-            - "@ezrepoforms.action_dispatcher.user"
-        parent: ezpublish.controller.base
+        autowire: true
+        deprecated: '"%service_id%" is deprecated since 2.5 and will be removed in 3.0. Please use \EzSystems\EzPlatformUserBundle\Controller\UserRegisterController instead.'
 
     ez_content_edit:
         alias: ezrepoforms.controller.content_edit
 
     ezrepoforms.user_register.registration_group_loader.configurable:
         class: "%ezrepoforms.user_register.registration_group_loader.configurable.class%"
-        arguments:
-            - "@ezpublish.api.repository"
+        deprecated: '"%service_id%" is deprecated since 2.5 and will be removed in 3.0. Please use \EzSystems\EzPlatformUser\ConfigResolver\ConfigurableRegistrationGroupLoader instead.'
+        autowire: true
         calls:
             - [setParam, ["groupId", "$user_registration.group_id$"]]
 
     ezrepoforms.user_register.registration_content_type_loader.configurable:
         class: "%ezrepoforms.user_register.registration_content_type_loader.configurable.class%"
-        arguments:
-            - "@ezpublish.api.repository"
+        deprecated: '"%service_id%" is deprecated since and will be removed in 3.0. Please use \EzSystems\EzPlatformUser\ConfigResolver\ConfigurableRegistrationContentTypeLoader instead.'
+        autowire: true
         calls:
             - [setParam, ["contentTypeIdentifier", "%ezrepoforms.user_content_type_identifier%"]]
 
     ezrepoforms.form_data_mapper.user_register:
         class: "%ezrepoforms.form_data_mapper.user_register.class%"
-        arguments:
-            - "@ezrepoforms.user_register.registration_content_type_loader.configurable"
-            - "@ezrepoforms.user_register.registration_group_loader.configurable"
-        calls:
-            - [setParam, ["language", "@=service('ezpublish.config.resolver').getParameter('languages', null, null)[0]"]]
+        deprecated: '"%service_id%" is deprecated since and will be removed in 3.0. Please use EzSystems\EzPlatformUser\Form\DataMapper\UserRegisterMapper instead.'
+        autowire: true
 
     ezrepoforms.view_templates_listener:
         class: "%ezrepoforms.view_templates_listener.class%"
@@ -325,8 +310,6 @@ services:
         calls:
             - [setViewTemplate, ['EzSystems\RepositoryForms\User\View\UserCreateView', "$user_edit.templates.create$"]]
             - [setViewTemplate, ['EzSystems\RepositoryForms\User\View\UserUpdateView', "$user_edit.templates.update$"]]
-            - [setViewTemplate, ['EzSystems\RepositoryForms\User\View\UserRegisterFormView', "$user_registration.templates.form$"]]
-            - [setViewTemplate, ['EzSystems\RepositoryForms\User\View\UserRegisterConfirmView', "$user_registration.templates.confirmation$"]]
             - [setViewTemplate, ['EzSystems\RepositoryForms\Content\View\ContentCreateDraftView', "$content_edit.templates.create_draft$"]]
             - [setPagelayout, ["$pagelayout$"]]
 

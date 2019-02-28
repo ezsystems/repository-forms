@@ -1,8 +1,0 @@
-{% extends noLayout is defined and noLayout == true ? viewbaseLayout : pagelayout %}
-
-{% block content %}
-    <h1>Your account has been created</h1>
-    <p class="user-register-confirmation-message">
-        Thank you for registering an account. You can now <a href="{{ path('login') }}">login</a>.
-    </p>
-{% endblock %}

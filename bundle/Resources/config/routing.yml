@@ -26,16 +26,6 @@ ez_content_draft_create:
     options:
         expose: true
 
-ez_user_register:
-    path: /register
-    defaults:
-        _controller: "ezrepoforms.controller.user_register:registerAction"
-
-ez_user_register_confirmation:
-    path: /register-confirm
-    defaults:
-        _controller: "ezrepoforms.controller.user_register:registerConfirmAction"
-
 ez_user_create:
     path: /user/create/{contentTypeIdentifier}/{language}/{parentLocationId}
     defaults:

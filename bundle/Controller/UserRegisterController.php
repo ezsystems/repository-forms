@@ -8,73 +8,45 @@
 namespace EzSystems\RepositoryFormsBundle\Controller;
 
 use eZ\Bundle\EzPublishCoreBundle\Controller;
-use eZ\Publish\Core\MVC\Symfony\Security\Authorization\Attribute;
-use EzSystems\RepositoryForms\Data\Mapper\UserRegisterMapper;
-use EzSystems\RepositoryForms\Form\ActionDispatcher\ActionDispatcherInterface;
-use EzSystems\RepositoryForms\Form\Type\User\UserRegisterType;
-use EzSystems\RepositoryForms\User\View\UserRegisterConfirmView;
-use EzSystems\RepositoryForms\User\View\UserRegisterFormView;
+use EzSystems\EzPlatformUserBundle\Controller\UserRegisterController as BaseUserRegisterController;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpKernel\Exception\UnauthorizedHttpException;
 
+/**
+ * @deprecated Deprecated in 2.5 and will be removed in 3.0. Please use \EzSystems\EzPlatformUserBundle\Controller\UserRegisterController instead.
+ */
 class UserRegisterController extends Controller
 {
-    /**
-     * @var UserRegisterMapper
-     */
-    private $userRegisterMapper;
+    /** @var \EzSystems\EzPlatformUserBundle\Controller\UserRegisterController */
+    private $userRegisterController;
 
     /**
-     * @var ActionDispatcherInterface
+     * @param \EzSystems\EzPlatformUserBundle\Controller\UserRegisterController $userRegisterController
      */
-    private $userActionDispatcher;
-
-    public function __construct(
-        UserRegisterMapper $userRegisterMapper,
-        ActionDispatcherInterface $userActionDispatcher
-    ) {
-        $this->userRegisterMapper = $userRegisterMapper;
-        $this->userActionDispatcher = $userActionDispatcher;
+    public function __construct(BaseUserRegisterController $userRegisterController)
+    {
+        $this->userRegisterController = $userRegisterController;
     }
 
     /**
-     * Displays and processes a user registration form.
+     * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @param Request $request
+     * @return \EzSystems\EzPlatformUser\View\Register\FormView|\Symfony\Component\HttpFoundation\Response|null
      *
-     * @return UserRegisterFormView|Response
-     *
-     * @throws \Exception if the current user isn't allowed to register an account
+     * @throws \eZ\Publish\Core\Base\Exceptions\InvalidArgumentType
+     * @throws \Symfony\Component\HttpKernel\Exception\UnauthorizedHttpException
      */
     public function registerAction(Request $request)
     {
-        if (!$this->isGranted(new Attribute('user', 'register'))) {
-            throw new UnauthorizedHttpException('You are not allowed to register a new account');
-        }
-
-        $data = $this->userRegisterMapper->mapToFormData();
-        $language = $data->mainLanguageCode;
-        $form = $this->createForm(
-            UserRegisterType::class,
-            $data,
-            ['languageCode' => $language, 'mainLanguageCode' => $language]
-        );
-
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid() && null !== $form->getClickedButton()) {
-            $this->userActionDispatcher->dispatchFormAction($form, $data, $form->getClickedButton()->getName());
-            if ($response = $this->userActionDispatcher->getResponse()) {
-                return $response;
-            }
-        }
-
-        return new UserRegisterFormView(null, ['form' => $form->createView()]);
+        return $this->userRegisterController->registerAction($request);
     }
 
+    /**
+     * @return \EzSystems\EzPlatformUser\View\Register\ConfirmView
+     *
+     * @throws \eZ\Publish\Core\Base\Exceptions\InvalidArgumentType
+     */
     public function registerConfirmAction()
     {
-        return new UserRegisterConfirmView();
+        return $this->userRegisterController->registerConfirmAction();
     }
 }

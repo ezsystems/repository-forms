@@ -1,7 +1,4 @@
 parameters:
-    ezsettings.default.user_registration.group_id: 11
-    ezsettings.default.user_registration.templates.form: "EzSystemsRepositoryFormsBundle:Content:content_edit.html.twig"
-    ezsettings.default.user_registration.templates.confirmation: "EzSystemsRepositoryFormsBundle:User:register_confirmation.html.twig"
     ezsettings.default.content_edit.templates.edit: "EzSystemsRepositoryFormsBundle:Content:content_edit.html.twig"
     ezsettings.default.content_edit.templates.create: "EzSystemsRepositoryFormsBundle:Content:content_edit.html.twig"
     ezsettings.default.content_edit.templates.create_draft: "EzSystemsRepositoryFormsBundle:Content:content_create_draft.html.twig"

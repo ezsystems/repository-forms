@@ -7,17 +7,12 @@
  */
 namespace EzSystems\RepositoryForms\User;
 
-use eZ\Publish\API\Repository\Values\User\UserGroup;
+use EzSystems\EzPlatformUser\ConfigResolver\RegistrationGroupLoader as BaseRegistrationGroupLoader;
 
 /**
  * Used to load a user group during registration.
+ * @deprecated Deprecated in 2.5 and will be removed in 3.0. Please use \EzSystems\EzPlatformUser\ConfigResolver\RegistrationGroupLoader instead.
  */
-interface RegistrationGroupLoader
+interface RegistrationGroupLoader extends BaseRegistrationGroupLoader
 {
-    /**
-     * Loads a parent group.
-     *
-     * @return UserGroup
-     */
-    public function loadGroup();
 }

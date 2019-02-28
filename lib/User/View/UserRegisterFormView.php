@@ -5,8 +5,11 @@
  */
 namespace EzSystems\RepositoryForms\User\View;
 
-use eZ\Publish\Core\MVC\Symfony\View\BaseView;
+use EzSystems\EzPlatformUser\View\Register\FormView as BaseUserRegisterFormView;
 
-class UserRegisterFormView extends BaseView
+/**
+ * @deprecated Deprecated in 2.5 and will be removed in 3.0. Please use EzSystems\EzPlatformUser\View\UserRegisterFormView instead.
+ */
+class UserRegisterFormView extends BaseUserRegisterFormView
 {
 }

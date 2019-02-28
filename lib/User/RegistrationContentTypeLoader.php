@@ -7,17 +7,12 @@
  */
 namespace EzSystems\RepositoryForms\User;
 
-use eZ\Publish\API\Repository\Values\ContentType\ContentType;
+use EzSystems\EzPlatformUser\ConfigResolver\RegistrationContentTypeLoader as BaseRegistrationContentTypeLoader;
 
 /**
  * Loads the content type used by user registration.
+ * @deprecated Deprecated in 2.5 and will be removed in 3.0. Please use \EzSystems\EzPlatformUser\ConfigResolver\RegistrationContentTypeLoader instead.
  */
-interface RegistrationContentTypeLoader
+interface RegistrationContentTypeLoader extends BaseRegistrationContentTypeLoader
 {
-    /**
-     * Gets the Content Type used by user registration.
-     *
-     * @return ContentType
-     */
-    public function loadContentType();
 }
