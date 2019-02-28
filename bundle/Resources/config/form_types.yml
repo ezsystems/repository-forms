@@ -7,3 +7,5 @@ services:
     EzSystems\RepositoryForms\Form\Type\SwitcherType: ~
 
     EzSystems\RepositoryForms\Form\Type\FieldType\BinaryBaseFieldType: ~
+
+    EzSystems\RepositoryForms\Form\Type\LocationType: ~

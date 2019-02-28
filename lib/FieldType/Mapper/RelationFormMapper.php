@@ -11,8 +11,8 @@ namespace EzSystems\RepositoryForms\FieldType\Mapper;
 use EzSystems\RepositoryForms\Data\Content\FieldData;
 use EzSystems\RepositoryForms\Data\FieldDefinitionData;
 use EzSystems\RepositoryForms\Form\Type\FieldType\RelationFieldType;
+use EzSystems\RepositoryForms\Form\Type\LocationType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -22,7 +22,7 @@ class RelationFormMapper extends AbstractRelationFormMapper
     {
         $isTranslation = $data->contentTypeData->languageCode !== $data->contentTypeData->mainLanguageCode;
         $fieldDefinitionForm
-            ->add('selectionRoot', HiddenType::class, [
+            ->add('selectionRoot', LocationType::class, [
                 'required' => false,
                 'property_path' => 'fieldSettings[selectionRoot]',
                 'label' => 'field_definition.ezobjectrelation.selection_root',
@@ -50,6 +50,9 @@ class RelationFormMapper extends AbstractRelationFormMapper
                     ->create('value', RelationFieldType::class, [
                         'required' => $fieldDefinition->isRequired,
                         'label' => $fieldDefinition->getName(),
+                        'default_location' => $this->loadDefaultLocationForSelection(
+                            $fieldDefinition->getFieldSettings()['selectionRoot']
+                        ),
                     ])
                     ->setAutoInitialize(false)
                     ->getForm()
