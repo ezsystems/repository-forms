@@ -8,8 +8,10 @@
  */
 namespace EzSystems\RepositoryForms\FieldType\Mapper;
 
+use eZ\Publish\API\Repository\Values\ContentType\FieldDefinition;
 use eZ\Publish\Core\FieldType\User\Value as ApiUserValue;
 use EzSystems\RepositoryForms\Data\Content\FieldData;
+use EzSystems\RepositoryForms\Data\ContentTranslationData;
 use EzSystems\RepositoryForms\Data\FieldDefinitionData;
 use EzSystems\RepositoryForms\Data\User\UserAccountFieldData;
 use EzSystems\RepositoryForms\FieldType\FieldDefinitionFormMapperInterface;
@@ -23,7 +25,6 @@ use Symfony\Component\Form\Exception\LogicException;
 use Symfony\Component\Form\Exception\UnexpectedTypeException;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\FormInterface;
-use Symfony\Component\OptionsResolver\Exception\AccessException;
 use Symfony\Component\OptionsResolver\Exception\InvalidOptionsException;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\Range;
@@ -50,22 +51,26 @@ final class UserAccountFieldValueFormMapper implements FieldValueFormMapperInter
         $formConfig = $fieldForm->getConfig();
         $rootForm = $fieldForm->getRoot()->getRoot();
         $formIntent = $rootForm->getConfig()->getOption('intent');
+        $isTranslation = $rootForm->getData() instanceof ContentTranslationData;
+        $formBuilder = $formConfig->getFormFactory()->createBuilder()
+            ->create('value', UserAccountFieldType::class, [
+                'required' => true,
+                'label' => $fieldDefinition->getName(),
+                'intent' => $formIntent,
+                'constraints' => [
+                    new UserAccountPassword(['contentType' => $rootForm->getData()->contentType]),
+                ],
+            ]);
 
-        $fieldForm
-            ->add(
-                $formConfig->getFormFactory()->createBuilder()
-                    ->create('value', UserAccountFieldType::class, [
-                        'required' => true,
-                        'label' => $fieldDefinition->getName(),
-                        'intent' => $formIntent,
-                        'constraints' => [
-                            new UserAccountPassword(['contentType' => $rootForm->getData()->contentType]),
-                        ],
-                    ])
-                    ->addModelTransformer($this->getModelTransformer())
-                    ->setAutoInitialize(false)
-                    ->getForm()
-            );
+        if ($isTranslation) {
+            $formBuilder->addModelTransformer($this->getModelTransformerForTranslation($fieldDefinition));
+        } else {
+            $formBuilder->addModelTransformer($this->getModelTransformer());
+        }
+
+        $formBuilder->setAutoInitialize(false);
+
+        $fieldForm->add($formBuilder->getForm());
     }
 
     /**
@@ -104,7 +109,9 @@ final class UserAccountFieldValueFormMapper implements FieldValueFormMapperInter
     /**
      * Fake method to set the translation domain for the extractor.
      *
-     * @throws AccessException
+     * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
+     *
+     * @throws \Symfony\Component\OptionsResolver\Exception\AccessException
      */
     public function configureOptions(OptionsResolver $resolver)
     {
@@ -115,9 +122,31 @@ final class UserAccountFieldValueFormMapper implements FieldValueFormMapperInter
     }
 
     /**
-     * @return CallbackTransformer
+     * @param \eZ\Publish\API\Repository\Values\ContentType\FieldDefinition $fieldDefinition
+     *
+     * @return \Symfony\Component\Form\CallbackTransformer
      */
-    public function getModelTransformer()
+    public function getModelTransformerForTranslation(FieldDefinition $fieldDefinition): CallbackTransformer
+    {
+        return new CallbackTransformer(
+            function (ApiUserValue $data) {
+                return new UserAccountFieldData($data->login, null, $data->email, $data->enabled);
+            },
+            function (UserAccountFieldData $submittedData) use ($fieldDefinition) {
+                $userValue = clone $fieldDefinition->defaultValue;
+                $userValue->login = $submittedData->username;
+                $userValue->email = $submittedData->email;
+                $userValue->enabled = $submittedData->enabled;
+
+                return $userValue;
+            }
+        );
+    }
+
+    /**
+     * @return \Symfony\Component\Form\CallbackTransformer
+     */
+    public function getModelTransformer(): CallbackTransformer
     {
         return new CallbackTransformer(
             function (ApiUserValue $data) {
