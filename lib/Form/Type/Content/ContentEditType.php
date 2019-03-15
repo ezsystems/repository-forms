@@ -58,6 +58,7 @@ class ContentEditType extends AbstractType
                 'drafts_enabled' => false,
                 'data_class' => '\eZ\Publish\API\Repository\Values\Content\ContentStruct',
                 'translation_domain' => 'ezrepoforms_content',
+                'intent' => 'update',
             ]);
     }
 }
