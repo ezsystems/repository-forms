@@ -31,7 +31,7 @@ class UserRegistrationContext extends RawMinkContext implements Context, Snippet
     /** @var string Regex matching the way the Twig template name is inserted in debug mode */
     const TWIG_DEBUG_STOP_REGEX = '<!-- STOP .*%s.* -->';
 
-    private static $password = 'publish';
+    private static $password = 'PassWord42';
 
     private static $language = 'eng-GB';
 
