@@ -172,6 +172,13 @@ services:
             - { name: ez.limitation.formMapper, limitationType: Language }
             - { name: ez.limitation.valueMapper, limitationType: Language }
 
+    EzSystems\RepositoryForms\Limitation\Mapper\TranslationLimitationMapper:
+        parent: ezrepoforms.limitation.form_mapper.multiple_selection
+        arguments: ["@ezpublish.api.service.language"]
+        tags:
+            - { name: ez.limitation.formMapper, limitationType: Translation }
+            - { name: ez.limitation.valueMapper, limitationType: Translation }
+
     ezrepoforms.limitation.form_mapper.owner:
         parent: ezrepoforms.limitation.form_mapper.multiple_selection
         class: "%ezrepoforms.limitation.form_mapper.owner.class%"
