@@ -81,6 +81,11 @@
         <target>Subtree of Location</target>
         <note>key: policy.limitation.identifier.subtree</note>
       </trans-unit>
+      <trans-unit id="02acf5d15c39735f2588b47274fbc987cddd1c86" resname="policy.limitation.identifier.translation">
+        <source>Translation</source>
+        <target>Translation</target>
+        <note>key: policy.limitation.identifier.translation</note>
+      </trans-unit>
     </body>
   </file>
 </xliff>
