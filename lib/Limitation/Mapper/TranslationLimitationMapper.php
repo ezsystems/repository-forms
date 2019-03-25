@@ -12,6 +12,11 @@ use eZ\Publish\API\Repository\LanguageService;
 use eZ\Publish\API\Repository\Values\User\Limitation;
 use EzSystems\RepositoryForms\Limitation\LimitationValueMapperInterface;
 
+/**
+ * Map possible or selected Translation Limitation values to a multiple selection form input.
+ *
+ * @see \eZ\Publish\API\Repository\Values\User\Limitation\TranslationLimitation
+ */
 class TranslationLimitationMapper extends MultipleSelectionBasedMapper implements LimitationValueMapperInterface
 {
     /**
@@ -44,7 +49,7 @@ class TranslationLimitationMapper extends MultipleSelectionBasedMapper implement
      *
      * @return \eZ\Publish\API\Repository\Values\Content\Language[]
      */
-    public function mapLimitationValue(Limitation $limitation)
+    public function mapLimitationValue(Limitation $limitation): array
     {
         $languages = $this->languageService->loadLanguageListByCode($limitation->limitationValues);
 
