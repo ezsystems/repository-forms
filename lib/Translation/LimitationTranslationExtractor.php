@@ -62,6 +62,10 @@ class LimitationTranslationExtractor implements ExtractorInterface
         $limitationTypes = [];
         foreach ($this->policyMap as $module) {
             foreach ($module as $policy) {
+                if (null === $policy) {
+                    continue;
+                }
+
                 foreach (array_keys($policy) as $limitationType) {
                     if (!in_array($limitationType, $limitationTypes)) {
                         $limitationTypes[] = $limitationType;
