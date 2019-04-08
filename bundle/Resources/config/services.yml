@@ -258,12 +258,15 @@ services:
 
     # Controllers
     ezrepoforms.controller.content_edit:
+        public: true
         class: "%ezrepoforms.controller.content_edit.class%"
         arguments:
             - "@ezpublish.api.service.content_type"
             - "@ezpublish.api.service.content"
             - "@ezrepoforms.action_dispatcher.content"
         parent: ezpublish.controller.base
+        tags:
+              - { name: controller.service_arguments }
 
     ezrepoforms.controller.user:
         class: "%ezrepoforms.controller.user.class%"
@@ -275,14 +278,19 @@ services:
             - "@ezrepoforms.action_dispatcher.user"
             - '@eZ\Publish\API\Repository\PermissionResolver'
         parent: ezpublish.controller.base
+        tags:
+              - { name: controller.service_arguments }
 
     ezrepoforms.controller.user_register:
         class: "%ezrepoforms.controller.user_register.class%"
         autowire: true
         deprecated: '"%service_id%" is deprecated since 2.5 and will be removed in 3.0. Please use \EzSystems\EzPlatformUserBundle\Controller\UserRegisterController instead.'
+        tags:
+            - { name: controller.service_arguments }
 
     ez_content_edit:
         alias: ezrepoforms.controller.content_edit
+        public: true
 
     ezrepoforms.user_register.registration_group_loader.configurable:
         class: "%ezrepoforms.user_register.registration_group_loader.configurable.class%"

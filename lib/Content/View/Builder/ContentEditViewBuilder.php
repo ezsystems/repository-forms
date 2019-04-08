@@ -113,7 +113,7 @@ class ContentEditViewBuilder implements ViewBuilder
             throw new InvalidArgumentException('Location', 'Provided location does not belong to selected content');
         }
 
-        if ($form->isValid() && null !== $form->getClickedButton()) {
+        if ($form->isSubmitted() && $form->isValid() && null !== $form->getClickedButton()) {
             $this->contentActionDispatcher->dispatchFormAction(
                 $form,
                 $form->getData(),
