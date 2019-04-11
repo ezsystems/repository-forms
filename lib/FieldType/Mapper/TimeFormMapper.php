@@ -46,7 +46,6 @@ class TimeFormMapper implements FieldDefinitionFormMapperInterface, FieldValueFo
                         'field_definition.eztime.default_type_empty' => Type::DEFAULT_EMPTY,
                         'field_definition.eztime.default_type_current' => Type::DEFAULT_CURRENT_TIME,
                     ],
-                    'choices_as_values' => true,
                     'expanded' => true,
                     'required' => true,
                     'property_path' => 'fieldSettings[defaultType]',

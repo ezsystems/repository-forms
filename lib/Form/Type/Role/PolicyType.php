@@ -95,7 +95,6 @@ class PolicyType extends AbstractType
         $builder
             ->add('moduleFunction', ChoiceType::class, [
                 'choices' => $this->policyChoices,
-                'choices_as_values' => true,
                 'label' => 'role.policy.type',
                 'placeholder' => 'role.policy.type.choose',
             ])

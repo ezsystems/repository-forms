@@ -115,7 +115,6 @@ class FieldDefinitionType extends AbstractType
             ->add(
                 'fieldGroup', ChoiceType::class, [
                     'choices' => $fieldsGroups,
-                    'choices_as_values' => true,
                     'required' => false,
                     'label' => 'field_definition.field_group',
                     'disabled' => $isTranslation,

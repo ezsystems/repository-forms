@@ -38,7 +38,6 @@ class CountryFormMapper implements FieldDefinitionFormMapperInterface, FieldValu
                     ->create(
                         'defaultValue',
                         CountryFieldType::class, [
-                            'choices_as_values' => true,
                             'multiple' => true,
                             'expanded' => false,
                             'required' => false,

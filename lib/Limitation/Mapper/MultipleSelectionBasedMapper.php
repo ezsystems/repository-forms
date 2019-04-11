@@ -34,7 +34,7 @@ abstract class MultipleSelectionBasedMapper implements LimitationFormMapperInter
         ];
         $choices = $this->getSelectionChoices();
         asort($choices, SORT_NATURAL | SORT_FLAG_CASE);
-        $options += ['choices' => array_flip($choices), 'choices_as_values' => true];
+        $options['choices'] = array_flip($choices);
         $form->add('limitationValues', ChoiceType::class, $options);
     }
 

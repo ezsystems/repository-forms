@@ -45,7 +45,6 @@ class SelectionFieldType extends AbstractType
     {
         $resolver->setDefaults([
             'expanded' => false,
-            'choices_as_values' => true,
         ]);
     }
 }

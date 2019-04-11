@@ -9,13 +9,13 @@ namespace EzSystems\RepositoryForms\FieldType\Mapper;
 use eZ\Publish\API\Repository\FieldTypeService;
 use eZ\Publish\Core\FieldType\Media\Type;
 use eZ\Publish\Core\FieldType\Media\Value;
+use EzSystems\RepositoryForms\ConfigResolver\MaxUploadSize;
 use EzSystems\RepositoryForms\Data\Content\FieldData;
 use EzSystems\RepositoryForms\Data\FieldDefinitionData;
 use EzSystems\RepositoryForms\FieldType\DataTransformer\MediaValueTransformer;
 use EzSystems\RepositoryForms\FieldType\FieldDefinitionFormMapperInterface;
 use EzSystems\RepositoryForms\FieldType\FieldValueFormMapperInterface;
 use EzSystems\RepositoryForms\Form\Type\FieldType\MediaFieldType;
-use EzSystems\RepositoryForms\ConfigResolver\MaxUploadSize;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\FormInterface;
@@ -69,7 +69,6 @@ class MediaFormMapper implements FieldDefinitionFormMapperInterface, FieldValueF
                     'field_definition.ezmedia.type_windows_media_player' => Type::TYPE_WINDOWSMEDIA,
                     'field_definition.ezmedia.type_html5_audio' => Type::TYPE_HTML5_AUDIO,
                 ],
-                'choices_as_values' => true,
                 'required' => true,
                 'property_path' => 'fieldSettings[mediaType]',
                 'label' => 'field_definition.ezmedia.media_type',

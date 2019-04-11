@@ -57,7 +57,6 @@ class CountryFieldType extends AbstractType
         $resolver->setDefaults([
             'expanded' => false,
             'choices' => $this->getCountryChoices($this->countriesInfo),
-            'choices_as_values' => true,
         ]);
     }
 
