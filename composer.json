@@ -9,6 +9,8 @@
             "email": "jerome.vieilledent@ez.no"
         }
     ],
+    "minimum-stability": "dev",
+    "prefer-stable": true,
     "require": {
         "php": "^7.1",
         "ezsystems/ezpublish-kernel": "^8.0@dev",
