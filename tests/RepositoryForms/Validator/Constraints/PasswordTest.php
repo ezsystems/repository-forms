@@ -30,6 +30,6 @@ class PasswordTest extends TestCase
 
     public function testGetTargets()
     {
-        $this->assertSame(Password::CLASS_CONSTRAINT, $this->constraint->getTargets());
+        $this->assertSame([Password::CLASS_CONSTRAINT, Password::PROPERTY_CONSTRAINT], $this->constraint->getTargets());
     }
 }
