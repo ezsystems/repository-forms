@@ -9,6 +9,8 @@
  */
 namespace EzSystems\RepositoryForms\Form\Processor\User;
 
+use eZ\Publish\API\Repository\ContentService;
+use eZ\Publish\API\Repository\LocationService;
 use eZ\Publish\API\Repository\UserService;
 use EzSystems\RepositoryForms\Data\User\UserCreateData;
 use EzSystems\RepositoryForms\Event\FormActionEvent;
@@ -28,16 +30,26 @@ class UserCreateFormProcessor implements EventSubscriberInterface
     /** @var UrlGeneratorInterface */
     private $urlGenerator;
 
+    /** @var \eZ\Publish\API\Repository\ContentService */
+    private $contentService;
+
+    /** @var \eZ\Publish\API\Repository\LocationService */
+    private $locationService;
+
     /**
      * @param UserService $userService
      * @param UrlGeneratorInterface $urlGenerator
      */
     public function __construct(
         UserService $userService,
+        ContentService $contentService,
+        LocationService $locationService,
         UrlGeneratorInterface $urlGenerator
     ) {
         $this->userService = $userService;
         $this->urlGenerator = $urlGenerator;
+        $this->contentService = $contentService;
+        $this->locationService = $locationService;
     }
 
     public static function getSubscribedEvents()
@@ -59,7 +71,12 @@ class UserCreateFormProcessor implements EventSubscriberInterface
         $languageCode = $form->getConfig()->getOption('languageCode');
 
         $this->setContentFields($data, $languageCode);
-        $user = $this->userService->createUser($data, $data->getParentGroups());
+
+        $user = $this->contentService->createContent(
+            $data,
+            $this->createLocationCreateStructsFromUserGroups($data->getParentGroups())
+        );
+        $user = $this->contentService->publishVersion($user->versionInfo);
 
         $redirectUrl = $form['redirectUrlAfterPublish']->getData() ?: $this->urlGenerator->generate(
             '_ezpublishLocation',
@@ -70,16 +87,35 @@ class UserCreateFormProcessor implements EventSubscriberInterface
     }
 
     /**
+     * @param \eZ\Publish\API\Repository\Values\User\UserGroup[] $userGroups
+     *
+     * @return \eZ\Publish\API\Repository\Values\Content\LocationCreateStruct[]
+     *
+     * @throws \eZ\Publish\API\Repository\Exceptions\NotFoundException
+     * @throws \eZ\Publish\API\Repository\Exceptions\UnauthorizedException
+     */
+    private function createLocationCreateStructsFromUserGroups(array $userGroups): array
+    {
+        $locationCreateStructs = [];
+        foreach ($userGroups as $parentGroup) {
+            $parentGroup = $this->userService->loadUserGroup($parentGroup->id);
+            if ($parentGroup->getVersionInfo()->getContentInfo()->mainLocationId !== null) {
+                $locationCreateStructs[] = $this->locationService->newLocationCreateStruct(
+                    $parentGroup->getVersionInfo()->getContentInfo()->mainLocationId
+                );
+            }
+        }
+
+        return $locationCreateStructs;
+    }
+
+    /**
      * @param UserCreateData $data
      * @param string $languageCode
      */
     private function setContentFields(UserCreateData $data, string $languageCode): void
     {
         foreach ($data->fieldsData as $fieldDefIdentifier => $fieldData) {
-            if ('ezuser' === $fieldData->getFieldTypeIdentifier()) {
-                continue;
-            }
-
             $data->setField($fieldDefIdentifier, $fieldData->value, $languageCode);
         }
     }

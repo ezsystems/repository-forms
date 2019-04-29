@@ -226,6 +226,8 @@ services:
         class: "%ezrepoforms.form_processor.user_create.class%"
         arguments:
             - '@ezpublish.api.service.user'
+            - '@ezpublish.api.service.content'
+            - '@ezpublish.api.service.location'
             - '@router'
         tags:
             - { name: kernel.event_subscriber }

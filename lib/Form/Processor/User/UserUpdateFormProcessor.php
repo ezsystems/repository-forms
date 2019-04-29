@@ -51,7 +51,7 @@ class UserUpdateFormProcessor implements EventSubscriberInterface
 
     public function processUpdate(FormActionEvent $event)
     {
-        $data = $data = $event->getData();
+        $data = $event->getData();
 
         if (!$data instanceof UserUpdateData) {
             return;
@@ -61,7 +61,10 @@ class UserUpdateFormProcessor implements EventSubscriberInterface
         $languageCode = $form->getConfig()->getOption('languageCode');
 
         $this->setContentFields($data, $languageCode);
-        $user = $this->userService->updateUser($data->user, $data);
+
+        $userDraft = $this->contentService->createContentDraft($data->user->contentInfo, $data->user->versionInfo);
+        $user = $this->contentService->updateContent($userDraft->versionInfo, $data->contentUpdateStruct);
+        $user = $this->contentService->publishVersion($user->versionInfo);
 
         $redirectUrl = $form['redirectUrlAfterPublish']->getData() ?: $this->urlGenerator->generate(
             '_ezpublishLocation',
