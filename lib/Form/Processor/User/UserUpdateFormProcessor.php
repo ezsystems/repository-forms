@@ -51,7 +51,7 @@ class UserUpdateFormProcessor implements EventSubscriberInterface
 
     public function processUpdate(FormActionEvent $event)
     {
-        $data = $data = $event->getData();
+        $data = $event->getData();
 
         if (!$data instanceof UserUpdateData) {
             return;
