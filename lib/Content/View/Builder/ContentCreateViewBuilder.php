@@ -116,9 +116,9 @@ class ContentCreateViewBuilder implements ViewBuilder
         $view->setForm($form);
 
         $view->addParameters([
-            'contentType' => $contentType,
+            'content_type' => $contentType,
             'language' => $language,
-            'parentLocation' => $location, // @todo: rename to `location` for consistency (3.0)
+            'location' => $location,
             'form' => $form->createView(),
         ]);
 

@@ -47,7 +47,7 @@ Scenario: The user registration templates can be customized
       """
       And the following template in "src/AppBundle/Resources/views/user/registration_form.html.twig":
       """
-      {% extends noLayout is defined and noLayout == true ? viewbaseLayout : pagelayout %}
+      {% extends no_layout is defined and no_layout == true ? view_base_layout : pagelayout %}
 
       {% block content %}
           <section class="ez-content-edit">
@@ -59,7 +59,7 @@ Scenario: The user registration templates can be customized
       """
       And the following template in "src/AppBundle/Resources/views/user/registration_confirmation.html.twig":
       """
-      {% extends noLayout is defined and noLayout == true ? viewbaseLayout : pagelayout %}
+      {% extends no_layout is defined and no_layout == true ? view_base_layout : pagelayout %}
 
       {% block content %}
           <h1>Your account has been created</h1>
