@@ -386,11 +386,6 @@
         <target>Select a start location for browsing for relations</target>
         <note>key: field_definition.ezobjectrelationlist.selection_root_udw_title</note>
       </trans-unit>
-      <trans-unit id="8c89d231e7f1b33a8e0b84ad81fc964785a59cbd" resname="field_definition.ezpage.default_layout">
-        <source>Default layout</source>
-        <target>Default layout</target>
-        <note>key: field_definition.ezpage.default_layout</note>
-      </trans-unit>
       <trans-unit id="14a95e986cd6b94301e0f44fd5ef2d5e7cdf90a4" resname="field_definition.ezselection.add_option">
         <source>Add an option</source>
         <target>Add an option</target>

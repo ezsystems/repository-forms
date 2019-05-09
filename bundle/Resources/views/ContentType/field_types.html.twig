@@ -204,14 +204,6 @@
     </div>
 {% endblock %}
 
-{% block ezpage_field_definition_edit %}
-    <div class="ezpage-settings default-layout{% if group_class is not empty %} {{ group_class }}{% endif %}">
-        {{- form_label(form.defaultLayout) -}}
-        {{- form_errors(form.defaultLayout) -}}
-        {{- form_widget(form.defaultLayout) -}}
-    </div>
-{% endblock %}
-
 {% block ezauthor_field_definition_edit %}
     <div class="ezauthor-settings default-author{% if group_class is not empty %} {{ group_class }}{% endif %}">
         {{- form_label(form.defaultAuthor) -}}

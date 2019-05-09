@@ -110,12 +110,6 @@ services:
             - { name: ez.fieldFormMapper.definition, fieldType: ezobjectrelationlist }
             - { name: ez.fieldFormMapper.value, fieldType: ezobjectrelationlist }
 
-    EzSystems\RepositoryForms\FieldType\Mapper\PageFormMapper:
-        arguments:
-            $pageService: '@ezpublish.fieldType.ezpage.pageService'
-        tags:
-            - { name: ez.fieldFormMapper.definition, fieldType: ezpage }
-
     EzSystems\RepositoryForms\FieldType\Mapper\RichTextFormMapper:
         tags:
             - { name: ez.fieldFormMapper.value, fieldType: ezrichtext }
