@@ -138,7 +138,7 @@ class ContentEditViewBuilder implements ViewBuilder
             'content' => $content,
             'location' => $location,
             'language' => $language,
-            'contentType' => $contentType,
+            'content_type' => $contentType,
             'form' => $form->createView(),
         ]);
 
