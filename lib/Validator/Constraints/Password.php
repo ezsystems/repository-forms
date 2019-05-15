@@ -6,6 +6,9 @@ namespace EzSystems\RepositoryForms\Validator\Constraints;
 
 use Symfony\Component\Validator\Constraint;
 
+/**
+ * @Annotation
+ */
 class Password extends Constraint
 {
     /** @var string */
@@ -17,8 +20,8 @@ class Password extends Constraint
     /**
      * {@inheritdoc}
      */
-    public function getTargets(): string
+    public function getTargets(): array
     {
-        return self::CLASS_CONSTRAINT;
+        return [self::CLASS_CONSTRAINT, self::PROPERTY_CONSTRAINT];
     }
 }
