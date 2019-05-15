@@ -11,16 +11,19 @@ env:
     - EZPLATFORM_REPO="https://github.com/ezsystems/ezplatform.git"
 
 matrix:
-  # mark as finished before allow_failures are run
-  fast_finish: true
   include:
     # 7.1
-    - php: 7.1
+    - name: "[PHP 7.1] PHP Unit tests"
+      php: 7.1
       env: TEST_CONFIG="phpunit.xml.dist"
-    - php: 7.1
-      env: BEHAT_OPTS="--profile=repository-forms" PHP_IMAGE=ezsystems/php:7.1-v1
+    - name: "[PHP 7.1] Repository-forms tests on Clean P"
+      php: 7.1
+      env:
+        - BEHAT_OPTS="--mode=behat --profile=repository-forms --non-strict"
+        - PHP_IMAGE=ezsystems/php:7.1-v1
     # 7.2
-    - php: 7.2
+    - name: "[PHP 7.2] PHP Unit tests"
+      php: 7.2
       env: TEST_CONFIG="phpunit.xml.dist"
 
 # test only master (+ Pull requests)
@@ -30,27 +33,32 @@ branches:
     - /^\d.\d+$/
     - "/^feature-/"
 
-before_install:
-  - echo 'memory_limit = -1' >> ~/.phpenv/versions/$(phpenv version-name)/etc/conf.d/travis.ini
-
-# setup requirements for running unit/behat tests
-before_script:
-  # Prepare system
-  - if [ "$TEST_CONFIG" != "" ] ; then ./bin/.travis/prepare_unittest.sh ; fi
-  - if [ "$BEHAT_OPTS" != "" ]; then ./bin/.travis/prepare_ezplatform.sh ; fi
-  # Detecting timezone issues by testing on random timezone
-  - TEST_TIMEZONES=("America/New_York" "Asia/Calcutta" "UTC")
-  - TEST_TIMEZONE=${TEST_TIMEZONES["`shuf -i 0-2 -n 1`"]}
-
-# execute phpunit or behat as the script command
-script:
-  - if [ "$TEST_CONFIG" != "" ] ; then php -d date.timezone=$TEST_TIMEZONE -d memory_limit=-1 bin/phpunit -c $TEST_CONFIG ; fi
-  - if [ "$BEHAT_OPTS" != "" ] ; then cd "$HOME/build/ezplatform"; docker-compose exec --user www-data app sh -c "bin/behat $BEHAT_OPTS" ; fi
+# reduce depth (history) of git checkout
+git:
+  depth: 30
 
 # disable mail notifications
 notifications:
   email: false
 
-# reduce depth (history) of git checkout
-git:
-  depth: 30
+before_install:
+  # Disable XDebug for performance
+  - phpenv config-rm xdebug.ini
+  # Get latest composer build
+  - travis_retry composer selfupdate
+  # Avoid memory issues on composer install
+  - echo 'memory_limit = -1' >> ~/.phpenv/versions/$(phpenv version-name)/etc/conf.d/travis.ini
+  # Detecting timezone issues by testing on random timezone
+  - TEST_TIMEZONES=("America/New_York" "Asia/Calcutta" "UTC")
+  - TEST_TIMEZONE=${TEST_TIMEZONES["`shuf -i 0-2 -n 1`"]}
+
+# setup requirements for running unit/behat tests
+install:
+  - if [ "$TEST_CONFIG" != "" ] ; then ./bin/.travis/prepare_unittest.sh ; fi
+  - if [ "$BEHAT_OPTS" != "" ]; then ./bin/.travis/prepare_ezplatform.sh ; fi
+
+# execute phpunit or behat as the script command
+script:
+  - if [ "$TEST_CONFIG" != "" ] ; then php -d date.timezone=$TEST_TIMEZONE -d memory_limit=-1 bin/phpunit -c $TEST_CONFIG ; fi
+  - if [ "$BEHAT_OPTS" != "" ] ; then cd "$HOME/build/ezplatform"; docker-compose exec --user www-data app sh -c "bin/ezbehat $BEHAT_OPTS" ; fi
+
