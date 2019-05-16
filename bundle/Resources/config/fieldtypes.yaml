@@ -25,63 +25,63 @@ services:
 
     EzSystems\RepositoryForms\FieldType\Mapper\AuthorFormMapper:
         tags:
-            - { name: ez.fieldFormMapper.definition, fieldType: ezauthor }
-            - { name: ez.fieldFormMapper.value, fieldType: ezauthor }
+            - { name: ezplatform.field_type.form_mapper.definition, fieldType: ezauthor }
+            - { name: ezplatform.field_type.form_mapper.value, fieldType: ezauthor }
 
     EzSystems\RepositoryForms\FieldType\Mapper\BinaryFileFormMapper:
         tags:
-            - { name: ez.fieldFormMapper.definition, fieldType: ezbinaryfile }
-            - { name: ez.fieldFormMapper.value, fieldType: ezbinaryfile }
+            - { name: ezplatform.field_type.form_mapper.definition, fieldType: ezbinaryfile }
+            - { name: ezplatform.field_type.form_mapper.value, fieldType: ezbinaryfile }
 
     EzSystems\RepositoryForms\FieldType\Mapper\CheckboxFormMapper:
         tags:
-            - { name: ez.fieldFormMapper.definition, fieldType: ezboolean }
-            - { name: ez.fieldFormMapper.value, fieldType: ezboolean }
+            - { name: ezplatform.field_type.form_mapper.definition, fieldType: ezboolean }
+            - { name: ezplatform.field_type.form_mapper.value, fieldType: ezboolean }
 
     EzSystems\RepositoryForms\FieldType\Mapper\SelectionFormMapper:
         tags:
-            - { name: ez.fieldFormMapper.definition, fieldType: ezselection }
-            - { name: ez.fieldFormMapper.value, fieldType: ezselection }
+            - { name: ezplatform.field_type.form_mapper.definition, fieldType: ezselection }
+            - { name: ezplatform.field_type.form_mapper.value, fieldType: ezselection }
 
     EzSystems\RepositoryForms\FieldType\Mapper\CountryFormMapper:
         tags:
-            - { name: ez.fieldFormMapper.definition, fieldType: ezcountry }
-            - { name: ez.fieldFormMapper.value, fieldType: ezcountry }
+            - { name: ezplatform.field_type.form_mapper.definition, fieldType: ezcountry }
+            - { name: ezplatform.field_type.form_mapper.value, fieldType: ezcountry }
 
     EzSystems\RepositoryForms\FieldType\Mapper\DateFormMapper:
         tags:
-            - { name: ez.fieldFormMapper.definition, fieldType: ezdate }
-            - { name: ez.fieldFormMapper.value, fieldType: ezdate }
+            - { name: ezplatform.field_type.form_mapper.definition, fieldType: ezdate }
+            - { name: ezplatform.field_type.form_mapper.value, fieldType: ezdate }
 
     EzSystems\RepositoryForms\FieldType\Mapper\DateTimeFormMapper:
         tags:
-            - { name: ez.fieldFormMapper.definition, fieldType: ezdatetime }
-            - { name: ez.fieldFormMapper.value, fieldType: ezdatetime }
+            - { name: ezplatform.field_type.form_mapper.definition, fieldType: ezdatetime }
+            - { name: ezplatform.field_type.form_mapper.value, fieldType: ezdatetime }
 
     EzSystems\RepositoryForms\FieldType\Mapper\FloatFormMapper:
         tags:
-            - { name: ez.fieldFormMapper.definition, fieldType: ezfloat }
-            - { name: ez.fieldFormMapper.value, fieldType: ezfloat }
+            - { name: ezplatform.field_type.form_mapper.definition, fieldType: ezfloat }
+            - { name: ezplatform.field_type.form_mapper.value, fieldType: ezfloat }
 
     EzSystems\RepositoryForms\FieldType\Mapper\ImageFormMapper:
         tags:
-            - { name: ez.fieldFormMapper.definition, fieldType: ezimage }
-            - { name: ez.fieldFormMapper.value, fieldType: ezimage }
+            - { name: ezplatform.field_type.form_mapper.definition, fieldType: ezimage }
+            - { name: ezplatform.field_type.form_mapper.value, fieldType: ezimage }
 
     EzSystems\RepositoryForms\FieldType\Mapper\IntegerFormMapper:
         tags:
-            - { name: ez.fieldFormMapper.definition, fieldType: ezinteger }
-            - { name: ez.fieldFormMapper.value, fieldType: ezinteger }
+            - { name: ezplatform.field_type.form_mapper.definition, fieldType: ezinteger }
+            - { name: ezplatform.field_type.form_mapper.value, fieldType: ezinteger }
 
     EzSystems\RepositoryForms\FieldType\Mapper\ISBNFormMapper:
         tags:
-            - { name: ez.fieldFormMapper.definition, fieldType: ezisbn }
-            - { name: ez.fieldFormMapper.value, fieldType: ezisbn }
+            - { name: ezplatform.field_type.form_mapper.definition, fieldType: ezisbn }
+            - { name: ezplatform.field_type.form_mapper.value, fieldType: ezisbn }
 
     EzSystems\RepositoryForms\FieldType\Mapper\MediaFormMapper:
         tags:
-            - { name: ez.fieldFormMapper.definition, fieldType: ezmedia }
-            - { name: ez.fieldFormMapper.value, fieldType: ezmedia }
+            - { name: ezplatform.field_type.form_mapper.definition, fieldType: ezmedia }
+            - { name: ezplatform.field_type.form_mapper.value, fieldType: ezmedia }
 
     EzSystems\RepositoryForms\FieldType\Mapper\AbstractRelationFormMapper:
         abstract: true
@@ -94,8 +94,8 @@ services:
         autoconfigure: false
         public: false
         tags:
-            - { name: ez.fieldFormMapper.definition, fieldType: ezobjectrelation }
-            - { name: ez.fieldFormMapper.value, fieldType: ezobjectrelation }
+            - { name: ezplatform.field_type.form_mapper.definition, fieldType: ezobjectrelation }
+            - { name: ezplatform.field_type.form_mapper.value, fieldType: ezobjectrelation }
 
     EzSystems\RepositoryForms\FieldType\Mapper\RelationListFormMapper:
         parent: EzSystems\RepositoryForms\FieldType\Mapper\AbstractRelationFormMapper
@@ -103,43 +103,43 @@ services:
         autoconfigure: false
         public: false
         tags:
-            - { name: ez.fieldFormMapper.definition, fieldType: ezobjectrelationlist }
-            - { name: ez.fieldFormMapper.value, fieldType: ezobjectrelationlist }
+            - { name: ezplatform.field_type.form_mapper.definition, fieldType: ezobjectrelationlist }
+            - { name: ezplatform.field_type.form_mapper.value, fieldType: ezobjectrelationlist }
 
     EzSystems\RepositoryForms\FieldType\Mapper\TextLineFormMapper:
         tags:
-            - { name: ez.fieldFormMapper.definition, fieldType: ezstring }
-            - { name: ez.fieldFormMapper.value, fieldType: ezstring }
+            - { name: ezplatform.field_type.form_mapper.definition, fieldType: ezstring }
+            - { name: ezplatform.field_type.form_mapper.value, fieldType: ezstring }
 
     EzSystems\RepositoryForms\FieldType\Mapper\TextBlockFormMapper:
         tags:
-            - { name: ez.fieldFormMapper.definition, fieldType: eztext }
-            - { name: ez.fieldFormMapper.value, fieldType: eztext }
+            - { name: ezplatform.field_type.form_mapper.definition, fieldType: eztext }
+            - { name: ezplatform.field_type.form_mapper.value, fieldType: eztext }
 
     EzSystems\RepositoryForms\FieldType\Mapper\TimeFormMapper:
         tags:
-            - { name: ez.fieldFormMapper.definition, fieldType: eztime }
-            - { name: ez.fieldFormMapper.value, fieldType: eztime }
+            - { name: ezplatform.field_type.form_mapper.definition, fieldType: eztime }
+            - { name: ezplatform.field_type.form_mapper.value, fieldType: eztime }
 
     EzSystems\RepositoryForms\FieldType\Mapper\FormTypeBasedFieldValueFormMapper:
         abstract: true
 
     EzSystems\RepositoryForms\FieldType\Mapper\UserAccountFieldValueFormMapper:
         tags:
-            - { name: ez.fieldFormMapper.definition, fieldType: ezuser }
-            - { name: ez.fieldFormMapper.value, fieldType: ezuser }
+            - { name: ezplatform.field_type.form_mapper.definition, fieldType: ezuser }
+            - { name: ezplatform.field_type.form_mapper.value, fieldType: ezuser }
 
     EzSystems\RepositoryForms\FieldType\Mapper\UrlFormMapper:
         tags:
-            - { name: ez.fieldFormMapper.value, fieldType: ezurl }
+            - { name: ezplatform.field_type.form_mapper.value, fieldType: ezurl }
 
     EzSystems\RepositoryForms\FieldType\Mapper\MapLocationFormMapper:
         tags:
-            - { name: ez.fieldFormMapper.value, fieldType: ezgmaplocation }
+            - { name: ezplatform.field_type.form_mapper.value, fieldType: ezgmaplocation }
 
     EzSystems\RepositoryForms\FieldType\Mapper\KeywordFormMapper:
         tags:
-            - { name: ez.fieldFormMapper.value, fieldType: ezkeyword }
+            - { name: ezplatform.field_type.form_mapper.value, fieldType: ezkeyword }
 
     ezrepoforms.field_type.form_mapper.ezemail:
         parent: EzSystems\RepositoryForms\FieldType\Mapper\FormTypeBasedFieldValueFormMapper
@@ -147,10 +147,10 @@ services:
         autoconfigure: false
         public: false
         tags:
-            - { name: ez.fieldFormMapper.value, fieldType: ezemail }
+            - { name: ezplatform.field_type.form_mapper.value, fieldType: ezemail }
         calls:
             - [setFormType, ['Symfony\Component\Form\Extension\Core\Type\EmailType']]
 
     EzSystems\RepositoryForms\FieldType\Mapper\ImageAssetFormMapper:
         tags:
-            - { name: ez.fieldFormMapper.value, fieldType: ezimageasset }
+            - { name: ezplatform.field_type.form_mapper.value, fieldType: ezimageasset }
