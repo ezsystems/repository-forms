@@ -11,7 +11,7 @@ use eZ\Bundle\EzPublishCoreBundle\DependencyInjection\Configuration\ConfigBuilde
 use eZ\Bundle\EzPublishCoreBundle\DependencyInjection\Security\PolicyProvider\PolicyProviderInterface;
 
 /**
- * @deprecated Deprecated since 2.1. No longer used. This policy was moved to the eZ/Publish/Core/settings/policies.yml.
+ * @deprecated Deprecated since 2.1. No longer used. This policy was moved to the eZ/Publish/Core/settings/policies.yaml.
  *
  * Adds the user/register policy.
  */

@@ -1,11 +1,11 @@
 imports:
-    - {resource: language.yml}
-    - {resource: section.yml}
-    - {resource: role.yml}
-    - {resource: fieldtypes.yml}
-    - {resource: form_types.yml}
-    - {resource: views.yml}
-    - {resource: events.yml}
+    - {resource: language.yaml}
+    - {resource: section.yaml}
+    - {resource: role.yaml}
+    - {resource: fieldtypes.yaml}
+    - {resource: form_types.yaml}
+    - {resource: views.yaml}
+    - {resource: events.yaml}
 
 parameters:
     ezrepoforms.field_type_form_mapper.dispatcher.class: EzSystems\RepositoryForms\FieldType\FieldTypeFormMapperDispatcher
