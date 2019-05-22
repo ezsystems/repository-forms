@@ -18,7 +18,11 @@ use Symfony\Component\DependencyInjection\Reference;
  */
 class FieldTypeFormMapperDispatcherPass implements CompilerPassInterface
 {
-    const FIELD_TYPE_FORM_MAPPER_DISPATCHER = 'ezrepoforms.field_type_form_mapper.dispatcher';
+    public const FIELD_TYPE_FORM_MAPPER_DISPATCHER = 'ezrepoforms.field_type_form_mapper.dispatcher';
+    public const FIELD_FORM_MAPPER_VALUE = 'ez.fieldFormMapper.value';
+    public const FIELD_FORM_MAPPER_DEFINITION = 'ez.fieldFormMapper.definition';
+    public const EZPLATFORM_FIELD_TYPE_FORM_MAPPER_VALUE = 'ezplatform.field_type.form_mapper.value';
+    public const EZPLATFORM_FIELD_TYPE_FORM_MAPPER_DEFINITION = 'ezplatform.field_type.form_mapper.definition';
 
     public function process(ContainerBuilder $container)
     {
@@ -32,7 +36,7 @@ class FieldTypeFormMapperDispatcherPass implements CompilerPassInterface
             foreach ($tags as $tag) {
                 if (!isset($tag['fieldType'])) {
                     throw new LogicException(
-                        'ez.fieldFormMapper or ezplatform.field_type.form_mapper service tags need a "fieldType" attribute to identify which field type the mapper is for. None given.'
+                        '`ezplatform.field_type.form_mapper` or deprecated `ez.fieldFormMapper` service tags need a "fieldType" attribute to identify which field type the mapper is for. None given.'
                     );
                 }
 
@@ -43,8 +47,8 @@ class FieldTypeFormMapperDispatcherPass implements CompilerPassInterface
 
     /**
      * Gathers services tagged as either
-     * - ez.fieldFormMapper.value
-     * - ez.fieldFormMapper.definition
+     * - ez.fieldFormMapper.value (deprecated)
+     * - ez.fieldFormMapper.definition (deprecated)
      * - ezplatform.field_type.form_mapper.value
      * - ezplatform.field_type.form_mapper.definition.
      *
@@ -54,17 +58,31 @@ class FieldTypeFormMapperDispatcherPass implements CompilerPassInterface
      */
     private function findTaggedFormMapperServices(ContainerBuilder $container): array
     {
-        $ezFieldFormMapperValueTags = $container->findTaggedServiceIds('ez.fieldFormMapper.value');
-        $ezFieldFormMapperDefinitionTags = $container->findTaggedServiceIds('ez.fieldFormMapper.definition');
-        $ezplatformFieldFormMapperValueTags = $container->findTaggedServiceIds('ezplatform.field_type.form_mapper.value');
-        $ezplatformFieldFormMapperDefinitionTags = $container->findTaggedServiceIds('ezplatform.field_type.form_mapper.definition');
+        $ezFieldFormMapperValueTags = $container->findTaggedServiceIds(self::FIELD_FORM_MAPPER_VALUE);
+        $ezFieldFormMapperDefinitionTags = $container->findTaggedServiceIds(self::FIELD_FORM_MAPPER_DEFINITION);
+        $ezplatformFieldFormMapperValueTags = $container->findTaggedServiceIds(self::EZPLATFORM_FIELD_TYPE_FORM_MAPPER_VALUE);
+        $ezplatformFieldFormMapperDefinitionTags = $container->findTaggedServiceIds(self::EZPLATFORM_FIELD_TYPE_FORM_MAPPER_DEFINITION);
 
         foreach ($ezFieldFormMapperValueTags as $ezFieldFormMapperValueTag) {
-            @trigger_error('`ez.fieldFormMapper.value` service tag is deprecated and will be removed in version 9. Please use `ezplatform.field_type.form_mapper.value` instead.', E_USER_DEPRECATED);
+            @trigger_error(
+                sprintf(
+                    '`%s` service tag is deprecated and will be removed in eZ Platform 4.0. Please use `%s` instead.',
+                    self::FIELD_FORM_MAPPER_VALUE,
+                    self::EZPLATFORM_FIELD_TYPE_FORM_MAPPER_VALUE
+                ),
+                E_USER_DEPRECATED
+            );
         }
 
         foreach ($ezFieldFormMapperDefinitionTags as $ezFieldFormMapperValueTag) {
-            @trigger_error('`ez.fieldFormMapper.definition` service tag is deprecated and will be removed in version 9. Please use `ezplatform.field_type.form_mapper.definition` instead.', E_USER_DEPRECATED);
+            @trigger_error(
+                sprintf(
+                    '`%s` service tag is deprecated and will be removed in eZ Platform 4.0. Please use `%s` instead.',
+                    self::FIELD_FORM_MAPPER_DEFINITION,
+                    self::EZPLATFORM_FIELD_TYPE_FORM_MAPPER_DEFINITION
+                ),
+                E_USER_DEPRECATED
+            );
         }
 
         return array_merge(

@@ -38,7 +38,6 @@ class FieldTypeFormMapperDispatcherPassTest extends AbstractCompilerPassTestCase
         $serviceId = 'service_id';
         $def = new Definition();
         $def->addTag($tag, ['fieldType' => $fieldTypeIdentifier]);
-//        $def->setClass(\get_class($this->createMock(LimitationValueMapperInterface::class)));
         $this->setDefinition($serviceId, $def);
 
         $this->compile();
@@ -53,10 +52,10 @@ class FieldTypeFormMapperDispatcherPassTest extends AbstractCompilerPassTestCase
     public function tagsProvider(): array
     {
         return [
-            ['ez.fieldFormMapper.value'],
-            ['ez.fieldFormMapper.definition'],
-            ['ezplatform.field_type.form_mapper.value'],
-            ['ezplatform.field_type.form_mapper.definition'],
+            [FieldTypeFormMapperDispatcherPass::FIELD_FORM_MAPPER_VALUE],
+            [FieldTypeFormMapperDispatcherPass::FIELD_FORM_MAPPER_DEFINITION],
+            [FieldTypeFormMapperDispatcherPass::EZPLATFORM_FIELD_TYPE_FORM_MAPPER_VALUE],
+            [FieldTypeFormMapperDispatcherPass::EZPLATFORM_FIELD_TYPE_FORM_MAPPER_DEFINITION],
         ];
     }
 }
