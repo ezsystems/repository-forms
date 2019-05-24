@@ -19,15 +19,12 @@ use eZ\Publish\API\Repository\Values\User\User;
 use eZ\Publish\API\Repository\Values\User\UserGroup;
 use eZ\Publish\Core\Repository\Values\User\RoleCreateStruct;
 use EzSystems\EzPlatformAdminUi\Behat\Helper\EzEnvironmentConstants;
-use EzSystems\PlatformBehatBundle\Context\RepositoryContext;
 use PHPUnit\Framework\Assert as Assertion;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Yaml\Yaml;
 
 class UserRegistrationContext extends RawMinkContext implements Context, SnippetAcceptingContext
 {
-    use RepositoryContext;
-
     /** @var string Regex matching the way the Twig template name is inserted in debug mode */
     const TWIG_DEBUG_STOP_REGEX = '<!-- STOP .*%s.* -->';
 
@@ -46,6 +43,11 @@ class UserRegistrationContext extends RawMinkContext implements Context, Snippet
     private $customUserGroup;
 
     /**
+     * @var \eZ\Publish\API\Repository\Repository
+     */
+    private $repository;
+
+    /**
      * @var YamlConfigurationContext
      */
     private $yamlConfigurationContext;
@@ -55,7 +57,7 @@ class UserRegistrationContext extends RawMinkContext implements Context, Snippet
      */
     public function __construct(Repository $repository)
     {
-        $this->setRepository($repository);
+        $this->repository = $repository;
     }
 
     /** @BeforeScenario */
@@ -364,5 +366,12 @@ class UserRegistrationContext extends RawMinkContext implements Context, Snippet
             (isset($alternativeTemplate) ? "nor $alternativeTemplate " : ' ') .
             "in HTML:\n\n$html"
         );
+    }
+
+    private function getRepository()
+    {
+        return $this->repository->sudo(function (Repository $repository) {
+            return $repository;
+        });
     }
 }
