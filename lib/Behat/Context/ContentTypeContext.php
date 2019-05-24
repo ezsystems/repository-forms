@@ -13,13 +13,11 @@ use eZ\Publish\API\Repository\Exceptions\NotFoundException;
 use eZ\Publish\API\Repository\Repository;
 use eZ\Publish\API\Repository\Values\ContentType\ContentTypeCreateStruct;
 use eZ\Publish\API\Repository\Values\ContentType\FieldDefinitionUpdateStruct;
-use EzSystems\PlatformBehatBundle\Context\RepositoryContext;
+use eZ\Publish\Core\Repository\Values\User\UserReference;
 use PHPUnit\Framework\Assert as Assertion;
 
 final class ContentTypeContext extends RawMinkContext implements Context, SnippetAcceptingContext
 {
-    use RepositoryContext;
-
     /** @var \eZ\Publish\API\Repository\ContentTypeService */
     private $contentTypeService;
 
@@ -30,12 +28,23 @@ final class ContentTypeContext extends RawMinkContext implements Context, Snippe
     private $currentContentType;
 
     /**
+     * @var \eZ\Publish\API\Repository\Repository
+     */
+    private $repository;
+
+    /**
+     * Default Administrator user id.
+     */
+    private $adminUserId = 14;
+
+    /**
      * @injectService $repository @ezpublish.api.repository
      * @injectService $contentTypeService @ezpublish.api.service.content_type
      */
     public function __construct(Repository $repository, ContentTypeService $contentTypeService)
     {
-        $this->setRepository($repository);
+        $this->repository = $repository;
+        $this->repository->setCurrentUser(new UserReference($this->adminUserId));
         $this->contentTypeService = $contentTypeService;
     }
 

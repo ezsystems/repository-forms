@@ -18,16 +18,14 @@ use eZ\Publish\API\Repository\Values\User\Role;
 use eZ\Publish\API\Repository\Values\User\User;
 use eZ\Publish\API\Repository\Values\User\UserGroup;
 use eZ\Publish\Core\Repository\Values\User\RoleCreateStruct;
+use eZ\Publish\Core\Repository\Values\User\UserReference;
 use EzSystems\EzPlatformAdminUi\Behat\Helper\EzEnvironmentConstants;
-use EzSystems\PlatformBehatBundle\Context\RepositoryContext;
 use PHPUnit\Framework\Assert as Assertion;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Yaml\Yaml;
 
 class UserRegistrationContext extends RawMinkContext implements Context, SnippetAcceptingContext
 {
-    use RepositoryContext;
-
     /** @var string Regex matching the way the Twig template name is inserted in debug mode */
     const TWIG_DEBUG_STOP_REGEX = '<!-- STOP .*%s.* -->';
 
@@ -46,16 +44,27 @@ class UserRegistrationContext extends RawMinkContext implements Context, Snippet
     private $customUserGroup;
 
     /**
+     * @var \eZ\Publish\API\Repository\Repository
+     */
+    private $repository;
+
+    /**
      * @var YamlConfigurationContext
      */
     private $yamlConfigurationContext;
+
+    /**
+     * Default Administrator user id.
+     */
+    private $adminUserId = 14;
 
     /**
      * @injectService $repository @ezpublish.api.repository
      */
     public function __construct(Repository $repository)
     {
-        $this->setRepository($repository);
+        $this->repository = $repository;
+        $this->repository->setCurrentUser(new UserReference($this->adminUserId));
     }
 
     /** @BeforeScenario */
@@ -95,7 +104,7 @@ class UserRegistrationContext extends RawMinkContext implements Context, Snippet
      */
     private function createUserWithRole(Role $role)
     {
-        $userService = $this->getRepository()->getUserService();
+        $userService = $this->repository->getUserService();
         $username = uniqid($role->identifier, true);
         $createStruct = $userService->newUserCreateStruct(
             $username,
@@ -107,7 +116,7 @@ class UserRegistrationContext extends RawMinkContext implements Context, Snippet
         $createStruct->setField('last_name', 'The first');
         $user = $userService->createUser($createStruct, [$userService->loadUserGroup(self::$groupId)]);
 
-        $this->getRepository()->getRoleService()->assignRoleToUser($role, $user);
+        $this->repository->getRoleService()->assignRoleToUser($role, $user);
 
         return $user;
     }
@@ -128,7 +137,7 @@ class UserRegistrationContext extends RawMinkContext implements Context, Snippet
             true
         );
 
-        $roleService = $this->getRepository()->getRoleService();
+        $roleService = $this->repository->getRoleService();
         $roleCreateStruct = new RoleCreateStruct(['identifier' => $roleIdentifier]);
 
         $policiesSet = explode(',', EzEnvironmentConstants::get('CREATE_REGISTRATION_ROLE_POLICIES'));
@@ -182,7 +191,7 @@ class UserRegistrationContext extends RawMinkContext implements Context, Snippet
      */
     public function itMatchesTheStructureOfTheConfiguredRegistrationUserContentType()
     {
-        $userContentType = $this->getRepository()->getContentTypeService()
+        $userContentType = $this->repository->getContentTypeService()
             ->loadContentTypeByIdentifier('user');
         foreach ($userContentType->getFieldDefinitions() as $fieldDefinition) {
             $this->assertSession()->elementExists(
@@ -254,7 +263,7 @@ class UserRegistrationContext extends RawMinkContext implements Context, Snippet
      */
     public function theUserAccountHasBeenCreated()
     {
-        $this->getRepository()->getUserService()->loadUserByLogin($this->registrationUsername);
+        $this->repository->getUserService()->loadUserByLogin($this->registrationUsername);
     }
 
     /**
@@ -262,7 +271,7 @@ class UserRegistrationContext extends RawMinkContext implements Context, Snippet
      */
     public function createUserGroup()
     {
-        $userService = $this->getRepository()->getUserService();
+        $userService = $this->repository->getUserService();
 
         $groupCreateStruct = $userService->newUserGroupCreateStruct(self::$language);
         $groupCreateStruct->setField('name', uniqid('User registration group ', true));
@@ -305,7 +314,7 @@ class UserRegistrationContext extends RawMinkContext implements Context, Snippet
      */
     public function theUserIsCreatedInThisUserGroup()
     {
-        $userService = $this->getRepository()->getUserService();
+        $userService = $this->repository->getUserService();
         $user = $userService->loadUserByLogin($this->registrationUsername);
         $userGroups = $userService->loadUserGroupsOfUser($user);
 
