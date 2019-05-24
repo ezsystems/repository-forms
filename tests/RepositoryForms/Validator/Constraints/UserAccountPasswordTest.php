@@ -30,6 +30,6 @@ class UserAccountPasswordTest extends TestCase
 
     public function testGetTargets()
     {
-        $this->assertSame(UserAccountPassword::CLASS_CONSTRAINT, $this->constraint->getTargets());
+        $this->assertSame([UserAccountPassword::CLASS_CONSTRAINT, UserAccountPassword::PROPERTY_CONSTRAINT], $this->constraint->getTargets());
     }
 }

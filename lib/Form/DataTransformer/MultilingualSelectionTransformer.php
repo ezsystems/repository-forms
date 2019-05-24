@@ -43,7 +43,7 @@ class MultilingualSelectionTransformer implements DataTransformerInterface
     public function reverseTransform($value)
     {
         if (!$value) {
-            return null;
+            return [$this->languageCode => []];
         }
 
         return array_merge($this->data->fieldSettings['multilingualOptions'], [$this->languageCode => $value]);
