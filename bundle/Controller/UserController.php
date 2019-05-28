@@ -123,8 +123,8 @@ class UserController extends Controller
         return new UserCreateView(null, [
             'form' => $form->createView(),
             'language' => $language,
-            'contentType' => $contentType,
-            'parentGroup' => $parentGroup,
+            'content_type' => $contentType,
+            'parent_group' => $parentGroup,
         ]);
     }
 
@@ -183,8 +183,8 @@ class UserController extends Controller
 
         return new UserUpdateView(null, [
             'form' => $form->createView(),
-            'languageCode' => $language,
-            'contentType' => $contentType,
+            'language_code' => $language,
+            'content_type' => $contentType,
             'user' => $user,
         ]);
     }
