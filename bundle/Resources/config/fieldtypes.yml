@@ -19,10 +19,6 @@ services:
         arguments:
             $countriesInfo: '%ezpublish.fieldType.ezcountry.data%'
 
-    EzSystems\RepositoryForms\Form\Type\FieldType\RichTextFieldType:
-        arguments:
-            $docbookToXhtml5EditConverter: '@ezpublish.fieldType.ezrichtext.converter.edit.xhtml5'
-
     #
     # FormMappers
     #
