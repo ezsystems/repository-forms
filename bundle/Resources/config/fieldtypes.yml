@@ -106,10 +106,6 @@ services:
             - { name: ez.fieldFormMapper.definition, fieldType: ezobjectrelationlist }
             - { name: ez.fieldFormMapper.value, fieldType: ezobjectrelationlist }
 
-    EzSystems\RepositoryForms\FieldType\Mapper\RichTextFormMapper:
-        tags:
-            - { name: ez.fieldFormMapper.value, fieldType: ezrichtext }
-
     EzSystems\RepositoryForms\FieldType\Mapper\TextLineFormMapper:
         tags:
             - { name: ez.fieldFormMapper.definition, fieldType: ezstring }
