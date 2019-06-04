@@ -19,10 +19,6 @@ services:
         arguments:
             $countriesInfo: '%ezpublish.fieldType.ezcountry.data%'
 
-    EzSystems\RepositoryForms\Form\Type\FieldType\RichTextFieldType:
-        arguments:
-            $docbookToXhtml5EditConverter: '@ezpublish.fieldType.ezrichtext.converter.edit.xhtml5'
-
     #
     # FormMappers
     #
@@ -109,10 +105,6 @@ services:
         tags:
             - { name: ez.fieldFormMapper.definition, fieldType: ezobjectrelationlist }
             - { name: ez.fieldFormMapper.value, fieldType: ezobjectrelationlist }
-
-    EzSystems\RepositoryForms\FieldType\Mapper\RichTextFormMapper:
-        tags:
-            - { name: ez.fieldFormMapper.value, fieldType: ezrichtext }
 
     EzSystems\RepositoryForms\FieldType\Mapper\TextLineFormMapper:
         tags:
