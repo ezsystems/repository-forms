@@ -42,10 +42,10 @@ Scenario: The user registration templates can be customized
           default:
             user_registration:
               templates:
-                form: 'AppBundle:user:registration_form.html.twig'
-                confirmation: 'AppBundle:user:registration_confirmation.html.twig'
+                form: 'user/registration_form.html.twig'
+                confirmation: 'user/registration_confirmation.html.twig'
       """
-      And the following template in "src/AppBundle/Resources/views/user/registration_form.html.twig":
+      And the following template in "templates/user/registration_form.html.twig":
       """
       {% extends no_layout is defined and no_layout == true ? view_base_layout : pagelayout %}
 
@@ -57,7 +57,7 @@ Scenario: The user registration templates can be customized
            </section>
       {% endblock %}
       """
-      And the following template in "src/AppBundle/Resources/views/user/registration_confirmation.html.twig":
+      And the following template in "templates/user/registration_confirmation.html.twig":
       """
       {% extends no_layout is defined and no_layout == true ? view_base_layout : pagelayout %}
 
