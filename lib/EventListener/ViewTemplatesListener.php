@@ -65,6 +65,7 @@ class ViewTemplatesListener implements EventSubscriberInterface
             if ($view instanceof $viewClass) {
                 $view->setTemplateIdentifier($template);
                 $view->addParameters(['pagelayout' => $this->pagelayout]);
+                $view->addParameters(['page_layout' => $this->pagelayout]);
             }
         }
     }

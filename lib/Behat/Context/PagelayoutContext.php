@@ -55,10 +55,14 @@ class PagelayoutContext extends RawMinkContext implements Context, SnippetAccept
         switch ($installType) {
             case InstallType::PLATFORM:
             case InstallType::ENTERPRISE:
-                return $this->configResolver->getParameter('pagelayout', null, 'site');
+                return $this->configResolver->hasParameter('page_layout')
+                    ? $this->configResolver->getParameter('page_layout', null, 'site')
+                    : $this->configResolver->getParameter('pagelayout', null, 'site');
             case InstallType::PLATFORM_DEMO:
             case InstallType::ENTERPRISE_DEMO:
-                return str_replace('@ezdesign', 'app/Resources/views/themes/tastefulplanet', $this->configResolver->getParameter('pagelayout', null, 'site'));
+                return $this->configResolver->hasParameter('page_layout')
+                    ? str_replace('@ezdesign', 'app/Resources/views/themes/tastefulplanet', $this->configResolver->getParameter('page_layout', null, 'site'))
+                    : str_replace('@ezdesign', 'app/Resources/views/themes/tastefulplanet', $this->configResolver->getParameter('pagelayout', null, 'site'));
             default:
                 throw new \Exception('Unrecognised install type');
         }
