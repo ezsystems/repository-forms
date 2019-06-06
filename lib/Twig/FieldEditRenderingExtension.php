@@ -11,11 +11,11 @@ namespace EzSystems\RepositoryForms\Twig;
 use eZ\Publish\Core\MVC\Symfony\Templating\Exception\MissingFieldBlockException;
 use eZ\Publish\Core\MVC\Symfony\Templating\FieldBlockRendererInterface;
 use EzSystems\RepositoryForms\Data\FieldDefinitionData;
-use Twig_Environment;
-use Twig_Extension;
-use Twig_SimpleFunction;
+use Twig\Environment;
+use Twig\Extension\AbstractExtension;
+use Twig\TwigFunction;
 
-class FieldEditRenderingExtension extends Twig_Extension
+class FieldEditRenderingExtension extends AbstractExtension
 {
     /**
      * @var FieldBlockRendererInterface|\eZ\Publish\Core\MVC\Symfony\Templating\Twig\FieldBlockRenderer
@@ -35,9 +35,9 @@ class FieldEditRenderingExtension extends Twig_Extension
     public function getFunctions()
     {
         return array(
-            new Twig_SimpleFunction(
+            new TwigFunction(
                 'ez_render_fielddefinition_edit',
-                function (Twig_Environment $twig, FieldDefinitionData $fieldDefinitionData, array $params = []) {
+                function (Environment $twig, FieldDefinitionData $fieldDefinitionData, array $params = []) {
                     $this->fieldBlockRenderer->setTwig($twig);
 
                     return $this->renderFieldDefinitionEdit($fieldDefinitionData, $params);
