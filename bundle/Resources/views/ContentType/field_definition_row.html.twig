@@ -56,7 +56,7 @@
 
         {# Field type specific fields below #}
         {# Use field type config, if provided. #}
-        {{ ez_render_fielddefinition_edit(value, {"languageCode": languageCode, "form": form, "group_class": group_class|default("")}) }}
+        {{ ez_render_field_definition_edit(value, {"languageCode": languageCode, "form": form, "group_class": group_class|default("")}) }}
         {# Default rendering #}
         {% for child in form %}
             {# Iterable children means collections, they are handled in field_types.html.twig #}
