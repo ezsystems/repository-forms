@@ -22,12 +22,12 @@ use Symfony\Component\Validator\Violation\ConstraintViolationBuilderInterface;
 class ValidatorConfigurationValidatorTest extends TestCase
 {
     /**
-     * @var \PHPUnit_Framework_MockObject_MockObject
+     * @var \PHPUnit\Framework\MockObject\MockObject
      */
     private $executionContext;
 
     /**
-     * @var \PHPUnit_Framework_MockObject_MockObject
+     * @var \PHPUnit\Framework\MockObject\MockObject
      */
     private $fieldTypeService;
 
@@ -36,7 +36,7 @@ class ValidatorConfigurationValidatorTest extends TestCase
      */
     private $validator;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
         $this->executionContext = $this->createMock(ExecutionContextInterface::class);

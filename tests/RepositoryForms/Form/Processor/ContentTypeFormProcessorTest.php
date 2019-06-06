@@ -28,12 +28,12 @@ use Symfony\Component\Routing\RouterInterface;
 class ContentTypeFormProcessorTest extends TestCase
 {
     /**
-     * @var \eZ\Publish\API\Repository\ContentTypeService|\PHPUnit_Framework_MockObject_MockObject
+     * @var \eZ\Publish\API\Repository\ContentTypeService|\PHPUnit\Framework\MockObject\MockObject
      */
     private $contentTypeService;
 
     /**
-     * @var \Symfony\Component\Routing\RouterInterface|\PHPUnit_Framework_MockObject_MockObject
+     * @var \Symfony\Component\Routing\RouterInterface|\PHPUnit\Framework\MockObject\MockObject
      */
     private $router;
 
@@ -43,11 +43,11 @@ class ContentTypeFormProcessorTest extends TestCase
     private $formProcessor;
 
     /**
-     * @var \eZ\Publish\Core\Helper\FieldsGroups\FieldsGroupsList|\PHPUnit_Framework_MockObject_MockObject
+     * @var \eZ\Publish\Core\Helper\FieldsGroups\FieldsGroupsList|\PHPUnit\Framework\MockObject\MockObject
      */
     private $groupsList;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
         $this->contentTypeService = $this->createMock(ContentTypeService::class);

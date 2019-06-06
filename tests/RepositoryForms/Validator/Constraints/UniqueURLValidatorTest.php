@@ -21,16 +21,16 @@ use Symfony\Component\Validator\Violation\ConstraintViolationBuilderInterface;
 
 class UniqueURLValidatorTest extends TestCase
 {
-    /** @var \eZ\Publish\API\Repository\URLService|\PHPUnit_Framework_MockObject_MockObject */
+    /** @var \eZ\Publish\API\Repository\URLService|\PHPUnit\Framework\MockObject\MockObject */
     private $urlService;
 
-    /** @var \Symfony\Component\Validator\Context\ExecutionContextInterface|\PHPUnit_Framework_MockObject_MockObject */
+    /** @var \Symfony\Component\Validator\Context\ExecutionContextInterface|\PHPUnit\Framework\MockObject\MockObject */
     private $executionContext;
 
     /** @var \EzSystems\RepositoryForms\Validator\Constraints\UniqueURLValidator */
     private $validator;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->urlService = $this->createMock(URLService::class);
         $this->executionContext = $this->createMock(ExecutionContextInterface::class);

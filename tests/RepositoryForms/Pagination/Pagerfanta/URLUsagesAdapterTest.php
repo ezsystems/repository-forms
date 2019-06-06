@@ -8,8 +8,8 @@
  */
 namespace EzSystems\RepositoryForms\Tests\Pagination\Pagerfanta;
 
-use eZ\Publish\API\Repository\Values\Content\Search\SearchHit;
 use eZ\Publish\API\Repository\URLService;
+use eZ\Publish\API\Repository\Values\Content\Search\SearchHit;
 use eZ\Publish\API\Repository\Values\URL\URL;
 use eZ\Publish\API\Repository\Values\URL\UsageSearchResult;
 use EzSystems\RepositoryForms\Pagination\Pagerfanta\URLUsagesAdapter;
@@ -17,10 +17,10 @@ use PHPUnit\Framework\TestCase;
 
 class URLUsagesAdapterTest extends TestCase
 {
-    /** @var \eZ\Publish\API\Repository\URLService|\PHPUnit_Framework_MockObject_MockObject */
+    /** @var \eZ\Publish\API\Repository\URLService|\PHPUnit\Framework\MockObject\MockObject */
     private $urlService;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->urlService = $this->createMock(URLService::class);
     }

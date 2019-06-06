@@ -17,7 +17,7 @@ abstract class BaseMapperTest extends TestCase
     protected $fieldForm;
     protected $data;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->fieldTypeService = $this->getMockBuilder(FieldTypeService::class)
             ->getMock();

@@ -19,16 +19,16 @@ use Psr\Log\LoggerInterface;
 
 class ObjectStateLimitationMapperTest extends TestCase
 {
-    /** @var ObjectStateService|\PHPUnit_Framework_MockObject_MockObject */
+    /** @var ObjectStateService|\PHPUnit\Framework\MockObject\MockObject */
     private $objectStateService;
 
-    /** @var LoggerInterface|\PHPUnit_Framework_MockObject_MockObject */
+    /** @var LoggerInterface|\PHPUnit\Framework\MockObject\MockObject */
     private $logger;
 
     /** @var ObjectStateLimitationMapper */
     private $mapper;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->objectStateService = $this->createMock(ObjectStateService::class);
         $this->logger = $this->createMock(LoggerInterface::class);

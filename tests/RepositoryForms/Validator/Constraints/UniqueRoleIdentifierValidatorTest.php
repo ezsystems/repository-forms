@@ -8,27 +8,27 @@
  */
 namespace EzSystems\RepositoryForms\Tests\Validator\Constraints;
 
+use eZ\Publish\API\Repository\RoleService;
 use eZ\Publish\API\Repository\Values\User\Role;
 use eZ\Publish\API\Repository\Values\User\RoleDraft;
 use eZ\Publish\Core\Base\Exceptions\NotFoundException;
-use eZ\Publish\API\Repository\RoleService;
 use EzSystems\RepositoryForms\Data\Role\RoleData;
 use EzSystems\RepositoryForms\Validator\Constraints\UniqueRoleIdentifier;
 use EzSystems\RepositoryForms\Validator\Constraints\UniqueRoleIdentifierValidator;
-use Symfony\Component\Validator\Context\ExecutionContextInterface;
-use Symfony\Component\Validator\Violation\ConstraintViolationBuilderInterface;
 use PHPUnit\Framework\TestCase;
 use stdClass;
+use Symfony\Component\Validator\Context\ExecutionContextInterface;
+use Symfony\Component\Validator\Violation\ConstraintViolationBuilderInterface;
 
 class UniqueRoleIdentifierValidatorTest extends TestCase
 {
     /**
-     * @var \PHPUnit_Framework_MockObject_MockObject
+     * @var \PHPUnit\Framework\MockObject\MockObject
      */
     private $roleService;
 
     /**
-     * @var \PHPUnit_Framework_MockObject_MockObject
+     * @var \PHPUnit\Framework\MockObject\MockObject
      */
     private $executionContext;
 
@@ -37,7 +37,7 @@ class UniqueRoleIdentifierValidatorTest extends TestCase
      */
     private $validator;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
         $this->roleService = $this->createMock(RoleService::class);

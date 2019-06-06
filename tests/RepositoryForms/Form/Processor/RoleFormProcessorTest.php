@@ -15,18 +15,18 @@ use EzSystems\RepositoryForms\Event\FormActionEvent;
 use EzSystems\RepositoryForms\Event\RepositoryFormEvents;
 use EzSystems\RepositoryForms\Form\Processor\RoleFormProcessor;
 use PHPUnit\Framework\TestCase;
-use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Form\FormInterface;
+use Symfony\Component\Routing\RouterInterface;
 
 class RoleFormProcessorTest extends TestCase
 {
     /**
-     * @var \PHPUnit_Framework_MockObject_MockObject
+     * @var \PHPUnit\Framework\MockObject\MockObject
      */
     private $roleService;
 
     /**
-     * @var \PHPUnit_Framework_MockObject_MockObject
+     * @var \PHPUnit\Framework\MockObject\MockObject
      */
     private $router;
 
@@ -35,7 +35,7 @@ class RoleFormProcessorTest extends TestCase
      */
     private $formProcessor;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
         $this->roleService = $this->createMock(RoleService::class);

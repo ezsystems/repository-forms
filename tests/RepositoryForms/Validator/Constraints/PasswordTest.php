@@ -13,7 +13,7 @@ class PasswordTest extends TestCase
     /** @var \EzSystems\RepositoryForms\Validator\Constraints\Password */
     private $constraint;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->constraint = new Password();
     }

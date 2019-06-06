@@ -24,7 +24,7 @@ class UDWBasedValueViewTransformerTest extends TestCase
     /** @var \EzSystems\RepositoryForms\Limitation\DataTransformer\UDWBasedValueViewTransformer */
     private $transformer;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->locationService = $this->createMock(LocationService::class);
         $this->transformer = new UDWBasedValueViewTransformer(

@@ -19,10 +19,10 @@ use PHPUnit\Framework\TestCase;
 
 class URLSearchAdapterTest extends TestCase
 {
-    /** @var \eZ\Publish\API\Repository\URLService|\PHPUnit_Framework_MockObject_MockObject */
+    /** @var \eZ\Publish\API\Repository\URLService|\PHPUnit\Framework\MockObject\MockObject */
     private $urlService;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->urlService = $this->createMock(URLService::class);
     }

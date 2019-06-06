@@ -23,12 +23,12 @@ use Symfony\Component\Validator\Violation\ConstraintViolationBuilderInterface;
 class UniqueContentTypeIdentifierValidatorTest extends TestCase
 {
     /**
-     * @var \PHPUnit_Framework_MockObject_MockObject
+     * @var \PHPUnit\Framework\MockObject\MockObject
      */
     private $contentTypeService;
 
     /**
-     * @var \PHPUnit_Framework_MockObject_MockObject
+     * @var \PHPUnit\Framework\MockObject\MockObject
      */
     private $executionContext;
 
@@ -37,7 +37,7 @@ class UniqueContentTypeIdentifierValidatorTest extends TestCase
      */
     private $validator;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
         $this->contentTypeService = $this->createMock(ContentTypeService::class);

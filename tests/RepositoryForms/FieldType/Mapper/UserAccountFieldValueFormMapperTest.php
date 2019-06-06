@@ -16,7 +16,8 @@ use Symfony\Component\Form\FormInterface;
 
 class UserAccountFieldValueFormMapperTest extends BaseMapperTest
 {
-    protected function setUp()
+    
+    protected function setUp(): void
     {
         parent::setUp();
 

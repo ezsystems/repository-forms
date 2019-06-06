@@ -15,23 +15,22 @@ use EzSystems\RepositoryForms\Data\Mapper\PolicyMapper;
 use EzSystems\RepositoryForms\Data\Role\PolicyCreateData;
 use EzSystems\RepositoryForms\Data\Role\PolicyUpdateData;
 use PHPUnit\Framework\TestCase;
+use Symfony\Component\OptionsResolver\Exception\MissingOptionsException;
 
 class PolicyMapperTest extends TestCase
 {
-    /**
-     * @expectedException \Symfony\Component\OptionsResolver\Exception\MissingOptionsException
-     */
     public function testMapToCreateNoRoleDraft()
     {
+        $this->expectException(MissingOptionsException::class);
+
         $policy = new PolicyDraft();
         (new PolicyMapper())->mapToFormData($policy);
     }
 
-    /**
-     * @expectedException \Symfony\Component\OptionsResolver\Exception\MissingOptionsException
-     */
     public function testMapToCreateNoInitialRole()
     {
+        $this->expectException(MissingOptionsException::class);
+
         $policy = new PolicyDraft();
         (new PolicyMapper())->mapToFormData($policy, ['roleDraft' => new RoleDraft(), 'availableLimitationTypes' => []]);
     }
@@ -53,20 +52,18 @@ class PolicyMapperTest extends TestCase
         self::assertTrue($data->isNew());
     }
 
-    /**
-     * @expectedException \Symfony\Component\OptionsResolver\Exception\MissingOptionsException
-     */
     public function testMapToUpdateNoRoleDraft()
     {
+        $this->expectException(MissingOptionsException::class);
+
         $policy = new PolicyDraft(['innerPolicy' => new Policy(['id' => 123])]);
         (new PolicyMapper())->mapToFormData($policy);
     }
 
-    /**
-     * @expectedException \Symfony\Component\OptionsResolver\Exception\MissingOptionsException
-     */
     public function testMapToUpdateNoInitialRole()
     {
+        $this->expectException(MissingOptionsException::class);
+
         $policy = new PolicyDraft(['innerPolicy' => new Policy(['id' => 123])]);
         $roleDraft = new RoleDraft();
         (new PolicyMapper())->mapToFormData($policy, ['roleDraft' => $roleDraft, 'availableLimitationTypes' => []]);

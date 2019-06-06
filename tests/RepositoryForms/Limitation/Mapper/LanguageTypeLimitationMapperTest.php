@@ -17,16 +17,16 @@ use Psr\Log\LoggerInterface;
 
 class LanguageTypeLimitationMapperTest extends TestCase
 {
-    /** @var LanguageService|\PHPUnit_Framework_MockObject_MockObject */
+    /** @var LanguageService|\PHPUnit\Framework\MockObject\MockObject */
     private $languageService;
 
-    /** @var LoggerInterface|\PHPUnit_Framework_MockObject_MockObject */
+    /** @var LoggerInterface|\PHPUnit\Framework\MockObject\MockObject */
     private $logger;
 
     /** @var LanguageLimitationMapper */
     private $mapper;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->languageService = $this->createMock(LanguageService::class);
         $this->logger = $this->createMock(LoggerInterface::class);

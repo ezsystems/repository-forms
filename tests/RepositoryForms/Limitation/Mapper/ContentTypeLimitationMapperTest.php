@@ -17,16 +17,16 @@ use Psr\Log\LoggerInterface;
 
 class ContentTypeLimitationMapperTest extends TestCase
 {
-    /** @var ContentTypeService|\PHPUnit_Framework_MockObject_MockObject */
+    /** @var ContentTypeService|\PHPUnit\Framework\MockObject\MockObject */
     private $contentTypeService;
 
-    /** @var LoggerInterface|\PHPUnit_Framework_MockObject_MockObject */
+    /** @var LoggerInterface|\PHPUnit\Framework\MockObject\MockObject */
     private $logger;
 
     /** @var ContentTypeLimitationMapper */
     private $mapper;
 
-    public function setUp()
+    protected function setUp(): void
     {
         $this->contentTypeService = $this->createMock(ContentTypeService::class);
         $this->logger = $this->createMock(LoggerInterface::class);
