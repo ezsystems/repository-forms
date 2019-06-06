@@ -6,25 +6,21 @@ env:
   global:
     # For functional tests
     - COMPOSE_FILE="doc/docker/base-dev.yml:doc/docker/selenium.yml"
-    - SYMFONY_ENV=behat
-    - SYMFONY_DEBUG=1
+    - APP_ENV=behat
+    - APP_DEBUG=1
     - EZPLATFORM_REPO="https://github.com/ezsystems/ezplatform.git"
 
 matrix:
   include:
-    # 7.1
-    - name: "[PHP 7.1] PHP Unit tests"
-      php: 7.1
+    # 7.3
+    - name: "[PHP 7.3] PHP Unit tests"
+      php: 7.3
       env: TEST_CONFIG="phpunit.xml.dist"
-    - name: "[PHP 7.1] Repository-forms tests on Clean P"
-      php: 7.1
+    - name: "[PHP 7.3] Repository-forms tests on Clean P"
+      php: 7.3
       env:
         - BEHAT_OPTS="--mode=behat --profile=repository-forms --non-strict"
-        - PHP_IMAGE=ezsystems/php:7.1-v1
-    # 7.2
-    - name: "[PHP 7.2] PHP Unit tests"
-      php: 7.2
-      env: TEST_CONFIG="phpunit.xml.dist"
+        - PHP_IMAGE=ezsystems/php:7.3
 
 # test only master (+ Pull requests)
 branches:
