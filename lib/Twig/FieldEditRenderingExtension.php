@@ -36,7 +36,7 @@ class FieldEditRenderingExtension extends AbstractExtension
     {
         return array(
             new TwigFunction(
-                'ez_render_field_definition_settings',
+                'ez_render_field_definition_edit',
                 function (Environment $twig, FieldDefinitionData $fieldDefinitionData, array $params = []) {
                     $this->fieldBlockRenderer->setTwig($twig);
 
