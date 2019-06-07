@@ -11,7 +11,7 @@ namespace EzSystems\RepositoryForms\Tests\Limitation\Mapper;
 use eZ\Publish\API\Repository\Values\User\Limitation\OwnerLimitation;
 use EzSystems\RepositoryForms\Limitation\Mapper\OwnerLimitationMapper;
 use PHPUnit\Framework\TestCase;
-use Symfony\Component\Translation\TranslatorInterface;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 class OwnerLimitationMapperTest extends TestCase
 {
