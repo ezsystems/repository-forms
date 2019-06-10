@@ -15,20 +15,20 @@ use eZ\Publish\Core\Base\Exceptions\NotFoundException;
 use EzSystems\RepositoryForms\Data\Language\LanguageCreateData;
 use EzSystems\RepositoryForms\Validator\Constraints\UniqueLanguageCode;
 use EzSystems\RepositoryForms\Validator\Constraints\UniqueLanguageCodeValidator;
+use PHPUnit\Framework\TestCase;
 use stdClass;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
 use Symfony\Component\Validator\Violation\ConstraintViolationBuilderInterface;
-use PHPUnit\Framework\TestCase;
 
 class UniqueLanguageCodeValidatorTest extends TestCase
 {
     /**
-     * @var \PHPUnit_Framework_MockObject_MockObject
+     * @var \PHPUnit\Framework\MockObject\MockObject
      */
     private $languageService;
 
     /**
-     * @var \PHPUnit_Framework_MockObject_MockObject
+     * @var \PHPUnit\Framework\MockObject\MockObject
      */
     private $executionContext;
 
@@ -37,7 +37,7 @@ class UniqueLanguageCodeValidatorTest extends TestCase
      */
     private $validator;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->languageService = $this->createMock(LanguageService::class);
         $this->executionContext = $this->createMock(ExecutionContextInterface::class);

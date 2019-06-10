@@ -94,7 +94,7 @@ class ContentCreateViewBuilder implements ViewBuilder
         $contentType = $this->resolveContentType($parameters, $this->languagePreferenceProvider->getPreferredLanguages());
         $form = $parameters['form'];
 
-        if ($form->isValid() && null !== $form->getClickedButton()) {
+        if ($form->isSubmitted() && $form->isValid() && null !== $form->getClickedButton()) {
             $this->contentActionDispatcher->dispatchFormAction(
                 $form,
                 $form->getData(),

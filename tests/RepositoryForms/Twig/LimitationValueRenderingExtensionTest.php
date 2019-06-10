@@ -16,15 +16,15 @@ use EzSystems\RepositoryForms\Limitation\LimitationValueMapperRegistryInterface;
 use EzSystems\RepositoryForms\Limitation\Templating\LimitationBlockRenderer;
 use EzSystems\RepositoryForms\Twig\LimitationValueRenderingExtension;
 use ReflectionProperty;
-use Twig_Environment;
-use Twig_Error;
-use Twig_Loader_Array;
-use Twig_Loader_Chain;
-use Twig_Loader_Filesystem;
+use Twig\Environment;
+use Twig\Error\Error;
+use Twig\Loader\ArrayLoader;
+use Twig\Loader\ChainLoader;
+use Twig\Loader\FilesystemLoader;
 
 class LimitationValueRenderingExtensionTest extends FileSystemTwigIntegrationTestCase
 {
-    public function getExtensions(\Twig_Environment $twig = null)
+    public function getExtensions(Environment $twig = null)
     {
         $limitationBlockRenderer = new LimitationBlockRenderer(
             $this->createLimitationValueMapperRegistryMock(),
@@ -91,9 +91,9 @@ class LimitationValueRenderingExtensionTest extends FileSystemTwigIntegrationTes
             }
         }
 
-        $loader = new Twig_Loader_Chain([
-            new Twig_Loader_Array($templates),
-            new Twig_Loader_Filesystem($this->getFixturesDir()),
+        $loader = new ChainLoader([
+            new ArrayLoader($templates),
+            new FilesystemLoader($this->getFixturesDir()),
         ]);
 
         foreach ($outputs as $i => $match) {
@@ -102,9 +102,9 @@ class LimitationValueRenderingExtensionTest extends FileSystemTwigIntegrationTes
                 'strict_variables' => true,
             ], $match[2] ? eval($match[2] . ';') : []);
 
-            $twig = new Twig_Environment($loader, $config);
+            $twig = new Environment($loader, $config);
             $twig->addGlobal('global', 'global');
-            // (!) Twig_Environment is dependency of LimitationBlockRenderer
+            // (!) Twig\Environment is dependency of LimitationBlockRenderer
             foreach ($this->getExtensions($twig) as $extension) {
                 $twig->addExtension($extension);
             }
@@ -138,7 +138,7 @@ class LimitationValueRenderingExtensionTest extends FileSystemTwigIntegrationTes
                     return;
                 }
 
-                throw new Twig_Error(sprintf('%s: %s', \get_class($e), $e->getMessage()), -1, $file, $e);
+                throw new Error(sprintf('%s: %s', \get_class($e), $e->getMessage()), -1, $file, $e);
             }
 
             try {
@@ -150,7 +150,7 @@ class LimitationValueRenderingExtensionTest extends FileSystemTwigIntegrationTes
                     return;
                 }
 
-                $e = new Twig_Error(sprintf('%s: %s', \get_class($e), $e->getMessage()), -1, $file, $e);
+                $e = new Error(sprintf('%s: %s', \get_class($e), $e->getMessage()), -1, $file, $e);
 
                 $output = trim(sprintf('%s: %s', \get_class($e), $e->getMessage()));
             }

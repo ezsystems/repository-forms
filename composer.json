@@ -12,19 +12,27 @@
     "minimum-stability": "dev",
     "prefer-stable": true,
     "require": {
-        "php": "^7.1",
+        "php": "^7.3",
         "ezsystems/ezpublish-kernel": "^8.0@dev",
-        "symfony/symfony": "^3.4",
-        "jms/translation-bundle": "^1.3"
+        "symfony/dependency-injection": "^4.2",
+        "symfony/http-kernel": "^4.3",
+        "symfony/http-foundation": "^4.3",
+        "symfony/options-resolver": "^4.3",
+        "symfony/config": "^4.3",
+        "symfony/yaml": "^4.3",
+        "symfony/filesystem": "^4.3",
+        "symfony/form": "^4.3",
+        "symfony/event-dispatcher": "^4.3",
+        "symfony/validator": "^4.3",
+        "symfony/routing": "^4.3",
+        "symfony/translation": " ^4.3",
+        "jms/translation-bundle": "^1.4"
     },
     "require-dev": {
-        "phpunit/phpunit": "^5.7|^6.0",
-        "matthiasnoback/symfony-dependency-injection-test": "~1.0|~2.0",
-        "behat/behat": "^3.0",
-        "friendsofphp/php-cs-fixer": "^2.7"
-    },
-    "conflict": {
-        "symfony/symfony": "2.7.11"
+        "phpunit/phpunit": "^8.2",
+        "matthiasnoback/symfony-dependency-injection-test": "^4.0",
+        "behat/behat": "^3.5",
+        "friendsofphp/php-cs-fixer": "^2.15"
     },
     "autoload": {
         "psr-4": {

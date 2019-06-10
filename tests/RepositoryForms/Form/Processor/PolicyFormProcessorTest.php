@@ -22,7 +22,7 @@ use Symfony\Component\Form\FormInterface;
 class PolicyFormProcessorTest extends TestCase
 {
     /**
-     * @var \PHPUnit_Framework_MockObject_MockObject
+     * @var \PHPUnit\Framework\MockObject\MockObject
      */
     private $roleService;
 
@@ -31,7 +31,7 @@ class PolicyFormProcessorTest extends TestCase
      */
     private $processor;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
         $this->roleService = $this->createMock(RoleService::class);

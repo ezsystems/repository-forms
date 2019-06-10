@@ -20,7 +20,7 @@ use Symfony\Component\Form\FormInterface;
 class ContentTypeGroupFormProcessorTest extends TestCase
 {
     /**
-     * @var \PHPUnit_Framework_MockObject_MockObject
+     * @var \PHPUnit\Framework\MockObject\MockObject
      */
     private $contentTypeService;
 
@@ -29,7 +29,7 @@ class ContentTypeGroupFormProcessorTest extends TestCase
      */
     private $processor;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
         $this->contentTypeService = $this->createMock(ContentTypeService::class);

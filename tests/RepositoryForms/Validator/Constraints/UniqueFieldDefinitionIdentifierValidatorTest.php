@@ -19,7 +19,7 @@ use Symfony\Component\Validator\Violation\ConstraintViolationBuilderInterface;
 class UniqueFieldDefinitionIdentifierValidatorTest extends TestCase
 {
     /**
-     * @var \PHPUnit_Framework_MockObject_MockObject
+     * @var \PHPUnit\Framework\MockObject\MockObject
      */
     private $executionContext;
 
@@ -28,7 +28,7 @@ class UniqueFieldDefinitionIdentifierValidatorTest extends TestCase
      */
     private $validator;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
         $this->executionContext = $this->createMock(ExecutionContextInterface::class);

@@ -11,7 +11,7 @@ use eZ\Publish\API\Repository\Values\Content\Location;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Translation\TranslatorInterface;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
  * Form type for sort field selection.
@@ -19,7 +19,7 @@ use Symfony\Component\Translation\TranslatorInterface;
 class SortFieldChoiceType extends AbstractType
 {
     /**
-     * @var Symfony\Component\Translation\TranslatorInterface
+     * @var Symfony\Contracts\Translation\TranslatorInterface
      */
     private $translator;
 
@@ -37,7 +37,6 @@ class SortFieldChoiceType extends AbstractType
     {
         $resolver->setDefaults([
             'choices' => $this->getSortFieldChoices(),
-            'choices_as_values' => true,
         ]);
     }
 

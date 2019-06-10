@@ -11,7 +11,7 @@ use eZ\Publish\Core\Base\Container\ApiLoader\FieldTypeCollectionFactory;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Translation\TranslatorInterface;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
  * Form type for field type selection.
@@ -19,12 +19,12 @@ use Symfony\Component\Translation\TranslatorInterface;
 class FieldTypeChoiceType extends AbstractType
 {
     /**
-     * @var eZ\Publish\Core\Base\Container\ApiLoader\FieldTypeCollectionFactory
+     * @var \eZ\Publish\Core\Base\Container\ApiLoader\FieldTypeCollectionFactory
      */
     private $fieldTypeCollectionFactory;
 
     /**
-     * @var Symfony\Component\Translation\TranslatorInterface
+     * @var \Symfony\Contracts\Translation\TranslatorInterface
      */
     private $translator;
 
@@ -43,7 +43,6 @@ class FieldTypeChoiceType extends AbstractType
     {
         $resolver->setDefaults([
             'choices' => $this->getFieldTypeChoices(),
-            'choices_as_values' => true,
         ]);
     }
 

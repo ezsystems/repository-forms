@@ -20,7 +20,7 @@ use Symfony\Component\Form\FormInterface;
 class LanguageFormProcessorTest extends TestCase
 {
     /**
-     * @var \PHPUnit_Framework_MockObject_MockObject|\eZ\Publish\API\Repository\LanguageService
+     * @var \PHPUnit\Framework\MockObject\MockObject|\eZ\Publish\API\Repository\LanguageService
      */
     private $languageService;
 
@@ -29,7 +29,7 @@ class LanguageFormProcessorTest extends TestCase
      */
     private $processor;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
         $this->languageService = $this->createMock(LanguageService::class);

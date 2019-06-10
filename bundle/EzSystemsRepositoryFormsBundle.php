@@ -36,6 +36,6 @@ class EzSystemsRepositoryFormsBundle extends Bundle
         $eZExtension->addConfigParser(new LimitationValueTemplates());
         $eZExtension->addConfigParser(new ContentEditView());
         $eZExtension->addConfigParser(new ContentCreateView());
-        $eZExtension->addDefaultSettings(__DIR__ . '/Resources/config', ['ezpublish_default_settings.yml']);
+        $eZExtension->addDefaultSettings(__DIR__ . '/Resources/config', ['ezpublish_default_settings.yaml']);
     }
 }

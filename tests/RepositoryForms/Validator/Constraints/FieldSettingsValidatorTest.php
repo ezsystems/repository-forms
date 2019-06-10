@@ -8,8 +8,8 @@
  */
 namespace EzSystems\RepositoryForms\Tests\Validator\Constraints;
 
-use eZ\Publish\API\Repository\FieldTypeService;
 use eZ\Publish\API\Repository\FieldType;
+use eZ\Publish\API\Repository\FieldTypeService;
 use eZ\Publish\Core\FieldType\ValidationError;
 use eZ\Publish\Core\Repository\Values\ContentType\FieldDefinition;
 use EzSystems\RepositoryForms\Data\FieldDefinitionData;
@@ -22,12 +22,12 @@ use Symfony\Component\Validator\Violation\ConstraintViolationBuilderInterface;
 class FieldSettingsValidatorTest extends TestCase
 {
     /**
-     * @var \PHPUnit_Framework_MockObject_MockObject
+     * @var \PHPUnit\Framework\MockObject\MockObject
      */
     private $executionContext;
 
     /**
-     * @var \PHPUnit_Framework_MockObject_MockObject
+     * @var \PHPUnit\Framework\MockObject\MockObject
      */
     private $fieldTypeService;
 
@@ -36,7 +36,7 @@ class FieldSettingsValidatorTest extends TestCase
      */
     private $validator;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
         $this->executionContext = $this->createMock(ExecutionContextInterface::class);

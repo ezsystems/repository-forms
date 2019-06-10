@@ -18,16 +18,16 @@ use Psr\Log\LoggerInterface;
 
 class SectionLimitationMapperTest extends TestCase
 {
-    /** @var SectionService|\PHPUnit_Framework_MockObject_MockObject */
+    /** @var SectionService|\PHPUnit\Framework\MockObject\MockObject */
     private $sectionServiceMock;
 
-    /** @var LoggerInterface|\PHPUnit_Framework_MockObject_MockObject */
+    /** @var LoggerInterface|\PHPUnit\Framework\MockObject\MockObject */
     private $logger;
 
     /** @var SectionLimitationMapper */
     private $mapper;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->sectionServiceMock = $this->createMock(SectionService::class);
         $this->logger = $this->createMock(LoggerInterface::class);

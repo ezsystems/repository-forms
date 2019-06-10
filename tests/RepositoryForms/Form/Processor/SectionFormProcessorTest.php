@@ -20,7 +20,7 @@ use Symfony\Component\Form\FormInterface;
 class SectionFormProcessorTest extends TestCase
 {
     /**
-     * @var \PHPUnit_Framework_MockObject_MockObject|\eZ\Publish\API\Repository\SectionService
+     * @var \PHPUnit\Framework\MockObject\MockObject|\eZ\Publish\API\Repository\SectionService
      */
     private $sectionService;
 
@@ -29,7 +29,7 @@ class SectionFormProcessorTest extends TestCase
      */
     private $processor;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
         $this->sectionService = $this->createMock(SectionService::class);

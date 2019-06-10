@@ -8,6 +8,7 @@
  */
 namespace EzSystems\RepositoryForms\Tests\Limitation;
 
+use EzSystems\RepositoryForms\Limitation\Exception\ValueMapperNotFoundException;
 use EzSystems\RepositoryForms\Limitation\LimitationValueMapperInterface;
 use EzSystems\RepositoryForms\Limitation\LimitationValueMapperRegistry;
 use PHPUnit\Framework\TestCase;
@@ -42,11 +43,10 @@ class LimitationValueMapperRegistryTest extends TestCase
         $this->assertEquals($foo, $registry->getMapper('foo'));
     }
 
-    /**
-     * @expectedException \EzSystems\RepositoryForms\Limitation\Exception\ValueMapperNotFoundException
-     */
     public function testGetNonExistingMapper()
     {
+        $this->expectException(ValueMapperNotFoundException::class);
+
         $registry = new LimitationValueMapperRegistry([
             'foo' => $this->createMock(LimitationValueMapperInterface::class),
         ]);

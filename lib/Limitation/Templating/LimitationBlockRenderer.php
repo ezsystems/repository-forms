@@ -11,8 +11,7 @@ use eZ\Publish\API\Repository\Values\User\Limitation;
 use EzSystems\RepositoryForms\Limitation\Exception\MissingLimitationBlockException;
 use EzSystems\RepositoryForms\Limitation\Exception\ValueMapperNotFoundException;
 use EzSystems\RepositoryForms\Limitation\LimitationValueMapperRegistryInterface;
-use Twig_Environment;
-use Twig_Template;
+use Twig\Environment;
 
 class LimitationBlockRenderer implements LimitationBlockRendererInterface
 {
@@ -25,7 +24,7 @@ class LimitationBlockRenderer implements LimitationBlockRendererInterface
     private $valueMapperRegistry;
 
     /**
-     * @var Twig_Environment
+     * @var \Twig\Environment
      */
     private $twig;
 
@@ -35,12 +34,10 @@ class LimitationBlockRenderer implements LimitationBlockRendererInterface
     private $limitationValueResources = [];
 
     /**
-     * LimitationRenderer constructor.
-     *
      * @param LimitationValueMapperRegistryInterface $valueMapperRegistry
-     * @param Twig_Environment $twig
+     * @param \Twig\Environment $twig
      */
-    public function __construct(LimitationValueMapperRegistryInterface $valueMapperRegistry, Twig_Environment $twig)
+    public function __construct(LimitationValueMapperRegistryInterface $valueMapperRegistry, Environment $twig)
     {
         $this->valueMapperRegistry = $valueMapperRegistry;
         $this->twig = $twig;
@@ -94,8 +91,8 @@ class LimitationBlockRenderer implements LimitationBlockRendererInterface
      * Find the first template containing block definition $blockName.
      *
      * @param string $blockName
-     * @param string|Twig_Template $localTemplate
-     * @return null|\Twig_TemplateWrapper
+     * @param string|\Twig\Template $localTemplate
+     * @return null|\Twig\TemplateWrapper
      */
     protected function findTemplateWithBlock($blockName, $localTemplate = null)
     {

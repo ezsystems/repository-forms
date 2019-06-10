@@ -16,7 +16,7 @@ class UniqueURLTest extends TestCase
     /** @var \EzSystems\RepositoryForms\Validator\Constraints\UniqueURL */
     private $constraint;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->constraint = new UniqueURL();
     }
