@@ -20,7 +20,7 @@ matrix:
       php: 7.3
       env:
         - BEHAT_OPTS="--mode=behat --profile=repository-forms --non-strict"
-        - PHP_IMAGE=ezsystems/php:7.3
+        - PHP_IMAGE=ezsystems/php:7.3-v1
 
 # test only master (+ Pull requests)
 branches:
