@@ -19,7 +19,7 @@ use eZ\Publish\API\Repository\Values\User\User;
 use eZ\Publish\API\Repository\Values\User\UserGroup;
 use eZ\Publish\Core\Repository\Values\User\RoleCreateStruct;
 use eZ\Publish\Core\Repository\Values\User\UserReference;
-use EzSystems\EzPlatformAdminUi\Behat\Helper\EzEnvironmentConstants;
+use EzSystems\Behat\Core\Environment\EnvironmentConstants;
 use PHPUnit\Framework\Assert as Assertion;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Yaml\Yaml;
@@ -140,7 +140,7 @@ class UserRegistrationContext extends RawMinkContext implements Context, Snippet
         $roleService = $this->repository->getRoleService();
         $roleCreateStruct = new RoleCreateStruct(['identifier' => $roleIdentifier]);
 
-        $policiesSet = explode(',', EzEnvironmentConstants::get('CREATE_REGISTRATION_ROLE_POLICIES'));
+        $policiesSet = explode(',', EnvironmentConstants::get('CREATE_REGISTRATION_ROLE_POLICIES'));
         foreach ($policiesSet as $policy) {
             [$module, $function] = explode('/', $policy);
             $roleCreateStruct->addPolicy($roleService->newPolicyCreateStruct($module, $function));
@@ -255,7 +255,7 @@ class UserRegistrationContext extends RawMinkContext implements Context, Snippet
      */
     public function iSeeARegistrationConfirmationMessage()
     {
-        $this->assertSession()->pageTextContains(EzEnvironmentConstants::get('REGISTRATION_CONFIRMATION_MESSAGE'));
+        $this->assertSession()->pageTextContains(EnvironmentConstants::get('REGISTRATION_CONFIRMATION_MESSAGE'));
     }
 
     /**
