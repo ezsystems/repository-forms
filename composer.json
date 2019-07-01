@@ -13,7 +13,7 @@
     "prefer-stable": true,
     "require": {
         "php": "^7.3",
-        "ezsystems/ezpublish-kernel": "^8.0@dev",
+        "ezsystems/ezpublish-kernel": "^8.0@beta",
         "symfony/dependency-injection": "^4.2",
         "symfony/http-kernel": "^4.3",
         "symfony/http-foundation": "^4.3",
