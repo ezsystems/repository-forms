@@ -8,8 +8,8 @@ use Behat\Behat\Context\Context;
 use Behat\Behat\Context\SnippetAcceptingContext;
 use Behat\MinkExtension\Context\RawMinkContext;
 use eZ\Publish\Core\MVC\ConfigResolverInterface;
-use EzSystems\EzPlatformAdminUi\Behat\Helper\EzEnvironmentConstants;
-use EzSystems\EzPlatformAdminUi\Behat\Helper\InstallType;
+use EzSystems\Behat\Core\Environment\EnvironmentConstants;
+use EzSystems\Behat\Core\Environment\InstallType;
 use PHPUnit\Framework\Assert as Assertion;
 
 class PagelayoutContext extends RawMinkContext implements Context, SnippetAcceptingContext
@@ -51,7 +51,7 @@ class PagelayoutContext extends RawMinkContext implements Context, SnippetAccept
 
     public function getPageLayout(): string
     {
-        $installType = EzEnvironmentConstants::getInstallType();
+        $installType = EnvironmentConstants::getInstallType();
         switch ($installType) {
             case InstallType::PLATFORM:
             case InstallType::ENTERPRISE:
