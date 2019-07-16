@@ -7,7 +7,7 @@
  */
 namespace EzSystems\RepositoryForms\Form\Type\ContentType;
 
-use eZ\Publish\Core\Base\Container\ApiLoader\FieldTypeCollectionFactory;
+use eZ\Publish\Core\FieldType\FieldTypeRegistry;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -19,18 +19,18 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 class FieldTypeChoiceType extends AbstractType
 {
     /**
-     * @var \eZ\Publish\Core\Base\Container\ApiLoader\FieldTypeCollectionFactory
+     * @var \eZ\Publish\Core\FieldType\FieldTypeRegistry
      */
-    private $fieldTypeCollectionFactory;
+    private $fieldTypeRegistry;
 
     /**
      * @var \Symfony\Contracts\Translation\TranslatorInterface
      */
     private $translator;
 
-    public function __construct(FieldTypeCollectionFactory $fieldTypeCollectionFactory, TranslatorInterface $translator)
+    public function __construct(FieldTypeRegistry $fieldTypeRegistry, TranslatorInterface $translator)
     {
-        $this->fieldTypeCollectionFactory = $fieldTypeCollectionFactory;
+        $this->fieldTypeRegistry = $fieldTypeRegistry;
         $this->translator = $translator;
     }
 
@@ -64,7 +64,7 @@ class FieldTypeChoiceType extends AbstractType
     private function getFieldTypeChoices()
     {
         $choices = [];
-        foreach ($this->fieldTypeCollectionFactory->getConcreteFieldTypesIdentifiers() as $fieldTypeIdentifier) {
+        foreach ($this->fieldTypeRegistry->getConcreteFieldTypesIdentifiers() as $fieldTypeIdentifier) {
             $choices[$this->getFieldTypeLabel($fieldTypeIdentifier)] = $fieldTypeIdentifier;
         }
 

@@ -75,7 +75,7 @@ services:
 
     ezrepoforms.content_type.field_type_choice.form_type:
         class: "%ezrepoforms.content_type.field_type_choice.form_type.class%"
-        arguments: ["@ezpublish.field_type_collection.factory", "@translator"]
+        arguments: ['@eZ\Publish\Core\FieldType\FieldTypeRegistry', '@translator']
         tags:
             - { name: form.type, alias: ezrepoforms_contenttype_field_type_choice }
 
