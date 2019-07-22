@@ -50,7 +50,7 @@ class TimeValueTransformer implements DataTransformerInterface
      */
     public function reverseTransform($value)
     {
-        if (is_null($value) || $value === '') {
+        if (null === $value || $value === '') {
             return null;
         }
 
