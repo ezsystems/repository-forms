@@ -46,7 +46,7 @@ class TimeValueTransformerTest extends TestCase
     {
         $transformer = new TimeValueTransformer();
 
-        self::expectException(TransformationFailedException::class);
+        $this->expectException(TransformationFailedException::class);
         $transformer->transform((object) ['time' => 1]);
     }
 }
