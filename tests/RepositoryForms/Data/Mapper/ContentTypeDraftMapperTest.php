@@ -167,8 +167,8 @@ class ContentTypeDraftMapperTest extends TestCase
         $eventDispatcherMock = $this->createMock(EventDispatcherInterface::class);
         $eventDispatcherMock
             ->method('dispatch')
-            ->with(FieldDefinitionMappingEvent::NAME, $this->isInstanceOf(FieldDefinitionMappingEvent::class))
-            ->willReturnCallback(function (string $eventName, FieldDefinitionMappingEvent $event) {
+            ->with($this->isInstanceOf(FieldDefinitionMappingEvent::class), FieldDefinitionMappingEvent::NAME)
+            ->willReturnCallback(function (FieldDefinitionMappingEvent $event, string $eventName) {
                 $fieldDefinitionData = $event->getFieldDefinitionData();
                 $fieldDefinition = $event->getFieldDefinition();
 
