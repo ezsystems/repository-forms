@@ -1,118 +1,118 @@
 {# fallback block for limitations without defined value mapper #}
 {% block ez_limitation_value_fallback %}
-{% spaceless %}
+{% apply spaceless %}
     {{ values|join(', ') }}
-{% endspaceless %}
+{% endapply %}
 {% endblock %}
 
 {% block ez_limitation_class_value %}
-{% spaceless %}
+{% apply spaceless %}
     {% for value in values %}
         {{ value.name }}{% if not loop.last %},{% endif %}
     {% endfor %}
-{% endspaceless %}
+{% endapply %}
 {% endblock %}
 
 {% block ez_limitation_language_value %}
-{% spaceless %}
+{% apply spaceless %}
     {% for value in values %}
         {{ value.name }}{% if not loop.last %},{% else %}{% endif %}
     {% endfor %}
-{% endspaceless %}
+{% endapply %}
 {% endblock %}
 
 {% block ez_limitation_node_value %}
-{% spaceless %}
+{% apply spaceless %}
     {% for path in values %}
         {% for value in path %}/{{ value.name }}{% endfor %}
         {% if not loop.last %}, {% endif %}
     {% endfor %}
-{% endspaceless %}
+{% endapply %}
 {% endblock %}
 
 {% block ez_limitation_owner_value %}
-{% spaceless %}
+{% apply spaceless %}
     {{ values|join(', ') }}
-{% endspaceless %}
+{% endapply %}
 {% endblock %}
 
 {% block ez_limitation_parentowner_value %}
-{% spaceless %}
+{% apply spaceless %}
     {{ values|join(', ') }}
-{% endspaceless %}
+{% endapply %}
 {% endblock %}
 
 {% block ez_limitation_parentclass_value %}
-{% spaceless %}
+{% apply spaceless %}
     {% for value in values %}
         {{ value.name }}{% if not loop.last %},{% endif %}
     {% endfor %}
-{% endspaceless %}
+{% endapply %}
 {% endblock %}
 
 {% block ez_limitation_section_value %}
-{% spaceless %}
+{% apply spaceless %}
     {% for value in values %}
         {{ value.name }}{% if not loop.last %},{% else %}{% endif %}
     {% endfor %}
-{% endspaceless %}
+{% endapply %}
 {% endblock %}
 
 {% block ez_limitation_newsection_value %}
-{% spaceless %}
+{% apply spaceless %}
     {% for value in values %}
         {{ value.name }}{% if not loop.last %},{% else %}{% endif %}
     {% endfor %}
-{% endspaceless %}
+{% endapply %}
 {% endblock %}
 
 {% block ez_limitation_siteaccess_value %}
-{% spaceless %}
+{% apply spaceless %}
     {{ values|join(', ') }}
-{% endspaceless %}
+{% endapply %}
 {% endblock %}
 
 {% block ez_limitation_state_value %}
-{% spaceless %}
+{% apply spaceless %}
     {{ values|join(', ') }}
-{% endspaceless %}
+{% endapply %}
 {% endblock %}
 
 {% block ez_limitation_newstate_value %}
-{% spaceless %}
+{% apply spaceless %}
     {{ values|join(', ') }}
-{% endspaceless %}
+{% endapply %}
 {% endblock %}
 
 {% block ez_limitation_subtree_value %}
-{% spaceless %}
+{% apply spaceless %}
     {% for path in values %}
         {% for value in path %}/{{ value.name }}{% endfor %}
         {% if not loop.last %}, {% endif %}
     {% endfor %}
-{% endspaceless %}
+{% endapply %}
 {% endblock %}
 
 {% block ez_limitation_group_value %}
-{% spaceless %}
+{% apply spaceless %}
     {{ values|join(', ') }}
-{% endspaceless %}
+{% endapply %}
 {% endblock %}
 
 {% block ez_limitation_parentdepth_value %}
-{% spaceless %}
+{% apply spaceless %}
     {{ values|join(', ') }}
-{% endspaceless %}
+{% endapply %}
 {% endblock %}
 
 {% block ez_limitation_parentgroup_value %}
-{% spaceless %}
+{% apply spaceless %}
     {{ values|join(', ') }}
-{% endspaceless %}
+{% endapply %}
 {% endblock %}
 
 {% block ez_limitation_status_value %}
-{% spaceless %}
+{% apply spaceless %}
     {{ values|join(', ') }}
-{% endspaceless %}
+{% endapply %}
 {% endblock %}
