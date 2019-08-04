@@ -50,7 +50,7 @@ class UserCancelFormProcessor implements EventSubscriberInterface
             ? $data->getParentGroups()[0]->contentInfo->mainLocationId
             : $data->user->contentInfo->mainLocationId;
 
-        $response = new RedirectResponse($this->urlGenerator->generate('_ezpublishLocation', [
+        $response = new RedirectResponse($this->urlGenerator->generate('ez_urlalias', [
             'locationId' => $locationId,
         ]));
         $event->setResponse($response);
