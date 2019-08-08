@@ -85,10 +85,7 @@ class ContentTypeDraftMapper implements FormDataMapperInterface
                 $language
             );
 
-            $this->eventDispatcher->dispatch(
-                FieldDefinitionMappingEvent::NAME,
-                $event
-            );
+            $this->eventDispatcher->dispatch($event, FieldDefinitionMappingEvent::NAME);
 
             $contentTypeData->addFieldDefinitionData($event->getFieldDefinitionData());
         }

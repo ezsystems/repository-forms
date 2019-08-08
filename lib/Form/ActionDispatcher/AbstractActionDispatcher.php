@@ -74,7 +74,7 @@ abstract class AbstractActionDispatcher implements ActionDispatcherInterface
      */
     protected function dispatchDefaultAction($defaultActionEventName, FormActionEvent $event)
     {
-        $this->eventDispatcher->dispatch($defaultActionEventName, $event);
+        $this->eventDispatcher->dispatch($event, $defaultActionEventName);
     }
 
     /**
@@ -83,7 +83,7 @@ abstract class AbstractActionDispatcher implements ActionDispatcherInterface
      */
     protected function dispatchAction($actionEventName, FormActionEvent $event)
     {
-        $this->eventDispatcher->dispatch($actionEventName, $event);
+        $this->eventDispatcher->dispatch($event, $actionEventName);
     }
 
     public function getResponse()
