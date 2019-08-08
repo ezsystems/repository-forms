@@ -1,8 +1,8 @@
 --TEST--
-"ez_render_fielddefinition_edit" function
+"ez_render_field_definition_edit" function
 --TEMPLATE--
-{{ ez_render_fielddefinition_edit(nooverride) }}
-{{ ez_render_fielddefinition_edit(overrides) }}
+{{ ez_render_field_definition_edit(nooverride) }}
+{{ ez_render_field_definition_edit(overrides) }}
 {{ ez_render_field_definition_edit(notdefault) }}
 {{ ez_render_field_definition_edit(withdata, {"foo": "bar", "some": "thing"}) }}
 {{ ez_render_field_definition_edit(noblock) }}
