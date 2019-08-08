@@ -11,7 +11,7 @@ namespace EzSystems\RepositoryForms\Event;
 use eZ\Publish\API\Repository\Values\Content\Language;
 use eZ\Publish\API\Repository\Values\ContentType\FieldDefinition;
 use EzSystems\RepositoryForms\Data\FieldDefinitionData;
-use Symfony\Component\EventDispatcher\Event;
+use Symfony\Contracts\EventDispatcher\Event;
 
 class FieldDefinitionMappingEvent extends Event
 {
