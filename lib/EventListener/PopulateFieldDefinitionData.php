@@ -33,6 +33,7 @@ class PopulateFieldDefinitionData implements EventSubscriberInterface
         $fieldDefinitionData->position = $fieldDefinition->position;
         $fieldDefinitionData->isTranslatable = $fieldDefinition->isTranslatable;
         $fieldDefinitionData->isRequired = $fieldDefinition->isRequired;
+        $fieldDefinitionData->isThumbnail = $fieldDefinition->isThumbnail;
         $fieldDefinitionData->isInfoCollector = $fieldDefinition->isInfoCollector;
         $fieldDefinitionData->validatorConfiguration = $fieldDefinition->getValidatorConfiguration();
         $fieldDefinitionData->fieldSettings = $fieldDefinition->getFieldSettings();

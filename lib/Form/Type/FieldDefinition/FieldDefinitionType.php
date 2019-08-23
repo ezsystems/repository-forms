@@ -10,6 +10,9 @@ namespace EzSystems\RepositoryForms\Form\Type\FieldDefinition;
 
 use eZ\Publish\API\Repository\FieldTypeService;
 use eZ\Publish\Core\Helper\FieldsGroups\FieldsGroupsList;
+use eZ\Publish\Core\Repository\Strategy\ContentThumbnail\Field\ContentFieldStrategy;
+use eZ\Publish\Core\Repository\Strategy\ContentThumbnail\FirstMatchingFieldStrategy;
+use eZ\Publish\Core\Repository\Strategy\ContentThumbnail\ThumbnailChainStrategy;
 use EzSystems\RepositoryForms\FieldType\FieldTypeFormMapperDispatcherInterface;
 use EzSystems\RepositoryForms\Form\DataTransformer\TranslatablePropertyTransformer;
 use Symfony\Component\Form\AbstractType;
@@ -41,11 +44,16 @@ class FieldDefinitionType extends AbstractType
      * @var FieldsGroupsList
      */
     private $groupsList;
+    /**
+     * @var \eZ\Publish\Core\Repository\Strategy\ContentThumbnail\Field\ContentFieldStrategy
+     */
+    private $contentFieldStrategy;
 
-    public function __construct(FieldTypeFormMapperDispatcherInterface $fieldTypeMapperDispatcher, FieldTypeService $fieldTypeService)
+    public function __construct(FieldTypeFormMapperDispatcherInterface $fieldTypeMapperDispatcher, FieldTypeService $fieldTypeService, ContentFieldStrategy $contentFieldStrategy)
     {
         $this->fieldTypeMapperDispatcher = $fieldTypeMapperDispatcher;
         $this->fieldTypeService = $fieldTypeService;
+        $this->contentFieldStrategy = $contentFieldStrategy;
     }
 
     public function setGroupsList(FieldsGroupsList $groupsList)
@@ -60,8 +68,9 @@ class FieldDefinitionType extends AbstractType
                 'data_class' => 'EzSystems\RepositoryForms\Data\FieldDefinitionData',
                 'translation_domain' => 'ezrepoforms_content_type',
                 'mainLanguageCode' => null,
+                'hasThumbnailStrategy' => false
             ])
-            ->setDefined(['mainLanguageCode'])
+            ->setDefined(['mainLanguageCode', 'hasThumbnailStrategy'])
             ->setAllowedTypes('mainLanguageCode', ['null', 'string'])
             ->setRequired(['languageCode']);
     }
@@ -75,6 +84,7 @@ class FieldDefinitionType extends AbstractType
 
         $translatablePropertyTransformer = new TranslatablePropertyTransformer($options['languageCode']);
         $isTranslation = $options['languageCode'] !== $options['mainLanguageCode'];
+        $hasThumbnailStrategy = $options['hasThumbnailStrategy'];
 
         $builder
             ->add(
@@ -143,6 +153,12 @@ class FieldDefinitionType extends AbstractType
                 'required' => false,
                 'disabled' => !$fieldType->isSearchable() || $isTranslation,
                 'label' => 'field_definition.is_searchable',
+            ]);
+
+            $form->add('isThumbnail', CheckboxType::class, [
+                'required' => false,
+                'label' => 'field_definition.is_thumbnail',
+                'disabled' => $isTranslation || !$this->contentFieldStrategy->hasStrategy($fieldTypeIdentifier),
             ]);
 
             // Let fieldType mappers do their jobs to complete the form.
