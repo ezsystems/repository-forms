@@ -22,10 +22,10 @@ services:
     ezplatform.repository_forms.content_edit_view.matcher_factory:
         class: '%ezpublish.view.matcher_factory.class%'
         arguments:
+            - '@eZ\Bundle\EzPublishCoreBundle\Matcher\ViewMatcherRegistry'
             - '@ezpublish.api.repository'
             - 'eZ\Publish\Core\MVC\Symfony\Matcher\ContentBased'
         calls:
-            - [setContainer, ['@service_container']]
             - [setMatchConfig, ['$content_edit_view$']]
 
     EzSystems\RepositoryForms\Content\View\Filter\ContentEditViewFilter:
@@ -53,10 +53,10 @@ services:
     ezplatform.repository_forms.content_create_view.matcher_factory:
         class: '%ezpublish.view.matcher_factory.class%'
         arguments:
+            - '@eZ\Bundle\EzPublishCoreBundle\Matcher\ViewMatcherRegistry'
             - '@ezpublish.api.repository'
             - 'eZ\Publish\Core\MVC\Symfony\Matcher\ContentBased'
         calls:
-            - [setContainer, ['@service_container']]
             - [setMatchConfig, ['$content_create_view$']]
 
     EzSystems\RepositoryForms\Content\View\Filter\ContentCreateViewFilter:
