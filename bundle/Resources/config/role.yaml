@@ -17,9 +17,9 @@ parameters:
     # Limitation mappers
     ezrepoforms.limitation_form_mapper.registry.class: EzSystems\RepositoryForms\Limitation\LimitationFormMapperRegistry
     ezrepoforms.limitation_value_mapper.registry.class: EzSystems\RepositoryForms\Limitation\LimitationValueMapperRegistry
-    ezrepoforms.limitation.null.template: "EzSystemsRepositoryFormsBundle:Limitation:null_limitation_values.html.twig"
+    ezrepoforms.limitation.null.template: '@@EzSystemsRepositoryForms/Limitation/null_limitation_values.html.twig'
     ezrepoforms.limitation.form_mapper.null.class: EzSystems\RepositoryForms\Limitation\Mapper\NullLimitationMapper
-    ezrepoforms.limitation.multiple_selection.template: "EzSystemsRepositoryFormsBundle:Limitation:base_limitation_values.html.twig"
+    ezrepoforms.limitation.multiple_selection.template: '@@EzSystemsRepositoryForms/Limitation/base_limitation_values.html.twig'
     ezrepoforms.limitation.form_mapper.siteaccess.class: EzSystems\RepositoryForms\Limitation\Mapper\SiteAccessLimitationMapper
     ezrepoforms.limitation.form_mapper.contenttype.class: EzSystems\RepositoryForms\Limitation\Mapper\ContentTypeLimitationMapper
     ezrepoforms.limitation.form_mapper.section.class: EzSystems\RepositoryForms\Limitation\Mapper\SectionLimitationMapper
@@ -29,7 +29,7 @@ parameters:
     ezrepoforms.limitation.form_mapper.group.class: EzSystems\RepositoryForms\Limitation\Mapper\GroupLimitationMapper
     ezrepoforms.limitation.form_mapper.parentdepth.class: EzSystems\RepositoryForms\Limitation\Mapper\ParentDepthLimitationMapper
     ezrepoforms.limitation.form_mapper.parentdepth.maxdepth: 20
-    ezrepoforms.limitation.udw.template: "EzSystemsRepositoryFormsBundle:Limitation:udw_limitation_value.html.twig"
+    ezrepoforms.limitation.udw.template: '@@EzSystemsRepositoryForms/Limitation/udw_limitation_value.html.twig'
     ezrepoforms.limitation.form_mapper.subtree.class: EzSystems\RepositoryForms\Limitation\Mapper\SubtreeLimitationMapper
 
 services:
