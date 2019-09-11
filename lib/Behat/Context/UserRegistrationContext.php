@@ -64,7 +64,7 @@ class UserRegistrationContext extends RawMinkContext implements Context, Snippet
     public function __construct(Repository $repository)
     {
         $this->repository = $repository;
-        $this->repository->setCurrentUser(new UserReference($this->adminUserId));
+        $this->repository->getPermissionResolver()->setCurrentUserReference(new UserReference($this->adminUserId));
     }
 
     /** @BeforeScenario */

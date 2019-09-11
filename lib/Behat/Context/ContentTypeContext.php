@@ -44,7 +44,7 @@ final class ContentTypeContext extends RawMinkContext implements Context, Snippe
     public function __construct(Repository $repository, ContentTypeService $contentTypeService)
     {
         $this->repository = $repository;
-        $this->repository->setCurrentUser(new UserReference($this->adminUserId));
+        $this->repository->getPermissionResolver()->setCurrentUserReference(new UserReference($this->adminUserId));
         $this->contentTypeService = $contentTypeService;
     }
 
