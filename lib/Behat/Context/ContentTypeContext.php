@@ -10,7 +10,7 @@ use Behat\MinkExtension\Context\RawMinkContext;
 use Exception;
 use eZ\Publish\API\Repository\ContentTypeService;
 use eZ\Publish\API\Repository\Exceptions\NotFoundException;
-use eZ\Publish\API\Repository\Repository;
+use eZ\Publish\API\Repository\PermissionResolver;
 use eZ\Publish\API\Repository\Values\ContentType\ContentTypeCreateStruct;
 use eZ\Publish\API\Repository\Values\ContentType\FieldDefinitionUpdateStruct;
 use eZ\Publish\Core\Repository\Values\User\UserReference;
@@ -27,10 +27,8 @@ final class ContentTypeContext extends RawMinkContext implements Context, Snippe
      */
     private $currentContentType;
 
-    /**
-     * @var \eZ\Publish\API\Repository\Repository
-     */
-    private $repository;
+    /** @var \eZ\Publish\API\Repository\PermissionResolver */
+    private $permissionResolver;
 
     /**
      * Default Administrator user id.
@@ -38,13 +36,13 @@ final class ContentTypeContext extends RawMinkContext implements Context, Snippe
     private $adminUserId = 14;
 
     /**
-     * @injectService $repository @ezpublish.api.repository
+     * @injectService $repository @eZ\Publish\API\Repository\PermissionResolver
      * @injectService $contentTypeService @ezpublish.api.service.content_type
      */
-    public function __construct(Repository $repository, ContentTypeService $contentTypeService)
+    public function __construct(PermissionResolver $permissionResolver, ContentTypeService $contentTypeService)
     {
-        $this->repository = $repository;
-        $this->repository->getPermissionResolver()->setCurrentUserReference(new UserReference($this->adminUserId));
+        $permissionResolver->setCurrentUserReference(new UserReference($this->adminUserId));
+        $this->permissionResolver = $permissionResolver;
         $this->contentTypeService = $contentTypeService;
     }
 
