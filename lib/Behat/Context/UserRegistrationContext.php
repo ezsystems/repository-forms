@@ -73,12 +73,6 @@ class UserRegistrationContext extends RawMinkContext implements Context, Snippet
     /** @var \eZ\Publish\API\Repository\ContentTypeService */
     private $contentTypeService;
 
-    /**
-     * @injectService $repository @ezpublish.api.repository
-     * @injectService $repository @ezpublish.api.service.role
-     * @injectService $repository @ezpublish.api.service.user
-     * @injectService $repository @ezpublish.api.service.content_type
-     */
     public function __construct(
         PermissionResolver $permissionResolver,
         RoleService $roleService,
