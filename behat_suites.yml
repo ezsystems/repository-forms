@@ -7,9 +7,7 @@ repository-forms:
                 - vendor/ezsystems/repository-forms/features/ContentEdit
             contexts:
                 - EzSystems\RepositoryForms\Behat\Context\ContentEditContext
-                - EzSystems\RepositoryForms\Behat\Context\ContentTypeContext:
-                    permissionResolver: '@eZ\Publish\API\Repository\PermissionResolver'
-                    contentTypeService: '@ezpublish.api.service.content_type'
+                - EzSystems\RepositoryForms\Behat\Context\ContentTypeContext
                 - EzSystems\RepositoryForms\Behat\Context\PagelayoutContext
                 - EzSystems\Behat\Browser\Context\Hooks
         fieldtype_form:
@@ -17,19 +15,13 @@ repository-forms:
                 - vendor/ezsystems/repository-forms/features/FieldTypeForm
             contexts:
                 - EzSystems\RepositoryForms\Behat\Context\ContentTypeContext:
-                    permissionResolver: '@eZ\Publish\API\Repository\PermissionResolver'
-                    contentTypeService: '@ezpublish.api.service.content_type'
                 - EzSystems\RepositoryForms\Behat\Context\FieldTypeFormContext
                 - EzSystems\RepositoryForms\Behat\Context\SelectionFieldTypeFormContext
         user_registration:
             paths:
                 - vendor/ezsystems/repository-forms/features/User/Registration
             contexts:
-                - EzSystems\RepositoryForms\Behat\Context\UserRegistrationContext:
-                    permissionResolver: '@eZ\Publish\API\Repository\PermissionResolver'
-                    roleService: '@ezpublish.api.service.role'
-                    userService: '@ezpublish.api.service.user'
-                    contentTypeService: '@ezpublish.api.service.content_type'
+                - EzSystems\RepositoryForms\Behat\Context\UserRegistrationContext
                 - Behat\MinkExtension\Context\MinkContext
                 - eZ\Bundle\EzPublishCoreBundle\Features\Context\YamlConfigurationContext
                 - EzSystems\Behat\Browser\Context\Hooks
