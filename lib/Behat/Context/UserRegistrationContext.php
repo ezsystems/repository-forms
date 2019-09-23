@@ -13,7 +13,10 @@ use Behat\Behat\Hook\Scope\BeforeScenarioScope;
 use Behat\Gherkin\Node\PyStringNode;
 use Behat\MinkExtension\Context\RawMinkContext;
 use eZ\Bundle\EzPublishCoreBundle\Features\Context\YamlConfigurationContext;
-use eZ\Publish\API\Repository\Repository;
+use eZ\Publish\API\Repository\ContentTypeService;
+use eZ\Publish\API\Repository\PermissionResolver;
+use eZ\Publish\API\Repository\RoleService;
+use eZ\Publish\API\Repository\UserService;
 use eZ\Publish\API\Repository\Values\User\Role;
 use eZ\Publish\API\Repository\Values\User\User;
 use eZ\Publish\API\Repository\Values\User\UserGroup;
@@ -26,7 +29,11 @@ use Symfony\Component\Yaml\Yaml;
 
 class UserRegistrationContext extends RawMinkContext implements Context, SnippetAcceptingContext
 {
-    /** @var string Regex matching the way the Twig template name is inserted in debug mode */
+    /**
+     * Regex matching the way the Twig template name is inserted in debug mode.
+     *
+     * @var string
+     */
     const TWIG_DEBUG_STOP_REGEX = '<!-- STOP .*%s.* -->';
 
     private static $password = 'PassWord42';
@@ -39,14 +46,10 @@ class UserRegistrationContext extends RawMinkContext implements Context, Snippet
 
     /**
      * Used to cover registration group customization.
+     *
      * @var UserGroup
      */
     private $customUserGroup;
-
-    /**
-     * @var \eZ\Publish\API\Repository\Repository
-     */
-    private $repository;
 
     /**
      * @var YamlConfigurationContext
@@ -58,13 +61,35 @@ class UserRegistrationContext extends RawMinkContext implements Context, Snippet
      */
     private $adminUserId = 14;
 
+    /** @var \eZ\Publish\API\Repository\PermissionResolver */
+    private $permissionResolver;
+
+    /** @var \eZ\Publish\API\Repository\RoleService */
+    private $roleService;
+
+    /** @var \eZ\Publish\API\Repository\UserService */
+    private $userService;
+
+    /** @var \eZ\Publish\API\Repository\ContentTypeService */
+    private $contentTypeService;
+
     /**
-     * @injectService $repository @ezpublish.api.repository
+     * @injectService $permissionResolver @eZ\Publish\API\Repository\PermissionResolver
+     * @injectService $roleService @ezpublish.api.service.role
+     * @injectService $userService @ezpublish.api.service.user
+     * @injectService $contentTypeService @ezpublish.api.service.content_type
      */
-    public function __construct(Repository $repository)
-    {
-        $this->repository = $repository;
-        $this->repository->setCurrentUser(new UserReference($this->adminUserId));
+    public function __construct(
+        PermissionResolver $permissionResolver,
+        RoleService $roleService,
+        UserService $userService,
+        ContentTypeService $contentTypeService
+    ) {
+        $permissionResolver->setCurrentUserReference(new UserReference($this->adminUserId));
+        $this->permissionResolver = $permissionResolver;
+        $this->roleService = $roleService;
+        $this->userService = $userService;
+        $this->contentTypeService = $contentTypeService;
     }
 
     /** @BeforeScenario */
@@ -104,9 +129,8 @@ class UserRegistrationContext extends RawMinkContext implements Context, Snippet
      */
     private function createUserWithRole(Role $role)
     {
-        $userService = $this->repository->getUserService();
         $username = uniqid($role->identifier, true);
-        $createStruct = $userService->newUserCreateStruct(
+        $createStruct = $this->userService->newUserCreateStruct(
             $username,
             $username . '@example.com',
             self::$password,
@@ -114,9 +138,9 @@ class UserRegistrationContext extends RawMinkContext implements Context, Snippet
         );
         $createStruct->setField('first_name', $username);
         $createStruct->setField('last_name', 'The first');
-        $user = $userService->createUser($createStruct, [$userService->loadUserGroup(self::$groupId)]);
+        $user = $this->userService->createUser($createStruct, [$this->userService->loadUserGroup(self::$groupId)]);
 
-        $this->repository->getRoleService()->assignRoleToUser($role, $user);
+        $this->roleService->assignRoleToUser($role, $user);
 
         return $user;
     }
@@ -137,22 +161,23 @@ class UserRegistrationContext extends RawMinkContext implements Context, Snippet
             true
         );
 
-        $roleService = $this->repository->getRoleService();
         $roleCreateStruct = new RoleCreateStruct(['identifier' => $roleIdentifier]);
 
         $policiesSet = explode(',', EnvironmentConstants::get('CREATE_REGISTRATION_ROLE_POLICIES'));
         foreach ($policiesSet as $policy) {
             [$module, $function] = explode('/', $policy);
-            $roleCreateStruct->addPolicy($roleService->newPolicyCreateStruct($module, $function));
+            $roleCreateStruct->addPolicy($this->roleService->newPolicyCreateStruct($module, $function));
         }
 
         if ($withUserRegisterPolicy === true) {
-            $roleCreateStruct->addPolicy($roleService->newPolicyCreateStruct('user', 'register'));
+            $roleCreateStruct->addPolicy($this->roleService->newPolicyCreateStruct('user', 'register'));
         }
 
-        $roleService->publishRoleDraft($roleService->createRole($roleCreateStruct));
+        $this->roleService->publishRoleDraft(
+            $this->roleService->createRole($roleCreateStruct)
+        );
 
-        return $roleService->loadRoleByIdentifier($roleIdentifier);
+        return $this->roleService->loadRoleByIdentifier($roleIdentifier);
     }
 
     /**
@@ -165,6 +190,7 @@ class UserRegistrationContext extends RawMinkContext implements Context, Snippet
 
     /**
      * @param User $user
+     *
      * @throws \Behat\Mink\Exception\ElementNotFoundException
      */
     private function loginAs(User $user)
@@ -191,8 +217,7 @@ class UserRegistrationContext extends RawMinkContext implements Context, Snippet
      */
     public function itMatchesTheStructureOfTheConfiguredRegistrationUserContentType()
     {
-        $userContentType = $this->repository->getContentTypeService()
-            ->loadContentTypeByIdentifier('user');
+        $userContentType = $this->contentTypeService->loadContentTypeByIdentifier('user');
         foreach ($userContentType->getFieldDefinitions() as $fieldDefinition) {
             $this->assertSession()->elementExists(
                 'css',
@@ -263,7 +288,7 @@ class UserRegistrationContext extends RawMinkContext implements Context, Snippet
      */
     public function theUserAccountHasBeenCreated()
     {
-        $this->repository->getUserService()->loadUserByLogin($this->registrationUsername);
+        $this->userService->loadUserByLogin($this->registrationUsername);
     }
 
     /**
@@ -271,13 +296,11 @@ class UserRegistrationContext extends RawMinkContext implements Context, Snippet
      */
     public function createUserGroup()
     {
-        $userService = $this->repository->getUserService();
-
-        $groupCreateStruct = $userService->newUserGroupCreateStruct(self::$language);
+        $groupCreateStruct = $this->userService->newUserGroupCreateStruct(self::$language);
         $groupCreateStruct->setField('name', uniqid('User registration group ', true));
-        $this->customUserGroup = $userService->createUserGroup(
+        $this->customUserGroup = $this->userService->createUserGroup(
             $groupCreateStruct,
-            $userService->loadUserGroup(self::$groupId)
+            $this->userService->loadUserGroup(self::$groupId)
         );
     }
 
@@ -314,9 +337,8 @@ class UserRegistrationContext extends RawMinkContext implements Context, Snippet
      */
     public function theUserIsCreatedInThisUserGroup()
     {
-        $userService = $this->repository->getUserService();
-        $user = $userService->loadUserByLogin($this->registrationUsername);
-        $userGroups = $userService->loadUserGroupsOfUser($user);
+        $user = $this->userService->loadUserByLogin($this->registrationUsername);
+        $userGroups = $this->userService->loadUserGroupsOfUser($user);
 
         Assertion::assertEquals(
             $this->customUserGroup->id,
