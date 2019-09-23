@@ -14,7 +14,7 @@ repository-forms:
             paths:
                 - vendor/ezsystems/repository-forms/features/FieldTypeForm
             contexts:
-                - EzSystems\RepositoryForms\Behat\Context\ContentTypeContext:
+                - EzSystems\RepositoryForms\Behat\Context\ContentTypeContext
                 - EzSystems\RepositoryForms\Behat\Context\FieldTypeFormContext
                 - EzSystems\RepositoryForms\Behat\Context\SelectionFieldTypeFormContext
         user_registration:
