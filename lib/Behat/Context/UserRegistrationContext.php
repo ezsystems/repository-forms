@@ -132,7 +132,7 @@ class UserRegistrationContext extends RawMinkContext implements Context, Snippet
         $username = uniqid($role->identifier, true);
         $createStruct = $this->userService->newUserCreateStruct(
             $username,
-            $username . '@example.com',
+            substr($username, 0, 64) . '@example.com',
             self::$password,
             'eng-GB'
         );
