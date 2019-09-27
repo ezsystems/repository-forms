@@ -13,7 +13,7 @@
     "prefer-stable": true,
     "require": {
         "php": "^7.3",
-        "ezsystems/ezpublish-kernel": "dev-EZP-30394-user-external-storage as 8.0.x@dev",
+        "ezsystems/ezpublish-kernel": "^8.0@dev",
         "symfony/dependency-injection": "^4.2",
         "symfony/http-kernel": "^4.3",
         "symfony/http-foundation": "^4.3",
@@ -49,7 +49,7 @@
     },
     "extra": {
         "_ezplatform_branch_for_behat_tests_comment_": "ezplatform branch to use to run Behat tests",
-        "_ezplatform_branch_for_behat_tests": "ezp-30394-user-external-storage",
+        "_ezplatform_branch_for_behat_tests": "master",
         "branch-alias": {
             "dev-master": "3.0.x-dev",
             "dev-tmp_ci_branch": "3.0.x-dev"
