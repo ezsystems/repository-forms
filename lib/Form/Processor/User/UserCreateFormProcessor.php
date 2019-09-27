@@ -76,10 +76,6 @@ class UserCreateFormProcessor implements EventSubscriberInterface
     private function setContentFields(UserCreateData $data, string $languageCode): void
     {
         foreach ($data->fieldsData as $fieldDefIdentifier => $fieldData) {
-            if ('ezuser' === $fieldData->getFieldTypeIdentifier()) {
-                continue;
-            }
-
             $data->setField($fieldDefIdentifier, $fieldData->value, $languageCode);
         }
     }
