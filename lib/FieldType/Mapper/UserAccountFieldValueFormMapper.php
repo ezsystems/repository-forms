@@ -96,6 +96,10 @@ final class UserAccountFieldValueFormMapper implements FieldValueFormMapperInter
             'property_path' => $validatorPropertyPathPrefix . '[requireAtLeastOneNonAlphanumericCharacter]',
         ]);
 
+        $fieldDefinitionForm->add('requireNewPassword', PasswordConstraintCheckboxType::class, [
+            'property_path' => $validatorPropertyPathPrefix . '[requireNewPassword]',
+        ]);
+
         $fieldDefinitionForm->add('minLength', IntegerType::class, [
             'required' => false,
             'property_path' => $validatorPropertyPathPrefix . '[minLength]',
