@@ -472,8 +472,8 @@
         <note>key: field_definition.ezuser.require_at_least_one_upper_case_character</note>
       </trans-unit>
       <trans-unit id="b3a4113222154dde9c8d136f4bea80217129b739" resname="field_definition.ezuser.password_ttl">
-        <source>Days before passwords expire</source>
-        <target>Days before passwords expire</target>
+        <source>Days before password expires</source>
+        <target>Days before password expires</target>
         <note>key: field_definition.ezuser.password_ttl</note>
       </trans-unit>
       <trans-unit id="cd2c70b2a3594f4de7adca0e84da6f106790ae8c" resname="field_definition.ezuser.password_ttl_warning">
