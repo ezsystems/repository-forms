@@ -69,7 +69,6 @@ class MediaFormMapper implements FieldDefinitionFormMapperInterface, FieldValueF
                     'field_definition.ezmedia.type_windows_media_player' => Type::TYPE_WINDOWSMEDIA,
                     'field_definition.ezmedia.type_html5_audio' => Type::TYPE_HTML5_AUDIO,
                 ],
-                'choices_as_values' => true,
                 'required' => true,
                 'property_path' => 'fieldSettings[mediaType]',
                 'label' => 'field_definition.ezmedia.media_type',

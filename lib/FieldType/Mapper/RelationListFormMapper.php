@@ -31,7 +31,6 @@ class RelationListFormMapper extends AbstractRelationFormMapper
             ])
             ->add('selectionContentTypes', ChoiceType::class, [
                 'choices' => $this->getContentTypesHash(),
-                'choices_as_values' => true,
                 'expanded' => false,
                 'multiple' => true,
                 'required' => false,

@@ -43,7 +43,6 @@ class FieldTypeChoiceType extends AbstractType
     {
         $resolver->setDefaults([
             'choices' => $this->getFieldTypeChoices(),
-            'choices_as_values' => true,
         ]);
     }
 
