@@ -486,6 +486,11 @@
         <target>Days before a user is notified about expiration</target>
         <note>key: field_definition.ezuser.password_ttl_warning</note>
       </trans-unit>
+      <trans-unit id="c196b953a8bc8966aeeb771c2c9e653bbe8062bb" resname="field_definition.ezuser.require_new_password">
+        <source>Prevent reusing old password</source>
+        <target>Prevent reusing old password</target>
+        <note>key: field_definition.ezuser.require_new_password</note>
+      </trans-unit>
       <trans-unit id="92d9243bb9fac540233dc376b41a3bcd41615ccc" resname="field_definition.field_group">
         <source>Category</source>
         <target>Category</target>
