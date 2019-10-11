@@ -35,7 +35,6 @@ class DateFormMapper implements FieldDefinitionFormMapperInterface, FieldValueFo
                         'field_definition.ezdate.default_type_empty' => Type::DEFAULT_EMPTY,
                         'field_definition.ezdate.default_type_current' => Type::DEFAULT_CURRENT_DATE,
                     ],
-                    'choices_as_values' => true,
                     'expanded' => true,
                     'required' => true,
                     'property_path' => 'fieldSettings[defaultType]',

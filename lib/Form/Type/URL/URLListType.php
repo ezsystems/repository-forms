@@ -47,7 +47,6 @@ class URLListType extends AbstractType
                 $this->translator->trans('url.status.invalid', [], 'ezrepoforms_url') => false,
                 $this->translator->trans('url.status.valid', [], 'ezrepoforms_url') => true,
             ],
-            'choices_as_values' => true,
             'placeholder' => $this->translator->trans('url.status.all', [], 'ezrepoforms_url'),
             'required' => false,
         ]);

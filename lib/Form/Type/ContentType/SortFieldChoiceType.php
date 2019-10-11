@@ -37,7 +37,6 @@ class SortFieldChoiceType extends AbstractType
     {
         $resolver->setDefaults([
             'choices' => $this->getSortFieldChoices(),
-            'choices_as_values' => true,
         ]);
     }
 
