@@ -46,7 +46,7 @@ class MediaFieldType extends AbstractType
                 'autoplay',
                 CheckboxType::class,
                 [
-                    'label' => /** @Desc("Auto play") */ 'content.field_type.ezmedia.autoplay',
+                    'label' => /** @Desc("Autoplay") */ 'content.field_type.ezmedia.autoplay',
                     'required' => false,
                 ]
             )
