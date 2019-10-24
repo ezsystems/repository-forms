@@ -11,8 +11,8 @@ namespace EzSystems\RepositoryForms\Form\Processor\User;
 
 use eZ\Publish\API\Repository\UserService;
 use EzSystems\RepositoryForms\Data\User\UserCreateData;
+use EzSystems\RepositoryForms\Event\ContentFormEvents;
 use EzSystems\RepositoryForms\Event\FormActionEvent;
-use EzSystems\RepositoryForms\Event\RepositoryFormEvents;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
@@ -43,7 +43,7 @@ class UserCreateFormProcessor implements EventSubscriberInterface
     public static function getSubscribedEvents()
     {
         return [
-            RepositoryFormEvents::USER_CREATE => ['processCreate', 20],
+            ContentFormEvents::USER_CREATE => ['processCreate', 20],
         ];
     }
 

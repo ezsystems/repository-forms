@@ -8,7 +8,7 @@
 namespace EzSystems\RepositoryForms\Form\ActionDispatcher;
 
 use eZ\Publish\API\Repository\Values\Content\Location;
-use EzSystems\RepositoryForms\Event\RepositoryFormEvents;
+use EzSystems\RepositoryForms\Event\ContentFormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class ContentDispatcher extends AbstractActionDispatcher
@@ -22,6 +22,6 @@ class ContentDispatcher extends AbstractActionDispatcher
 
     protected function getActionEventBaseName()
     {
-        return RepositoryFormEvents::CONTENT_EDIT;
+        return ContentFormEvents::CONTENT_EDIT;
     }
 }

@@ -11,8 +11,8 @@ namespace EzSystems\RepositoryForms\Form\Processor\User;
 
 use EzSystems\RepositoryForms\Data\User\UserCreateData;
 use EzSystems\RepositoryForms\Data\User\UserUpdateData;
+use EzSystems\RepositoryForms\Event\ContentFormEvents;
 use EzSystems\RepositoryForms\Event\FormActionEvent;
-use EzSystems\RepositoryForms\Event\RepositoryFormEvents;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
@@ -37,7 +37,7 @@ class UserCancelFormProcessor implements EventSubscriberInterface
     public static function getSubscribedEvents()
     {
         return [
-            RepositoryFormEvents::USER_CANCEL => ['processCancel', 10],
+            ContentFormEvents::USER_CANCEL => ['processCancel', 10],
         ];
     }
 

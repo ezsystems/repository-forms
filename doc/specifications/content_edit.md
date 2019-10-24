@@ -28,7 +28,7 @@ will be issued.
 `ContentFormProcessor::processCreateDraft()` uses a `ContentCreateDraftType` Form.
 It manipulates a `ContentCreateDraftData` object that has the parameters to create the draft.
 The actual creation of the draft is delegated to the FormProcessor API, by firing a
-`RepositoryFormEvents::CONTENT_CREATE_DRAFT`.
+`ContentFormEvents::CONTENT_CREATE_DRAFT`.
 
 
 ### Editing a draft

@@ -12,8 +12,8 @@ namespace EzSystems\RepositoryForms\Form\Processor\User;
 use eZ\Publish\API\Repository\ContentService;
 use eZ\Publish\API\Repository\UserService;
 use EzSystems\RepositoryForms\Data\User\UserUpdateData;
+use EzSystems\RepositoryForms\Event\ContentFormEvents;
 use EzSystems\RepositoryForms\Event\FormActionEvent;
-use EzSystems\RepositoryForms\Event\RepositoryFormEvents;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
@@ -45,7 +45,7 @@ class UserUpdateFormProcessor implements EventSubscriberInterface
     public static function getSubscribedEvents()
     {
         return [
-            RepositoryFormEvents::USER_UPDATE => ['processUpdate', 20],
+            ContentFormEvents::USER_UPDATE => ['processUpdate', 20],
         ];
     }
 

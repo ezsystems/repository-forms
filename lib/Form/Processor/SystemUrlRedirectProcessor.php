@@ -10,8 +10,8 @@ namespace EzSystems\RepositoryForms\Form\Processor;
 
 use eZ\Publish\API\Repository\LocationService;
 use eZ\Publish\API\Repository\URLAliasService;
+use EzSystems\RepositoryForms\Event\ContentFormEvents;
 use EzSystems\RepositoryForms\Event\FormActionEvent;
-use EzSystems\RepositoryForms\Event\RepositoryFormEvents;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\Routing\RouterInterface;
@@ -49,8 +49,8 @@ class SystemUrlRedirectProcessor implements EventSubscriberInterface
     public static function getSubscribedEvents(): array
     {
         return [
-            RepositoryFormEvents::CONTENT_PUBLISH => ['processRedirectAfterPublish', 2],
-            RepositoryFormEvents::CONTENT_CANCEL => ['processRedirectAfterCancel', 2],
+            ContentFormEvents::CONTENT_PUBLISH => ['processRedirectAfterPublish', 2],
+            ContentFormEvents::CONTENT_CANCEL => ['processRedirectAfterCancel', 2],
         ];
     }
 

@@ -16,8 +16,8 @@ use eZ\Publish\Core\Base\Exceptions\InvalidArgumentException;
 use EzSystems\RepositoryForms\Data\Content\ContentCreateData;
 use EzSystems\RepositoryForms\Data\Content\ContentUpdateData;
 use EzSystems\RepositoryForms\Data\NewnessCheckable;
+use EzSystems\RepositoryForms\Event\ContentFormEvents;
 use EzSystems\RepositoryForms\Event\FormActionEvent;
-use EzSystems\RepositoryForms\Event\RepositoryFormEvents;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
@@ -59,10 +59,10 @@ class ContentFormProcessor implements EventSubscriberInterface
     public static function getSubscribedEvents(): array
     {
         return [
-            RepositoryFormEvents::CONTENT_PUBLISH => ['processPublish', 10],
-            RepositoryFormEvents::CONTENT_CANCEL => ['processCancel', 10],
-            RepositoryFormEvents::CONTENT_SAVE_DRAFT => ['processSaveDraft', 10],
-            RepositoryFormEvents::CONTENT_CREATE_DRAFT => ['processCreateDraft', 10],
+            ContentFormEvents::CONTENT_PUBLISH => ['processPublish', 10],
+            ContentFormEvents::CONTENT_CANCEL => ['processCancel', 10],
+            ContentFormEvents::CONTENT_SAVE_DRAFT => ['processSaveDraft', 10],
+            ContentFormEvents::CONTENT_CREATE_DRAFT => ['processCreateDraft', 10],
         ];
     }
 
