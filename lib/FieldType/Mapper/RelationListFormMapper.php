@@ -11,7 +11,6 @@ namespace EzSystems\RepositoryForms\FieldType\Mapper;
 use EzSystems\RepositoryForms\Data\Content\FieldData;
 use EzSystems\RepositoryForms\Form\Type\FieldType\RelationListFieldType;
 use Symfony\Component\Form\FormInterface;
-use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class RelationListFormMapper extends AbstractRelationFormMapper
 {
@@ -37,17 +36,5 @@ class RelationListFormMapper extends AbstractRelationFormMapper
                     ->setAutoInitialize(false)
                     ->getForm()
             );
-    }
-
-    /**
-     * Fake method to set the translation domain for the extractor.
-     * @param OptionsResolver $resolver
-     */
-    public function configureOptions(OptionsResolver $resolver)
-    {
-        $resolver
-            ->setDefaults([
-                'translation_domain' => 'ezrepoforms_content_type',
-            ]);
     }
 }

@@ -13,7 +13,6 @@ use EzSystems\RepositoryForms\FieldType\FieldDefinitionFormMapperInterface;
 use EzSystems\RepositoryForms\FieldType\FieldValueFormMapperInterface;
 use EzSystems\RepositoryForms\Form\Type\FieldType\SelectionFieldType;
 use Symfony\Component\Form\FormInterface;
-use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class SelectionFormMapper implements FieldValueFormMapperInterface
 {
@@ -80,16 +79,5 @@ class SelectionFormMapper implements FieldValueFormMapperInterface
                            ->setAutoInitialize(false)
                            ->getForm()
             );
-    }
-
-    /**
-     * Fake method to set the translation domain for the extractor.
-     */
-    public function configureOptions(OptionsResolver $resolver)
-    {
-        $resolver
-            ->setDefaults([
-                'translation_domain' => 'ezrepoforms_content_type',
-            ]);
     }
 }

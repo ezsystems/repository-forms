@@ -7,6 +7,7 @@
  */
 namespace EzSystems\RepositoryForms\Form\Type\Content;
 
+use EzSystems\RepositoryForms\Data\Content\FieldData;
 use EzSystems\RepositoryForms\FieldType\FieldTypeFormMapperDispatcherInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -42,8 +43,8 @@ class ContentFieldType extends AbstractType
     {
         $resolver
             ->setDefaults([
-                'data_class' => '\EzSystems\RepositoryForms\Data\Content\FieldData',
-                'translation_domain' => 'ezrepoforms_content',
+                'data_class' => FieldData::class,
+                'translation_domain' => 'ezplatform_content_forms_content',
             ])
             ->setRequired(['languageCode', 'mainLanguageCode']);
     }

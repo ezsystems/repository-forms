@@ -13,7 +13,6 @@ use EzSystems\RepositoryForms\FieldType\FieldDefinitionFormMapperInterface;
 use EzSystems\RepositoryForms\FieldType\FieldValueFormMapperInterface;
 use EzSystems\RepositoryForms\Form\Type\FieldType\TimeFieldType;
 use Symfony\Component\Form\FormInterface;
-use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
  * FormMapper for eztime FieldType.
@@ -37,13 +36,5 @@ class TimeFormMapper implements FieldValueFormMapperInterface
                     ->setAutoInitialize(false)
                     ->getForm()
             );
-    }
-
-    public function configureOptions(OptionsResolver $resolver)
-    {
-        $resolver
-            ->setDefaults([
-                'translation_domain' => 'ezrepoforms_content_type',
-            ]);
     }
 }

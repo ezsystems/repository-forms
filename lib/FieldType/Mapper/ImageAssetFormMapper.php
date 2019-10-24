@@ -15,7 +15,6 @@ use EzSystems\RepositoryForms\FieldType\DataTransformer\ImageAssetValueTransform
 use EzSystems\RepositoryForms\FieldType\FieldValueFormMapperInterface;
 use EzSystems\RepositoryForms\Form\Type\FieldType\ImageAssetFieldType;
 use Symfony\Component\Form\FormInterface;
-use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class ImageAssetFormMapper implements FieldValueFormMapperInterface
 {
@@ -55,18 +54,5 @@ class ImageAssetFormMapper implements FieldValueFormMapperInterface
                     ->setAutoInitialize(false)
                     ->getForm()
             );
-    }
-
-    /**
-     * Fake method to set the translation domain for the extractor.
-     *
-     * @param OptionsResolver $resolver
-     */
-    public function configureOptions(OptionsResolver $resolver): void
-    {
-        $resolver
-            ->setDefaults([
-                'translation_domain' => 'ezrepoforms_content_type',
-            ]);
     }
 }

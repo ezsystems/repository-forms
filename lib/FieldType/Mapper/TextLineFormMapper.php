@@ -13,7 +13,6 @@ use EzSystems\RepositoryForms\FieldType\FieldDefinitionFormMapperInterface;
 use EzSystems\RepositoryForms\FieldType\FieldValueFormMapperInterface;
 use EzSystems\RepositoryForms\Form\Type\FieldType\TextLineFieldType;
 use Symfony\Component\Form\FormInterface;
-use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
  * FormMapper for ezstring FieldType.
@@ -42,13 +41,5 @@ class TextLineFormMapper implements FieldValueFormMapperInterface
                     ->setAutoInitialize(false)
                     ->getForm()
             );
-    }
-
-    public function configureOptions(OptionsResolver $resolver)
-    {
-        $resolver
-            ->setDefaults([
-                'translation_domain' => 'ezrepoforms_content_type',
-            ]);
     }
 }

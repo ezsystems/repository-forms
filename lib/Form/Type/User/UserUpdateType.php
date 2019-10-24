@@ -47,7 +47,7 @@ class UserUpdateType extends AbstractType
             ->setDefaults([
                 'data_class' => UserUpdateData::class,
                 'intent' => 'update',
-                'translation_domain' => 'ezrepoforms_user',
+                'translation_domain' => 'ezplatform_content_forms_user',
             ]);
     }
 }

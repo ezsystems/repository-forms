@@ -14,8 +14,6 @@ use EzSystems\RepositoryForms\FieldType\FieldDefinitionFormMapperInterface;
 use EzSystems\RepositoryForms\FieldType\FieldValueFormMapperInterface;
 use EzSystems\RepositoryForms\Form\Type\FieldType\ImageFieldType;
 use Symfony\Component\Form\FormInterface;
-use Symfony\Component\OptionsResolver\Exception\AccessException;
-use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class ImageFormMapper implements FieldValueFormMapperInterface
 {
@@ -48,18 +46,5 @@ class ImageFormMapper implements FieldValueFormMapperInterface
                     ->setAutoInitialize(false)
                     ->getForm()
             );
-    }
-
-    /**
-     * Fake method to set the translation domain for the extractor.
-     *
-     * @throws AccessException
-     */
-    public function configureOptions(OptionsResolver $resolver)
-    {
-        $resolver
-            ->setDefaults([
-                'translation_domain' => 'ezrepoforms_content_type',
-            ]);
     }
 }

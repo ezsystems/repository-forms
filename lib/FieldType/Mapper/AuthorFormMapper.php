@@ -13,7 +13,6 @@ use EzSystems\RepositoryForms\FieldType\FieldDefinitionFormMapperInterface;
 use EzSystems\RepositoryForms\FieldType\FieldValueFormMapperInterface;
 use EzSystems\RepositoryForms\Form\Type\FieldType\AuthorFieldType;
 use Symfony\Component\Form\FormInterface;
-use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
  * FormMapper for ezauthor FieldType.
@@ -42,18 +41,5 @@ class AuthorFormMapper implements FieldValueFormMapperInterface
                     ->setAutoInitialize(false)
                     ->getForm()
             );
-    }
-
-    /**
-     * Fake method to set the translation domain for the extractor.
-     *
-     * @param OptionsResolver $resolver
-     */
-    public function configureOptions(OptionsResolver $resolver)
-    {
-        $resolver
-            ->setDefaults([
-                'translation_domain' => 'ezrepoforms_content_type',
-            ]);
     }
 }

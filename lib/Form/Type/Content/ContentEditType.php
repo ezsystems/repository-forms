@@ -7,6 +7,7 @@
  */
 namespace EzSystems\RepositoryForms\Form\Type\Content;
 
+use eZ\Publish\API\Repository\Values\Content\ContentStruct;
 use EzSystems\RepositoryForms\Form\EventSubscriber\SuppressValidationSubscriber;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -56,8 +57,8 @@ class ContentEditType extends AbstractType
         $resolver
             ->setDefaults([
                 'drafts_enabled' => false,
-                'data_class' => '\eZ\Publish\API\Repository\Values\Content\ContentStruct',
-                'translation_domain' => 'ezrepoforms_content',
+                'data_class' => ContentStruct::class,
+                'translation_domain' => 'ezplatform_content_forms_content',
                 'intent' => 'update',
             ]);
     }

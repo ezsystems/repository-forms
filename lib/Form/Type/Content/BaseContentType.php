@@ -35,7 +35,7 @@ class BaseContentType extends AbstractType
         $builder
             ->add('fieldsData', CollectionType::class, [
                 'entry_type' => ContentFieldType::class,
-                'label' => 'ezrepoforms.content.fields',
+                'label' => /** @Desc("Fields") */ 'ezrepoforms.content.fields',
                 'entry_options' => [
                     'languageCode' => $options['languageCode'],
                     'mainLanguageCode' => $options['mainLanguageCode'],
@@ -56,6 +56,7 @@ class BaseContentType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver
+            ->setDefaults(['translation_domain' => 'ezplatform_content_forms_content'])
             ->setRequired(['languageCode', 'mainLanguageCode']);
     }
 }

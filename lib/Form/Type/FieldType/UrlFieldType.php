@@ -61,7 +61,7 @@ class UrlFieldType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'translation_domain' => 'ezrepoforms_content',
+            'translation_domain' => 'ezplatform_content_forms_fieldtype',
         ]);
     }
 }

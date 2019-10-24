@@ -52,7 +52,7 @@ class BaseUserType extends AbstractType
     {
         $resolver
             ->setDefaults([
-                'translation_domain' => 'ezrepoforms_user',
+                'translation_domain' => 'ezplatform_content_forms_user',
             ])
             ->setRequired([
                 'languageCode',
