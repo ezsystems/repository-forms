@@ -9,33 +9,17 @@
 namespace EzSystems\RepositoryForms\FieldType\Mapper;
 
 use EzSystems\RepositoryForms\Data\Content\FieldData;
-use EzSystems\RepositoryForms\Data\FieldDefinitionData;
 use EzSystems\RepositoryForms\FieldType\FieldDefinitionFormMapperInterface;
 use EzSystems\RepositoryForms\FieldType\FieldValueFormMapperInterface;
 use EzSystems\RepositoryForms\Form\Type\FieldType\TextBlockFieldType;
-use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
  * FormMapper for eztext FieldType.
  */
-class TextBlockFormMapper implements FieldDefinitionFormMapperInterface, FieldValueFormMapperInterface
+class TextBlockFormMapper implements FieldValueFormMapperInterface
 {
-    public function mapFieldDefinitionForm(FormInterface $fieldDefinitionForm, FieldDefinitionData $data)
-    {
-        $isTranslation = $data->contentTypeData->languageCode !== $data->contentTypeData->mainLanguageCode;
-        $fieldDefinitionForm
-            ->add(
-                'textRows', IntegerType::class, [
-                    'required' => false,
-                    'property_path' => 'fieldSettings[textRows]',
-                    'label' => 'field_definition.eztext.text_rows',
-                    'disabled' => $isTranslation,
-                ]
-            );
-    }
-
     public function mapFieldValueForm(FormInterface $fieldForm, FieldData $data)
     {
         $fieldDefinition = $data->fieldDefinition;

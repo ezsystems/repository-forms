@@ -53,9 +53,7 @@ class FieldTypeFormMapperDispatcherPassTest extends AbstractCompilerPassTestCase
     {
         return [
             [FieldTypeFormMapperDispatcherPass::DEPRECATED_FIELD_TYPE_FORM_MAPPER_VALUE_SERVICE_TAG],
-            [FieldTypeFormMapperDispatcherPass::DEPRECATED_FIELD_TYPE_FORM_MAPPER_DEFINITION_SERVICE_TAG],
             [FieldTypeFormMapperDispatcherPass::FIELD_TYPE_FORM_MAPPER_VALUE_SERVICE_TAG],
-            [FieldTypeFormMapperDispatcherPass::FIELD_TYPE_FORM_MAPPER_DEFINITION_SERVICE_TAG],
         ];
     }
 }

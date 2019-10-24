@@ -1,4 +1,4 @@
-ez_content_create_no_draft:
+ezplatform.content.create_no_draft:
     path: /content/create/nodraft/{contentTypeIdentifier}/{language}/{parentLocationId}
     defaults:
         _controller: ez_content_edit:createWithoutDraftAction
@@ -6,7 +6,7 @@ ez_content_create_no_draft:
         expose: true
     # @todo rename language to languageCode in 3.0
 
-ez_content_draft_edit:
+ezplatform.content.draft.edit:
     path: /content/edit/draft/{contentId}/{versionNo}/{language}/{locationId}
     defaults:
         _controller: ez_content_edit:editVersionDraftAction
@@ -15,23 +15,22 @@ ez_content_draft_edit:
     options:
         expose: true
 
-ez_content_draft_create:
-    path: /content/create/draft/{contentId}/{fromVersionNo}/{fromLanguage}/{toLanguage}
+ezplatform.content.draft.create:
+    path: /content/create/draft/{contentId}/{fromVersionNo}/{fromLanguage}
     defaults:
         _controller: ez_content_edit:createContentDraftAction
-        contentId: null
-        fromVersionNo: null
-        fromLanguage: null
-        toLanguage: null
+        contentId: ~
+        fromVersionNo: ~
+        fromLanguage: ~
     options:
         expose: true
 
-ez_user_create:
+ezplatform.user.create:
     path: /user/create/{contentTypeIdentifier}/{language}/{parentLocationId}
     defaults:
         _controller: "ezrepoforms.controller.user:createAction"
 
-ez_user_update:
+ezplatform.user.update:
     path: /user/update/{contentId}/{versionNo}/{language}
     defaults:
         _controller: "ezrepoforms.controller.user:editAction"

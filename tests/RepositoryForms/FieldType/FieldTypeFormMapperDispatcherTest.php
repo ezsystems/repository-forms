@@ -28,11 +28,6 @@ class FieldTypeFormMapperDispatcherTest extends TestCase
     private $dispatcher;
 
     /**
-     * @var \EzSystems\RepositoryForms\FieldType\FieldDefinitionFormMapperInterface|\PHPUnit\Framework\MockObject\MockObject
-     */
-    private $fieldDefinitionMapperMock;
-
-    /**
      * @var \EzSystems\RepositoryForms\FieldType\FieldValueFormMapperInterface|\PHPUnit\Framework\MockObject\MockObject
      */
     private $fieldValueMapperMock;
@@ -41,39 +36,15 @@ class FieldTypeFormMapperDispatcherTest extends TestCase
     {
         $this->dispatcher = new FieldTypeFormMapperDispatcher();
 
-        // Should be improved to test with a value + definition mapper (this is what repo-forms uses)
-        $this->fieldDefinitionMapperMock = $this->createMock(FieldDefinitionFormMapperInterface::class);
         $this->fieldValueMapperMock = $this->createMock(FieldValueFormMapperInterface::class);
-        $this->dispatcher->addMapper($this->fieldDefinitionMapperMock, 'first_type');
-        $this->dispatcher->addMapper($this->fieldValueMapperMock, 'second_type');
-    }
-
-    public function testMapFieldDefinition()
-    {
-        $data = new FieldDefinitionData([
-            'fieldDefinition' => new FieldDefinition(['fieldTypeIdentifier' => 'first_type']),
-            'contentTypeData' => new ContentTypeData(),
-        ]);
-
-        $formMock = $this->createMock(FormInterface::class);
-
-        $this->fieldValueMapperMock
-            ->expects($this->never())
-            ->method('mapFieldValueForm');
-
-        $this->fieldDefinitionMapperMock
-            ->expects($this->once())
-            ->method('mapFieldDefinitionForm')
-            ->with($formMock, $data);
-
-        $this->dispatcher->map($formMock, $data);
+        $this->dispatcher->addMapper($this->fieldValueMapperMock, 'first_type');
     }
 
     public function testMapFieldValue()
     {
         $data = new FieldData([
-            'field' => new Field(['fieldDefIdentifier' => 'second_type']),
-            'fieldDefinition' => new FieldDefinition(['fieldTypeIdentifier' => 'second_type']),
+            'field' => new Field(['fieldDefIdentifier' => 'first_type']),
+            'fieldDefinition' => new FieldDefinition(['fieldTypeIdentifier' => 'first_type']),
         ]);
 
         $formMock = $this->createMock(FormInterface::class);
@@ -82,10 +53,6 @@ class FieldTypeFormMapperDispatcherTest extends TestCase
             ->expects($this->once())
             ->method('mapFieldValueForm')
             ->with($formMock, $data);
-
-        $this->fieldDefinitionMapperMock
-            ->expects($this->never())
-            ->method('mapFieldDefinitionForm');
 
         $this->dispatcher->map($formMock, $data);
     }

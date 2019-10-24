@@ -16,7 +16,7 @@ use eZ\Publish\API\Repository\Values\Content\Location;
 use EzSystems\RepositoryForms\FieldType\FieldDefinitionFormMapperInterface;
 use EzSystems\RepositoryForms\FieldType\FieldValueFormMapperInterface;
 
-abstract class AbstractRelationFormMapper implements FieldDefinitionFormMapperInterface, FieldValueFormMapperInterface
+abstract class AbstractRelationFormMapper implements FieldValueFormMapperInterface
 {
     /**
      * @var \eZ\Publish\API\Repository\ContentTypeService Used to fetch list of available content types

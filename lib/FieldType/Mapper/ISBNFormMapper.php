@@ -9,43 +9,14 @@
 namespace EzSystems\RepositoryForms\FieldType\Mapper;
 
 use EzSystems\RepositoryForms\Data\Content\FieldData;
-use EzSystems\RepositoryForms\Data\FieldDefinitionData;
 use EzSystems\RepositoryForms\FieldType\FieldDefinitionFormMapperInterface;
 use EzSystems\RepositoryForms\FieldType\FieldValueFormMapperInterface;
 use EzSystems\RepositoryForms\Form\Type\FieldType\ISBNFieldType;
-use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class ISBNFormMapper implements FieldDefinitionFormMapperInterface, FieldValueFormMapperInterface
+class ISBNFormMapper implements FieldValueFormMapperInterface
 {
-    public function mapFieldDefinitionForm(FormInterface $fieldDefinitionForm, FieldDefinitionData $fieldDefinition)
-    {
-        $isTranslation = $fieldDefinition->contentTypeData->languageCode !== $fieldDefinition->contentTypeData->mainLanguageCode;
-        $defaultValueForm = $fieldDefinitionForm
-            ->getConfig()
-            ->getFormFactory()
-            ->createBuilder()
-            ->create('defaultValue', ISBNFieldType::class, [
-                'required' => false,
-                'label' => 'field_definition.ezisbn.default_value',
-                'disabled' => $isTranslation,
-            ])
-            ->setAutoInitialize(false)
-            ->getForm();
-
-        $fieldDefinitionForm
-            ->add(
-                'isISBN13', CheckboxType::class, [
-                    'required' => false,
-                    'property_path' => 'fieldSettings[isISBN13]',
-                    'label' => 'field_definition.ezisbn.is_isbn13',
-                    'disabled' => $isTranslation,
-                ]
-            )
-            ->add($defaultValueForm);
-    }
-
     public function mapFieldValueForm(FormInterface $fieldForm, FieldData $data)
     {
         $fieldDefinition = $data->fieldDefinition;

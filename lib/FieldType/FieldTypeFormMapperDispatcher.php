@@ -9,85 +9,45 @@
 namespace EzSystems\RepositoryForms\FieldType;
 
 use EzSystems\RepositoryForms\Data\Content\FieldData;
-use EzSystems\RepositoryForms\Data\FieldDefinitionData;
 use Symfony\Component\Form\FormInterface;
-use InvalidArgumentException;
 
 /**
  * FieldType mappers dispatcher.
  *
- * Adds the form elements matching the given Field Data (Value or Definition) to a given Form.
+ * Adds the form elements matching the given Field Data Definition to a given Form.
  */
 class FieldTypeFormMapperDispatcher implements FieldTypeFormMapperDispatcherInterface
 {
     /**
      * FieldType form mappers, indexed by FieldType identifier.
      *
-     * @var FieldValueFormMapperInterface[]|FieldDefinitionFormMapperInterface[]
+     * @var \EzSystems\RepositoryForms\FieldType\FieldValueFormMapperInterface[]
      */
-    private $mappers = [];
+    private $mappers;
 
     /**
-     * @var FieldDefinitionFormMapperInterface[]
+     * FieldTypeFormMapperDispatcher constructor.
+     *
+     * @param \EzSystems\RepositoryForms\FieldType\FieldValueFormMapperInterface[] $mappers
      */
-    private $definitionMappers = [];
-
-    /**
-     * @var FieldValueFormMapperInterface[]
-     */
-    private $valueMappers = [];
-
-    public function addMapper(FieldFormMapperInterface $mapper, $fieldTypeIdentifier)
+    public function __construct(array $mappers = [])
     {
-        if ($mapper instanceof FieldValueFormMapperInterface) {
-            $this->valueMappers[$fieldTypeIdentifier] = $mapper;
-            $valid = true;
-        }
-
-        if ($mapper instanceof FieldDefinitionFormMapperInterface) {
-            $this->definitionMappers[$fieldTypeIdentifier] = $mapper;
-            $valid = true;
-        }
-
-        if (!isset($valid)) {
-            throw new \InvalidArgumentException(
-                'Expecting a FieldValueFormMapperInterface, FieldDefinitionFormMapperInterface'
-            );
-        }
+        $this->mappers = $mappers;
     }
 
-    public function map(FormInterface $fieldForm, $data)
+    public function addMapper(FieldValueFormMapperInterface $mapper, string $fieldTypeIdentifier): void
     {
-        if (!$data instanceof FieldDefinitionData && !$data instanceof FieldData) {
-            throw new InvalidArgumentException('Invalid data object, valid types are FieldData and FieldDefinitionData');
-        }
+        $this->mappers[$fieldTypeIdentifier] = $mapper;
+    }
 
+    public function map(FormInterface $fieldForm, FieldData $data): void
+    {
         $fieldTypeIdentifier = $data->getFieldTypeIdentifier();
 
-        if ($data instanceof FieldDefinitionData) {
-            if (isset($this->definitionMappers[$fieldTypeIdentifier])) {
-                $this->definitionMappers[$fieldTypeIdentifier]->mapFieldDefinitionForm($fieldForm, $data);
-            } elseif (
-                isset($this->mappers[$fieldTypeIdentifier]) &&
-                $this->definitionMappers[$fieldTypeIdentifier] instanceof FieldDefinitionFormMapperInterface
-            ) {
-                $this->mappers[$fieldTypeIdentifier]->mapFieldDefinitionForm($fieldForm, $data);
-            }
-
+        if (!isset($this->mappers[$fieldTypeIdentifier])) {
             return;
         }
 
-        if ($data instanceof FieldData) {
-            if (isset($this->valueMappers[$fieldTypeIdentifier])) {
-                $this->valueMappers[$fieldTypeIdentifier]->mapFieldValueForm($fieldForm, $data);
-            } elseif (
-                isset($this->mappers[$fieldTypeIdentifier]) &&
-                $this->mappers[$fieldTypeIdentifier] instanceof FieldValueFormMapperInterface
-            ) {
-                $this->mappers[$fieldTypeIdentifier]->mapFieldValueForm($fieldForm, $data);
-            }
-
-            return;
-        }
+        $this->mappers[$fieldTypeIdentifier]->mapFieldValueForm($fieldForm, $data);
     }
 }

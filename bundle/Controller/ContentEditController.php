@@ -68,11 +68,10 @@ class ContentEditController extends Controller
     /**
      * Displays a draft creation form that creates a content draft from an existing content.
      *
+     * @param \Symfony\Component\HttpFoundation\Request $request
      * @param mixed $contentId
      * @param int $fromVersionNo
      * @param string $fromLanguage
-     * @param string $toLanguage
-     * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return \EzSystems\RepositoryForms\Content\View\ContentCreateDraftView|\Symfony\Component\HttpFoundation\Response
      *
@@ -81,11 +80,10 @@ class ContentEditController extends Controller
      * @throws \eZ\Publish\Core\Base\Exceptions\InvalidArgumentType
      */
     public function createContentDraftAction(
-        $contentId,
-        $fromVersionNo = null,
-        $fromLanguage = null,
-        $toLanguage = null,
-        Request $request
+        Request $request,
+        ?int $contentId = null,
+        ?int $fromVersionNo = null,
+        ?string $fromLanguage = null
     ) {
         $createContentDraft = new CreateContentDraftData();
         $contentInfo = null;
@@ -104,13 +102,13 @@ class ContentEditController extends Controller
             ContentDraftCreateType::class,
             $createContentDraft,
             [
-                'action' => $this->generateUrl('ez_content_draft_create'),
+                'action' => $this->generateUrl('ezplatform.content.draft.create'),
             ]
         );
 
         $form->handleRequest($request);
 
-        if ($form->isValid() && null !== $form->getClickedButton()) {
+        if ($form->isSubmitted() && $form->isValid() && null !== $form->getClickedButton()) {
             $this->contentActionDispatcher->dispatchFormAction($form, $createContentDraft, $form->getClickedButton()->getName());
             if ($response = $this->contentActionDispatcher->getResponse()) {
                 return $response;
@@ -146,31 +144,5 @@ class ContentEditController extends Controller
     public function editVersionDraftSuccessAction(ContentEditSuccessView $view): ContentEditSuccessView
     {
         return $view;
-    }
-
-    /**
-     * Shows a content draft editing form.
-     *
-     * @deprecated In 2.1 and will be removed in 3.0. Please use `editVersionDraftAction()` instead.
-     *
-     * @param int $contentId ContentType id to create
-     * @param int $versionNo Version number the version should be created from. Defaults to the currently published one.
-     * @param string $language Language code to create the version in (eng-GB, ger-DE, ...))
-     * @param int|null $locationId
-     *
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
-    public function editContentDraftAction(
-        $contentId,
-        $versionNo = null,
-        $language = null,
-        $locationId = null
-    ) {
-        return $this->forward('ez_content_edit:editVersionDraftAction', [
-            'contentId' => $contentId,
-            'versionNo' => $versionNo,
-            'languageCode' => $language,
-            'locationId' => $locationId,
-        ]);
     }
 }

@@ -8,53 +8,18 @@
  */
 namespace EzSystems\RepositoryForms\FieldType\Mapper;
 
-use eZ\Publish\Core\FieldType\Time\Type;
 use EzSystems\RepositoryForms\Data\Content\FieldData;
-use EzSystems\RepositoryForms\Data\FieldDefinitionData;
 use EzSystems\RepositoryForms\FieldType\FieldDefinitionFormMapperInterface;
 use EzSystems\RepositoryForms\FieldType\FieldValueFormMapperInterface;
 use EzSystems\RepositoryForms\Form\Type\FieldType\TimeFieldType;
-use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
  * FormMapper for eztime FieldType.
  */
-class TimeFormMapper implements FieldDefinitionFormMapperInterface, FieldValueFormMapperInterface
+class TimeFormMapper implements FieldValueFormMapperInterface
 {
-    public function mapFieldDefinitionForm(FormInterface $fieldDefinitionForm, FieldDefinitionData $data)
-    {
-        $isTranslation = $data->contentTypeData->languageCode !== $data->contentTypeData->mainLanguageCode;
-        $fieldDefinitionForm
-            ->add(
-                'useSeconds',
-                CheckboxType::class,
-                [
-                    'required' => false,
-                    'property_path' => 'fieldSettings[useSeconds]',
-                    'label' => 'field_definition.eztime.use_seconds',
-                    'disabled' => $isTranslation,
-                ]
-            )
-            ->add(
-                'defaultType',
-                ChoiceType::class,
-                [
-                    'choices' => [
-                        'field_definition.eztime.default_type_empty' => Type::DEFAULT_EMPTY,
-                        'field_definition.eztime.default_type_current' => Type::DEFAULT_CURRENT_TIME,
-                    ],
-                    'expanded' => true,
-                    'required' => true,
-                    'property_path' => 'fieldSettings[defaultType]',
-                    'label' => 'field_definition.eztime.default_type',
-                    'disabled' => $isTranslation,
-                ]
-            );
-    }
-
     public function mapFieldValueForm(FormInterface $fieldForm, FieldData $data)
     {
         $fieldDefinition = $data->fieldDefinition;

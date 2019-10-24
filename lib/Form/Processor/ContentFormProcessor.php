@@ -92,7 +92,7 @@ class ContentFormProcessor implements EventSubscriberInterface
         $event->setPayload('content', $draft);
         $event->setPayload('is_new', $draft->contentInfo->isDraft());
 
-        $defaultUrl = $this->router->generate('ez_content_draft_edit', [
+        $defaultUrl = $this->router->generate('ezplatform.content.draft.edit', [
             'contentId' => $draft->id,
             'versionNo' => $draft->getVersionInfo()->versionNo,
             'language' => $languageCode,
@@ -198,7 +198,7 @@ class ContentFormProcessor implements EventSubscriberInterface
         $event->setPayload('content', $contentDraft);
         $event->setPayload('is_new', $contentDraft->contentInfo->isDraft());
 
-        $contentEditUrl = $this->router->generate('ez_content_draft_edit', [
+        $contentEditUrl = $this->router->generate('ezplatform.content.draft.edit', [
             'contentId' => $contentDraft->id,
             'versionNo' => $contentDraft->getVersionInfo()->versionNo,
             'language' => $contentDraft->contentInfo->mainLanguageCode,

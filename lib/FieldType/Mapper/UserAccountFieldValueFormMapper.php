@@ -12,27 +12,23 @@ use eZ\Publish\API\Repository\Values\ContentType\FieldDefinition;
 use eZ\Publish\Core\FieldType\User\Value as ApiUserValue;
 use EzSystems\RepositoryForms\Data\Content\FieldData;
 use EzSystems\RepositoryForms\Data\ContentTranslationData;
-use EzSystems\RepositoryForms\Data\FieldDefinitionData;
 use EzSystems\RepositoryForms\Data\User\UserAccountFieldData;
 use EzSystems\RepositoryForms\FieldType\FieldDefinitionFormMapperInterface;
 use EzSystems\RepositoryForms\FieldType\FieldValueFormMapperInterface;
-use EzSystems\RepositoryForms\Form\Type\FieldDefinition\User\PasswordConstraintCheckboxType;
 use EzSystems\RepositoryForms\Form\Type\FieldType\UserAccountFieldType;
 use EzSystems\RepositoryForms\Validator\Constraints\UserAccountPassword;
 use Symfony\Component\Form\CallbackTransformer;
 use Symfony\Component\Form\Exception\AlreadySubmittedException;
 use Symfony\Component\Form\Exception\LogicException;
 use Symfony\Component\Form\Exception\UnexpectedTypeException;
-use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\OptionsResolver\Exception\InvalidOptionsException;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Validator\Constraints\Range;
 
 /**
  * Maps a user FieldType.
  */
-final class UserAccountFieldValueFormMapper implements FieldValueFormMapperInterface, FieldDefinitionFormMapperInterface
+final class UserAccountFieldValueFormMapper implements FieldValueFormMapperInterface
 {
     /**
      * Maps Field form to current FieldType based on the configured form type (self::$formType).
@@ -71,61 +67,6 @@ final class UserAccountFieldValueFormMapper implements FieldValueFormMapperInter
         $formBuilder->setAutoInitialize(false);
 
         $fieldForm->add($formBuilder->getForm());
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function mapFieldDefinitionForm(FormInterface $fieldDefinitionForm, FieldDefinitionData $data)
-    {
-        $validatorPropertyPathPrefix = 'validatorConfiguration[PasswordValueValidator]';
-
-        $fieldDefinitionForm->add('requireAtLeastOneUpperCaseCharacter', PasswordConstraintCheckboxType::class, [
-            'property_path' => $validatorPropertyPathPrefix . '[requireAtLeastOneUpperCaseCharacter]',
-        ]);
-
-        $fieldDefinitionForm->add('requireAtLeastOneLowerCaseCharacter', PasswordConstraintCheckboxType::class, [
-            'property_path' => $validatorPropertyPathPrefix . '[requireAtLeastOneLowerCaseCharacter]',
-        ]);
-
-        $fieldDefinitionForm->add('requireAtLeastOneNumericCharacter', PasswordConstraintCheckboxType::class, [
-            'property_path' => $validatorPropertyPathPrefix . '[requireAtLeastOneNumericCharacter]',
-        ]);
-
-        $fieldDefinitionForm->add('requireAtLeastOneNonAlphanumericCharacter', PasswordConstraintCheckboxType::class, [
-            'property_path' => $validatorPropertyPathPrefix . '[requireAtLeastOneNonAlphanumericCharacter]',
-        ]);
-
-        $fieldDefinitionForm->add('requireNewPassword', PasswordConstraintCheckboxType::class, [
-            'property_path' => $validatorPropertyPathPrefix . '[requireNewPassword]',
-        ]);
-
-        $fieldDefinitionForm->add('minLength', IntegerType::class, [
-            'required' => false,
-            'property_path' => $validatorPropertyPathPrefix . '[minLength]',
-            'label' => 'field_definition.ezuser.min_length',
-            'constraints' => [
-                new Range(['min' => 0, 'max' => 255]),
-            ],
-        ]);
-
-        $fieldDefinitionForm->add('passwordTTL', IntegerType::class, [
-            'required' => false,
-            'property_path' => 'fieldSettings[PasswordTTL]',
-            'label' => 'field_definition.ezuser.password_ttl',
-            'constraints' => [
-                new Range(['min' => 0, 'max' => null]),
-            ],
-        ]);
-
-        $fieldDefinitionForm->add('passwordTTLWarning', IntegerType::class, [
-            'required' => false,
-            'property_path' => 'fieldSettings[PasswordTTLWarning]',
-            'label' => 'field_definition.ezuser.password_ttl_warning',
-            'constraints' => [
-                new Range(['min' => 0, 'max' => null]),
-            ],
-        ]);
     }
 
     /**

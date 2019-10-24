@@ -9,47 +9,14 @@
 namespace EzSystems\RepositoryForms\FieldType\Mapper;
 
 use EzSystems\RepositoryForms\Data\Content\FieldData;
-use EzSystems\RepositoryForms\Data\FieldDefinitionData;
 use EzSystems\RepositoryForms\FieldType\FieldDefinitionFormMapperInterface;
 use EzSystems\RepositoryForms\FieldType\FieldValueFormMapperInterface;
 use EzSystems\RepositoryForms\Form\Type\FieldType\CountryFieldType;
-use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class CountryFormMapper implements FieldDefinitionFormMapperInterface, FieldValueFormMapperInterface
+class CountryFormMapper implements FieldValueFormMapperInterface
 {
-    public function mapFieldDefinitionForm(FormInterface $fieldDefinitionForm, FieldDefinitionData $data)
-    {
-        $isTranslation = $data->contentTypeData->languageCode !== $data->contentTypeData->mainLanguageCode;
-        $fieldDefinitionForm
-            ->add(
-                'isMultiple',
-                CheckboxType::class, [
-                    'required' => false,
-                    'property_path' => 'fieldSettings[isMultiple]',
-                    'label' => 'field_definition.ezcountry.is_multiple',
-                    'disabled' => $isTranslation,
-                ]
-            )
-            ->add(
-                // Creating from FormBuilder as we need to add a DataTransformer.
-                $fieldDefinitionForm->getConfig()->getFormFactory()->createBuilder()
-                    ->create(
-                        'defaultValue',
-                        CountryFieldType::class, [
-                            'multiple' => true,
-                            'expanded' => false,
-                            'required' => false,
-                            'label' => 'field_definition.ezcountry.default_value',
-                            'disabled' => $isTranslation,
-                        ]
-                    )
-                    // Deactivate auto-initialize as we're not on the root form.
-                    ->setAutoInitialize(false)->getForm()
-            );
-    }
-
     public function mapFieldValueForm(FormInterface $fieldForm, FieldData $data)
     {
         $fieldDefinition = $data->fieldDefinition;

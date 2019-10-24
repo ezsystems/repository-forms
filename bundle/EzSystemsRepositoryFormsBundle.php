@@ -26,14 +26,11 @@ class EzSystemsRepositoryFormsBundle extends Bundle
     {
         parent::build($container);
         $container->addCompilerPass(new FieldTypeFormMapperDispatcherPass());
-        $container->addCompilerPass(new LimitationFormMapperPass());
-        $container->addCompilerPass(new LimitationValueMapperPass());
         $container->addCompilerPass(new ViewBuilderRegistryPass());
 
         $eZExtension = $container->getExtension('ezpublish');
         $eZExtension->addConfigParser(new ContentEdit());
         $eZExtension->addConfigParser(new UserEdit());
-        $eZExtension->addConfigParser(new LimitationValueTemplates());
         $eZExtension->addConfigParser(new ContentEditView());
         $eZExtension->addConfigParser(new ContentCreateView());
         $eZExtension->addDefaultSettings(__DIR__ . '/Resources/config', ['ezpublish_default_settings.yaml']);

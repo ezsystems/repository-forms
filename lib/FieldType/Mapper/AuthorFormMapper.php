@@ -8,47 +8,19 @@
  */
 namespace EzSystems\RepositoryForms\FieldType\Mapper;
 
-use eZ\Publish\Core\FieldType\Author\Type;
 use EzSystems\RepositoryForms\Data\Content\FieldData;
-use EzSystems\RepositoryForms\Data\FieldDefinitionData;
 use EzSystems\RepositoryForms\FieldType\FieldDefinitionFormMapperInterface;
 use EzSystems\RepositoryForms\FieldType\FieldValueFormMapperInterface;
 use EzSystems\RepositoryForms\Form\Type\FieldType\AuthorFieldType;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
  * FormMapper for ezauthor FieldType.
  */
-class AuthorFormMapper implements FieldDefinitionFormMapperInterface, FieldValueFormMapperInterface
+class AuthorFormMapper implements FieldValueFormMapperInterface
 {
     /**
-     * @param \Symfony\Component\Form\FormInterface $fieldDefinitionForm
-     * @param \EzSystems\RepositoryForms\Data\FieldDefinitionData $data
-     */
-    public function mapFieldDefinitionForm(FormInterface $fieldDefinitionForm, FieldDefinitionData $data)
-    {
-        $isTranslation = $data->contentTypeData->languageCode !== $data->contentTypeData->mainLanguageCode;
-        $fieldDefinitionForm
-            ->add(
-                'defaultAuthor',
-                ChoiceType::class,
-                [
-                    'choices' => [
-                        'field_definition.ezauthor.default_user_empty' => Type::DEFAULT_VALUE_EMPTY,
-                        'field_definition.ezauthor.default_user_current' => Type::DEFAULT_CURRENT_USER,
-                    ],
-                    'expanded' => true,
-                    'required' => true,
-                    'property_path' => 'fieldSettings[defaultAuthor]',
-                    'label' => 'field_definition.ezauthor.default_author',
-                    'translation_domain' => 'ezrepoforms_content_type',
-                    'disabled' => $isTranslation,
-                ]
-            );
-    }
-
     /**
      * @param \Symfony\Component\Form\FormInterface $fieldForm
      * @param \EzSystems\RepositoryForms\Data\Content\FieldData $data

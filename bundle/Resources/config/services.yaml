@@ -1,43 +1,17 @@
 imports:
-    - {resource: language.yaml}
-    - {resource: section.yaml}
-    - {resource: role.yaml}
     - {resource: fieldtypes.yaml}
     - {resource: form_types.yaml}
     - {resource: views.yaml}
-    - {resource: events.yaml}
 
 parameters:
     ezrepoforms.field_type_form_mapper.dispatcher.class: EzSystems\RepositoryForms\FieldType\FieldTypeFormMapperDispatcher
-    ezrepoforms.content_type.create.form_type.class: EzSystems\RepositoryForms\Form\Type\ContentType\ContentTypeCreateType
-    ezrepoforms.content_type.update.form_type.class: EzSystems\RepositoryForms\Form\Type\ContentType\ContentTypeUpdateType
-    ezrepoforms.content_type.field_type_choice.form_type.class: EzSystems\RepositoryForms\Form\Type\ContentType\FieldTypeChoiceType
-    ezrepoforms.content_type.sort_field_choice.form_type.class: EzSystems\RepositoryForms\Form\Type\ContentType\SortFieldChoiceType
-    ezrepoforms.content_type.sort_order_choice.form_type.class: EzSystems\RepositoryForms\Form\Type\ContentType\SortOrderChoiceType
-    ezrepoforms.field_definition.form_type.class: EzSystems\RepositoryForms\Form\Type\FieldDefinition\FieldDefinitionType
     ezrepoforms.field.form_type.class: EzSystems\RepositoryForms\Form\Type\Content\ContentFieldType
 
-    ezrepoforms.validator.unique_content_type_identifier.class: EzSystems\RepositoryForms\Validator\Constraints\UniqueContentTypeIdentifierValidator
-    ezrepoforms.validator.validator_configuration.class: EzSystems\RepositoryForms\Validator\Constraints\ValidatorConfigurationValidator
-    ezrepoforms.validator.field_settings.class: EzSystems\RepositoryForms\Validator\Constraints\FieldSettingsValidator
-    ezrepoforms.validator.default_field_value.class: EzSystems\RepositoryForms\Validator\Constraints\FieldDefinitionDefaultValueValidator
     ezrepoforms.validator.field_value.class: EzSystems\RepositoryForms\Validator\Constraints\FieldValueValidator
-    ezrepoforms.validator.unique_url.class: EzSystems\RepositoryForms\Validator\Constraints\UniqueURLValidator
 
-    ezrepoforms.templating.limitation_block_renderer.class: EzSystems\RepositoryForms\Limitation\Templating\LimitationBlockRenderer
-
-    ezrepoforms.twig.field_edit_rendering_extension.class: EzSystems\RepositoryForms\Twig\FieldEditRenderingExtension
-    ezrepoforms.twig.limitation_rendering_extension.class: EzSystems\RepositoryForms\Twig\LimitationValueRenderingExtension
     ezrepoforms.action_dispatcher.base.class: EzSystems\RepositoryForms\Form\ActionDispatcher\AbstractActionDispatcher
-    ezrepoforms.action_dispatcher.content_type.class: EzSystems\RepositoryForms\Form\ActionDispatcher\ContentTypeDispatcher
-    ezrepoforms.action_dispatcher.content_type.group.class: EzSystems\RepositoryForms\Form\ActionDispatcher\ContentTypeGroupDispatcher
     ezrepoforms.action_dispatcher.content.class: EzSystems\RepositoryForms\Form\ActionDispatcher\ContentDispatcher
     ezrepoforms.action_dispatcher.user.class: EzSystems\RepositoryForms\Form\ActionDispatcher\UserDispatcher
-    ezrepoforms.form_processor.content_type.class: EzSystems\RepositoryForms\Form\Processor\ContentTypeFormProcessor
-    ezrepoforms.form_processor.content_type.options.redirect_route_after_publish: ~
-    ezrepoforms.form_processor.content_type.options:
-        redirectRouteAfterPublish: "%ezrepoforms.form_processor.content_type.options.redirect_route_after_publish%"
-    ezrepoforms.form_processor.content_type_group.class: EzSystems\RepositoryForms\Form\Processor\ContentTypeGroupFormProcessor
     ezrepoforms.form_processor.content.class: EzSystems\RepositoryForms\Form\Processor\ContentFormProcessor
     ezrepoforms.form_processor.user_create.class: EzSystems\RepositoryForms\Form\Processor\User\UserCreateFormProcessor
     ezrepoforms.form_processor.user_update.class: EzSystems\RepositoryForms\Form\Processor\User\UserUpdateFormProcessor
@@ -47,57 +21,13 @@ parameters:
     ezrepoforms.controller.user_register.class: EzSystems\RepositoryFormsBundle\Controller\UserRegisterController
     ezrepoforms.controller.user.class: EzSystems\RepositoryFormsBundle\Controller\UserController
 
-    ezrepoforms.user_register.registration_group_loader.configurable.class: EzSystems\RepositoryForms\User\ConfigurableRegistrationGroupLoader
-    ezrepoforms.user_register.registration_content_type_loader.configurable.class: EzSystems\RepositoryForms\User\ConfigurableRegistrationContentTypeLoader
     ezrepoforms.view_templates_listener.class: EzSystems\RepositoryForms\EventListener\ViewTemplatesListener
-
-    ezrepoforms.form_data_mapper.user_register.class: EzSystems\RepositoryForms\Data\Mapper\UserRegisterMapper
-
-    ezrepoforms.form.type.url_list.class: EzSystems\RepositoryForms\Form\Type\URL\URLListType
-    ezrepoforms.form.type.url_edit.class: EzSystems\RepositoryForms\Form\Type\URL\URLEditType
 
     ezrepoforms.user_content_type_identifier: "user"
 
 services:
     ezrepoforms.field_type_form_mapper.dispatcher:
         class: "%ezrepoforms.field_type_form_mapper.dispatcher.class%"
-
-    ezrepoforms.content_type.create.form_type:
-        class: "%ezrepoforms.content_type.create.form_type.class%"
-        arguments: ["@ezpublish.api.service.content_type"]
-        tags:
-            - {name: form.type, alias: ezrepoforms_contenttype_create}
-
-    ezrepoforms.content_type.update.form_type:
-        class: "%ezrepoforms.content_type.update.form_type.class%"
-        tags:
-            - {name: form.type, alias: ezrepoforms_contenttype_update}
-
-    ezrepoforms.content_type.field_type_choice.form_type:
-        class: "%ezrepoforms.content_type.field_type_choice.form_type.class%"
-        arguments: ['@eZ\Publish\Core\FieldType\FieldTypeRegistry', '@translator']
-        tags:
-            - { name: form.type, alias: ezrepoforms_contenttype_field_type_choice }
-
-    ezrepoforms.content_type.sort_field_choice.form_type:
-        class: "%ezrepoforms.content_type.sort_field_choice.form_type.class%"
-        arguments: ["@translator"]
-        tags:
-            - { name: form.type, alias: ezrepoforms_contenttype_sort_field_choice }
-
-    ezrepoforms.content_type.sort_order_choice.form_type:
-        class: "%ezrepoforms.content_type.sort_order_choice.form_type.class%"
-        arguments: ["@translator"]
-        tags:
-            - { name: form.type, alias: ezrepoforms_contenttype_sort_order_choice }
-
-    ezrepoforms.field_definition.form_type:
-        class: "%ezrepoforms.field_definition.form_type.class%"
-        arguments: ["@ezrepoforms.field_type_form_mapper.dispatcher", "@ezpublish.api.service.field_type"]
-        calls:
-            - [setGroupsList, ["@ezpublish.fields_groups.list"]]
-        tags:
-            - { name: form.type, alias: ezrepoforms_fielddefinition_update }
 
     ezrepoforms.field.form_type:
         class: "%ezrepoforms.field.form_type.class%"
@@ -106,41 +36,10 @@ services:
             - { name: form.type, alias: ezrepoforms_content_field }
 
     # Validators
-    ezrepoforms.validator.unique_content_type_identifier:
-        class: "%ezrepoforms.validator.unique_content_type_identifier.class%"
-        arguments: ["@ezpublish.api.service.content_type"]
-        tags:
-            - { name: validator.constraint_validator, alias: ezrepoforms.validator.unique_content_type_identifier }
-
     ezrepoforms.validator.field_type.abstract:
         class: EzSystems\RepositoryForms\Validator\Constraints\FieldTypeValidator
         arguments: ["@ezpublish.api.service.field_type"]
         abstract: true
-
-    ezrepoforms.validator.validator_configuration:
-        parent: ezrepoforms.validator.field_type.abstract
-        class: "%ezrepoforms.validator.validator_configuration.class%"
-        tags:
-            - { name: validator.constraint_validator, alias: ezrepoforms.validator.validator_configuration }
-
-    ezrepoforms.validator.field_settings:
-        parent: ezrepoforms.validator.field_type.abstract
-        class: "%ezrepoforms.validator.field_settings.class%"
-        tags:
-            - { name: validator.constraint_validator, alias: ezrepoforms.validator.field_settings }
-
-    ezrepoforms.validator.default_field_value:
-        parent: ezrepoforms.validator.field_type.abstract
-        class: "%ezrepoforms.validator.default_field_value.class%"
-        tags:
-            - { name: validator.constraint_validator, alias: ezrepoforms.validator.default_field_value }
-
-    ezrepoforms.validator.unique_url:
-        class: '%ezrepoforms.validator.unique_url.class%'
-        arguments:
-            - '@ezpublish.api.service.url'
-        tags:
-            - { name: validator.constraint_validator, alias: ezrepoforms.validator.unique_url }
 
     EzSystems\RepositoryForms\Validator\Constraints\PasswordValidator:
         arguments:
@@ -153,27 +52,6 @@ services:
             $userService: '@ezpublish.api.service.user'
         tags:
             - { name: validator.constraint_validator }
-
-    ezrepoforms.twig.field_edit_rendering_extension:
-        class: "%ezrepoforms.twig.field_edit_rendering_extension.class%"
-        arguments: ["@ezpublish.templating.field_block_renderer"]
-        tags:
-            - { name: twig.extension }
-
-    ezrepoforms.templating.limitation_block_renderer:
-        class: '%ezrepoforms.templating.limitation_block_renderer.class%'
-        arguments:
-            - '@ezrepoforms.limitation_value_mapper.registry'
-            - '@twig'
-        calls:
-            - ['setLimitationValueResources', [ '$limitation_value_templates$' ]]
-
-    ezrepoforms.twig.limitation_rendering_extension:
-        class: '%ezrepoforms.twig.limitation_rendering_extension.class%'
-        arguments:
-            - '@ezrepoforms.templating.limitation_block_renderer'
-        tags:
-            - { name: twig.extension }
 
     ezrepoforms.validator.field_value:
         parent: ezrepoforms.validator.field_type.abstract
@@ -192,27 +70,11 @@ services:
         class: "%ezrepoforms.action_dispatcher.content.class%"
         parent: ezrepoforms.action_dispatcher.base
 
-    ezrepoforms.action_dispatcher.content_type:
-        class: "%ezrepoforms.action_dispatcher.content_type.class%"
-        parent: ezrepoforms.action_dispatcher.base
-
-    ezrepoforms.action_dispatcher.content_type.group:
-        class: "%ezrepoforms.action_dispatcher.content_type.group.class%"
-        parent: ezrepoforms.action_dispatcher.base
-
     ezrepoforms.action_dispatcher.user:
         class: "%ezrepoforms.action_dispatcher.user.class%"
         parent: ezrepoforms.action_dispatcher.base
 
     # Form processors
-    ezrepoforms.form_processor.content_type:
-        class: "%ezrepoforms.form_processor.content_type.class%"
-        arguments: ["@ezpublish.api.service.content_type", "@router", "%ezrepoforms.form_processor.content_type.options%"]
-        calls:
-            - [setGroupsList, ["@ezpublish.fields_groups.list"]]
-        tags:
-            - { name: kernel.event_subscriber }
-
     ezrepoforms.form_processor.content:
         class: '%ezrepoforms.form_processor.content.class%'
         arguments:
@@ -246,12 +108,6 @@ services:
         tags:
             - { name: kernel.event_subscriber }
 
-    ezrepoforms.form_processor.content_type_group:
-        class: "%ezrepoforms.form_processor.content_type_group.class%"
-        arguments: ["@ezpublish.api.service.content_type"]
-        tags:
-            - { name: kernel.event_subscriber }
-
     EzSystems\RepositoryForms\Form\Processor\SystemUrlRedirectProcessor:
         autowire: true
         autoconfigure: true
@@ -281,35 +137,9 @@ services:
         tags:
               - { name: controller.service_arguments }
 
-    ezrepoforms.controller.user_register:
-        class: "%ezrepoforms.controller.user_register.class%"
-        autowire: true
-        deprecated: '"%service_id%" is deprecated since 2.5 and will be removed in 3.0. Please use \EzSystems\EzPlatformUserBundle\Controller\UserRegisterController instead.'
-        tags:
-            - { name: controller.service_arguments }
-
     ez_content_edit:
         alias: ezrepoforms.controller.content_edit
         public: true
-
-    ezrepoforms.user_register.registration_group_loader.configurable:
-        class: "%ezrepoforms.user_register.registration_group_loader.configurable.class%"
-        deprecated: '"%service_id%" is deprecated since 2.5 and will be removed in 3.0. Please use \EzSystems\EzPlatformUser\ConfigResolver\ConfigurableRegistrationGroupLoader instead.'
-        autowire: true
-        calls:
-            - [setParam, ["groupId", "$user_registration.group_id$"]]
-
-    ezrepoforms.user_register.registration_content_type_loader.configurable:
-        class: "%ezrepoforms.user_register.registration_content_type_loader.configurable.class%"
-        deprecated: '"%service_id%" is deprecated since and will be removed in 3.0. Please use \EzSystems\EzPlatformUser\ConfigResolver\ConfigurableRegistrationContentTypeLoader instead.'
-        autowire: true
-        calls:
-            - [setParam, ["contentTypeIdentifier", "%ezrepoforms.user_content_type_identifier%"]]
-
-    ezrepoforms.form_data_mapper.user_register:
-        class: "%ezrepoforms.form_data_mapper.user_register.class%"
-        deprecated: '"%service_id%" is deprecated since and will be removed in 3.0. Please use EzSystems\EzPlatformUser\Form\DataMapper\UserRegisterMapper instead.'
-        autowire: true
 
     ezrepoforms.view_templates_listener:
         class: "%ezrepoforms.view_templates_listener.class%"
@@ -321,36 +151,4 @@ services:
             - [setViewTemplate, ['EzSystems\RepositoryForms\Content\View\ContentCreateDraftView', "$content_edit.templates.create_draft$"]]
             - [setPagelayout, ["$pagelayout$"]]
 
-    ezrepoforms.translation.extractor.sorting:
-        class: EzSystems\RepositoryForms\Translation\SortingTranslationExtractor
-        tags:
-            - { name: jms_translation.extractor, alias: ez_location_sorting }
-
-    ezrepoforms.translation.extractor.limitation:
-        class: EzSystems\RepositoryForms\Translation\LimitationTranslationExtractor
-        arguments:
-            - '%ezpublish.api.role.policy_map%'
-        tags:
-            - { name: jms_translation.extractor, alias: ez_policy_limitation }
-
-    ezrepoforms.form.type.url_list:
-        class: '%ezrepoforms.form.type.url_list.class%'
-        arguments:
-            - '@translator'
-        tags:
-            - { name: 'form.type', alias: 'ezrepoforms_url_list' }
-
-    ezrepoforms.form.type.url_edit:
-        class: '%ezrepoforms.form.type.url_edit.class%'
-        tags:
-            - { name: 'form.type', alias: 'ezrepoforms_url_edit' }
-
     EzSystems\RepositoryForms\ConfigResolver\MaxUploadSize: ~
-
-    ezrepoforms.config_resolver.max_upload_size:
-        alias: EzSystems\RepositoryForms\ConfigResolver\MaxUploadSize
-
-    EzSystems\RepositoryForms\Data\Mapper\ContentTypeDraftMapper:
-        autowire: true
-        autoconfigure: true
-        public: false
