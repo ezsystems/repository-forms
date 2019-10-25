@@ -123,7 +123,7 @@ services:
         tags:
             - { name: ezplatform.field_type.form_mapper.value, fieldType: ezkeyword }
 
-    ezrepoforms.field_type.form_mapper.ezemail:
+    ezplatform.content_forms.field_type.form_mapper.ezemail:
         parent: EzSystems\RepositoryForms\FieldType\Mapper\FormTypeBasedFieldValueFormMapper
         autowire: true
         autoconfigure: false

@@ -23,6 +23,6 @@ class FieldValue extends Constraint
 
     public function validatedBy()
     {
-        return 'ezrepoforms.validator.field_value';
+        return 'ezplatform.content_forms.validator.field_value';
     }
 }

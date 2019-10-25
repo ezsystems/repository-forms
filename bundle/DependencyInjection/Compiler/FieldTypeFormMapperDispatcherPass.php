@@ -18,7 +18,7 @@ use Symfony\Component\DependencyInjection\Reference;
  */
 class FieldTypeFormMapperDispatcherPass implements CompilerPassInterface
 {
-    public const FIELD_TYPE_FORM_MAPPER_DISPATCHER = 'ezrepoforms.field_type_form_mapper.dispatcher';
+    public const FIELD_TYPE_FORM_MAPPER_DISPATCHER = 'ezplatform.content_forms.field_type_form_mapper.dispatcher';
     public const DEPRECATED_FIELD_TYPE_FORM_MAPPER_VALUE_SERVICE_TAG = 'ez.fieldFormMapper.value';
     public const FIELD_TYPE_FORM_MAPPER_VALUE_SERVICE_TAG = 'ezplatform.field_type.form_mapper.value';
 

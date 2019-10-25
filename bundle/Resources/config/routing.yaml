@@ -28,12 +28,12 @@ ezplatform.content.draft.create:
 ezplatform.user.create:
     path: /user/create/{contentTypeIdentifier}/{language}/{parentLocationId}
     defaults:
-        _controller: "ezrepoforms.controller.user:createAction"
+        _controller: "ezplatform.content_forms.controller.user:createAction"
 
 ezplatform.user.update:
     path: /user/update/{contentId}/{versionNo}/{language}
     defaults:
-        _controller: "ezrepoforms.controller.user:editAction"
+        _controller: "ezplatform.content_forms.controller.user:editAction"
     options:
         expose: true
 

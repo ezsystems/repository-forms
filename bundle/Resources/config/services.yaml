@@ -4,39 +4,39 @@ imports:
     - {resource: views.yaml}
 
 parameters:
-    ezrepoforms.field_type_form_mapper.dispatcher.class: EzSystems\RepositoryForms\FieldType\FieldTypeFormMapperDispatcher
-    ezrepoforms.field.form_type.class: EzSystems\RepositoryForms\Form\Type\Content\ContentFieldType
+    ezplatform.content_forms.field_type_form_mapper.dispatcher.class: EzSystems\RepositoryForms\FieldType\FieldTypeFormMapperDispatcher
+    ezplatform.content_forms.field.form_type.class: EzSystems\RepositoryForms\Form\Type\Content\ContentFieldType
 
-    ezrepoforms.validator.field_value.class: EzSystems\RepositoryForms\Validator\Constraints\FieldValueValidator
+    ezplatform.content_forms.validator.field_value.class: EzSystems\RepositoryForms\Validator\Constraints\FieldValueValidator
 
-    ezrepoforms.action_dispatcher.base.class: EzSystems\RepositoryForms\Form\ActionDispatcher\AbstractActionDispatcher
-    ezrepoforms.action_dispatcher.content.class: EzSystems\RepositoryForms\Form\ActionDispatcher\ContentDispatcher
-    ezrepoforms.action_dispatcher.user.class: EzSystems\RepositoryForms\Form\ActionDispatcher\UserDispatcher
-    ezrepoforms.form_processor.content.class: EzSystems\RepositoryForms\Form\Processor\ContentFormProcessor
-    ezrepoforms.form_processor.user_create.class: EzSystems\RepositoryForms\Form\Processor\User\UserCreateFormProcessor
-    ezrepoforms.form_processor.user_update.class: EzSystems\RepositoryForms\Form\Processor\User\UserUpdateFormProcessor
-    ezrepoforms.form_processor.user_cancel.class: EzSystems\RepositoryForms\Form\Processor\User\UserCancelFormProcessor
+    ezplatform.content_forms.action_dispatcher.base.class: EzSystems\RepositoryForms\Form\ActionDispatcher\AbstractActionDispatcher
+    ezplatform.content_forms.action_dispatcher.content.class: EzSystems\RepositoryForms\Form\ActionDispatcher\ContentDispatcher
+    ezplatform.content_forms.action_dispatcher.user.class: EzSystems\RepositoryForms\Form\ActionDispatcher\UserDispatcher
+    ezplatform.content_forms.form_processor.content.class: EzSystems\RepositoryForms\Form\Processor\ContentFormProcessor
+    ezplatform.content_forms.form_processor.user_create.class: EzSystems\RepositoryForms\Form\Processor\User\UserCreateFormProcessor
+    ezplatform.content_forms.form_processor.user_update.class: EzSystems\RepositoryForms\Form\Processor\User\UserUpdateFormProcessor
+    ezplatform.content_forms.form_processor.user_cancel.class: EzSystems\RepositoryForms\Form\Processor\User\UserCancelFormProcessor
 
-    ezrepoforms.controller.content_edit.class: EzSystems\RepositoryFormsBundle\Controller\ContentEditController
-    ezrepoforms.controller.user_register.class: EzSystems\RepositoryFormsBundle\Controller\UserRegisterController
-    ezrepoforms.controller.user.class: EzSystems\RepositoryFormsBundle\Controller\UserController
+    ezplatform.content_forms.controller.content_edit.class: EzSystems\RepositoryFormsBundle\Controller\ContentEditController
+    ezplatform.content_forms.controller.user_register.class: EzSystems\RepositoryFormsBundle\Controller\UserRegisterController
+    ezplatform.content_forms.controller.user.class: EzSystems\RepositoryFormsBundle\Controller\UserController
 
-    ezrepoforms.view_templates_listener.class: EzSystems\RepositoryForms\EventListener\ViewTemplatesListener
+    ezplatform.content_forms.view_templates_listener.class: EzSystems\RepositoryForms\EventListener\ViewTemplatesListener
 
-    ezrepoforms.user_content_type_identifier: "user"
+    ezplatform.content_forms.user_content_type_identifier: "user"
 
 services:
-    ezrepoforms.field_type_form_mapper.dispatcher:
-        class: "%ezrepoforms.field_type_form_mapper.dispatcher.class%"
+    ezplatform.content_forms.field_type_form_mapper.dispatcher:
+        class: "%ezplatform.content_forms.field_type_form_mapper.dispatcher.class%"
 
-    ezrepoforms.field.form_type:
-        class: "%ezrepoforms.field.form_type.class%"
-        arguments: ["@ezrepoforms.field_type_form_mapper.dispatcher"]
+    ezplatform.content_forms.field.form_type:
+        class: "%ezplatform.content_forms.field.form_type.class%"
+        arguments: ["@ezplatform.content_forms.field_type_form_mapper.dispatcher"]
         tags:
             - { name: form.type, alias: ezrepoforms_content_field }
 
     # Validators
-    ezrepoforms.validator.field_type.abstract:
+    ezplatform.content_forms.validator.field_type.abstract:
         class: EzSystems\RepositoryForms\Validator\Constraints\FieldTypeValidator
         arguments: ["@ezpublish.api.service.field_type"]
         abstract: true
@@ -53,30 +53,30 @@ services:
         tags:
             - { name: validator.constraint_validator }
 
-    ezrepoforms.validator.field_value:
-        parent: ezrepoforms.validator.field_type.abstract
-        class: "%ezrepoforms.validator.field_value.class%"
+    ezplatform.content_forms.validator.field_value:
+        parent: ezplatform.content_forms.validator.field_type.abstract
+        class: "%ezplatform.content_forms.validator.field_value.class%"
         tags:
-            - { name: validator.constraint_validator, alias: ezrepoforms.validator.field_value }
+            - { name: validator.constraint_validator, alias: ezplatform.content_forms.validator.field_value }
 
     # Action dispatchers
-    ezrepoforms.action_dispatcher.base:
-        class: "%ezrepoforms.action_dispatcher.base.class%"
+    ezplatform.content_forms.action_dispatcher.base:
+        class: "%ezplatform.content_forms.action_dispatcher.base.class%"
         abstract: true
         calls:
             - [setEventDispatcher, ["@event_dispatcher"]]
 
-    ezrepoforms.action_dispatcher.content:
-        class: "%ezrepoforms.action_dispatcher.content.class%"
-        parent: ezrepoforms.action_dispatcher.base
+    ezplatform.content_forms.action_dispatcher.content:
+        class: "%ezplatform.content_forms.action_dispatcher.content.class%"
+        parent: ezplatform.content_forms.action_dispatcher.base
 
-    ezrepoforms.action_dispatcher.user:
-        class: "%ezrepoforms.action_dispatcher.user.class%"
-        parent: ezrepoforms.action_dispatcher.base
+    ezplatform.content_forms.action_dispatcher.user:
+        class: "%ezplatform.content_forms.action_dispatcher.user.class%"
+        parent: ezplatform.content_forms.action_dispatcher.base
 
     # Form processors
-    ezrepoforms.form_processor.content:
-        class: '%ezrepoforms.form_processor.content.class%'
+    ezplatform.content_forms.form_processor.content:
+        class: '%ezplatform.content_forms.form_processor.content.class%'
         arguments:
             - '@ezpublish.api.service.content'
             - '@ezpublish.api.service.location'
@@ -84,16 +84,16 @@ services:
         tags:
             - { name: kernel.event_subscriber }
 
-    ezrepoforms.form_processor.user_create:
-        class: "%ezrepoforms.form_processor.user_create.class%"
+    ezplatform.content_forms.form_processor.user_create:
+        class: "%ezplatform.content_forms.form_processor.user_create.class%"
         arguments:
             - '@ezpublish.api.service.user'
             - '@router'
         tags:
             - { name: kernel.event_subscriber }
 
-    ezrepoforms.form_processor.user_update:
-        class: "%ezrepoforms.form_processor.user_update.class%"
+    ezplatform.content_forms.form_processor.user_update:
+        class: "%ezplatform.content_forms.form_processor.user_update.class%"
         arguments:
             - '@ezpublish.api.service.user'
             - '@ezpublish.api.service.content'
@@ -101,8 +101,8 @@ services:
         tags:
             - { name: kernel.event_subscriber }
 
-    ezrepoforms.form_processor.user:
-        class: "%ezrepoforms.form_processor.user_cancel.class%"
+    ezplatform.content_forms.form_processor.user:
+        class: "%ezplatform.content_forms.form_processor.user_cancel.class%"
         arguments:
             - '@router'
         tags:
@@ -113,36 +113,36 @@ services:
         autoconfigure: true
 
     # Controllers
-    ezrepoforms.controller.content_edit:
+    ezplatform.content_forms.controller.content_edit:
         public: true
-        class: "%ezrepoforms.controller.content_edit.class%"
+        class: "%ezplatform.content_forms.controller.content_edit.class%"
         arguments:
             - "@ezpublish.api.service.content_type"
             - "@ezpublish.api.service.content"
-            - "@ezrepoforms.action_dispatcher.content"
+            - "@ezplatform.content_forms.action_dispatcher.content"
         parent: ezpublish.controller.base
         tags:
               - { name: controller.service_arguments }
 
-    ezrepoforms.controller.user:
-        class: "%ezrepoforms.controller.user.class%"
+    ezplatform.content_forms.controller.user:
+        class: "%ezplatform.content_forms.controller.user.class%"
         arguments:
             - "@ezpublish.api.service.content_type"
             - "@ezpublish.api.service.user"
             - "@ezpublish.api.service.location"
             - "@ezpublish.api.service.language"
-            - "@ezrepoforms.action_dispatcher.user"
+            - "@ezplatform.content_forms.action_dispatcher.user"
             - '@eZ\Publish\API\Repository\PermissionResolver'
         parent: ezpublish.controller.base
         tags:
               - { name: controller.service_arguments }
 
     ez_content_edit:
-        alias: ezrepoforms.controller.content_edit
+        alias: ezplatform.content_forms.controller.content_edit
         public: true
 
-    ezrepoforms.view_templates_listener:
-        class: "%ezrepoforms.view_templates_listener.class%"
+    ezplatform.content_forms.view_templates_listener:
+        class: "%ezplatform.content_forms.view_templates_listener.class%"
         tags:
             - { name: kernel.event_subscriber }
         calls:

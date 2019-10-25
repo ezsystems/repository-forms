@@ -11,7 +11,7 @@ services:
             - '@ezpublish.view.configurator'
             - '@ezpublish.view.view_parameters.injector.dispatcher'
             - '$content_edit.templates.edit$'
-            - '@ezrepoforms.action_dispatcher.content'
+            - '@ezplatform.content_forms.action_dispatcher.content'
 
     EzSystems\RepositoryForms\Content\View\Provider\ContentEditView\Configured:
         arguments:
@@ -42,7 +42,7 @@ services:
             - '@ezpublish.view.configurator'
             - '@ezpublish.view.view_parameters.injector.dispatcher'
             - '$content_edit.templates.create$'
-            - '@ezrepoforms.action_dispatcher.content'
+            - '@ezplatform.content_forms.action_dispatcher.content'
 
     EzSystems\RepositoryForms\Content\View\Provider\ContentCreateView\Configured:
         arguments:
