@@ -28,7 +28,7 @@ class ContentEditType extends AbstractType
 
     public function getBlockPrefix()
     {
-        return 'ezrepoforms_content_edit';
+        return 'ezplatform_content_forms_content_edit';
     }
 
     public function getParent()

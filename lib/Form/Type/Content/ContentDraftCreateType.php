@@ -20,7 +20,7 @@ class ContentDraftCreateType extends AbstractType
 
     public function getBlockPrefix()
     {
-        return 'ezrepoforms_content_draft_create';
+        return 'ezplatform_content_forms_content_draft_create';
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options)

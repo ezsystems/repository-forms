@@ -43,7 +43,7 @@ final class ContentEditContext extends MinkContext implements Context, SnippetAc
      */
     public function iShouldSeeAContentEditForm()
     {
-        $this->assertSession()->elementExists('css', 'form[name=ezrepoforms_content_edit]');
+        $this->assertSession()->elementExists('css', 'form[name=ezplatform_content_forms_content_edit]');
     }
 
     /**
@@ -66,7 +66,7 @@ final class ContentEditContext extends MinkContext implements Context, SnippetAc
     {
         // will only work for single value fields
         $this->createdContentName = 'Behat content edit @' . microtime(true);
-        $this->fillField('ezrepoforms_content_edit_fieldsData_name_value', $this->createdContentName);
+        $this->fillField('ezplatform_content_forms_content_edit_fieldsData_name_value', $this->createdContentName);
     }
 
     /**
@@ -108,7 +108,7 @@ final class ContentEditContext extends MinkContext implements Context, SnippetAc
     {
         $this->fillField(
             sprintf(
-                'ezrepoforms_content_edit_fieldsData_%s_value',
+                'ezplatform_content_forms_content_edit_fieldsData_%s_value',
                 self::$constrainedFieldIdentifier
             ),
             'abc'
@@ -128,7 +128,7 @@ final class ContentEditContext extends MinkContext implements Context, SnippetAc
         $this->assertPageAddress($uri);
         $this->assertElementOnPage(
             sprintf(
-                'input[name="ezrepoforms_content_edit[fieldsData][%s][value]"]',
+                'input[name="ezplatform_content_forms_content_edit[fieldsData][%s][value]"]',
                 self::$constrainedFieldIdentifier
             )
         );
@@ -140,7 +140,7 @@ final class ContentEditContext extends MinkContext implements Context, SnippetAc
     public function thereIsARelevantErrorMessageLinkedToTheInvalidField()
     {
         $selector = sprintf(
-            '#ezrepoforms_content_edit_fieldsData_%s div ul li',
+            '#ezplatform_content_forms_content_edit_fieldsData_%s div ul li',
             self::$constrainedFieldIdentifier
         );
 

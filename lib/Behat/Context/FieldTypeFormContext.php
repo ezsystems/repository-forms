@@ -106,7 +106,7 @@ final class FieldTypeFormContext extends RawMinkContext implements SnippetAccept
     {
         $this->assertSession()->elementTextContains(
             'css',
-            sprintf('form[name="ezrepoforms_%s"] label', $this->getFieldTypeSelector($fieldTypeIdentifier)),
+            sprintf('form[name="ezplatform_content_forms_%s"] label', $this->getFieldTypeSelector($fieldTypeIdentifier)),
             'Field'
         );
     }
@@ -119,8 +119,8 @@ final class FieldTypeFormContext extends RawMinkContext implements SnippetAccept
         $this->assertSession()->elementExists(
             'css',
             sprintf(
-                'form[name="ezrepoforms_content_edit"] '
-                . 'input[name="ezrepoforms_content_edit[fieldsData][%s][value]"][type=%s]',
+                'form[name="ezplatform_content_forms_content_edit"] '
+                . 'input[name="ezplatform_content_forms_content_edit[fieldsData][%s][value]"][type=%s]',
                 self::$fieldIdentifier,
                 $inputType
             )
@@ -135,7 +135,7 @@ final class FieldTypeFormContext extends RawMinkContext implements SnippetAccept
         $inputNodeElements = $this->getSession()->getPage()->findAll(
             'css',
             sprintf(
-                'form[name="ezrepoforms_user_create"] #ezrepoforms_user_create_fieldsData_%s_value input',
+                'form[name="ezplatform_content_forms_user_create"] #ezplatform_content_forms_user_create_fieldsData_%s_value input',
                 self::$fieldIdentifier
             )
         );
@@ -174,7 +174,7 @@ final class FieldTypeFormContext extends RawMinkContext implements SnippetAccept
         $inputNodeElements = $this->getSession()->getPage()->findAll(
             'css',
             sprintf(
-                'form[name="ezrepoforms_%1$s"] #ezrepoforms_%1$s_fieldsData_%2$s input',
+                'form[name="ezplatform_content_forms_%1$s"] #ezplatform_content_forms_%1$s_fieldsData_%2$s input',
                 $this->getFieldTypeSelector($fieldTypeIdentifier),
                 self::$fieldIdentifier
             )

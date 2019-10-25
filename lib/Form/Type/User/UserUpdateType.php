@@ -27,7 +27,7 @@ class UserUpdateType extends AbstractType
 
     public function getBlockPrefix()
     {
-        return 'ezrepoforms_user_update';
+        return 'ezplatform_content_forms_user_update';
     }
 
     public function getParent()

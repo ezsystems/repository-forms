@@ -36,7 +36,7 @@ class ContentFieldType extends AbstractType
 
     public function getBlockPrefix()
     {
-        return 'ezrepoforms_content_field';
+        return 'ezplatform_content_forms_content_field';
     }
 
     public function configureOptions(OptionsResolver $resolver)

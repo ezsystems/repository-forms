@@ -29,7 +29,7 @@ class BaseUserType extends AbstractType
 
     public function getBlockPrefix()
     {
-        return 'ezrepoforms_user';
+        return 'ezplatform_content_forms_user';
     }
 
     public function getParent()

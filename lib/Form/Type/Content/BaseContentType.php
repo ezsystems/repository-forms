@@ -27,7 +27,7 @@ class BaseContentType extends AbstractType
 
     public function getBlockPrefix()
     {
-        return 'ezrepoforms_content';
+        return 'ezplatform_content_forms_content';
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options)

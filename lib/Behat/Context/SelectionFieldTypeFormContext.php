@@ -50,8 +50,8 @@ final class SelectionFieldTypeFormContext extends RawMinkContext implements Snip
         $this->assertSession()->elementExists(
             'css',
             sprintf(
-                'form[name="ezrepoforms_content_edit"] '
-                . 'select[name="ezrepoforms_content_edit[fieldsData][%s][value]"]',
+                'form[name="ezplatform_content_forms_content_edit"] '
+                . 'select[name="ezplatform_content_forms_content_edit[fieldsData][%s][value]"]',
                 self::$fieldIdentifier
             )
         );
@@ -65,7 +65,7 @@ final class SelectionFieldTypeFormContext extends RawMinkContext implements Snip
         $nodeElements = $this->getSession()->getPage()->findAll(
             'css',
             sprintf(
-                'select[name="ezrepoforms_content_edit[fieldsData][%s][value][]"]',
+                'select[name="ezplatform_content_forms_content_edit[fieldsData][%s][value][]"]',
                 self::$fieldIdentifier
             )
         );
@@ -88,7 +88,7 @@ final class SelectionFieldTypeFormContext extends RawMinkContext implements Snip
     public function theInputIsASingleSelectionDropdown()
     {
         $selector = sprintf(
-            'select[name="ezrepoforms_content_edit[fieldsData][%s][value]"]',
+            'select[name="ezplatform_content_forms_content_edit[fieldsData][%s][value]"]',
             self::$fieldIdentifier
         );
 
@@ -102,7 +102,7 @@ final class SelectionFieldTypeFormContext extends RawMinkContext implements Snip
     public function theInputIsAMultipleSelectionDropdown()
     {
         $selector = sprintf(
-            'select[name="ezrepoforms_content_edit[fieldsData][%s][value][]"][multiple=multiple]',
+            'select[name="ezplatform_content_forms_content_edit[fieldsData][%s][value][]"][multiple=multiple]',
             self::$fieldIdentifier
         );
 

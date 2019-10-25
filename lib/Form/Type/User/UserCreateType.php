@@ -27,7 +27,7 @@ class UserCreateType extends AbstractType
 
     public function getBlockPrefix()
     {
-        return 'ezrepoforms_user_create';
+        return 'ezplatform_content_forms_user_create';
     }
 
     public function getParent()

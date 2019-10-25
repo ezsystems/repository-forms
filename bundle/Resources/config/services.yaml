@@ -33,7 +33,7 @@ services:
         class: "%ezplatform.content_forms.field.form_type.class%"
         arguments: ["@ezplatform.content_forms.field_type_form_mapper.dispatcher"]
         tags:
-            - { name: form.type, alias: ezrepoforms_content_field }
+            - { name: form.type, alias: ezplatform_content_forms_content_field }
 
     # Validators
     ezplatform.content_forms.validator.field_type.abstract:
