@@ -252,10 +252,6 @@ services:
         tags:
             - { name: kernel.event_subscriber }
 
-    EzSystems\RepositoryForms\Form\Processor\SystemUrlRedirectProcessor:
-        autowire: true
-        autoconfigure: true
-
     # Controllers
     ezrepoforms.controller.content_edit:
         class: "%ezrepoforms.controller.content_edit.class%"
