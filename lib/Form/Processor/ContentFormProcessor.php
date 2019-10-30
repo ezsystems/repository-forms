@@ -119,7 +119,7 @@ class ContentFormProcessor implements EventSubscriberInterface
 
         $draft = $this->saveDraft($data, $form->getConfig()->getOption('languageCode'));
         $versionInfo = $draft->versionInfo;
-        $content = $this->contentService->publishVersion($versionInfo, [$versionInfo->initialLanguageCode]);
+        $content = $this->contentService->publishVersion($versionInfo);
 
         $event->setPayload('content', $content);
         $event->setPayload('is_new', $draft->contentInfo->isDraft());
