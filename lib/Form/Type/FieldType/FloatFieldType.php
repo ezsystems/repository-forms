@@ -45,6 +45,7 @@ class FloatFieldType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->addModelTransformer(new FieldValueTransformer($this->fieldTypeService->getFieldType('ezfloat')));
+        $builder->resetViewTransformers();
     }
 
     public function buildView(FormView $view, FormInterface $form, array $options)
