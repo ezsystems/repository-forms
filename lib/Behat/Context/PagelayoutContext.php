@@ -64,7 +64,7 @@ class PagelayoutContext extends RawMinkContext implements Context, SnippetAccept
                     ? str_replace('@ezdesign', 'templates/themes/tastefulplanet', $this->configResolver->getParameter('page_layout', null, 'site'))
                     : str_replace('@ezdesign', 'templates/themes/tastefulplanet', $this->configResolver->getParameter('pagelayout', null, 'site'));
             default:
-                throw new \Exception('Unrecognised install type');
+                throw new \Exception('Unrecognised installation type');
         }
     }
 }

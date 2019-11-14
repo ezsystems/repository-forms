@@ -52,7 +52,7 @@ abstract class ConfigurableSudoRepositoryLoader
     protected function getParam($name)
     {
         if (!isset($this->params[$name])) {
-            throw new OutOfBoundsException("No such param '$name'");
+            throw new OutOfBoundsException("There is no param '$name'");
         }
 
         return $this->params[$name];

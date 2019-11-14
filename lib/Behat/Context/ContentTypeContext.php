@@ -93,7 +93,7 @@ final class ContentTypeContext extends RawMinkContext implements Context, Snippe
     public function getCurrentContentType()
     {
         if ($this->currentContentType === null) {
-            throw new Exception('No current content type has been defined in the context');
+            throw new Exception('No current Content Type has been defined in the context');
         }
 
         return $this->currentContentType;

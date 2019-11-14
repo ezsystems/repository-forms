@@ -255,7 +255,7 @@ class ContentFormProcessor implements EventSubscriberInterface
         if (!$data instanceof ContentUpdateData && !$data instanceof ContentCreateData) {
             throw new InvalidArgumentException(
                 '$data',
-                'expected type of ContentUpdateData or ContentCreateData'
+                'expected ContentUpdateData or ContentCreateData'
             );
         }
 
