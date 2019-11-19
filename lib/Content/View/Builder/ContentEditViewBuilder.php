@@ -101,7 +101,7 @@ class ContentEditViewBuilder implements ViewBuilder
         $isPublished = null !== $contentInfo->mainLocationId && $contentInfo->published;
 
         if (!$content->getVersionInfo()->isDraft()) {
-            throw new InvalidArgumentException('Version', 'the status is not draft');
+            throw new InvalidArgumentException('Version', 'The status is not draft');
         }
 
         if (null === $location && $isPublished) {
