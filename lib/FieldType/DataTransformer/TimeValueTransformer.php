@@ -56,7 +56,7 @@ class TimeValueTransformer implements DataTransformerInterface
 
         if (!is_numeric($value)) {
             throw new TransformationFailedException(
-                sprintf('Received %s instead instead of a numeric value', gettype($value))
+                sprintf('Received %s instead of a numeric value', gettype($value))
             );
         }
 
