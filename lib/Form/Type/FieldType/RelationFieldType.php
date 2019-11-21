@@ -67,11 +67,10 @@ class RelationFieldType extends AbstractType
         /** @var Value $data */
         $data = $form->getData();
 
-        $contentId = $data->destinationContentId;
-        if (!$data instanceof Value || null === $contentId) {
+        if (!$data instanceof Value || null === $data->destinationContentId) {
             return;
         }
-
+        $contentId = $data->destinationContentId;
         $contentInfo = null;
         $contentType = null;
         $unauthorized = false;
