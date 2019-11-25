@@ -7,7 +7,6 @@ namespace EzSystems\RepositoryForms\Form\Type\FieldType;
 
 use eZ\Publish\API\Repository\ContentService;
 use eZ\Publish\API\Repository\ContentTypeService;
-use eZ\Publish\API\Repository\Exceptions\UnauthorizedException;
 use eZ\Publish\API\Repository\Values\Content\Location;
 use eZ\Publish\Core\FieldType\Relation\Value;
 use EzSystems\RepositoryForms\FieldType\DataTransformer\RelationValueTransformer;
@@ -70,23 +69,13 @@ class RelationFieldType extends AbstractType
         if (!$data instanceof Value || null === $data->destinationContentId) {
             return;
         }
-        $contentId = $data->destinationContentId;
-        $contentInfo = null;
-        $contentType = null;
-        $unauthorized = false;
 
-        try {
-            $contentInfo = $this->contentService->loadContentInfo($contentId);
-            $contentType = $this->contentTypeService->loadContentType($contentInfo->contentTypeId);
-        } catch (UnauthorizedException $e) {
-            $unauthorized = true;
-        }
+        $contentInfo = $this->contentService->loadContentInfo($data->destinationContentId);
+        $contentType = $this->contentTypeService->loadContentType($contentInfo->contentTypeId);
 
         $view->vars['relations'][$data->destinationContentId] = [
             'contentInfo' => $contentInfo,
             'contentType' => $contentType,
-            'unauthorized' => $unauthorized,
-            'contentId' => $contentId,
         ];
     }
 
