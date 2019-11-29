@@ -66,11 +66,6 @@
         <target>Save draft</target>
         <note>key: content.save_button</note>
       </trans-unit>
-      <trans-unit id="df2f594c4b24eb1a49a45e95a5e7ed5cdef802bd" resname="ezrepoforms.content.fields">
-        <source>ezrepoforms.content.fields</source>
-        <target>ezrepoforms.content.fields</target>
-        <note>key: ezrepoforms.content.fields</note>
-      </trans-unit>
     </body>
   </file>
 </xliff>

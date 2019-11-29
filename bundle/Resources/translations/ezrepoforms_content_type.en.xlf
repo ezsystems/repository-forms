@@ -106,61 +106,6 @@
         <target>Apply</target>
         <note>key: content_type.save</note>
       </trans-unit>
-      <trans-unit id="c625b80940dd9f13842e38446a97391248d0f709" resname="content_type.sort_field.1">
-        <source>Location path</source>
-        <target>Location path</target>
-        <note>key: content_type.sort_field.1</note>
-      </trans-unit>
-      <trans-unit id="4cdfd30bdc30f263b30713d22f714ad46beb120b" resname="content_type.sort_field.2">
-        <source>Publication date</source>
-        <target>Publication date</target>
-        <note>key: content_type.sort_field.2</note>
-      </trans-unit>
-      <trans-unit id="3b367aa1610d6332d66b2113a1b1ed287e0310a6" resname="content_type.sort_field.3">
-        <source>Modification date</source>
-        <target>Modification date</target>
-        <note>key: content_type.sort_field.3</note>
-      </trans-unit>
-      <trans-unit id="f0dba52962ff2fceb7ab0de72427b4deb55ffbbc" resname="content_type.sort_field.4">
-        <source>Section</source>
-        <target>Section</target>
-        <note>key: content_type.sort_field.4</note>
-      </trans-unit>
-      <trans-unit id="08c573b0f90eddd499911819f24a58632ceec79b" resname="content_type.sort_field.5">
-        <source>Location depth</source>
-        <target>Location depth</target>
-        <note>key: content_type.sort_field.5</note>
-      </trans-unit>
-      <trans-unit id="f75919a228809d6de255e3fd535c4eaaf8789241" resname="content_type.sort_field.6">
-        <source>ContentType identifier</source>
-        <target>ContentType identifier</target>
-        <note>key: content_type.sort_field.6</note>
-      </trans-unit>
-      <trans-unit id="f4bd88a45172f3cf7e268c40cfc27b0c5336bc9b" resname="content_type.sort_field.7">
-        <source>ContentType name</source>
-        <target>ContentType name</target>
-        <note>key: content_type.sort_field.7</note>
-      </trans-unit>
-      <trans-unit id="d605ada5b53c58b7d08df3379cdc8c9ffc619a3f" resname="content_type.sort_field.8">
-        <source>Location priority</source>
-        <target>Location priority</target>
-        <note>key: content_type.sort_field.8</note>
-      </trans-unit>
-      <trans-unit id="d24f4fdc1a193e1526c297e5e30b61bdb396b3bb" resname="content_type.sort_field.9">
-        <source>Content name</source>
-        <target>Content name</target>
-        <note>key: content_type.sort_field.9</note>
-      </trans-unit>
-      <trans-unit id="18f4f0dcdd6a1f1a9f7a5c301cc378167f403836" resname="content_type.sort_order.0">
-        <source>Descending</source>
-        <target>Descending</target>
-        <note>key: content_type.sort_order.0</note>
-      </trans-unit>
-      <trans-unit id="b411f25ded028ccb2ef56a55d69bd2e3f1da4cd5" resname="content_type.sort_order.1">
-        <source>Ascending</source>
-        <target>Ascending</target>
-        <note>key: content_type.sort_order.1</note>
-      </trans-unit>
       <trans-unit id="6ab7362c77b22ff8bc0d14eeaae8514b0a683473" resname="content_type.url_alias_schema">
         <source>URL alias name pattern</source>
         <target>URL alias name pattern</target>
@@ -352,13 +297,13 @@
         <note>key: field_definition.ezobjectrelation.selection_root</note>
       </trans-unit>
       <trans-unit id="e03e262fad0802fdee49aac136644b35450e1eab" resname="field_definition.ezobjectrelation.selection_root_udw_button">
-        <source>Select starting Location</source>
-        <target>Select starting Location</target>
+        <source>field_definition.ezobjectrelation.selection_root_udw_button</source>
+        <target state="new">field_definition.ezobjectrelation.selection_root_udw_button</target>
         <note>key: field_definition.ezobjectrelation.selection_root_udw_button</note>
       </trans-unit>
       <trans-unit id="d892163a41d816c03db3c4a04e35550f02169c11" resname="field_definition.ezobjectrelation.selection_root_udw_title">
-        <source>Select where to start browsing for a Relation</source>
-        <target>Select where to start browsing for a Relation</target>
+        <source>field_definition.ezobjectrelation.selection_root_udw_title</source>
+        <target state="new">field_definition.ezobjectrelation.selection_root_udw_title</target>
         <note>key: field_definition.ezobjectrelation.selection_root_udw_title</note>
       </trans-unit>
       <trans-unit id="7e061dc7c88fe38c11714695d4034f935788efb3" resname="field_definition.ezobjectrelationlist.selection_content_types">
@@ -377,18 +322,18 @@
         <note>key: field_definition.ezobjectrelationlist.selection_limit</note>
       </trans-unit>
       <trans-unit id="1592c36df8d445c3154d1f639027f97a90739856" resname="field_definition.ezobjectrelationlist.selection_root_udw_button">
-        <source>Select Location</source>
-        <target>Select Location</target>
+        <source>field_definition.ezobjectrelationlist.selection_root_udw_button</source>
+        <target state="new">field_definition.ezobjectrelationlist.selection_root_udw_button</target>
         <note>key: field_definition.ezobjectrelationlist.selection_root_udw_button</note>
       </trans-unit>
       <trans-unit id="17d8f3e8bbd5b5f0f5b4b02ddaeaf2af82b0d222" resname="field_definition.ezobjectrelationlist.selection_root_udw_title">
-        <source>Select where to start browsing for Relations</source>
-        <target>Select where to start browsing for Relations</target>
+        <source>field_definition.ezobjectrelationlist.selection_root_udw_title</source>
+        <target state="new">field_definition.ezobjectrelationlist.selection_root_udw_title</target>
         <note>key: field_definition.ezobjectrelationlist.selection_root_udw_title</note>
       </trans-unit>
       <trans-unit id="14a95e986cd6b94301e0f44fd5ef2d5e7cdf90a4" resname="field_definition.ezselection.add_option">
-        <source>Add an option</source>
-        <target>Add an option</target>
+        <source>field_definition.ezselection.add_option</source>
+        <target state="new">field_definition.ezselection.add_option</target>
         <note>key: field_definition.ezselection.add_option</note>
       </trans-unit>
       <trans-unit id="e9e5a43d734719bf6ca42940c1cf5bc78b234e2b" resname="field_definition.ezselection.is_multiple">
@@ -402,8 +347,8 @@
         <note>key: field_definition.ezselection.options</note>
       </trans-unit>
       <trans-unit id="c8017c71074191e0e6ebe4eb1a3a278eecbcc874" resname="field_definition.ezselection.remove_selected_options">
-        <source>Remove selected options</source>
-        <target>Remove selected options</target>
+        <source>field_definition.ezselection.remove_selected_options</source>
+        <target state="new">field_definition.ezselection.remove_selected_options</target>
         <note>key: field_definition.ezselection.remove_selected_options</note>
       </trans-unit>
       <trans-unit id="e8ede1605bfed09023397f8662ca28c40e7c460a" resname="field_definition.ezstring.default_value">
@@ -451,40 +396,15 @@
         <target>Minimum password length</target>
         <note>key: field_definition.ezuser.min_length</note>
       </trans-unit>
-      <trans-unit id="98c42f6735c213cd7c7580fdcc918aeec57920da" resname="field_definition.ezuser.require_at_least_one_lower_case_character">
-        <source>Password must contain at least one lowercase letter</source>
-        <target>Password must contain at least one lowercase letter</target>
-        <note>key: field_definition.ezuser.require_at_least_one_lower_case_character</note>
-      </trans-unit>
-      <trans-unit id="d694dab8e90b1f2b1a633c0f6ba200e66c18ce02" resname="field_definition.ezuser.require_at_least_one_non_alphanumeric_character">
-        <source>Password must contain at least one non-alphanumeric character</source>
-        <target>Password must contain at least one non-alphanumeric character</target>
-        <note>key: field_definition.ezuser.require_at_least_one_non_alphanumeric_character</note>
-      </trans-unit>
-      <trans-unit id="26cb6ab7ae7e190a9d8d8b0411512b531c8c42ff" resname="field_definition.ezuser.require_at_least_one_numeric_character">
-        <source>Password must contain at least one number</source>
-        <target>Password must contain at least one number</target>
-        <note>key: field_definition.ezuser.require_at_least_one_numeric_character</note>
-      </trans-unit>
-      <trans-unit id="5bac176749950e52e2499c099cc6fd83333b60df" resname="field_definition.ezuser.require_at_least_one_upper_case_character">
-        <source>Password must contain at least one uppercase letter</source>
-        <target>Password must contain at least one uppercase letter</target>
-        <note>key: field_definition.ezuser.require_at_least_one_upper_case_character</note>
-      </trans-unit>
-      <trans-unit id="b3a4113222154dde9c8d136f4bea80217129b739" resname="field_definition.ezuser.password_ttl">
+      <trans-unit id="9ad3fff9bb6ca7a5afdc438f99851dd87228699c" resname="field_definition.ezuser.password_ttl">
         <source>Days before password expires</source>
         <target>Days before password expires</target>
         <note>key: field_definition.ezuser.password_ttl</note>
       </trans-unit>
-      <trans-unit id="cd2c70b2a3594f4de7adca0e84da6f106790ae8c" resname="field_definition.ezuser.password_ttl_warning">
+      <trans-unit id="1b81ac541baeeaf535b19ae644965c799c218329" resname="field_definition.ezuser.password_ttl_warning">
         <source>Days before a user is notified about expiration</source>
         <target>Days before a user is notified about expiration</target>
         <note>key: field_definition.ezuser.password_ttl_warning</note>
-      </trans-unit>
-      <trans-unit id="c196b953a8bc8966aeeb771c2c9e653bbe8062bb" resname="field_definition.ezuser.require_new_password">
-        <source>Prevent reusing old password</source>
-        <target>Prevent reusing old password</target>
-        <note>key: field_definition.ezuser.require_new_password</note>
       </trans-unit>
       <trans-unit id="92d9243bb9fac540233dc376b41a3bcd41615ccc" resname="field_definition.field_group">
         <source>Category</source>

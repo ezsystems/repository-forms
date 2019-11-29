@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:jms="urn:jms:translation" version="1.2">
+  <file source-language="en" target-language="en" datatype="plaintext" original="not.available">
+    <header>
+      <tool tool-id="JMSTranslationBundle" tool-name="JMSTranslationBundle" tool-version="1.1.0-DEV"/>
+      <note>The source node in most cases contains the sample message as written by the developer. If it looks like a dot-delimitted string such as "form.label.firstname", then the developer has not provided a default message.</note>
+    </header>
+    <body>
+      <trans-unit id="55f7e3b51a9cf46d7778064398a273bdf8d12ba9" resname="Content Id">
+        <source>Content Id</source>
+        <target>Content Id</target>
+        <note>key: Content Id</note>
+      </trans-unit>
+      <trans-unit id="bc6a25180a9678a7e2299b8a1070361d462ec9d3" resname="Create and edit draft">
+        <source>Create and edit draft</source>
+        <target>Create and edit draft</target>
+        <note>key: Create and edit draft</note>
+      </trans-unit>
+      <trans-unit id="1b23470f704e53cc7b325e8fdf42ef526a431e6d" resname="From language">
+        <source>From language</source>
+        <target>From language</target>
+        <note>key: From language</note>
+      </trans-unit>
+      <trans-unit id="6e7c32839481999b9ed6384f9a0a86d9abc5b037" resname="From version">
+        <source>From version</source>
+        <target>From version</target>
+        <note>key: From version</note>
+      </trans-unit>
+      <trans-unit id="fb063a81c26c9246dd089025bf8e6ff896058ffc" resname="To language">
+        <source>To language</source>
+        <target>To language</target>
+        <note>key: To language</note>
+      </trans-unit>
+      <trans-unit id="df2f594c4b24eb1a49a45e95a5e7ed5cdef802bd" resname="ezrepoforms.content.fields">
+        <source>ezrepoforms.content.fields</source>
+        <target>ezrepoforms.content.fields</target>
+        <note>key: ezrepoforms.content.fields</note>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>
