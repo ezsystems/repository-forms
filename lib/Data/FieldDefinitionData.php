@@ -1,38 +1,27 @@
 <?php
 
 /**
- * This file is part of the eZ RepositoryForms package.
- *
  * @copyright Copyright (C) eZ Systems AS. All rights reserved.
  * @license For full copyright and license information view LICENSE file distributed with this source code.
  */
 namespace EzSystems\RepositoryForms\Data;
 
-use eZ\Publish\API\Repository\Values\ContentType\FieldDefinitionUpdateStruct;
+@trigger_error(
+    sprintf(
+        'Class %s has been deprecated in eZ Platform 3.0 and is going to be removed in 4.0. Please use %s class instead.',
+        FieldDefinitionData::class,
+        \EzSystems\EzPlatformAdminUi\Form\Data\FieldDefinitionData::class
+    ),
+    E_DEPRECATED
+);
 
-/**
- * Base class for FieldDefinition forms, with corresponding FieldDefinition object.
- *
- * @property-read \eZ\Publish\API\Repository\Values\ContentType\FieldDefinition $fieldDefinition
- * @property-read \EzSystems\RepositoryForms\Data\ContentTypeData $contentTypeData
- */
-class FieldDefinitionData extends FieldDefinitionUpdateStruct
-{
+if (!class_exists(\EzSystems\EzPlatformAdminUi\Form\Data\FieldDefinitionData::class)) {
     /**
-     * @var \eZ\Publish\API\Repository\Values\ContentType\FieldDefinition
+     * @deprecated Class FieldDefinitionData has been deprecated in eZ Platform 3.0
+     *             and is going to be removed in 4.0. Please use
+     *             \EzSystems\EzPlatformAdminUi\Form\Data\FieldDefinitionData class instead.
      */
-    protected $fieldDefinition;
-
-    /**
-     * ContentTypeData holding current FieldDefinitionData.
-     * Mainly used for validation.
-     *
-     * @var \EzSystems\RepositoryForms\Data\ContentTypeData
-     */
-    protected $contentTypeData;
-
-    public function getFieldTypeIdentifier()
+    class FieldDefinitionData
     {
-        return $this->fieldDefinition->fieldTypeIdentifier;
     }
 }

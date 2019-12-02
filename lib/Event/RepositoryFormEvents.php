@@ -1,132 +1,100 @@
 <?php
 
 /**
- * This file is part of the eZ RepositoryForms package.
- *
  * @copyright Copyright (C) eZ Systems AS. All rights reserved.
  * @license For full copyright and license information view LICENSE file distributed with this source code.
  */
 namespace EzSystems\RepositoryForms\Event;
+
+use EzSystems\EzPlatformAdminUi\Event\FormEvents;
+use EzSystems\EzPlatformContentForms\Event\ContentFormEvents;
+use EzSystems\EzPlatformUser\Form\UserFormEvents;
+
+@trigger_error(
+    sprintf(
+        'Class %s has been deprecated in eZ Platform 3.0 and is going to be removed in 4.0. Please use %s, %s, %s classes instead.',
+        RepositoryFormEvents::class,
+        FormEvents::class,
+        ContentFormEvents::class,
+        UserFormEvents::class
+    ),
+    E_DEPRECATED
+);
 
 final class RepositoryFormEvents
 {
     /**
      * Base name for ContentType update processing events.
      */
-    const CONTENT_TYPE_UPDATE = 'contentType.update';
+    public const CONTENT_TYPE_UPDATE = FormEvents::CONTENT_TYPE_UPDATE;
 
     /**
      * Triggered when adding a FieldDefinition to the ContentTypeDraft.
      */
-    const CONTENT_TYPE_ADD_FIELD_DEFINITION = 'contentType.update.addFieldDefinition';
+    public const CONTENT_TYPE_ADD_FIELD_DEFINITION = FormEvents::CONTENT_TYPE_ADD_FIELD_DEFINITION;
 
     /**
      * Triggered when removing a FieldDefinition from the ContentTypeDraft.
      */
-    const CONTENT_TYPE_REMOVE_FIELD_DEFINITION = 'contentType.update.removeFieldDefinition';
+    public const CONTENT_TYPE_REMOVE_FIELD_DEFINITION = FormEvents::CONTENT_TYPE_REMOVE_FIELD_DEFINITION;
 
     /**
      * Triggered when saving the draft + publishing the ContentType.
      */
-    const CONTENT_TYPE_PUBLISH = 'contentType.update.publishContentType';
+    public const CONTENT_TYPE_PUBLISH = FormEvents::CONTENT_TYPE_PUBLISH;
 
     /**
      * Triggered when removing the draft (e.g. "cancel" action).
      */
-    const CONTENT_TYPE_REMOVE_DRAFT = 'contentType.update.removeDraft';
-
-    /**
-     * Triggered when updating a ContentType group.
-     */
-    const CONTENT_TYPE_GROUP_UPDATE = 'contentType.group.update';
+    public const CONTENT_TYPE_REMOVE_DRAFT = FormEvents::CONTENT_TYPE_REMOVE_DRAFT;
 
     /**
      * Base name for Content edit processing events.
      */
-    const CONTENT_EDIT = 'content.edit';
+    public const CONTENT_EDIT = ContentFormEvents::CONTENT_EDIT;
 
     /**
      * Triggered when saving a content draft.
      */
-    const CONTENT_SAVE_DRAFT = 'content.edit.saveDraft';
+    public const CONTENT_SAVE_DRAFT = ContentFormEvents::CONTENT_SAVE_DRAFT;
 
     /**
      * Triggered when creating a content draft.
      */
-    const CONTENT_CREATE_DRAFT = 'content.edit.createDraft';
+    public const CONTENT_CREATE_DRAFT = ContentFormEvents::CONTENT_CREATE_DRAFT;
 
     /**
      * Triggered when publishing a content.
      */
-    const CONTENT_PUBLISH = 'content.edit.publish';
+    public const CONTENT_PUBLISH = ContentFormEvents::CONTENT_PUBLISH;
 
     /**
      * Triggered when canceling a content edition.
      */
-    const CONTENT_CANCEL = 'content.edit.cancel';
-
-    /**
-     * Base name for Role update processing events.
-     */
-    const ROLE_UPDATE = 'role.update';
-
-    /**
-     * Triggered when saving the role.
-     */
-    const ROLE_SAVE = 'role.update.saveRole';
-
-    /**
-     * Triggered when removing the draft (e.g. "cancel" action).
-     */
-    const ROLE_REMOVE_DRAFT = 'role.update.removeDraft';
-
-    /**
-     * Base name for Policy update processing events.
-     */
-    const POLICY_UPDATE = 'policy.update';
-
-    /**
-     * Triggered when saving the policy.
-     */
-    const POLICY_SAVE = 'policy.update.savePolicy';
-
-    /**
-     * Triggered when canceling policy edition.
-     */
-    const POLICY_REMOVE_DRAFT = 'policy.update.removeDraft';
-
-    /**
-     * Triggered when updating a section.
-     */
-    const SECTION_UPDATE = 'section.update';
-
-    /**
-     * Triggered when updating a language.
-     */
-    const LANGUAGE_UPDATE = 'language.update';
+    public const CONTENT_CANCEL = ContentFormEvents::CONTENT_CANCEL;
 
     /**
      * Base name for User edit processing events.
      */
-    const USER_EDIT = 'user.edit';
+    public const USER_EDIT = ContentFormEvents::USER_EDIT;
 
     /**
      * Triggered when saving an user.
      */
-    const USER_UPDATE = 'user.edit.update';
+    public const USER_UPDATE = ContentFormEvents::USER_UPDATE;
 
     /**
      * Triggered when creating an user.
      */
-    const USER_CREATE = 'user.edit.create';
+    public const USER_CREATE = ContentFormEvents::USER_CREATE;
 
     /**
      * Triggered when registering an user.
      */
-    const USER_REGISTER = 'user.edit.register';
+    public const USER_REGISTER = UserFormEvents::USER_REGISTER;
 
     /**
      * Triggered when canceling a user edition.
      */
-    const USER_CANCEL = 'user.edit.cancel';
+    public const USER_CANCEL = ContentFormEvents::USER_CANCEL;
 }
