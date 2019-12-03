@@ -199,7 +199,7 @@ class ContentCreateViewBuilder implements ViewBuilder
         }
 
         throw new InvalidArgumentException('Language',
-            'No language information provided. Are you missing language or languageCode parameters');
+            'No language information provided. Are you missing language or languageCode parameters?');
     }
 
     /**
@@ -223,7 +223,7 @@ class ContentCreateViewBuilder implements ViewBuilder
 
         throw new InvalidArgumentException(
             'ContentType',
-            'No content type could be loaded from parameters'
+            'No Content Type could be loaded from the parameters'
         );
     }
 
@@ -248,7 +248,7 @@ class ContentCreateViewBuilder implements ViewBuilder
 
         throw new InvalidArgumentException(
             'ParentLocation',
-            'Unable to load parent location from parameters'
+            'Unable to load parent Location from the parameters'
         );
     }
 }

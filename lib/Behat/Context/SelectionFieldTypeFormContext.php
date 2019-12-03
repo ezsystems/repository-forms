@@ -75,7 +75,7 @@ final class SelectionFieldTypeFormContext extends RawMinkContext implements Snip
                 'required',
                 $nodeElement->getAttribute('required'),
                 sprintf(
-                    'select with id %s is not flagged as required',
+                    'The select with ID %s is not flagged as required',
                     $nodeElement->getAttribute('id')
                 )
             );

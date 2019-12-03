@@ -101,7 +101,7 @@ class ContentEditViewBuilder implements ViewBuilder
         $isPublished = null !== $contentInfo->mainLocationId && $contentInfo->published;
 
         if (!$content->getVersionInfo()->isDraft()) {
-            throw new InvalidArgumentException('Version', 'status is not draft');
+            throw new InvalidArgumentException('Version', 'The status is not draft');
         }
 
         if (null === $location && $isPublished) {
@@ -110,7 +110,7 @@ class ContentEditViewBuilder implements ViewBuilder
         }
 
         if (null !== $location && $location->contentId !== $content->id) {
-            throw new InvalidArgumentException('Location', 'Provided location does not belong to selected content');
+            throw new InvalidArgumentException('Location', 'The provided Location does not belong to the selected content');
         }
 
         if ($form->isSubmitted() && $form->isValid() && null !== $form->getClickedButton()) {
@@ -229,7 +229,7 @@ class ContentEditViewBuilder implements ViewBuilder
         }
 
         throw new InvalidArgumentException('Language',
-            'No language information provided. Are you missing language or languageCode parameters');
+            'No language information provided. Are you missing language or languageCode parameters?');
     }
 
     /**
@@ -254,7 +254,7 @@ class ContentEditViewBuilder implements ViewBuilder
         } else {
             throw new InvalidArgumentException(
                 'Content',
-                'No content could be loaded from parameters'
+                'No content could be loaded from the parameters'
             );
         }
 

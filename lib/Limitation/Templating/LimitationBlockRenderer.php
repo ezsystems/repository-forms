@@ -61,7 +61,7 @@ class LimitationBlockRenderer implements LimitationBlockRendererInterface
 
         $template = $this->findTemplateWithBlock($blockName, $localTemplate);
         if ($template === null) {
-            throw new MissingLimitationBlockException("Could not find block for {$limitation->getIdentifier()}: $blockName!");
+            throw new MissingLimitationBlockException("Could not find a block for {$limitation->getIdentifier()}: $blockName.");
         }
 
         return $template->renderBlock($blockName, $parameters);
