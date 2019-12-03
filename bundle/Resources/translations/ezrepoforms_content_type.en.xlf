@@ -12,23 +12,23 @@
         <note>key: content_type.add_field_definition</note>
       </trans-unit>
       <trans-unit id="529a1012c7fe5ca6fafdb5d070ac8ececfe94af6" resname="content_type.create">
-        <source>Create a content type</source>
-        <target>Create a content type</target>
+        <source>Create a Content Type</source>
+        <target>Create a Content Type</target>
         <note>key: content_type.create</note>
       </trans-unit>
       <trans-unit id="7b64ebcf792d888de957eaee1c3734c97c80db98" resname="content_type.default_always_available">
-        <source>Default content availability</source>
-        <target>Default content availability</target>
+        <source>Make content available even with missing translations</source>
+        <target>Make content available even with missing translations</target>
         <note>key: content_type.default_always_available</note>
       </trans-unit>
       <trans-unit id="b29f5d9c32e10776ec9fd36c35c4aefc96732cb2" resname="content_type.default_sort_field">
-        <source>Default field for sorting children</source>
-        <target>Default field for sorting children</target>
+        <source>Sort children by default by:</source>
+        <target>Sort children by default by:</target>
         <note>key: content_type.default_sort_field</note>
       </trans-unit>
       <trans-unit id="7a67ffefca1339a9e4c5224d773378c2e5f6f378" resname="content_type.default_sort_order">
-        <source>Default sort order</source>
-        <target>Default sort order</target>
+        <source>Sort children by default in order:</source>
+        <target>Sort children by default in order:</target>
         <note>key: content_type.default_sort_order</note>
       </trans-unit>
       <trans-unit id="be2f64eb4557a3af16a2f32f5e0185c591d3ca8f" resname="content_type.delete">
@@ -42,13 +42,13 @@
         <note>key: content_type.description</note>
       </trans-unit>
       <trans-unit id="2aecf6f88fd1ee89037907b8743d5873879a0590" resname="content_type.field_definitions_data">
-        <source>Content field definitions</source>
-        <target>Content field definitions</target>
+        <source>Content Field definitions</source>
+        <target>Content Field definitions</target>
         <note>key: content_type.field_definitions_data</note>
       </trans-unit>
       <trans-unit id="a43bfd2651eb1f3357e3398286afd5b6e17c101e" resname="content_type.field_type_selection">
-        <source>Field type selection</source>
-        <target>Field type selection</target>
+        <source>Field Type selection</source>
+        <target>Field Type selection</target>
         <note>key: content_type.field_type_selection</note>
       </trans-unit>
       <trans-unit id="368a6ffa173a2e9605371392e99e565d9b247382" resname="content_type.group.delete">
@@ -97,69 +97,14 @@
         <note>key: content_type.remove_draft</note>
       </trans-unit>
       <trans-unit id="5fa42f2a0ef1fee12efaa4cdb1c35bbed35e9b7e" resname="content_type.remove_field_definitions">
-        <source>Remove selected field definitions</source>
-        <target>Remove selected field definitions</target>
+        <source>Remove selected Field definitions</source>
+        <target>Remove selected Field definitions</target>
         <note>key: content_type.remove_field_definitions</note>
       </trans-unit>
       <trans-unit id="946ba9e49beabdacd143e10e343f852736c081d8" resname="content_type.save">
         <source>Apply</source>
         <target>Apply</target>
         <note>key: content_type.save</note>
-      </trans-unit>
-      <trans-unit id="c625b80940dd9f13842e38446a97391248d0f709" resname="content_type.sort_field.1">
-        <source>Location path</source>
-        <target>Location path</target>
-        <note>key: content_type.sort_field.1</note>
-      </trans-unit>
-      <trans-unit id="4cdfd30bdc30f263b30713d22f714ad46beb120b" resname="content_type.sort_field.2">
-        <source>Publication date</source>
-        <target>Publication date</target>
-        <note>key: content_type.sort_field.2</note>
-      </trans-unit>
-      <trans-unit id="3b367aa1610d6332d66b2113a1b1ed287e0310a6" resname="content_type.sort_field.3">
-        <source>Modification date</source>
-        <target>Modification date</target>
-        <note>key: content_type.sort_field.3</note>
-      </trans-unit>
-      <trans-unit id="f0dba52962ff2fceb7ab0de72427b4deb55ffbbc" resname="content_type.sort_field.4">
-        <source>Section</source>
-        <target>Section</target>
-        <note>key: content_type.sort_field.4</note>
-      </trans-unit>
-      <trans-unit id="08c573b0f90eddd499911819f24a58632ceec79b" resname="content_type.sort_field.5">
-        <source>Location depth</source>
-        <target>Location depth</target>
-        <note>key: content_type.sort_field.5</note>
-      </trans-unit>
-      <trans-unit id="f75919a228809d6de255e3fd535c4eaaf8789241" resname="content_type.sort_field.6">
-        <source>ContentType identifier</source>
-        <target>ContentType identifier</target>
-        <note>key: content_type.sort_field.6</note>
-      </trans-unit>
-      <trans-unit id="f4bd88a45172f3cf7e268c40cfc27b0c5336bc9b" resname="content_type.sort_field.7">
-        <source>ContentType name</source>
-        <target>ContentType name</target>
-        <note>key: content_type.sort_field.7</note>
-      </trans-unit>
-      <trans-unit id="d605ada5b53c58b7d08df3379cdc8c9ffc619a3f" resname="content_type.sort_field.8">
-        <source>Location priority</source>
-        <target>Location priority</target>
-        <note>key: content_type.sort_field.8</note>
-      </trans-unit>
-      <trans-unit id="d24f4fdc1a193e1526c297e5e30b61bdb396b3bb" resname="content_type.sort_field.9">
-        <source>Content name</source>
-        <target>Content name</target>
-        <note>key: content_type.sort_field.9</note>
-      </trans-unit>
-      <trans-unit id="18f4f0dcdd6a1f1a9f7a5c301cc378167f403836" resname="content_type.sort_order.0">
-        <source>Descending</source>
-        <target>Descending</target>
-        <note>key: content_type.sort_order.0</note>
-      </trans-unit>
-      <trans-unit id="b411f25ded028ccb2ef56a55d69bd2e3f1da4cd5" resname="content_type.sort_order.1">
-        <source>Ascending</source>
-        <target>Ascending</target>
-        <note>key: content_type.sort_order.1</note>
       </trans-unit>
       <trans-unit id="6ab7362c77b22ff8bc0d14eeaae8514b0a683473" resname="content_type.url_alias_schema">
         <source>URL alias name pattern</source>
@@ -197,8 +142,8 @@
         <note>key: field_definition.ezboolean.default_value</note>
       </trans-unit>
       <trans-unit id="3ef6598f8cd7d60095784845bb24852ac531e47c" resname="field_definition.ezcountry.default_value">
-        <source>Select which countries by default</source>
-        <target>Select which countries by default</target>
+        <source>Default country</source>
+        <target>Default country</target>
         <note>key: field_definition.ezcountry.default_value</note>
       </trans-unit>
       <trans-unit id="027f35cf66e5ea571cc7b600dad0ab5ceea20cd6" resname="field_definition.ezcountry.is_multiple">
@@ -342,33 +287,33 @@
         <note>key: field_definition.ezmedia.type_windows_media_player</note>
       </trans-unit>
       <trans-unit id="fabc9be57b82439dac2f612b9c2a171eb7ce6e04" resname="field_definition.ezobjectrelation.selection_content_types">
-        <source>Allowed content types</source>
-        <target>Allowed content types</target>
+        <source>Allowed Content Types</source>
+        <target>Allowed Content Types</target>
         <note>key: field_definition.ezobjectrelation.selection_content_types</note>
       </trans-unit>
       <trans-unit id="440d8fe80bb8a07b62f17d843721285b2cf8a4d5" resname="field_definition.ezobjectrelation.selection_root">
-        <source>Default selection item</source>
-        <target>Default selection item</target>
+        <source>Starting Location</source>
+        <target>Starting Location</target>
         <note>key: field_definition.ezobjectrelation.selection_root</note>
       </trans-unit>
       <trans-unit id="e03e262fad0802fdee49aac136644b35450e1eab" resname="field_definition.ezobjectrelation.selection_root_udw_button">
-        <source>Select item</source>
-        <target>Select item</target>
+        <source>field_definition.ezobjectrelation.selection_root_udw_button</source>
+        <target state="new">field_definition.ezobjectrelation.selection_root_udw_button</target>
         <note>key: field_definition.ezobjectrelation.selection_root_udw_button</note>
       </trans-unit>
       <trans-unit id="d892163a41d816c03db3c4a04e35550f02169c11" resname="field_definition.ezobjectrelation.selection_root_udw_title">
-        <source>Select a start location for browsing for relation</source>
-        <target>Select a start location for browsing for relation</target>
+        <source>field_definition.ezobjectrelation.selection_root_udw_title</source>
+        <target state="new">field_definition.ezobjectrelation.selection_root_udw_title</target>
         <note>key: field_definition.ezobjectrelation.selection_root_udw_title</note>
       </trans-unit>
       <trans-unit id="7e061dc7c88fe38c11714695d4034f935788efb3" resname="field_definition.ezobjectrelationlist.selection_content_types">
-        <source>Allowed content types</source>
-        <target>Allowed content types</target>
+        <source>Allowed Content Types</source>
+        <target>Allowed Content Types</target>
         <note>key: field_definition.ezobjectrelationlist.selection_content_types</note>
       </trans-unit>
       <trans-unit id="b08d97ea9175eef7352c7e9c5c8ee0516798bdfa" resname="field_definition.ezobjectrelationlist.selection_default_location">
-        <source>Default location</source>
-        <target>Default location</target>
+        <source>Default Location</source>
+        <target>Default Location</target>
         <note>key: field_definition.ezobjectrelationlist.selection_default_location</note>
       </trans-unit>
       <trans-unit id="14274feead6c1e1a98261c8df42d6e2e2210cb6f" resname="field_definition.ezobjectrelationlist.selection_limit">
@@ -377,18 +322,18 @@
         <note>key: field_definition.ezobjectrelationlist.selection_limit</note>
       </trans-unit>
       <trans-unit id="1592c36df8d445c3154d1f639027f97a90739856" resname="field_definition.ezobjectrelationlist.selection_root_udw_button">
-        <source>Select location</source>
-        <target>Select location</target>
+        <source>field_definition.ezobjectrelationlist.selection_root_udw_button</source>
+        <target state="new">field_definition.ezobjectrelationlist.selection_root_udw_button</target>
         <note>key: field_definition.ezobjectrelationlist.selection_root_udw_button</note>
       </trans-unit>
       <trans-unit id="17d8f3e8bbd5b5f0f5b4b02ddaeaf2af82b0d222" resname="field_definition.ezobjectrelationlist.selection_root_udw_title">
-        <source>Select a start location for browsing for relations</source>
-        <target>Select a start location for browsing for relations</target>
+        <source>field_definition.ezobjectrelationlist.selection_root_udw_title</source>
+        <target state="new">field_definition.ezobjectrelationlist.selection_root_udw_title</target>
         <note>key: field_definition.ezobjectrelationlist.selection_root_udw_title</note>
       </trans-unit>
       <trans-unit id="14a95e986cd6b94301e0f44fd5ef2d5e7cdf90a4" resname="field_definition.ezselection.add_option">
-        <source>Add an option</source>
-        <target>Add an option</target>
+        <source>field_definition.ezselection.add_option</source>
+        <target state="new">field_definition.ezselection.add_option</target>
         <note>key: field_definition.ezselection.add_option</note>
       </trans-unit>
       <trans-unit id="e9e5a43d734719bf6ca42940c1cf5bc78b234e2b" resname="field_definition.ezselection.is_multiple">
@@ -402,8 +347,8 @@
         <note>key: field_definition.ezselection.options</note>
       </trans-unit>
       <trans-unit id="c8017c71074191e0e6ebe4eb1a3a278eecbcc874" resname="field_definition.ezselection.remove_selected_options">
-        <source>Remove selected options</source>
-        <target>Remove selected options</target>
+        <source>field_definition.ezselection.remove_selected_options</source>
+        <target state="new">field_definition.ezselection.remove_selected_options</target>
         <note>key: field_definition.ezselection.remove_selected_options</note>
       </trans-unit>
       <trans-unit id="e8ede1605bfed09023397f8662ca28c40e7c460a" resname="field_definition.ezstring.default_value">
@@ -451,40 +396,15 @@
         <target>Minimum password length</target>
         <note>key: field_definition.ezuser.min_length</note>
       </trans-unit>
-      <trans-unit id="98c42f6735c213cd7c7580fdcc918aeec57920da" resname="field_definition.ezuser.require_at_least_one_lower_case_character">
-        <source>Password must contain at least one lowercase letter</source>
-        <target>Password must contain at least one lowercase letter</target>
-        <note>key: field_definition.ezuser.require_at_least_one_lower_case_character</note>
-      </trans-unit>
-      <trans-unit id="d694dab8e90b1f2b1a633c0f6ba200e66c18ce02" resname="field_definition.ezuser.require_at_least_one_non_alphanumeric_character">
-        <source>Password must contain at least one non-alphanumeric character</source>
-        <target>Password must contain at least one non-alphanumeric character</target>
-        <note>key: field_definition.ezuser.require_at_least_one_non_alphanumeric_character</note>
-      </trans-unit>
-      <trans-unit id="26cb6ab7ae7e190a9d8d8b0411512b531c8c42ff" resname="field_definition.ezuser.require_at_least_one_numeric_character">
-        <source>Password must contain at least one number</source>
-        <target>Password must contain at least one number</target>
-        <note>key: field_definition.ezuser.require_at_least_one_numeric_character</note>
-      </trans-unit>
-      <trans-unit id="5bac176749950e52e2499c099cc6fd83333b60df" resname="field_definition.ezuser.require_at_least_one_upper_case_character">
-        <source>Password must contain at least one uppercase letter</source>
-        <target>Password must contain at least one uppercase letter</target>
-        <note>key: field_definition.ezuser.require_at_least_one_upper_case_character</note>
-      </trans-unit>
-      <trans-unit id="b3a4113222154dde9c8d136f4bea80217129b739" resname="field_definition.ezuser.password_ttl">
+      <trans-unit id="9ad3fff9bb6ca7a5afdc438f99851dd87228699c" resname="field_definition.ezuser.password_ttl">
         <source>Days before password expires</source>
         <target>Days before password expires</target>
         <note>key: field_definition.ezuser.password_ttl</note>
       </trans-unit>
-      <trans-unit id="cd2c70b2a3594f4de7adca0e84da6f106790ae8c" resname="field_definition.ezuser.password_ttl_warning">
+      <trans-unit id="1b81ac541baeeaf535b19ae644965c799c218329" resname="field_definition.ezuser.password_ttl_warning">
         <source>Days before a user is notified about expiration</source>
         <target>Days before a user is notified about expiration</target>
         <note>key: field_definition.ezuser.password_ttl_warning</note>
-      </trans-unit>
-      <trans-unit id="c196b953a8bc8966aeeb771c2c9e653bbe8062bb" resname="field_definition.ezuser.require_new_password">
-        <source>Prevent reusing old password</source>
-        <target>Prevent reusing old password</target>
-        <note>key: field_definition.ezuser.require_new_password</note>
       </trans-unit>
       <trans-unit id="92d9243bb9fac540233dc376b41a3bcd41615ccc" resname="field_definition.field_group">
         <source>Category</source>

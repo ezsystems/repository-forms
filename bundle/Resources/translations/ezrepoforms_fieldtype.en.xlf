@@ -42,7 +42,7 @@
         <note>key: content.field_type.ezimageasset.alternative_text</note>
       </trans-unit>
       <trans-unit id="7162d22b1be8aaa634e57fa94cc2664026be4390" resname="content.field_type.ezmedia.autoplay">
-        <source>Auto play</source>
+        <source>Autoplay</source>
         <target>Auto play</target>
         <note>key: content.field_type.ezmedia.autoplay</note>
       </trans-unit>

@@ -24,7 +24,7 @@ class FieldValueValidatorMessages implements TranslationContainerInterface
     public static function getTranslationMessages(): array
     {
         return [
-            new Message("The user login '%login%' is used by another user. You must enter a unique login.", 'validators'),
+            new Message("User login '%login%' already in use. Enter a unique login.", 'validators'),
         ];
     }
 }
