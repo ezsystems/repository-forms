@@ -65,7 +65,7 @@ class FloatFieldType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver
-            ->setDefaults(['min' => null, 'max' => null])
+            ->setDefaults(['min' => null, 'max' => null, 'scale' => 20])
             ->setAllowedTypes('min', ['float', 'integer', 'null'])
             ->setAllowedTypes('max', ['float', 'integer', 'null']);
     }
