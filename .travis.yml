@@ -16,9 +16,6 @@ matrix:
     - name: "Code Style Check"
       php: 7.3
       env: CHECK_CS=1
-    - name: "PHP Unit tests"
-      php: 7.3
-      env: TEST_CONFIG="phpunit.xml.dist"
 
 # test only master (+ Pull requests)
 branches:
@@ -49,7 +46,6 @@ before_install:
 # setup requirements for running unit/behat tests
 install:
   - if [ "$CHECK_CS" != "" ] ; then travis_retry composer install --prefer-dist --no-interaction --no-suggest ; fi
-  - if [ "$TEST_CONFIG" != "" ] ; then ./bin/.travis/prepare_unittest.sh ; fi
 
 # execute phpunit as the script command
 script:
