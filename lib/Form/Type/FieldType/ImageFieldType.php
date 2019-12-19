@@ -38,6 +38,7 @@ class ImageFieldType extends AbstractType
                 TextType::class,
                 [
                     'label' => /** @Desc("Alternative text") */ 'content.field_type.ezimage.alternative_text',
+                    'required' => false,
                 ]
             );
     }
