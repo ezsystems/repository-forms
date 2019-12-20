@@ -1,9 +1,0 @@
-services:
-    _defaults:
-        autowire: true
-        autoconfigure: true
-        public: false
-
-    EzSystems\RepositoryForms\EventListener\TranslateEzSelectionMultilingualOptions: ~
-    EzSystems\RepositoryForms\EventListener\PopulateFieldDefinitionData: ~
-    EzSystems\RepositoryForms\EventListener\AddNewTranslationFieldDefinition: ~

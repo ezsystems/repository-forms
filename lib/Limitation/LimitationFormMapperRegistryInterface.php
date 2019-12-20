@@ -1,44 +1,27 @@
 <?php
 
 /**
- * This file is part of the eZ RepositoryForms package.
- *
  * @copyright Copyright (C) eZ Systems AS. All rights reserved.
  * @license For full copyright and license information view LICENSE file distributed with this source code.
  */
 namespace EzSystems\RepositoryForms\Limitation;
 
-/**
- * Interface for Limitation form mappers registry.
- */
-interface LimitationFormMapperRegistryInterface
-{
-    /**
-     * @return LimitationFormMapperInterface[]
-     */
-    public function getMappers();
+@trigger_error(
+    sprintf(
+        'Interface %s has been deprecated in eZ Platform 3.0 and is going to be removed in 4.0. Please use %s interface instead.',
+        LimitationFormMapperRegistryInterface::class,
+        \EzSystems\EzPlatformAdminUi\Limitation\LimitationFormMapperRegistryInterface::class
+    ),
+    E_DEPRECATED
+);
 
+if (!class_exists(\EzSystems\EzPlatformAdminUi\Limitation\LimitationFormMapperRegistryInterface::class)) {
     /**
-     * Returns mapper corresponding to given Limitation identifier.
-     *
-     * @throws \InvalidArgumentException If no mapper exists for $limitationIdentifier.
-     *
-     * @return LimitationFormMapperInterface
+     * @deprecated Interface LimitationFormMapperRegistryInterface has been deprecated in eZ Platform 3.0
+     *             and is going to be removed in 4.0. Please use
+     *             \EzSystems\EzPlatformAdminUi\Limitation\LimitationFormMapperRegistryInterface interface instead.
      */
-    public function getMapper($limitationIdentifier);
-
-    /**
-     * Checks if a mapper exists for given Limitation identifier.
-     *
-     * @param string $limitationIdentifier
-     *
-     * @return bool
-     */
-    public function hasMapper($limitationIdentifier);
-
-    /**
-     * @param LimitationFormMapperInterface $mapper
-     * @param string $limitationIdentifier Limitation identifier the mapper is meant for.
-     */
-    public function addMapper(LimitationFormMapperInterface $mapper, $limitationIdentifier);
+    interface LimitationFormMapperRegistryInterface
+    {
+    }
 }

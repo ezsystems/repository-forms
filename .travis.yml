@@ -13,14 +13,9 @@ env:
 matrix:
   include:
     # 7.3
-    - name: "[PHP 7.3] PHP Unit tests"
+    - name: "Code Style Check"
       php: 7.3
-      env: TEST_CONFIG="phpunit.xml.dist"
-    - name: "[PHP 7.3] Repository-forms tests on Clean P"
-      php: 7.3
-      env:
-        - BEHAT_OPTS="--mode=behat --profile=repository-forms --non-strict"
-        - PHP_IMAGE=ezsystems/php:7.3-v1
+      env: CHECK_CS=1
 
 # test only master (+ Pull requests)
 branches:
@@ -50,11 +45,9 @@ before_install:
 
 # setup requirements for running unit/behat tests
 install:
-  - if [ "$TEST_CONFIG" != "" ] ; then ./bin/.travis/prepare_unittest.sh ; fi
-  - if [ "$BEHAT_OPTS" != "" ]; then ./bin/.travis/prepare_ezplatform.sh ; fi
+  - if [ "$CHECK_CS" != "" ] ; then travis_retry composer install --prefer-dist --no-interaction --no-suggest ; fi
 
-# execute phpunit or behat as the script command
+# execute phpunit as the script command
 script:
   - if [ "$TEST_CONFIG" != "" ] ; then php -d date.timezone=$TEST_TIMEZONE -d memory_limit=-1 bin/phpunit -c $TEST_CONFIG ; fi
-  - if [ "$BEHAT_OPTS" != "" ] ; then cd "$HOME/build/ezplatform"; docker-compose exec --user www-data app sh -c "bin/ezbehat $BEHAT_OPTS" ; fi
 

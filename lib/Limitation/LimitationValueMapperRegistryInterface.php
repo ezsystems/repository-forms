@@ -1,49 +1,27 @@
 <?php
+
 /**
- * This file is part of the eZ RepositoryForms package.
- *
  * @copyright Copyright (C) eZ Systems AS. All rights reserved.
  * @license For full copyright and license information view LICENSE file distributed with this source code.
  */
 namespace EzSystems\RepositoryForms\Limitation;
 
-use EzSystems\RepositoryForms\Limitation\Exception\ValueMapperNotFoundException;
+@trigger_error(
+    sprintf(
+        'Interface %s has been deprecated in eZ Platform 3.0 and is going to be removed in 4.0. Please use %s interface instead.',
+        LimitationValueMapperRegistryInterface::class,
+        \EzSystems\EzPlatformAdminUi\Limitation\LimitationValueMapperRegistryInterface::class
+    ),
+    E_DEPRECATED
+);
 
-/**
- * Interface for Limitation value mappers registry.
- */
-interface LimitationValueMapperRegistryInterface
-{
+if (!class_exists(\EzSystems\EzPlatformAdminUi\Limitation\LimitationValueMapperRegistryInterface::class)) {
     /**
-     * Returns all available mappers.
-     *
-     * @return LimitationValueMapperInterface[]
+     * @deprecated Interface LimitationValueMapperRegistryInterface has been deprecated in eZ Platform 3.0
+     *             and is going to be removed in 4.0. Please use
+     *             \EzSystems\EzPlatformAdminUi\Limitation\LimitationValueMapperRegistryInterface interface instead.
      */
-    public function getMappers();
-
-    /**
-     * Returns mapper corresponding to given Limitation Type.
-     *
-     * @throws ValueMapperNotFoundException If no mapper exists for $limitationType.
-     *
-     * @param string $limitationType
-     * @return LimitationValueMapperInterface
-     */
-    public function getMapper($limitationType);
-
-    /**
-     * Checks if a mapper exists for given Limitation Type.
-     *
-     * @param string $limitationType
-     * @return bool
-     */
-    public function hasMapper($limitationType);
-
-    /**
-     * Register mapper.
-     *
-     * @param LimitationValueMapperInterface $mapper
-     * @param string $limitationType Limitation identifier the mapper is meant for.
-     */
-    public function addMapper(LimitationValueMapperInterface $mapper, $limitationType);
+    interface LimitationValueMapperRegistryInterface
+    {
+    }
 }
