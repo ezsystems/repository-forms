@@ -49,6 +49,7 @@ class DateFormMapper implements FieldDefinitionFormMapperInterface, FieldValueFo
     {
         $fieldDefinition = $data->fieldDefinition;
         $formConfig = $fieldForm->getConfig();
+        $timezoneOffsetSeconds = $data->value->date->getTimezone()->getOffset($data->value->date);
 
         $fieldForm
             ->add(
@@ -59,6 +60,7 @@ class DateFormMapper implements FieldDefinitionFormMapperInterface, FieldValueFo
                         [
                             'required' => $fieldDefinition->isRequired,
                             'label' => $fieldDefinition->getName(),
+                            'attr' => ['data-timezone_offset' => $timezoneOffsetSeconds]
                         ]
                     )
                     ->setAutoInitialize(false)
