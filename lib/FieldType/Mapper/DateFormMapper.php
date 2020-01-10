@@ -60,7 +60,7 @@ class DateFormMapper implements FieldDefinitionFormMapperInterface, FieldValueFo
                         [
                             'required' => $fieldDefinition->isRequired,
                             'label' => $fieldDefinition->getName(),
-                            'attr' => ['data-timezone_offset' => $timezoneOffsetSeconds]
+                            'attr' => ['data-timezone-offset' => $timezoneOffsetSeconds]
                         ]
                     )
                     ->setAutoInitialize(false)
