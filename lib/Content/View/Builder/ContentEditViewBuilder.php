@@ -8,6 +8,7 @@ declare(strict_types=1);
 
 namespace EzSystems\RepositoryForms\Content\View\Builder;
 
+use eZ\Publish\API\Repository\Exceptions\UnauthorizedException;
 use eZ\Publish\API\Repository\Repository;
 use eZ\Publish\API\Repository\Values\Content\Content;
 use eZ\Publish\API\Repository\Values\Content\Language;
@@ -105,8 +106,14 @@ class ContentEditViewBuilder implements ViewBuilder
         }
 
         if (null === $location && $isPublished) {
-            // assume main location if no location was provided
-            $location = $this->loadLocation((int) $contentInfo->mainLocationId);
+            try {
+                // assume main location if no location was provided
+                $location = $this->loadLocation((int) $contentInfo->mainLocationId);
+            } catch (UnauthorizedException $e) {
+                // if no access to the main location assume content has multiple locations and first of them can be used
+                $availableLocations = $this->repository->getLocationService()->loadLocations($contentInfo);
+                $location = array_shift($availableLocations);
+            }
         }
 
         if (null !== $location && $location->contentId !== $content->id) {
@@ -273,7 +280,11 @@ class ContentEditViewBuilder implements ViewBuilder
     private function resolveLocation(array $parameters): ?Location
     {
         if (isset($parameters['locationId'])) {
-            return $this->loadLocation((int) $parameters['locationId']);
+            try {
+                // the load error is suppressed because a user can have no permission to this location
+                // but can have access to another location when content is in multiple locations
+                return $this->loadLocation((int) $parameters['locationId']);
+            } catch (UnauthorizedException $e) {}
         }
 
         if (isset($parameters['location'])) {
