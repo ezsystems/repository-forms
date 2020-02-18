@@ -182,12 +182,15 @@ class UserController extends Controller
             }
         }
 
+        $location = $this->locationService->loadLocation($user->versionInfo->contentInfo->mainLocationId);
+
         return new UserUpdateView(null, [
             'form' => $form->createView(),
             'languageCode' => $languageCode,
             'language' => $language,
             'contentType' => $contentType,
             'user' => $user,
+            'location' => $location
         ]);
     }
 }
