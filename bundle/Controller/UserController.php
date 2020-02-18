@@ -160,7 +160,7 @@ class UserController extends Controller
             throw new CoreUnauthorizedException('content', 'edit', ['userId' => $contentId]);
         }
         $contentType = $this->contentTypeService->loadContentType($user->contentInfo->contentTypeId);
-
+        $language = $this->languageService->loadLanguage($language);
         $userUpdate = (new UserUpdateMapper())->mapToFormData($user, $contentType, [
             'languageCode' => $language,
         ]);
@@ -168,7 +168,7 @@ class UserController extends Controller
             UserUpdateType::class,
             $userUpdate,
             [
-                'languageCode' => $language,
+                'languageCode' => $language->languageCode,
                 'mainLanguageCode' => $user->contentInfo->mainLanguageCode,
             ]
         );
@@ -183,7 +183,8 @@ class UserController extends Controller
 
         return new UserUpdateView(null, [
             'form' => $form->createView(),
-            'languageCode' => $language,
+            'languageCode' => $language->languageCode,
+            'language' => $language,
             'contentType' => $contentType,
             'user' => $user,
         ]);
