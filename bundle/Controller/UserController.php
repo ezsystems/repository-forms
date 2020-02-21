@@ -123,6 +123,7 @@ class UserController extends Controller
         return new UserCreateView(null, [
             'form' => $form->createView(),
             'language' => $language,
+            'parentLocation' => $location,
             'contentType' => $contentType,
             'parentGroup' => $parentGroup,
         ]);
@@ -131,9 +132,9 @@ class UserController extends Controller
     /**
      * Displays a user update form that updates user data and related content item.
      *
-     * @param int|null $contentId ContentType id to create
-     * @param int|null $versionNo Version number the version should be created from. Defaults to the currently published one.
-     * @param string|null $language Language code to create the version in (eng-GB, ger-DE, ...))
+     * @param int $contentId ContentType id to create
+     * @param int $versionNo Version number the version should be created from. Defaults to the currently published one.
+     * @param string $language Language code to create the version in (eng-GB, ger-DE, ...))
      * @param Request $request
      *
      * @return UserUpdateView|Response
@@ -151,25 +152,24 @@ class UserController extends Controller
      */
     public function editAction(
         int $contentId,
-        ?int $versionNo = null,
-        ?string $language = null,
+        int $versionNo,
+        string $language,
         Request $request
     ) {
-        $languageCode = $language;
         $user = $this->userService->loadUser($contentId);
         if (!$this->permissionResolver->canUser('content', 'edit', $user)) {
             throw new CoreUnauthorizedException('content', 'edit', ['userId' => $contentId]);
         }
         $contentType = $this->contentTypeService->loadContentType($user->contentInfo->contentTypeId);
-        $language = $this->languageService->loadLanguage($languageCode ?:$this->languageService->getDefaultLanguageCode());
+
         $userUpdate = (new UserUpdateMapper())->mapToFormData($user, $contentType, [
-            'languageCode' => $languageCode,
+            'languageCode' => $language,
         ]);
         $form = $this->createForm(
             UserUpdateType::class,
             $userUpdate,
             [
-                'languageCode' => $languageCode,
+                'languageCode' => $language,
                 'mainLanguageCode' => $user->contentInfo->mainLanguageCode,
             ]
         );
@@ -182,15 +182,25 @@ class UserController extends Controller
             }
         }
 
-        $location = $this->locationService->loadLocation($user->versionInfo->contentInfo->mainLocationId);
+        try {
+            // assume main location if no location was provided
+            $location = $this->locationService->loadLocation((int)
+            $user->versionInfo->contentInfo->mainLocationId);
+        } catch (UnauthorizedException $e) {
+            // if no access to the main location assume content has multiple locations and first of them can be used
+            $availableLocations = $this->locationService->loadLocations($user->versionInfo->contentInfo);
+            $location = array_shift($availableLocations);
+        }
+
 
         return new UserUpdateView(null, [
             'form' => $form->createView(),
-            'languageCode' => $languageCode,
-            'language' => $language,
+            'languageCode' => $language,
+            'language' => $this->languageService->loadLanguage($language),
             'contentType' => $contentType,
             'user' => $user,
-            'location' => $location
+            'location' => $location,
+            'parentLocation' => $location
         ]);
     }
 }
