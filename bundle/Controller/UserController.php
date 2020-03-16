@@ -6,6 +6,7 @@
  * @license For full copyright and license information view LICENSE file distributed with this source code.
  * @version //autogentag//
  */
+
 namespace EzSystems\RepositoryFormsBundle\Controller;
 
 use eZ\Bundle\EzPublishCoreBundle\Controller;
@@ -16,7 +17,6 @@ use eZ\Publish\API\Repository\LanguageService;
 use eZ\Publish\API\Repository\LocationService;
 use eZ\Publish\API\Repository\PermissionResolver;
 use eZ\Publish\API\Repository\UserService;
-use eZ\Publish\Core\Base\Exceptions\BadStateException;
 use eZ\Publish\Core\Base\Exceptions\InvalidArgumentException;
 use eZ\Publish\Core\Base\Exceptions\InvalidArgumentType;
 use EzSystems\RepositoryForms\Data\Mapper\UserCreateMapper;
@@ -120,39 +120,37 @@ class UserController extends Controller
             }
         }
 
-        return new UserCreateView(null, [
-            'form' => $form->createView(),
-            'language' => $language,
-            'contentType' => $contentType,
-            'parentGroup' => $parentGroup,
-        ]);
+        return new UserCreateView(
+            null, [
+                'form' => $form->createView(),
+                'language' => $language,
+                'parentLocation' => $location,
+                'contentType' => $contentType,
+                'parentGroup' => $parentGroup,
+            ]
+        );
     }
 
     /**
      * Displays a user update form that updates user data and related content item.
      *
-     * @param int|null $contentId ContentType id to create
-     * @param int|null $versionNo Version number the version should be created from. Defaults to the currently published one.
-     * @param string|null $language Language code to create the version in (eng-GB, ger-DE, ...))
+     * @param int $contentId ContentType id to create
+     * @param int $versionNo Version number the version should be created from. Defaults to the currently published one.
+     * @param string $language Language code to create the version in (eng-GB, ger-DE, ...))
      * @param Request $request
      *
      * @return UserUpdateView|Response
      *
-     * @throws \Symfony\Component\OptionsResolver\Exception\UndefinedOptionsException
-     * @throws \Symfony\Component\OptionsResolver\Exception\OptionDefinitionException
-     * @throws \Symfony\Component\OptionsResolver\Exception\NoSuchOptionException
-     * @throws \Symfony\Component\OptionsResolver\Exception\MissingOptionsException
-     * @throws \Symfony\Component\OptionsResolver\Exception\InvalidOptionsException
-     * @throws \Symfony\Component\OptionsResolver\Exception\AccessException
-     * @throws InvalidArgumentType
-     * @throws UnauthorizedException
-     * @throws NotFoundException
-     * @throws BadStateException If the version isn't editable, or if there is no editable version.
+     * @throws \eZ\Publish\API\Repository\Exceptions\BadStateException
+     * @throws \eZ\Publish\API\Repository\Exceptions\InvalidArgumentException
+     * @throws \eZ\Publish\API\Repository\Exceptions\NotFoundException
+     * @throws \eZ\Publish\Core\Base\Exceptions\InvalidArgumentType
+     * @throws \eZ\Publish\Core\Base\Exceptions\UnauthorizedException
      */
     public function editAction(
         int $contentId,
-        ?int $versionNo = null,
-        ?string $language = null,
+        int $versionNo,
+        string $language,
         Request $request
     ) {
         $user = $this->userService->loadUser($contentId);
@@ -181,11 +179,35 @@ class UserController extends Controller
             }
         }
 
-        return new UserUpdateView(null, [
-            'form' => $form->createView(),
-            'languageCode' => $language,
-            'contentType' => $contentType,
-            'user' => $user,
-        ]);
+        try {
+            // assume main location if no location was provided
+            $location = $this->locationService->loadLocation(
+                (int)$user->versionInfo->contentInfo->mainLocationId
+            );
+        } catch (UnauthorizedException $e) {
+            // if no access to the main location assume content has multiple locations and first of them can be used
+            $availableLocations = $this->locationService->loadLocations(
+                $user->versionInfo->contentInfo
+            );
+            $location = array_shift($availableLocations);
+        }
+
+        $parentLocation = null;
+        try {
+            $parentLocation = $this->locationService->loadLocation($location->parentLocationId);
+        } catch (UnauthorizedException $e) {
+        }
+
+        return new UserUpdateView(
+            null, [
+                'form' => $form->createView(),
+                'languageCode' => $language,
+                'language' => $this->languageService->loadLanguage($language),
+                'contentType' => $contentType,
+                'user' => $user,
+                'location' => $location,
+                'parentLocation' => $parentLocation,
+            ]
+        );
     }
 }
