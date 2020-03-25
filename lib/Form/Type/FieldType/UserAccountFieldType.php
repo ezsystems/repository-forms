@@ -37,7 +37,7 @@ class UserAccountFieldType extends AbstractType
             ->add('username', TextType::class, [
                 'label' => /** @Desc("Username") */ 'content.field_type.ezuser.username',
                 'required' => true,
-                'attr' => $isUpdateForm ? ['disabled' => 'disabled'] : [],
+                'attr' => $isUpdateForm ? ['readonly' => 'readonly'] : [],
             ])
             ->add('password', RepeatedType::class, [
                 'type' => PasswordType::class,
