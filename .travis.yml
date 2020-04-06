@@ -21,6 +21,8 @@ matrix:
       env:
         - BEHAT_OPTS="--mode=behat --profile=repository-forms --non-strict"
         - PHP_IMAGE=ezsystems/php:7.1-v1
+        # This env variable is actually used when installing dependencies
+        - PHP_IMAGE_DEV=ezsystems/php:7.1-v1-dev
     # 7.2
     - name: "[PHP 7.2] PHP Unit tests"
       php: 7.2
