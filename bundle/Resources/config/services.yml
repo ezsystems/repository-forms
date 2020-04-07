@@ -274,6 +274,7 @@ services:
             - "@ezpublish.api.service.language"
             - "@ezrepoforms.action_dispatcher.user"
             - '@eZ\Publish\API\Repository\PermissionResolver'
+            - '@eZ\Publish\Core\MVC\Symfony\Locale\UserLanguagePreferenceProvider'
         parent: ezpublish.controller.base
 
     ezrepoforms.controller.user_register:
