@@ -15,7 +15,8 @@ matrix:
     # 7.3
     - name: "Code Style Check"
       php: 7.3
-      env: CHECK_CS=1
+      install: travis_retry composer install --prefer-dist --no-interaction --no-suggest
+      script: ./bin/php-cs-fixer fix -v --dry-run --show-progress=estimating
 
 # test only master (+ Pull requests)
 branches:
@@ -39,15 +40,3 @@ before_install:
   - travis_retry composer selfupdate
   # Avoid memory issues on composer install
   - echo 'memory_limit = -1' >> ~/.phpenv/versions/$(phpenv version-name)/etc/conf.d/travis.ini
-  # Detecting timezone issues by testing on random timezone
-  - TEST_TIMEZONES=("America/New_York" "Asia/Calcutta" "UTC")
-  - TEST_TIMEZONE=${TEST_TIMEZONES["`shuf -i 0-2 -n 1`"]}
-
-# setup requirements for running unit/behat tests
-install:
-  - if [ "$CHECK_CS" != "" ] ; then travis_retry composer install --prefer-dist --no-interaction --no-suggest ; fi
-
-# execute phpunit as the script command
-script:
-  - if [ "$TEST_CONFIG" != "" ] ; then php -d date.timezone=$TEST_TIMEZONE -d memory_limit=-1 bin/phpunit -c $TEST_CONFIG ; fi
-
