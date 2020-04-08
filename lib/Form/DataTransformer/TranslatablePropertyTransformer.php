@@ -38,10 +38,6 @@ class TranslatablePropertyTransformer implements DataTransformerInterface
 
     public function reverseTransform($value)
     {
-        if (!$value) {
-            return null;
-        }
-
         return [$this->languageCode => $value];
     }
 }
