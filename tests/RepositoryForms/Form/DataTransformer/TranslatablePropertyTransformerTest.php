@@ -62,7 +62,7 @@ class TranslatablePropertyTransformerTest extends TestCase
     public function reverseTransformProvider()
     {
         return [
-            [false, 'fre-FR', ['fre-FR' => false]],
+            [false, 'fre-FR', ['fre-FR' => null]],
             [null, 'fre-FR', ['fre-FR' => null]],
             ['français', 'fre-FR', ['fre-FR' => 'français']],
             ['english', 'eng-GB', ['eng-GB' => 'english']],
