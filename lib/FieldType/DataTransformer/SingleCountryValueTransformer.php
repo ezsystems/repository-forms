@@ -10,6 +10,7 @@ namespace EzSystems\RepositoryForms\FieldType\DataTransformer;
 
 use eZ\Publish\Core\FieldType\Country\Value;
 use Symfony\Component\Form\DataTransformerInterface;
+use Symfony\Component\Form\Exception\TransformationFailedException;
 
 /**
  * DataTransformer for Country\Value to be used with form type handling only single selection.
@@ -36,7 +37,16 @@ class SingleCountryValueTransformer implements DataTransformerInterface
             return null;
         }
 
-        return current($value->countries)['Alpha2'];
+        if (empty($value->countries)) {
+            return null;
+        }
+
+        $country = current($value->countries);
+        if (!isset($country['Alpha2'])) {
+            throw new TransformationFailedException('Missing Alpha2 key');
+        }
+
+        return $country['Alpha2'];
     }
 
     public function reverseTransform($value)
