@@ -21,6 +21,11 @@
         <target>Content type identifier may only contain letters from "a" to "z", numbers and underscores.</target>
         <note>key: ez.content_type.identifier.pattern</note>
       </trans-unit>
+      <trans-unit id="e03cdf7df4e43a891269e0bbe734e7bab5cc61eb" resname="ez.content_type.identifier.unique">
+         <source>The content type identifier "%identifier%" is used by another content type. You must enter a unique identifier.</source>
+         <target>The content type identifier "%identifier%" is used by another content type. You must enter a unique identifier.</target>
+         <note>key: ez.content_type.identifier.unique</note>
+      </trans-unit>
       <trans-unit id="7ecfa6bd2c1993d18d067f3abe3acebeb9c2458c" resname="ez.content_type.names">
         <source>Content type name cannot be blank and cannot exceed 255 characters.</source>
         <target>Content type name cannot be blank and cannot exceed 255 characters.</target>
@@ -35,6 +40,11 @@
         <source>Field definition name cannot be blank cannot exceed 255 characters.</source>
         <target>Field definition name cannot be blank cannot exceed 255 characters.</target>
         <note>key: ez.field_definition.names</note>
+      </trans-unit>
+      <trans-unit id="3c8e362f900d886ce75b34d0fd952128612a2b12" resname="ez.field_definition.identifier.unique">
+         <source>The Field definition identifier "%identifier%" is used by another Field definition. You must enter a unique identifier.</source>
+         <target>The Field definition identifier "%identifier%" is used by another Field definition. You must enter a unique identifier.</target>
+         <note>key: ez.field_definition.identifier.unique</note>
       </trans-unit>
       <trans-unit id="8666b9bac694063a73e477fed0531653db9577cf" resname="ez.language.code.unique">
         <source>The language code "%language_code%" is used by another language. You must enter a unique language code.</source>
