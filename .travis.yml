@@ -27,6 +27,10 @@ matrix:
     - name: "[PHP 7.2] PHP Unit tests"
       php: 7.2
       env: TEST_CONFIG="phpunit.xml.dist"
+    # 7.4
+    - name: "[PHP 7.4] PHP Unit tests"
+      php: 7.4
+      env: TEST_CONFIG="phpunit.xml.dist"
 
 # test only master (+ Pull requests)
 branches:
