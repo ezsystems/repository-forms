@@ -41,7 +41,7 @@ class DateValueTransformer implements DataTransformerInterface
             return null;
         }
 
-        return $value->date->getTimestamp();
+        return $value->date->getTimestamp() + $value->date->getOffset();
     }
 
     /**
