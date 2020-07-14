@@ -10,8 +10,10 @@ namespace EzSystems\RepositoryForms\Form\Type\ContentType;
 use eZ\Publish\API\Repository\ContentTypeService;
 use eZ\Publish\API\Repository\Exceptions\NotFoundException;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\Callback;
@@ -64,6 +66,45 @@ class ContentTypeCreateType extends AbstractType
                     }
                 ),
             ])
-            ->add('create', SubmitType::class, ['label' => 'content_type.create']);
+            ->add('name', TextType::class, [
+                'label' => 'content_type.name',
+            ])
+            ->add('identifier', TextType::class, [
+                'label' => 'content_type.identifier',
+            ])
+            ->add('description', TextType::class, [
+                'required' => false,
+                'label' => 'content_type.description',
+            ])
+            ->add('nameSchema', TextType::class, [
+                'required' => false,
+                'label' => 'content_type.name_schema',
+            ])
+            ->add('urlAliasSchema', TextType::class, [
+                'required' => false,
+                'label' => 'content_type.url_alias_schema',
+            ])
+            ->add('isContainer', CheckboxType::class, [
+                'required' => false,
+                'label' => 'content_type.is_container',
+            ])
+            ->add('defaultSortField', SortFieldChoiceType::class, [
+                'label' => 'content_type.default_sort_field',
+            ])
+            ->add('defaultSortOrder', SortOrderChoiceType::class, [
+                'label' => 'content_type.default_sort_order',
+            ])
+            ->add('defaultAlwaysAvailable', CheckboxType::class, [
+                'required' => false,
+                'label' => 'content_type.default_always_available',
+            ])
+            ->add('fieldTypeSelection', FieldTypeChoiceType::class, [
+                'label' => 'content_type.field_type_selection',
+            ])
+            ->add('publishContentType', SubmitType::class, ['label' => 'content_type.create'])
+            ->add('addFieldDefinition', SubmitType::class, [
+                'label' => 'content_type.add_field_definition',
+            ])
+        ;
     }
 }

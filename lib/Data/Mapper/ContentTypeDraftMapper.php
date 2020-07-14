@@ -9,7 +9,10 @@
 namespace EzSystems\RepositoryForms\Data\Mapper;
 
 use eZ\Publish\API\Repository\Values\Content\Language;
+use eZ\Publish\API\Repository\Values\ContentType\FieldDefinitionCreateStruct;
 use eZ\Publish\API\Repository\Values\ValueObject;
+use eZ\Publish\Core\REST\Client\Values\ContentType\ContentTypeCreateStruct;
+use EzSystems\RepositoryForms\Data\ContentTypeCreateData;
 use EzSystems\RepositoryForms\Data\ContentTypeData;
 use EzSystems\RepositoryForms\Data\FieldDefinitionData;
 use EzSystems\RepositoryForms\Event\FieldDefinitionMappingEvent;
@@ -21,9 +24,6 @@ class ContentTypeDraftMapper implements FormDataMapperInterface
     /** @var \Symfony\Component\EventDispatcher\EventDispatcherInterface */
     private $eventDispatcher;
 
-    /**
-     * @param \Symfony\Component\EventDispatcher\EventDispatcherInterface $eventDispatcher
-     */
     public function __construct(
         EventDispatcherInterface $eventDispatcher
     ) {
@@ -34,7 +34,6 @@ class ContentTypeDraftMapper implements FormDataMapperInterface
      * Maps a ValueObject from eZ content repository to a data usable as underlying form data (e.g. create/update struct).
      *
      * @param ValueObject|\eZ\Publish\API\Repository\Values\ContentType\ContentTypeDraft $contentTypeDraft
-     * @param array $params
      *
      * @return ContentTypeData
      */
@@ -98,8 +97,39 @@ class ContentTypeDraftMapper implements FormDataMapperInterface
     }
 
     /**
-     * @param \Symfony\Component\OptionsResolver\OptionsResolver $optionsResolver
-     *
+     * Maps given ContentTypeCreateData object to a ContentTypeCreateStruct object.
+     */
+    public function reverseMap(ContentTypeCreateData $data, string $mainLanguageCode): ContentTypeCreateStruct
+    {
+        $createStruct = new ContentTypeCreateStruct([
+            'mainLanguageCode' => $mainLanguageCode,
+            'names' => [$mainLanguageCode => $data->getName()],
+            'identifier' => $data->identifier,
+            'descriptions' => null !== $data->getDescription() ? [$mainLanguageCode => $data->getDescription()] : null,
+            'nameSchema' => $data->nameSchema,
+            'urlAliasSchema' => $data->urlAliasSchema,
+            'isContainer' => $data->isContainer,
+            'defaultSortField' => $data->defaultSortField,
+            'defaultSortOrder' => $data->defaultSortOrder,
+            'defaultAlwaysAvailable' => $data->defaultAlwaysAvailable,
+        ]);
+
+        $fieldTypeIdentifier = $data->getFieldTypeSelection();
+        $fieldDefinitionIdentifier = sprintf('new_%s_%d', $fieldTypeIdentifier, 1);
+
+        $fieldDefCreateStruct = new FieldDefinitionCreateStruct([
+            'fieldTypeIdentifier' => $fieldTypeIdentifier,
+            'identifier' => $fieldDefinitionIdentifier,
+            'names' => [$mainLanguageCode => 'New FieldDefinition'],
+            'position' => 1,
+        ]);
+
+        $createStruct->addFieldDefinition($fieldDefCreateStruct);
+
+        return $createStruct;
+    }
+
+    /**
      * @throws \Symfony\Component\OptionsResolver\Exception\UndefinedOptionsException
      * @throws \Symfony\Component\OptionsResolver\Exception\AccessException
      */
