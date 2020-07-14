@@ -11,7 +11,7 @@ namespace EzSystems\RepositoryForms\Data\Mapper;
 use eZ\Publish\API\Repository\Values\Content\Language;
 use eZ\Publish\API\Repository\Values\ContentType\FieldDefinitionCreateStruct;
 use eZ\Publish\API\Repository\Values\ValueObject;
-use eZ\Publish\Core\REST\Client\Values\ContentType\ContentTypeCreateStruct;
+use eZ\Publish\Core\Repository\Values\ContentType\ContentTypeCreateStruct;
 use EzSystems\RepositoryForms\Data\ContentTypeCreateData;
 use EzSystems\RepositoryForms\Data\ContentTypeData;
 use EzSystems\RepositoryForms\Data\FieldDefinitionData;
