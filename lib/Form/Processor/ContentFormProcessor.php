@@ -41,6 +41,7 @@ class ContentFormProcessor implements EventSubscriberInterface
      * @param \eZ\Publish\API\Repository\ContentService $contentService
      * @param \eZ\Publish\API\Repository\LocationService $locationService
      * @param \Symfony\Component\Routing\RouterInterface $router
+     * @param \eZ\Publish\API\Repository\URLAliasService $urlAliasService
      */
     public function __construct(
         ContentService $contentService,
@@ -124,7 +125,7 @@ class ContentFormProcessor implements EventSubscriberInterface
         $event->setPayload('is_new', $draft->contentInfo->isDraft());
 
         $redirectUrl = $form['redirectUrlAfterPublish']->getData() ?: $this->router->generate(
-            'ez_urlalias', [
+            '_ezpublishLocation', [
                 'locationId' => $content->contentInfo->mainLocationId,
             ]
         );
@@ -145,7 +146,7 @@ class ContentFormProcessor implements EventSubscriberInterface
 
         if ($data->isNew()) {
             $response = new RedirectResponse($this->router->generate(
-                'ez_urlalias',
+                '_ezpublishLocation',
                 ['locationId' => $data->getLocationStructs()[0]->parentLocationId]
             ));
             $event->setResponse($response);
@@ -170,7 +171,7 @@ class ContentFormProcessor implements EventSubscriberInterface
         }
 
         $url = $this->router->generate(
-            'ez_urlalias',
+            '_ezpublishLocation',
             ['locationId' => $redirectionLocationId],
             UrlGeneratorInterface::ABSOLUTE_URL
         );
