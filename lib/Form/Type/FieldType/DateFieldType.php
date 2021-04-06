@@ -50,9 +50,10 @@ class DateFieldType extends AbstractType
     public function buildView(FormView $view, FormInterface $form, array $options)
     {
         $request = $this->requestStack->getCurrentRequest();
-        $isEditView =
-            $request->attributes->get('_route') === 'ez_content_draft_edit' ||
-            $request->attributes->get('_route') === 'ezplatform.content.translate';
+        $isEditView = \in_array(
+            $request->attributes->get('_route'),
+            ['ez_content_draft_edit', 'ezplatform.content.translate']
+        );
 
         $view->vars['attr']['data-action-type'] = $isEditView ? 'edit' : 'create';
         $view->vars['attr']['class'] = 'ez-data-source__input';
