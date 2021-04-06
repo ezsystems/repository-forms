@@ -18,6 +18,8 @@ use Symfony\Component\HttpFoundation\RequestStack;
  */
 class DateFieldType extends AbstractType
 {
+    private const EDIT_VIEWS = ['ez_content_draft_edit', 'ezplatform.content.translate'];
+
     /** @var \Symfony\Component\HttpFoundation\RequestStack */
     private $requestStack;
 
@@ -50,10 +52,7 @@ class DateFieldType extends AbstractType
     public function buildView(FormView $view, FormInterface $form, array $options)
     {
         $request = $this->requestStack->getCurrentRequest();
-        $isEditView = \in_array(
-            $request->attributes->get('_route'),
-            ['ez_content_draft_edit', 'ezplatform.content.translate']
-        );
+        $isEditView = \in_array($request->attributes->get('_route'), self::EDIT_VIEWS);
 
         $view->vars['attr']['data-action-type'] = $isEditView ? 'edit' : 'create';
         $view->vars['attr']['class'] = 'ez-data-source__input';
