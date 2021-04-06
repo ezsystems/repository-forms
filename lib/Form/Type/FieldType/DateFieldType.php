@@ -55,5 +55,7 @@ class DateFieldType extends AbstractType
             $request->attributes->get('_route') === 'ezplatform.content.translate';
 
         $view->vars['attr']['data-action-type'] = $isEditView ? 'edit' : 'create';
+        $view->vars['attr']['class'] = 'ez-data-source__input';
+        $view->vars['attr']['hidden'] = 'hidden';
     }
 }
