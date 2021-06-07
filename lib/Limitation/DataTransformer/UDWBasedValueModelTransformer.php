@@ -24,9 +24,6 @@ class UDWBasedValueModelTransformer implements DataTransformerInterface
     /** @var \eZ\Publish\API\Repository\LocationService */
     private $locationService;
 
-    /**
-     * @param \eZ\Publish\API\Repository\LocationService $locationService
-     */
     public function __construct(LocationService $locationService)
     {
         $this->locationService = $locationService;
@@ -37,7 +34,7 @@ class UDWBasedValueModelTransformer implements DataTransformerInterface
      */
     public function transform($value)
     {
-        if (!is_array($value)) {
+        if (!\is_array($value)) {
             return null;
         }
 
@@ -47,7 +44,9 @@ class UDWBasedValueModelTransformer implements DataTransformerInterface
                     $this->extractLocationIdFromPath($path)
                 );
             }, $value);
-        } catch (NotFoundException | UnauthorizedException $e) {
+        } catch (NotFoundException $e) {
+            return null;
+        } catch (UnauthorizedException $e) {
             throw new TransformationFailedException($e->getMessage(), $e->getCode(), $e);
         }
     }
@@ -57,7 +56,7 @@ class UDWBasedValueModelTransformer implements DataTransformerInterface
      */
     public function reverseTransform($value)
     {
-        if (!is_array($value)) {
+        if (!\is_array($value)) {
             return null;
         }
 
@@ -66,10 +65,6 @@ class UDWBasedValueModelTransformer implements DataTransformerInterface
 
     /**
      * Extracts and returns an item id from a path, e.g. /1/2/58/ => 58.
-     *
-     * @param string $path
-     *
-     * @return string|null
      */
     private function extractLocationIdFromPath(string $path): ?string
     {
