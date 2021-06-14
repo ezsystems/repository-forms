@@ -65,7 +65,7 @@ class UDWBasedValueModelTransformerTest extends TestCase
         ];
     }
 
-    public function testTransformThrowsTransformationFailedException()
+    public function testTransformThrowsTransformationFailedException(): void
     {
         $this->expectException(TransformationFailedException::class);
 
@@ -79,7 +79,7 @@ class UDWBasedValueModelTransformerTest extends TestCase
         $this->transformer->transform(['/1/2/54']);
     }
 
-    public function testTransformWithDeletedLocation()
+    public function testTransformWithDeletedLocation(): void
     {
         $this->locationService
             ->expects($this->any())
@@ -89,14 +89,6 @@ class UDWBasedValueModelTransformerTest extends TestCase
             );
 
         self::assertNull($this->transformer->transform(['/1/2/54']));
-    }
-
-    public function dataProviderForTransformThrowsTransformationFailedException(): array
-    {
-        return [
-            //[NotFoundException::class],
-            [UnauthorizedException::class],
-        ];
     }
 
     /**
