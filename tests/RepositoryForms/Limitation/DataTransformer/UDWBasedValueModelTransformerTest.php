@@ -70,7 +70,6 @@ class UDWBasedValueModelTransformerTest extends TestCase
         $this->expectException(TransformationFailedException::class);
 
         $this->locationService
-            ->expects($this->any())
             ->method('loadLocation')
             ->willThrowException(
                 $this->createMock(UnauthorizedException::class)
@@ -82,7 +81,6 @@ class UDWBasedValueModelTransformerTest extends TestCase
     public function testTransformWithDeletedLocation(): void
     {
         $this->locationService
-            ->expects($this->any())
             ->method('loadLocation')
             ->willThrowException(
                 $this->createMock(NotFoundException::class)
