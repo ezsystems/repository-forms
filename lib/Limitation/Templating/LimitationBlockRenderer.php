@@ -7,6 +7,7 @@
  */
 namespace EzSystems\RepositoryForms\Limitation\Templating;
 
+use eZ\Publish\API\Repository\Exceptions\NotFoundException;
 use eZ\Publish\API\Repository\Values\User\Limitation;
 use EzSystems\RepositoryForms\Limitation\Exception\MissingLimitationBlockException;
 use EzSystems\RepositoryForms\Limitation\Exception\ValueMapperNotFoundException;
@@ -36,9 +37,6 @@ class LimitationBlockRenderer implements LimitationBlockRendererInterface
 
     /**
      * LimitationRenderer constructor.
-     *
-     * @param LimitationValueMapperRegistryInterface $valueMapperRegistry
-     * @param Twig_Environment $twig
      */
     public function __construct(LimitationValueMapperRegistryInterface $valueMapperRegistry, Twig_Environment $twig)
     {
@@ -51,7 +49,7 @@ class LimitationBlockRenderer implements LimitationBlockRendererInterface
         try {
             $blockName = $this->getValueBlockName($limitation);
             $parameters = $this->getValueBlockParameters($limitation, $parameters);
-        } catch (ValueMapperNotFoundException $exception) {
+        } catch (ValueMapperNotFoundException | NotFoundException $exception) {
             $blockName = self::LIMITATION_VALUE_BLOCK_NAME_FALLBACK;
             $parameters = $this->getValueFallbackBlockParameters($limitation, $parameters);
         }
@@ -82,7 +80,6 @@ class LimitationBlockRenderer implements LimitationBlockRendererInterface
     /**
      * Generates value block name based on Limitation.
      *
-     * @param Limitation $limitation
      * @return string
      */
     protected function getValueBlockName(Limitation $limitation)
@@ -95,12 +92,12 @@ class LimitationBlockRenderer implements LimitationBlockRendererInterface
      *
      * @param string $blockName
      * @param string|Twig_Template $localTemplate
-     * @return null|\Twig_TemplateWrapper
+     * @return \Twig_TemplateWrapper|null
      */
     protected function findTemplateWithBlock($blockName, $localTemplate = null)
     {
         if ($localTemplate !== null) {
-            if (is_string($localTemplate)) {
+            if (\is_string($localTemplate)) {
                 $localTemplate = $this->twig->load($localTemplate);
             }
 
@@ -110,7 +107,7 @@ class LimitationBlockRenderer implements LimitationBlockRendererInterface
         }
 
         foreach ($this->limitationValueResources as &$template) {
-            if (is_string($template)) {
+            if (\is_string($template)) {
                 // Load the template if it is necessary
                 $template = $this->twig->load($template);
             }
@@ -126,8 +123,6 @@ class LimitationBlockRenderer implements LimitationBlockRendererInterface
     /**
      * Get parameters passed as context of value block render.
      *
-     * @param Limitation $limitation
-     * @param array $parameters
      * @return array
      */
     protected function getValueBlockParameters(Limitation $limitation, array $parameters)
@@ -147,8 +142,6 @@ class LimitationBlockRenderer implements LimitationBlockRendererInterface
     /**
      * Get parameters passed as context of value fallback block.
      *
-     * @param Limitation $limitation
-     * @param array $parameters
      * @return array
      */
     protected function getValueFallbackBlockParameters(Limitation $limitation, array $parameters)
