@@ -15,6 +15,7 @@ use EzSystems\RepositoryForms\FieldType\FieldDefinitionFormMapperInterface;
 use EzSystems\RepositoryForms\FieldType\FieldValueFormMapperInterface;
 use EzSystems\RepositoryForms\Form\Type\FieldType\ImageFieldType;
 use EzSystems\RepositoryForms\ConfigResolver\MaxUploadSize;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\OptionsResolver\Exception\AccessException;
@@ -54,6 +55,12 @@ class ImageFormMapper implements FieldDefinitionFormMapperInterface, FieldValueF
                     'max' => $this->maxUploadSize->get(MaxUploadSize::MEGABYTES),
                 ],
                 'disabled' => $isTranslation,
+            ])
+            ->add('isAlternativeTextRequired', CheckboxType::class, [
+                'required' => false,
+                'property_path' => 'validatorConfiguration[AlternativeTextValidator][required]',
+                'label' => /** @Desc("Alternative text is required") */ 'field_definition.ezimage.is_alternative_text_required',
+                'disabled' => $isTranslation,
             ]);
     }
 
@@ -62,6 +69,7 @@ class ImageFormMapper implements FieldDefinitionFormMapperInterface, FieldValueF
         $fieldDefinition = $data->fieldDefinition;
         $formConfig = $fieldForm->getConfig();
         $fieldType = $this->fieldTypeService->getFieldType($fieldDefinition->fieldTypeIdentifier);
+        $isAlternativeTextRequired = $fieldDefinition->validatorConfiguration['AlternativeTextValidator']['required'] ?? false;
 
         $fieldForm
             ->add(
@@ -72,6 +80,7 @@ class ImageFormMapper implements FieldDefinitionFormMapperInterface, FieldValueF
                         [
                             'required' => $fieldDefinition->isRequired,
                             'label' => $fieldDefinition->getName(),
+                            'is_alternative_text_required' => $isAlternativeTextRequired,
                         ]
                     )
                     ->addModelTransformer(new ImageValueTransformer($fieldType, $data->value, Value::class))
