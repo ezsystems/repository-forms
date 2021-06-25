@@ -27,11 +27,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 class UserCreateMapper
 {
     /**
-     * @param ContentType $contentType
      * @param UserGroup[] $parentGroups
-     * @param array $params
-     *
-     * @return UserCreateData
      *
      * @throws UndefinedOptionsException
      * @throws OptionDefinitionException
@@ -64,8 +60,6 @@ class UserCreateMapper
     }
 
     /**
-     * @param OptionsResolver $optionsResolver
-     *
      * @throws AccessException
      */
     private function configureOptions(OptionsResolver $optionsResolver): void

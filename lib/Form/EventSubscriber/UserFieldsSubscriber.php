@@ -62,7 +62,7 @@ class UserFieldsSubscriber implements EventSubscriberInterface
             $data->login = $userAccountFieldData->username;
             $data->email = $userAccountFieldData->email;
             $data->password = $userAccountFieldData->password;
-            $data->enabled = $data->enabled ?? $userAccountFieldData->enabled;
+            $data->enabled = $userAccountFieldData->enabled ?? $data->enabled;
 
             /** @var Value $userValue */
             $userValue = clone $data->contentType
