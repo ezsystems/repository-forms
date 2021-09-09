@@ -164,11 +164,11 @@ class ContentFormProcessor implements EventSubscriberInterface
         if (1 === count($this->contentService->loadVersions($contentInfo))) {
             $parentLocation = $this->locationService->loadParentLocationsForDraftContent($versionInfo)[0];
             $redirectionLocationId = $parentLocation->id;
-            $this->contentService->deleteContent($contentInfo);
         } else {
             $redirectionLocationId = $contentInfo->mainLocationId;
-            $this->contentService->deleteVersion($versionInfo);
         }
+
+        $this->contentService->deleteVersion($versionInfo);
 
         $url = $this->router->generate(
             '_ezpublishLocation',
