@@ -3,7 +3,9 @@
 # File for setting up system for unit/integration testing
 
 # Disable xdebug to speed things up as we don't currently generate coverge on travis
-if [ "$TRAVIS_PHP_VERSION" != "hhvm" ] ; then phpenv config-rm xdebug.ini ; fi
+if [ "$TRAVIS_PHP_VERSION" != "hhvm" ] ; then phpenv config-rm xdebug.ini
+  # Disable expired certificate
+. - sed -i '/mozilla\/DST_Root_CA_X3.crt/ s/./!&/' /etc/ca-certificates.conf \ && update-ca-certificates --verbose ; fi
 
 # Update composer to newest version
 # disabled, issues with packagist/github, something..
