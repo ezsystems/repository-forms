@@ -11,7 +11,7 @@
     ],
     "require": {
         "php": "^7.1",
-        "ezsystems/ezpublish-kernel": "^7.0@dev",
+        "ezsystems/ezpublish-kernel": "^7.0",
         "symfony/symfony": "^3.4",
         "jms/translation-bundle": "^1.3"
     },
@@ -42,7 +42,7 @@
         "_ezplatform_branch_for_behat_tests": "2.5",
         "branch-alias": {
             "dev-master": "2.5.x-dev",
-            "dev-tmp_ci_branch": "2.5.x-dev"
+            "dev-tmp_ci_branch": "2.5"
         }
     },
     "scripts": {
