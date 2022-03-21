@@ -5,13 +5,13 @@
     "type": "ezplatform-bundle",
     "authors": [
         {
-            "name": "Jérôme Vieilledent",
+            "name": "J\u00e9r\u00f4me Vieilledent",
             "email": "jerome.vieilledent@ez.no"
         }
     ],
     "require": {
         "php": "^7.1",
-        "ezsystems/ezpublish-kernel": "^7.0@dev",
+        "ezsystems/ezpublish-kernel": "^7.0",
         "symfony/symfony": "^3.4",
         "jms/translation-bundle": "^1.3"
     },
