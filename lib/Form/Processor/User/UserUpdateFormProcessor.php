@@ -71,10 +71,6 @@ class UserUpdateFormProcessor implements EventSubscriberInterface
         $event->setResponse(new RedirectResponse($redirectUrl));
     }
 
-    /**
-     * @param UserUpdateData $data
-     * @param string $languageCode
-     */
     private function setContentFields(UserUpdateData $data, string $languageCode): void
     {
         $data->contentUpdateStruct = $this->contentService->newContentUpdateStruct();

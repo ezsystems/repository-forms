@@ -23,9 +23,7 @@ class ConfigurableRegistrationGroupLoader extends ConfigurableSudoRepositoryLoad
     private $configurableRegistrationGroupLoader;
 
     /**
-     * @param \eZ\Publish\API\Repository\Repository $repository
      * @param null $params
-     * @param \EzSystems\EzPlatformUser\ConfigResolver\ConfigurableRegistrationGroupLoader $configurableRegistrationGroupLoader
      */
     public function __construct(
         Repository $repository,

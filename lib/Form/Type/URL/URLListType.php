@@ -29,8 +29,6 @@ class URLListType extends AbstractType
 
     /**
      * URLListType constructor.
-     *
-     * @param \Symfony\Component\Translation\TranslatorInterface $translator
      */
     public function __construct(TranslatorInterface $translator)
     {

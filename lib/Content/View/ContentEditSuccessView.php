@@ -19,8 +19,6 @@ class ContentEditSuccessView extends BaseView implements LocationValueView
     private $location;
 
     /**
-     * @param \Symfony\Component\HttpFoundation\Response $response
-     *
      * @throws \eZ\Publish\Core\Base\Exceptions\InvalidArgumentType
      */
     public function __construct(Response $response)
@@ -31,17 +29,11 @@ class ContentEditSuccessView extends BaseView implements LocationValueView
         $this->setControllerReference(new ControllerReference('ez_content_edit:editVersionDraftSuccessAction'));
     }
 
-    /**
-     * @param \eZ\Publish\API\Repository\Values\Content\Location|null $location
-     */
     public function setLocation(?Location $location): void
     {
         $this->location = $location;
     }
 
-    /**
-     * @return \eZ\Publish\API\Repository\Values\Content\Location|null
-     */
     public function getLocation(): ?Location
     {
         return $this->location;

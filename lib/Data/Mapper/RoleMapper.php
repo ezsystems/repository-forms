@@ -18,7 +18,6 @@ class RoleMapper implements FormDataMapperInterface
      * (e.g. create/update struct).
      *
      * @param ValueObject|\eZ\Publish\API\Repository\Values\User\RoleDraft $role
-     * @param array $params
      *
      * @return RoleData
      */

@@ -22,18 +22,11 @@ class ImageAssetFormMapper implements FieldValueFormMapperInterface
     /** @var \eZ\Publish\API\Repository\FieldTypeService */
     private $fieldTypeService;
 
-    /**
-     * @param \eZ\Publish\API\Repository\FieldTypeService $fieldTypeService
-     */
     public function __construct(FieldTypeService $fieldTypeService)
     {
         $this->fieldTypeService = $fieldTypeService;
     }
 
-    /**
-     * @param \Symfony\Component\Form\FormInterface $fieldForm
-     * @param \EzSystems\RepositoryForms\Data\Content\FieldData $data
-     */
     public function mapFieldValueForm(FormInterface $fieldForm, FieldData $data): void
     {
         $fieldDefinition = $data->fieldDefinition;
@@ -59,8 +52,6 @@ class ImageAssetFormMapper implements FieldValueFormMapperInterface
 
     /**
      * Fake method to set the translation domain for the extractor.
-     *
-     * @param OptionsResolver $resolver
      */
     public function configureOptions(OptionsResolver $resolver): void
     {

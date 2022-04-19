@@ -14,8 +14,6 @@ interface ContentTypeValueView
 {
     /**
      * Returns the ContentType.
-     *
-     * @return ContentType
      */
     public function getContentType(): ContentType;
 }

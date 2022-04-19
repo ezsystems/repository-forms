@@ -16,7 +16,7 @@ class SubtreeLimitationMapper extends UDWBasedMapper
 {
     public function filterLimitationValues(Limitation $limitation)
     {
-        if (!is_array($limitation->limitationValues)) {
+        if (!\is_array($limitation->limitationValues)) {
             return;
         }
 

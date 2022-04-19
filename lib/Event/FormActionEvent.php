@@ -43,11 +43,8 @@ class FormActionEvent extends FormEvent
     private $payloads;
 
     /**
-     * @param \Symfony\Component\Form\FormInterface $form
      * @param $data
      * @param $clickedButton
-     * @param array $options
-     * @param array $payloads
      */
     public function __construct(FormInterface $form, $data, $clickedButton, array $options = [], array $payloads = [])
     {
@@ -106,9 +103,6 @@ class FormActionEvent extends FormEvent
         return $this->response;
     }
 
-    /**
-     * @param Response $response
-     */
     public function setResponse(Response $response)
     {
         $this->response = $response;
@@ -119,35 +113,22 @@ class FormActionEvent extends FormEvent
         return $this->response !== null;
     }
 
-    /**
-     * @return array
-     */
     public function getPayloads(): array
     {
         return $this->payloads;
     }
 
-    /**
-     * @param array $payloads
-     */
     public function setPayloads(array $payloads): void
     {
         $this->payloads = $payloads;
     }
 
-    /**
-     * @param string $name
-     *
-     * @return bool
-     */
     public function hasPayload(string $name): bool
     {
         return isset($this->payloads[$name]);
     }
 
     /**
-     * @param string $name
-     *
      * @return mixed
      */
     public function getPayload(string $name)
@@ -156,7 +137,6 @@ class FormActionEvent extends FormEvent
     }
 
     /**
-     * @param string $name
      * @param mixed $payload
      */
     public function setPayload(string $name, $payload): void

@@ -21,8 +21,6 @@ class UniqueURLValidator extends ConstraintValidator
 
     /**
      * UniqueURLValidator constructor.
-     *
-     * @param URLService $urlService
      */
     public function __construct(URLService $urlService)
     {

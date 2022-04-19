@@ -73,7 +73,7 @@ class SortFieldChoiceType extends AbstractType
      */
     private function getSortFieldLabel($sortField)
     {
-        return $this->translator->trans(/** @Ignore */'content_type.sort_field.' . $sortField, [], 'ezrepoforms_content_type');
+        return $this->translator->trans(/** @Ignore */ 'content_type.sort_field.' . $sortField, [], 'ezrepoforms_content_type');
     }
 
     /**

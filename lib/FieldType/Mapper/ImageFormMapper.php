@@ -8,13 +8,13 @@ namespace EzSystems\RepositoryForms\FieldType\Mapper;
 
 use eZ\Publish\API\Repository\FieldTypeService;
 use eZ\Publish\Core\FieldType\Image\Value;
+use EzSystems\RepositoryForms\ConfigResolver\MaxUploadSize;
 use EzSystems\RepositoryForms\Data\Content\FieldData;
 use EzSystems\RepositoryForms\Data\FieldDefinitionData;
 use EzSystems\RepositoryForms\FieldType\DataTransformer\ImageValueTransformer;
 use EzSystems\RepositoryForms\FieldType\FieldDefinitionFormMapperInterface;
 use EzSystems\RepositoryForms\FieldType\FieldValueFormMapperInterface;
 use EzSystems\RepositoryForms\Form\Type\FieldType\ImageFieldType;
-use EzSystems\RepositoryForms\ConfigResolver\MaxUploadSize;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\FormInterface;

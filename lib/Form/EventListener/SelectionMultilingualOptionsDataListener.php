@@ -15,17 +15,11 @@ class SelectionMultilingualOptionsDataListener
     /** @var string */
     protected $languageCode;
 
-    /**
-     * @param string $languageCode
-     */
     public function __construct(string $languageCode)
     {
         $this->languageCode = $languageCode;
     }
 
-    /**
-     * @param \Symfony\Component\Form\FormEvent $event
-     */
     public function setLanguageOptions(FormEvent $event): void
     {
         $data = $event->getData();

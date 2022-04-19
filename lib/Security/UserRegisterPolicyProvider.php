@@ -19,6 +19,6 @@ class UserRegisterPolicyProvider implements PolicyProviderInterface
 {
     public function addPolicies(ConfigBuilderInterface $configBuilder)
     {
-        @trigger_error('Method ' . __METHOD__ . ' is deprecated since 2.1', E_USER_DEPRECATED);
+        @trigger_error('Method ' . __METHOD__ . ' is deprecated since 2.1', \E_USER_DEPRECATED);
     }
 }

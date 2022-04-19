@@ -42,7 +42,6 @@ interface LimitationValueMapperRegistryInterface
     /**
      * Register mapper.
      *
-     * @param LimitationValueMapperInterface $mapper
      * @param string $limitationType Limitation identifier the mapper is meant for.
      */
     public function addMapper(LimitationValueMapperInterface $mapper, $limitationType);

@@ -32,9 +32,7 @@ class TimeValueTransformer implements DataTransformerInterface
         }
 
         if (!$value instanceof Value) {
-            throw new TransformationFailedException(
-                sprintf('Expected a %s', Value::class)
-            );
+            throw new TransformationFailedException(sprintf('Expected a %s', Value::class));
         }
 
         return $value->time;
@@ -55,9 +53,7 @@ class TimeValueTransformer implements DataTransformerInterface
         }
 
         if (!is_numeric($value)) {
-            throw new TransformationFailedException(
-                sprintf('Expected a numeric, got %s instead', gettype($value))
-            );
+            throw new TransformationFailedException(sprintf('Expected a numeric, got %s instead', \gettype($value)));
         }
 
         return new Value($value);

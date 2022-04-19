@@ -20,9 +20,6 @@ class CountryFieldType extends AbstractType
     /** @var array */
     protected $countriesInfo;
 
-    /**
-     * @param array $countriesInfo
-     */
     public function __construct(array $countriesInfo)
     {
         $this->countriesInfo = $countriesInfo;

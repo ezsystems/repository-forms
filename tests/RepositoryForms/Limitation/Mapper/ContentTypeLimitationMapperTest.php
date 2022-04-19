@@ -26,7 +26,7 @@ class ContentTypeLimitationMapperTest extends TestCase
     /** @var ContentTypeLimitationMapper */
     private $mapper;
 
-    public function setUp()
+    protected function setUp()
     {
         $this->contentTypeService = $this->createMock(ContentTypeService::class);
         $this->logger = $this->createMock(LoggerInterface::class);

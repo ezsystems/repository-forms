@@ -18,7 +18,8 @@ use EzSystems\RepositoryForms\Data\NewnessChecker;
  */
 class PolicyUpdateData extends PolicyUpdateStruct
 {
-    use PolicyDataTrait, NewnessChecker;
+    use NewnessChecker;
+    use PolicyDataTrait;
 
     protected function getIdentifierValue()
     {

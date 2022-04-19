@@ -21,9 +21,6 @@ class LocationType extends AbstractType
     /** @var \eZ\Publish\API\Repository\LocationService */
     private $locationService;
 
-    /**
-     * @param \eZ\Publish\API\Repository\LocationService $locationService
-     */
     public function __construct(LocationService $locationService)
     {
         $this->locationService = $locationService;

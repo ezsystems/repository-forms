@@ -21,9 +21,6 @@ class UDWBasedValueViewTransformer implements DataTransformerInterface
     /** @var \eZ\Publish\API\Repository\LocationService */
     private $locationService;
 
-    /**
-     * @param \eZ\Publish\API\Repository\LocationService $locationService
-     */
     public function __construct(LocationService $locationService)
     {
         $this->locationService = $locationService;
@@ -34,7 +31,7 @@ class UDWBasedValueViewTransformer implements DataTransformerInterface
      */
     public function transform($value)
     {
-        if (!is_array($value)) {
+        if (!\is_array($value)) {
             return null;
         }
 
@@ -46,7 +43,7 @@ class UDWBasedValueViewTransformer implements DataTransformerInterface
      */
     public function reverseTransform($value)
     {
-        if (!is_string($value) || $value === '') {
+        if (!\is_string($value) || $value === '') {
             return $value;
         }
 

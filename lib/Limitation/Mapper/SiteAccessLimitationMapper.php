@@ -36,7 +36,7 @@ class SiteAccessLimitationMapper extends MultipleSelectionBasedMapper implements
     {
         $values = [];
         foreach ($this->siteAccessList as $sa) {
-            if (in_array($this->getSiteAccessKey($sa), $limitation->limitationValues)) {
+            if (\in_array($this->getSiteAccessKey($sa), $limitation->limitationValues)) {
                 $values[] = $sa;
             }
         }

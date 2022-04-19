@@ -60,8 +60,6 @@ class RoleFormProcessor implements EventSubscriberInterface
      * Saving is not needed when cancelling, and when the Save button is clicked the save action takes care of it.
      * The default action is only needed when the form has been submitted by pressing Enter.
      *
-     * @param FormActionEvent $event
-     *
      * @return bool
      */
     protected function isDefaultEvent(FormActionEvent $event)
@@ -72,8 +70,6 @@ class RoleFormProcessor implements EventSubscriberInterface
     /**
      * Returns the role data for the event.
      *
-     * @param FormActionEvent $event
-     *
      * @return \EzSystems\RepositoryForms\Data\Role\RoleData
      */
     protected function getRoleData(FormActionEvent $event)
@@ -83,8 +79,6 @@ class RoleFormProcessor implements EventSubscriberInterface
 
     /**
      * Returns the role draft for the event.
-     *
-     * @param FormActionEvent $event
      *
      * @return \eZ\Publish\API\Repository\Values\User\RoleDraft
      */

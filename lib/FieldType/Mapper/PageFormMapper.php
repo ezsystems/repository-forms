@@ -22,9 +22,6 @@ class PageFormMapper implements FieldDefinitionFormMapperInterface
      */
     protected $pageService;
 
-    /**
-     * @param PageService $pageService
-     */
     public function __construct(PageService $pageService)
     {
         $this->pageService = $pageService;

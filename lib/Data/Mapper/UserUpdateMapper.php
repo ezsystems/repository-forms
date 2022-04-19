@@ -28,12 +28,6 @@ class UserUpdateMapper
     /**
      * Maps a ValueObject from eZ content repository to a data usable as underlying form data (e.g. create/update struct).
      *
-     * @param User $user
-     * @param ContentType $contentType
-     * @param array $params
-     *
-     * @return UserUpdateData
-     *
      * @throws UndefinedOptionsException
      * @throws OptionDefinitionException
      * @throws NoSuchOptionException

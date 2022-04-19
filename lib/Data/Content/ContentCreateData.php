@@ -39,8 +39,6 @@ class ContentCreateData extends ContentCreateStruct implements NewnessCheckable
     /**
      * Adds a location struct.
      * A location will be created out of it, bound to the created content.
-     *
-     * @param LocationCreateStruct $locationStruct
      */
     public function addLocationStruct(LocationCreateStruct $locationStruct)
     {

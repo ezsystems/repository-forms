@@ -47,12 +47,7 @@ class ContentCreateViewBuilder implements ViewBuilder
     private $languagePreferenceProvider;
 
     /**
-     * @param \eZ\Publish\API\Repository\Repository $repository
-     * @param \eZ\Publish\Core\MVC\Symfony\View\Configurator $viewConfigurator
-     * @param \eZ\Publish\Core\MVC\Symfony\View\ParametersInjector $viewParametersInjector
      * @param $defaultTemplate
-     * @param \EzSystems\RepositoryForms\Form\ActionDispatcher\ActionDispatcherInterface $contentActionDispatcher
-     * @param \eZ\Publish\Core\MVC\Symfony\Locale\UserLanguagePreferenceProviderInterface $languagePreferenceProvider
      */
     public function __construct(
         Repository $repository,
@@ -76,8 +71,6 @@ class ContentCreateViewBuilder implements ViewBuilder
     }
 
     /**
-     * @param array $parameters
-     *
      * @return \EzSystems\RepositoryForms\Content\View\ContentCreateSuccessView|\EzSystems\RepositoryForms\Content\View\ContentCreateView
      *
      * @throws \eZ\Publish\API\Repository\Exceptions\UnauthorizedException
@@ -131,10 +124,6 @@ class ContentCreateViewBuilder implements ViewBuilder
     /**
      * Loads a visible Location.
      *
-     * @param int $locationId
-     *
-     * @return \eZ\Publish\API\Repository\Values\Content\Location
-     *
      * @throws \eZ\Publish\API\Repository\Exceptions\UnauthorizedException
      * @throws \eZ\Publish\API\Repository\Exceptions\NotFoundException
      */
@@ -146,10 +135,6 @@ class ContentCreateViewBuilder implements ViewBuilder
     /**
      * Loads Language with code $languageCode.
      *
-     * @param string $languageCode
-     *
-     * @return \eZ\Publish\API\Repository\Values\Content\Language
-     *
      * @throws \eZ\Publish\API\Repository\Exceptions\NotFoundException
      */
     private function loadLanguage(string $languageCode): Language
@@ -160,10 +145,7 @@ class ContentCreateViewBuilder implements ViewBuilder
     /**
      * Loads ContentType with identifier $contentTypeIdentifier.
      *
-     * @param string $contentTypeIdentifier
      * @param string[] $prioritizedLanguages
-     *
-     * @return \eZ\Publish\API\Repository\Values\ContentType\ContentType
      *
      * @throws \eZ\Publish\API\Repository\Exceptions\NotFoundException
      */
@@ -176,10 +158,6 @@ class ContentCreateViewBuilder implements ViewBuilder
     }
 
     /**
-     * @param array $parameters
-     *
-     * @return \eZ\Publish\API\Repository\Values\Content\Language
-     *
      * @throws \eZ\Publish\API\Repository\Exceptions\NotFoundException
      * @throws \eZ\Publish\API\Repository\Exceptions\InvalidArgumentException
      */
@@ -190,7 +168,7 @@ class ContentCreateViewBuilder implements ViewBuilder
         }
 
         if (isset($parameters['language'])) {
-            if (is_string($parameters['language'])) {
+            if (\is_string($parameters['language'])) {
                 // @todo BC: route parameter should be called languageCode but it won't happen until 3.0
                 return $this->loadLanguage($parameters['language']);
             }
@@ -198,16 +176,10 @@ class ContentCreateViewBuilder implements ViewBuilder
             return $parameters['language'];
         }
 
-        throw new InvalidArgumentException('Language',
-            'No language information provided. Are you missing language or languageCode parameters');
+        throw new InvalidArgumentException('Language', 'No language information provided. Are you missing language or languageCode parameters');
     }
 
     /**
-     * @param array $parameters
-     * @param array $languageCodes
-     *
-     * @return \eZ\Publish\API\Repository\Values\ContentType\ContentType
-     *
      * @throws \eZ\Publish\API\Repository\Exceptions\NotFoundException
      * @throws \eZ\Publish\API\Repository\Exceptions\InvalidArgumentException
      */
@@ -221,17 +193,10 @@ class ContentCreateViewBuilder implements ViewBuilder
             return $this->loadContentType($parameters['contentTypeIdentifier'], $languageCodes);
         }
 
-        throw new InvalidArgumentException(
-            'ContentType',
-            'No content type could be loaded from parameters'
-        );
+        throw new InvalidArgumentException('ContentType', 'No content type could be loaded from parameters');
     }
 
     /**
-     * @param array $parameters
-     *
-     * @return \eZ\Publish\API\Repository\Values\Content\Location
-     *
      * @throws \eZ\Publish\API\Repository\Exceptions\UnauthorizedException
      * @throws \eZ\Publish\API\Repository\Exceptions\NotFoundException
      * @throws \eZ\Publish\API\Repository\Exceptions\InvalidArgumentException
@@ -246,9 +211,6 @@ class ContentCreateViewBuilder implements ViewBuilder
             return $this->loadLocation((int) $parameters['parentLocationId']);
         }
 
-        throw new InvalidArgumentException(
-            'ParentLocation',
-            'Unable to load parent location from parameters'
-        );
+        throw new InvalidArgumentException('ParentLocation', 'Unable to load parent location from parameters');
     }
 }

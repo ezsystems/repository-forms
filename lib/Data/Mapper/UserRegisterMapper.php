@@ -18,9 +18,6 @@ class UserRegisterMapper
     /** @var \EzSystems\EzPlatformUser\Form\DataMapper\UserRegisterMapper */
     private $baseUserRegisterMapper;
 
-    /**
-     * @param \EzSystems\EzPlatformUser\Form\DataMapper\UserRegisterMapper $baseUserRegisterMapper
-     */
     public function __construct(
         BaseUserRegisterMapper $baseUserRegisterMapper
     ) {

@@ -30,8 +30,6 @@ class UserFieldsSubscriber implements EventSubscriberInterface
      *
      * Workaround to quirky ezuser field type, it copies user data from field Data class to general User update/create
      * struct and injects proper Value for ezuser field type in order to pass validation.
-     *
-     * @param FormEvent $event
      */
     public function handleUserAccountField(FormEvent $event)
     {
@@ -47,9 +45,6 @@ class UserFieldsSubscriber implements EventSubscriberInterface
         }
     }
 
-    /**
-     * @param UserCreateData $data
-     */
     private function handleUserCreateData(UserCreateData $data)
     {
         foreach ($data->fieldsData as $fieldData) {
@@ -78,7 +73,6 @@ class UserFieldsSubscriber implements EventSubscriberInterface
     }
 
     /**
-     * @param UserUpdateData $data
      * @param $languageCode
      */
     private function handleUserUpdateData(UserUpdateData $data, $languageCode)

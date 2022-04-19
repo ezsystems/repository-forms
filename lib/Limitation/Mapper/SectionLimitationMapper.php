@@ -7,9 +7,9 @@
  */
 namespace EzSystems\RepositoryForms\Limitation\Mapper;
 
+use eZ\Publish\API\Repository\Exceptions\NotFoundException;
 use eZ\Publish\API\Repository\SectionService;
 use eZ\Publish\API\Repository\Values\User\Limitation;
-use eZ\Publish\API\Repository\Exceptions\NotFoundException;
 use EzSystems\RepositoryForms\Limitation\LimitationValueMapperInterface;
 use Psr\Log\LoggerAwareTrait;
 use Psr\Log\NullLogger;

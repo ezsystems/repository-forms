@@ -17,7 +17,6 @@ interface LimitationValueMapperInterface
     /**
      * Map the limitation values, in order to pass them as context of limitation value rendering.
      *
-     * @param Limitation $limitation
      * @return mixed[]
      */
     public function mapLimitationValue(Limitation $limitation);

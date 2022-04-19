@@ -18,10 +18,6 @@ class MaxUploadSize
 
     /**
      * Return value of upload_max_filesize in bytes.
-     *
-     * @param string|null $unit
-     *
-     * @return int
      */
     public function get(?string $unit = null): int
     {
@@ -44,11 +40,6 @@ class MaxUploadSize
         return $value;
     }
 
-    /**
-     * @param string $str
-     *
-     * @return int
-     */
     protected function stringToBytes(string $str): int
     {
         $str = strtoupper(trim($str));

@@ -29,65 +29,41 @@ class ContentCreateView extends BaseView implements LocationValueView, ContentTy
     /** @var \Symfony\Component\Form\FormInterface */
     private $form;
 
-    /**
-     * @param \eZ\Publish\API\Repository\Values\ContentType\ContentType $contentType
-     */
     public function setContentType(ContentType $contentType)
     {
         $this->contentType = $contentType;
     }
 
-    /**
-     * @return \eZ\Publish\API\Repository\Values\ContentType\ContentType
-     */
     public function getContentType(): ContentType
     {
         return $this->contentType;
     }
 
-    /**
-     * @param \eZ\Publish\API\Repository\Values\Content\Location $location
-     */
     public function setLocation(Location $location)
     {
         $this->location = $location;
     }
 
-    /**
-     * @return \eZ\Publish\API\Repository\Values\Content\Location
-     */
     public function getLocation(): Location
     {
         return $this->location;
     }
 
-    /**
-     * @return \eZ\Publish\API\Repository\Values\Content\Language
-     */
     public function getLanguage(): Language
     {
         return $this->language;
     }
 
-    /**
-     * @param \eZ\Publish\API\Repository\Values\Content\Language $language
-     */
     public function setLanguage(Language $language)
     {
         $this->language = $language;
     }
 
-    /**
-     * @return \Symfony\Component\Form\FormInterface
-     */
     public function getForm(): FormInterface
     {
         return $this->form;
     }
 
-    /**
-     * @param \Symfony\Component\Form\FormInterface $form
-     */
     public function setForm(FormInterface $form)
     {
         $this->form = $form;

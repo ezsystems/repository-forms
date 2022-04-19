@@ -15,7 +15,8 @@ use EzSystems\RepositoryForms\Data\NewnessChecker;
  */
 class ContentTypeGroupUpdateData extends ContentTypeGroupUpdateStruct
 {
-    use ContentTypeGroupDataTrait, NewnessChecker;
+    use ContentTypeGroupDataTrait;
+    use NewnessChecker;
 
     protected function getIdentifierValue()
     {

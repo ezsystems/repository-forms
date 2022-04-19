@@ -73,7 +73,7 @@ class SortOrderChoiceType extends AbstractType
      */
     private function getSortOrderLabel($sortOrder)
     {
-        return $this->translator->trans(/** @Ignore */'content_type.sort_order.' . $sortOrder, [], 'ezrepoforms_content_type');
+        return $this->translator->trans(/** @Ignore */ 'content_type.sort_order.' . $sortOrder, [], 'ezrepoforms_content_type');
     }
 
     /**

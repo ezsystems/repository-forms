@@ -14,8 +14,6 @@ interface LimitationBlockRendererInterface
     /**
      * Returns limitation value in human readable format.
      *
-     * @param Limitation $limitation
-     * @param array $parameters
      * @return string
      */
     public function renderLimitationValue(Limitation $limitation, array $parameters = []);

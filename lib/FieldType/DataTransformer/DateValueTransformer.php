@@ -32,9 +32,7 @@ class DateValueTransformer implements DataTransformerInterface
         }
 
         if (!$value instanceof Value) {
-            throw new TransformationFailedException(
-                sprintf('Expected a %s, got %s instead', Value::class, gettype($value))
-            );
+            throw new TransformationFailedException(sprintf('Expected a %s, got %s instead', Value::class, \gettype($value)));
         }
 
         if (null === $value->date) {
@@ -59,9 +57,7 @@ class DateValueTransformer implements DataTransformerInterface
         }
 
         if (!is_numeric($value)) {
-            throw new TransformationFailedException(
-                sprintf('Expected a numeric, got %s instead', gettype($value))
-            );
+            throw new TransformationFailedException(sprintf('Expected a numeric, got %s instead', \gettype($value)));
         }
 
         return Value::fromTimestamp($value);

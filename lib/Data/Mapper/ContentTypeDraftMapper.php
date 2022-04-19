@@ -21,9 +21,6 @@ class ContentTypeDraftMapper implements FormDataMapperInterface
     /** @var \Symfony\Component\EventDispatcher\EventDispatcherInterface */
     private $eventDispatcher;
 
-    /**
-     * @param \Symfony\Component\EventDispatcher\EventDispatcherInterface $eventDispatcher
-     */
     public function __construct(
         EventDispatcherInterface $eventDispatcher
     ) {
@@ -34,7 +31,6 @@ class ContentTypeDraftMapper implements FormDataMapperInterface
      * Maps a ValueObject from eZ content repository to a data usable as underlying form data (e.g. create/update struct).
      *
      * @param ValueObject|\eZ\Publish\API\Repository\Values\ContentType\ContentTypeDraft $contentTypeDraft
-     * @param array $params
      *
      * @return ContentTypeData
      */
@@ -98,8 +94,6 @@ class ContentTypeDraftMapper implements FormDataMapperInterface
     }
 
     /**
-     * @param \Symfony\Component\OptionsResolver\OptionsResolver $optionsResolver
-     *
      * @throws \Symfony\Component\OptionsResolver\Exception\UndefinedOptionsException
      * @throws \Symfony\Component\OptionsResolver\Exception\AccessException
      */

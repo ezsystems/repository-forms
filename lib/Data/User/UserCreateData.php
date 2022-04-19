@@ -40,8 +40,6 @@ class UserCreateData extends UserCreateStruct implements NewnessCheckable
 
     /**
      * Adds a parent group.
-     *
-     * @param UserGroup $parentGroup
      */
     public function addParentGroup(UserGroup $parentGroup)
     {

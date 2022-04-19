@@ -131,8 +131,6 @@ final class UserAccountFieldValueFormMapper implements FieldValueFormMapperInter
     /**
      * Fake method to set the translation domain for the extractor.
      *
-     * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
-     *
      * @throws \Symfony\Component\OptionsResolver\Exception\AccessException
      */
     public function configureOptions(OptionsResolver $resolver)
@@ -143,11 +141,6 @@ final class UserAccountFieldValueFormMapper implements FieldValueFormMapperInter
             ]);
     }
 
-    /**
-     * @param \eZ\Publish\API\Repository\Values\ContentType\FieldDefinition $fieldDefinition
-     *
-     * @return \Symfony\Component\Form\CallbackTransformer
-     */
     public function getModelTransformerForTranslation(FieldDefinition $fieldDefinition): CallbackTransformer
     {
         return new CallbackTransformer(
@@ -165,9 +158,6 @@ final class UserAccountFieldValueFormMapper implements FieldValueFormMapperInter
         );
     }
 
-    /**
-     * @return \Symfony\Component\Form\CallbackTransformer
-     */
     public function getModelTransformer(): CallbackTransformer
     {
         return new CallbackTransformer(

@@ -18,9 +18,6 @@ interface FormDataMapperInterface
     /**
      * Maps a ValueObject from eZ content repository to a data usable as underlying form data (e.g. create/update struct).
      *
-     * @param ValueObject $repositoryValueObject
-     * @param array $params
-     *
      * @return mixed
      */
     public function mapToFormData(ValueObject $repositoryValueObject, array $params = []);

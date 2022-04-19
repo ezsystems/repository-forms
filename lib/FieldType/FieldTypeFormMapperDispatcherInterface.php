@@ -30,7 +30,6 @@ interface FieldTypeFormMapperDispatcherInterface
     /**
      * Maps, if a mapper is available for the fieldtype, $data to $form.
      *
-     * @param \Symfony\Component\Form\FormInterface $form
      * @param FieldDefinitionData|FieldData $data
      *
      * @return self

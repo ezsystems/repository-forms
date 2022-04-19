@@ -48,7 +48,7 @@ class ContentTypeUpdateType extends AbstractType
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $hasFieldDefinition = count($options['data']->fieldDefinitionsData) > 0;
+        $hasFieldDefinition = \count($options['data']->fieldDefinitionsData) > 0;
         $isTranslation = $options['mainLanguageCode'] !== $options['languageCode'];
 
         $translatablePropertyTransformer = new TranslatablePropertyTransformer($options['languageCode']);

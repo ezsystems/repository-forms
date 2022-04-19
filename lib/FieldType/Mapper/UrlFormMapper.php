@@ -18,10 +18,6 @@ use Symfony\Component\Form\FormInterface;
  */
 class UrlFormMapper implements FieldValueFormMapperInterface
 {
-    /**
-     * @param FormInterface $fieldForm
-     * @param FieldData $data
-     */
     public function mapFieldValueForm(FormInterface $fieldForm, FieldData $data)
     {
         $fieldDefinition = $data->fieldDefinition;

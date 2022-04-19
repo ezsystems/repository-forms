@@ -29,7 +29,7 @@ class TranslatablePropertyTransformer implements DataTransformerInterface
 
     public function transform($valueAsHash)
     {
-        if (!($valueAsHash && is_array($valueAsHash) && isset($valueAsHash[$this->languageCode]))) {
+        if (!($valueAsHash && \is_array($valueAsHash) && isset($valueAsHash[$this->languageCode]))) {
             return null;
         }
 

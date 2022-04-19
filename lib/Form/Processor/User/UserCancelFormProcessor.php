@@ -25,9 +25,6 @@ class UserCancelFormProcessor implements EventSubscriberInterface
     /** @var UrlGeneratorInterface */
     private $urlGenerator;
 
-    /**
-     * @param UrlGeneratorInterface $urlGenerator
-     */
     public function __construct(
         UrlGeneratorInterface $urlGenerator
     ) {
