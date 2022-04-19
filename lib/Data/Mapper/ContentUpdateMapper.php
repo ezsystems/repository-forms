@@ -19,7 +19,6 @@ class ContentUpdateMapper implements FormDataMapperInterface
      * Maps a ValueObject from eZ content repository to a data usable as underlying form data (e.g. create/update struct).
      *
      * @param \eZ\Publish\API\Repository\Values\ValueObject|\eZ\Publish\API\Repository\Values\Content\Content $contentDraft
-     * @param array $params
      *
      * @return \EzSystems\RepositoryForms\Data\Content\ContentUpdateData
      */

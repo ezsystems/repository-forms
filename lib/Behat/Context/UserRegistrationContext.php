@@ -89,8 +89,6 @@ class UserRegistrationContext extends RawMinkContext implements Context, Snippet
     /**
      * Creates a user for registration testing, and assigns it the role $role.
      *
-     * @param Role $role
-     *
      * @return User
      */
     private function createUserWithRole(Role $role)
@@ -155,7 +153,6 @@ class UserRegistrationContext extends RawMinkContext implements Context, Snippet
     }
 
     /**
-     * @param User $user
      * @throws \Behat\Mink\Exception\ElementNotFoundException
      */
     private function loginAs(User $user)
@@ -329,7 +326,7 @@ class UserRegistrationContext extends RawMinkContext implements Context, Snippet
     public function createTemplateAt($path, PyStringNode $contents)
     {
         $fs = new Filesystem();
-        $fs->mkdir(dirname($path));
+        $fs->mkdir(\dirname($path));
         $fs->dumpFile($path, $contents);
     }
 
@@ -351,7 +348,7 @@ class UserRegistrationContext extends RawMinkContext implements Context, Snippet
         if (!$found && strpos($template, ':') === false) {
             $alternativeTemplate = sprintf(
                 ':%s:%s',
-                dirname($template),
+                \dirname($template),
                 basename($template)
             );
             $searchedPattern = sprintf(self::TWIG_DEBUG_STOP_REGEX, preg_quote($alternativeTemplate, null));

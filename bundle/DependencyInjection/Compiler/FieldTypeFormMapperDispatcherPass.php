@@ -8,9 +8,9 @@
  */
 namespace EzSystems\RepositoryFormsBundle\DependencyInjection\Compiler;
 
+use LogicException;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
-use LogicException;
 use Symfony\Component\DependencyInjection\Reference;
 
 /**
@@ -29,9 +29,7 @@ class FieldTypeFormMapperDispatcherPass implements CompilerPassInterface
         foreach ($this->findTaggedFormMapperServices($container) as $id => $tags) {
             foreach ($tags as $tag) {
                 if (!isset($tag['fieldType'])) {
-                    throw new LogicException(
-                        'ez.fieldFormMapper service tags need a "fieldType" attribute to identify which field type the mapper is for. None given.'
-                    );
+                    throw new LogicException('ez.fieldFormMapper service tags need a "fieldType" attribute to identify which field type the mapper is for. None given.');
                 }
 
                 $dispatcherDefinition->addMethodCall('addMapper', [new Reference($id), $tag['fieldType']]);
@@ -41,8 +39,6 @@ class FieldTypeFormMapperDispatcherPass implements CompilerPassInterface
 
     /**
      * Gathers services tagged as either ez.fieldFormMapper.value or ez.fieldFormMapper.definition.
-     *
-     * @param \Symfony\Component\DependencyInjection\ContainerBuilder $container
      *
      * @return array
      */

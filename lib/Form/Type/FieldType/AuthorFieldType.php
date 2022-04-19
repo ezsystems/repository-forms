@@ -8,8 +8,8 @@ namespace EzSystems\RepositoryForms\Form\Type\FieldType;
 
 use eZ\Publish\API\Repository\Exceptions\NotFoundException;
 use eZ\Publish\API\Repository\Repository;
-use eZ\Publish\Core\FieldType\Author\Type as AuthorType;
 use eZ\Publish\Core\FieldType\Author\Author;
+use eZ\Publish\Core\FieldType\Author\Type as AuthorType;
 use eZ\Publish\Core\FieldType\Author\Value;
 use EzSystems\RepositoryForms\Form\Type\FieldType\Author\AuthorCollectionType;
 use Symfony\Component\Form\AbstractType;
@@ -18,9 +18,9 @@ use Symfony\Component\Form\DataTransformerInterface;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
-use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
  * Form Type representing ezauthor field type.
@@ -33,9 +33,6 @@ class AuthorFieldType extends AbstractType
     /** @var int */
     private $defaultAuthor;
 
-    /**
-     * @param \eZ\Publish\API\Repository\Repository $repository
-     */
     public function __construct(Repository $repository)
     {
         $this->repository = $repository;
@@ -58,7 +55,6 @@ class AuthorFieldType extends AbstractType
     }
 
     /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param array
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
@@ -71,19 +67,11 @@ class AuthorFieldType extends AbstractType
             ->addEventListener(FormEvents::POST_SUBMIT, [$this, 'filterOutEmptyAuthors']);
     }
 
-    /**
-     * @param \Symfony\Component\Form\FormView $view
-     * @param \Symfony\Component\Form\FormInterface $form
-     * @param array $options
-     */
     public function buildView(FormView $view, FormInterface $form, array $options)
     {
         $view->vars['attr']['default-author'] = $options['default_author'];
     }
 
-    /**
-     * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
-     */
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
@@ -94,8 +82,6 @@ class AuthorFieldType extends AbstractType
 
     /**
      * Returns a view transformer which handles empty row needed to display add/remove buttons.
-     *
-     * @return \Symfony\Component\Form\DataTransformerInterface
      */
     public function getViewTransformer(): DataTransformerInterface
     {
@@ -114,9 +100,6 @@ class AuthorFieldType extends AbstractType
         });
     }
 
-    /**
-     * @param \Symfony\Component\Form\FormEvent $event
-     */
     public function filterOutEmptyAuthors(FormEvent $event)
     {
         $value = $event->getData();
@@ -133,8 +116,6 @@ class AuthorFieldType extends AbstractType
 
     /**
      * Returns currently logged user data, or empty Author object if none was found.
-     *
-     * @return \eZ\Publish\Core\FieldType\Author\Author
      */
     private function fetchLoggedAuthor(): Author
     {

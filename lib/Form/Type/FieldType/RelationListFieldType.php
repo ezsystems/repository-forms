@@ -29,10 +29,6 @@ class RelationListFieldType extends AbstractType
     /** @var ContentTypeService */
     private $contentTypeService;
 
-    /**
-     * @param ContentService $contentService
-     * @param ContentTypeService $contentTypeService
-     */
     public function __construct(ContentService $contentService, ContentTypeService $contentTypeService)
     {
         $this->contentService = $contentService;

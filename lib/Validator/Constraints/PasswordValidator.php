@@ -15,9 +15,6 @@ class PasswordValidator extends ConstraintValidator
     /** @var \eZ\Publish\API\Repository\UserService */
     private $userService;
 
-    /**
-     * @param \eZ\Publish\API\Repository\UserService $userService
-     */
     public function __construct(UserService $userService)
     {
         $this->userService = $userService;
@@ -43,9 +40,6 @@ class PasswordValidator extends ConstraintValidator
         }
     }
 
-    /**
-     * @return \EzSystems\RepositoryForms\Validator\ValidationErrorsProcessor
-     */
     protected function createValidationErrorsProcessor(): ValidationErrorsProcessor
     {
         return new ValidationErrorsProcessor($this->context);

@@ -60,7 +60,6 @@ class RelationFormMapper extends AbstractRelationFormMapper
 
     /**
      * Fake method to set the translation domain for the extractor.
-     * @param OptionsResolver $resolver
      */
     public function configureOptions(OptionsResolver $resolver)
     {

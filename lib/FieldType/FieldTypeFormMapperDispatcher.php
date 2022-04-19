@@ -10,8 +10,8 @@ namespace EzSystems\RepositoryForms\FieldType;
 
 use EzSystems\RepositoryForms\Data\Content\FieldData;
 use EzSystems\RepositoryForms\Data\FieldDefinitionData;
-use Symfony\Component\Form\FormInterface;
 use InvalidArgumentException;
+use Symfony\Component\Form\FormInterface;
 
 /**
  * FieldType mappers dispatcher.
@@ -50,9 +50,7 @@ class FieldTypeFormMapperDispatcher implements FieldTypeFormMapperDispatcherInte
         }
 
         if (!isset($valid)) {
-            throw new \InvalidArgumentException(
-                'Expecting a FieldValueFormMapperInterface, FieldDefinitionFormMapperInterface'
-            );
+            throw new \InvalidArgumentException('Expecting a FieldValueFormMapperInterface, FieldDefinitionFormMapperInterface');
         }
     }
 

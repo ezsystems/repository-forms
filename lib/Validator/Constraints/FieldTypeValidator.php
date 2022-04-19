@@ -50,9 +50,6 @@ abstract class FieldTypeValidator extends ConstraintValidator
         return '';
     }
 
-    /**
-     * @return \EzSystems\RepositoryForms\Validator\ValidationErrorsProcessor
-     */
     private function createValidationErrorProcessor(): ValidationErrorsProcessor
     {
         return new ValidationErrorsProcessor($this->context, function ($index, $target) {

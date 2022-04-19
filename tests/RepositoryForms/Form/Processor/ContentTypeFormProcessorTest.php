@@ -165,7 +165,7 @@ class ContentTypeFormProcessorTest extends TestCase
         $this->groupsList
             ->expects($this->once())
             ->method('getDefaultGroup')
-            ->will($this->returnValue('content'));
+            ->willReturn('content');
 
         $event = new FormActionEvent(
             $mainForm,

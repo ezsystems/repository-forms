@@ -36,12 +36,6 @@ class ContentCreateViewFilter implements EventSubscriberInterface
     /** @var \eZ\Publish\Core\MVC\Symfony\Locale\UserLanguagePreferenceProviderInterface */
     private $languagePreferenceProvider;
 
-    /**
-     * @param \eZ\Publish\API\Repository\LocationService $locationService
-     * @param \eZ\Publish\API\Repository\ContentTypeService $contentTypeService
-     * @param \Symfony\Component\Form\FormFactoryInterface $formFactory
-     * @param \eZ\Publish\Core\MVC\Symfony\Locale\UserLanguagePreferenceProviderInterface $languagePreferenceProvider
-     */
     public function __construct(
         LocationService $locationService,
         ContentTypeService $contentTypeService,
@@ -60,8 +54,6 @@ class ContentCreateViewFilter implements EventSubscriberInterface
     }
 
     /**
-     * @param \eZ\Publish\Core\MVC\Symfony\View\Event\FilterViewBuilderParametersEvent $event
-     *
      * @throws \Symfony\Component\OptionsResolver\Exception\InvalidOptionsException
      * @throws \eZ\Publish\API\Repository\Exceptions\UnauthorizedException
      * @throws \eZ\Publish\API\Repository\Exceptions\NotFoundException
@@ -90,13 +82,6 @@ class ContentCreateViewFilter implements EventSubscriberInterface
         $event->getParameters()->add(['form' => $form->handleRequest($request)]);
     }
 
-    /**
-     * @param \eZ\Publish\API\Repository\Values\ContentType\ContentType $contentType
-     * @param \eZ\Publish\API\Repository\Values\Content\Location $location
-     * @param string $languageCode
-     *
-     * @return \EzSystems\RepositoryForms\Data\Content\ContentCreateData
-     */
     private function resolveContentCreateData(
         ContentType $contentType,
         Location $location,
@@ -113,12 +98,6 @@ class ContentCreateViewFilter implements EventSubscriberInterface
         );
     }
 
-    /**
-     * @param \EzSystems\RepositoryForms\Data\Content\ContentCreateData $contentCreateData
-     * @param string $languageCode
-     *
-     * @return \Symfony\Component\Form\FormInterface
-     */
     private function resolveContentCreateForm(
         ContentCreateData $contentCreateData,
         string $languageCode

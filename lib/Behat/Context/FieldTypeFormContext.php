@@ -188,7 +188,7 @@ final class FieldTypeFormContext extends RawMinkContext implements SnippetAccept
             $inputId = $inputNodeElement->getAttribute('id');
             $label = $this->getSession()->getPage()->find('css', sprintf('label[for=%s]', $inputId))->getText();
 
-            $expectedState = array_key_exists($label, $exceptions) ? $exceptions[$label] : true;
+            $expectedState = \array_key_exists($label, $exceptions) ? $exceptions[$label] : true;
 
             Assertion::assertEquals(
                 $expectedState,

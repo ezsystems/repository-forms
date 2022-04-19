@@ -45,8 +45,6 @@ class UDWBasedMapper implements LimitationFormMapperInterface, LimitationValueMa
 
     /**
      * UDWBasedMapper constructor.
-     *
-     * @param SearchService $searchService
      */
     public function __construct(LocationService $locationService, SearchService $searchService)
     {

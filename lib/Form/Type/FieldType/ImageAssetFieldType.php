@@ -34,11 +34,6 @@ class ImageAssetFieldType extends AbstractType
     /** @var \EzSystems\RepositoryForms\ConfigResolver\MaxUploadSize */
     private $maxUploadSize;
 
-    /**
-     * @param \eZ\Publish\API\Repository\ContentService $contentService
-     * @param \eZ\Publish\Core\FieldType\ImageAsset\AssetMapper $mapper
-     * @param \EzSystems\RepositoryForms\ConfigResolver\MaxUploadSize $maxUploadSize
-     */
     public function __construct(ContentService $contentService, AssetMapper $mapper, MaxUploadSize $maxUploadSize)
     {
         $this->contentService = $contentService;
@@ -120,8 +115,6 @@ class ImageAssetFieldType extends AbstractType
 
     /**
      * Returns max size of uploaded file in bytes.
-     *
-     * @return int
      */
     private function getMaxFileSize(): int
     {

@@ -36,12 +36,6 @@ class ContentEditViewFilter implements EventSubscriberInterface
     /** @var \eZ\Publish\Core\MVC\Symfony\Locale\UserLanguagePreferenceProviderInterface */
     private $languagePreferenceProvider;
 
-    /**
-     * @param \eZ\Publish\API\Repository\ContentService $contentService
-     * @param \eZ\Publish\API\Repository\ContentTypeService $contentTypeService
-     * @param \Symfony\Component\Form\FormFactoryInterface $formFactory
-     * @param \eZ\Publish\Core\MVC\Symfony\Locale\UserLanguagePreferenceProviderInterface $languagePreferenceProvider
-     */
     public function __construct(
         ContentService $contentService,
         ContentTypeService $contentTypeService,
@@ -60,8 +54,6 @@ class ContentEditViewFilter implements EventSubscriberInterface
     }
 
     /**
-     * @param \eZ\Publish\Core\MVC\Symfony\View\Event\FilterViewBuilderParametersEvent $event
-     *
      * @throws \Symfony\Component\OptionsResolver\Exception\InvalidOptionsException
      * @throws \eZ\Publish\API\Repository\Exceptions\UnauthorizedException
      * @throws \eZ\Publish\API\Repository\Exceptions\NotFoundException
@@ -95,13 +87,6 @@ class ContentEditViewFilter implements EventSubscriberInterface
         $event->getParameters()->add(['form' => $form->handleRequest($request)]);
     }
 
-    /**
-     * @param \eZ\Publish\API\Repository\Values\Content\Content $content
-     * @param string $languageCode
-     * @param \eZ\Publish\API\Repository\Values\ContentType\ContentType $contentType
-     *
-     * @return \EzSystems\RepositoryForms\Data\Content\ContentUpdateData
-     */
     private function resolveContentEditData(
         Content $content,
         string $languageCode,
@@ -115,13 +100,6 @@ class ContentEditViewFilter implements EventSubscriberInterface
         ]);
     }
 
-    /**
-     * @param \EzSystems\RepositoryForms\Data\Content\ContentUpdateData $contentUpdate
-     * @param string $languageCode
-     * @param \eZ\Publish\API\Repository\Values\Content\Content $content
-     *
-     * @return \Symfony\Component\Form\FormInterface
-     */
     private function resolveContentEditForm(
         ContentUpdateData $contentUpdate,
         string $languageCode,

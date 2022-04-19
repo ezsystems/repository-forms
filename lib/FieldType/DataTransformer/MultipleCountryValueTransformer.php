@@ -22,9 +22,6 @@ class MultipleCountryValueTransformer implements DataTransformerInterface
      */
     protected $countriesInfo;
 
-    /**
-     * @param array $countriesInfo
-     */
     public function __construct(array $countriesInfo)
     {
         $this->countriesInfo = $countriesInfo;
@@ -41,7 +38,7 @@ class MultipleCountryValueTransformer implements DataTransformerInterface
 
     public function reverseTransform($value)
     {
-        if (!is_array($value)) {
+        if (!\is_array($value)) {
             return null;
         }
 

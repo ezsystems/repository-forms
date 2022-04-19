@@ -8,9 +8,9 @@
  */
 namespace EzSystems\RepositoryFormsBundle\DependencyInjection\Compiler;
 
+use LogicException;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
-use LogicException;
 use Symfony\Component\DependencyInjection\Reference;
 
 /**
@@ -29,9 +29,7 @@ class LimitationFormMapperPass implements CompilerPassInterface
         foreach ($container->findTaggedServiceIds('ez.limitation.formMapper') as $id => $attributes) {
             foreach ($attributes as $attribute) {
                 if (!isset($attribute['limitationType'])) {
-                    throw new LogicException(
-                        'ez.limitation.formMapper service tag needs a "limitationType" attribute to identify which LimitationType the mapper is for. None given.'
-                    );
+                    throw new LogicException('ez.limitation.formMapper service tag needs a "limitationType" attribute to identify which LimitationType the mapper is for. None given.');
                 }
 
                 $registry->addMethodCall('addMapper', [new Reference($id), $attribute['limitationType']]);

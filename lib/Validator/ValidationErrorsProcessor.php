@@ -18,10 +18,6 @@ final class ValidationErrorsProcessor
     /** @var callable|null */
     private $propertyPathGenerator;
 
-    /**
-     * @param \Symfony\Component\Validator\Context\ExecutionContextInterface $context
-     * @param callable|null $propertyPathGenerator
-     */
     public function __construct(ExecutionContextInterface $context, callable $propertyPathGenerator = null)
     {
         $this->context = $context;

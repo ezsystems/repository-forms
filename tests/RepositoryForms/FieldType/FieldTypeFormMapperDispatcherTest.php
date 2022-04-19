@@ -13,9 +13,9 @@ use eZ\Publish\Core\Repository\Values\ContentType\FieldDefinition;
 use EzSystems\RepositoryForms\Data\Content\FieldData;
 use EzSystems\RepositoryForms\Data\ContentTypeData;
 use EzSystems\RepositoryForms\Data\FieldDefinitionData;
+use EzSystems\RepositoryForms\FieldType\FieldDefinitionFormMapperInterface;
 use EzSystems\RepositoryForms\FieldType\FieldTypeFormMapperDispatcher;
 use EzSystems\RepositoryForms\FieldType\FieldTypeFormMapperDispatcherInterface;
-use EzSystems\RepositoryForms\FieldType\FieldDefinitionFormMapperInterface;
 use EzSystems\RepositoryForms\FieldType\FieldValueFormMapperInterface;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Form\FormInterface;
@@ -37,7 +37,7 @@ class FieldTypeFormMapperDispatcherTest extends TestCase
      */
     private $fieldValueMapperMock;
 
-    public function setUp()
+    protected function setUp()
     {
         $this->dispatcher = new FieldTypeFormMapperDispatcher();
 

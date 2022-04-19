@@ -55,8 +55,6 @@ abstract class AbstractActionDispatcher implements ActionDispatcherInterface
     /**
      * Configures options to pass to the form action event.
      * Might do nothing if there are no options.
-     *
-     * @param OptionsResolver $resolver
      */
     abstract protected function configureOptions(OptionsResolver $resolver);
 

@@ -18,8 +18,6 @@ class ImageAssetValueTransformer extends AbstractBinaryBaseTransformer implement
      * @param \eZ\Publish\Core\FieldType\ImageAsset\Value|null $value
      *
      * @throws \Symfony\Component\Form\Exception\TransformationFailedException
-     *
-     * @return array|null
      */
     public function transform($value): ?array
     {
@@ -28,9 +26,7 @@ class ImageAssetValueTransformer extends AbstractBinaryBaseTransformer implement
         }
 
         if (!$value instanceof Value) {
-            throw new TransformationFailedException(
-                sprintf('Expected a %s, got %s instead', Value::class, gettype($value))
-            );
+            throw new TransformationFailedException(sprintf('Expected a %s, got %s instead', Value::class, \gettype($value)));
         }
 
         return array_merge(
@@ -46,8 +42,6 @@ class ImageAssetValueTransformer extends AbstractBinaryBaseTransformer implement
      * @param array|null $value
      *
      * @throws \Symfony\Component\Form\Exception\TransformationFailedException
-     *
-     * @return \eZ\Publish\Core\FieldType\ImageAsset\Value|null
      */
     public function reverseTransform($value): ?Value
     {
@@ -55,10 +49,8 @@ class ImageAssetValueTransformer extends AbstractBinaryBaseTransformer implement
             return null;
         }
 
-        if (!is_array($value)) {
-            throw new TransformationFailedException(
-                sprintf('Expected a array, got %s instead', gettype($value))
-            );
+        if (!\is_array($value)) {
+            throw new TransformationFailedException(sprintf('Expected a array, got %s instead', \gettype($value)));
         }
 
         return new Value($value['destinationContentId'], $value['alternativeText']);

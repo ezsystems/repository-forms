@@ -96,10 +96,7 @@ class ContentTypeFormProcessor implements EventSubscriberInterface
 
         $targetLanguageCode = $event->getForm()->getConfig()->getOption('languageCode');
         if ($contentTypeDraft->mainLanguageCode !== $targetLanguageCode) {
-            throw new InvalidArgumentException(
-                'languageCode',
-                'FieldDefinitions can be only added to main language translation'
-            );
+            throw new InvalidArgumentException('languageCode', 'FieldDefinitions can be only added to main language translation');
         }
 
         $maxFieldPos = 0;
@@ -166,12 +163,6 @@ class ContentTypeFormProcessor implements EventSubscriberInterface
 
     /**
      * Resolves unique field definition identifier.
-     *
-     * @param ContentTypeDraft $contentTypeDraft
-     * @param int $startIndex
-     * @param string $fieldTypeIdentifier
-     *
-     * @return string
      */
     private function resolveNewFieldDefinitionIdentifier(
         ContentTypeDraft $contentTypeDraft,
@@ -184,7 +175,7 @@ class ContentTypeFormProcessor implements EventSubscriberInterface
 
         do {
             $fieldDefinitionIdentifier = sprintf('new_%s_%d', $fieldTypeIdentifier, ++$startIndex);
-        } while (in_array($fieldDefinitionIdentifier, $fieldDefinitionIdentifiers, true));
+        } while (\in_array($fieldDefinitionIdentifier, $fieldDefinitionIdentifiers, true));
 
         return $fieldDefinitionIdentifier;
     }

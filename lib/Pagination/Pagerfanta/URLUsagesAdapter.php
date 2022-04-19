@@ -26,9 +26,6 @@ class URLUsagesAdapter implements AdapterInterface
 
     /**
      * UrlUsagesAdapter constructor.
-     *
-     * @param \eZ\Publish\API\Repository\Values\URL\URL $url
-     * @param \eZ\Publish\API\Repository\URLService $urlService
      */
     public function __construct(URL $url, URLService $urlService)
     {

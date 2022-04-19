@@ -8,15 +8,16 @@
 namespace EzSystems\RepositoryForms\Data\Section;
 
 use eZ\Publish\API\Repository\Values\Content\SectionUpdateStruct;
-use EzSystems\RepositoryForms\Data\NewnessChecker;
 use EzSystems\RepositoryForms\Data\NewnessCheckable;
+use EzSystems\RepositoryForms\Data\NewnessChecker;
 
 /**
  * @property-read \eZ\Publish\API\Repository\Values\Content\Section $section
  */
 class SectionUpdateData extends SectionUpdateStruct implements NewnessCheckable
 {
-    use SectionDataTrait, NewnessChecker;
+    use NewnessChecker;
+    use SectionDataTrait;
 
     /**
      * Returns the value of the property which can be considered as the value object identifier.

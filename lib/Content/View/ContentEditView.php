@@ -29,9 +29,6 @@ class ContentEditView extends BaseView implements ContentValueView, LocationValu
     /** @var \Symfony\Component\Form\FormInterface */
     private $form;
 
-    /**
-     * @param \eZ\Publish\API\Repository\Values\Content\Content $content
-     */
     public function setContent(Content $content)
     {
         $this->content = $content;
@@ -39,57 +36,37 @@ class ContentEditView extends BaseView implements ContentValueView, LocationValu
 
     /**
      * Returns the Content.
-     *
-     * @return \eZ\Publish\API\Repository\Values\Content\Content
      */
     public function getContent(): Content
     {
         return $this->content;
     }
 
-    /**
-     * @param \eZ\Publish\API\Repository\Values\Content\Location|null $location
-     */
     public function setLocation(?Location $location)
     {
         $this->location = $location;
     }
 
-    /**
-     * @return \eZ\Publish\API\Repository\Values\Content\Location|null
-     */
     public function getLocation(): ?Location
     {
         return $this->location;
     }
 
-    /**
-     * @return \eZ\Publish\API\Repository\Values\Content\Language
-     */
     public function getLanguage(): Language
     {
         return $this->language;
     }
 
-    /**
-     * @param \eZ\Publish\API\Repository\Values\Content\Language $language
-     */
     public function setLanguage(Language $language)
     {
         $this->language = $language;
     }
 
-    /**
-     * @return \Symfony\Component\Form\FormInterface
-     */
     public function getForm(): FormInterface
     {
         return $this->form;
     }
 
-    /**
-     * @param \Symfony\Component\Form\FormInterface $form
-     */
     public function setForm(FormInterface $form)
     {
         $this->form = $form;

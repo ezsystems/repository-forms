@@ -27,8 +27,6 @@ abstract class AbstractBinaryBaseTransformer
     protected $valueClass;
 
     /**
-     * @param FieldType $fieldType
-     * @param Value $initialValue
      * @param string $valueClass
      */
     public function __construct(FieldType $fieldType, Value $initialValue, $valueClass)
@@ -58,8 +56,8 @@ abstract class AbstractBinaryBaseTransformer
      */
     public function getReverseTransformedValue($value)
     {
-        if (!is_array($value)) {
-            throw new TransformationFailedException(sprintf('Expected a array got %s', gettype($value)));
+        if (!\is_array($value)) {
+            throw new TransformationFailedException(sprintf('Expected a array got %s', \gettype($value)));
         }
 
         if ($value['remove']) {

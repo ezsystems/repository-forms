@@ -54,8 +54,6 @@ class ViewTemplatesListener implements EventSubscriberInterface
     /**
      * If the event's view has a defined template, sets the view's template identifier,
      * and the 'pagelayout' parameter.
-     *
-     * @param PreContentViewEvent $event
      */
     public function setViewTemplates(PreContentViewEvent $event)
     {

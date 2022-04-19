@@ -26,9 +26,6 @@ class URLSearchAdapter implements AdapterInterface
 
     /**
      * UrlSearchAdapter constructor.
-     *
-     * @param \eZ\Publish\API\Repository\Values\URL\URLQuery $query
-     * @param \eZ\Publish\API\Repository\URLService $urlService
      */
     public function __construct(URLQuery $query, URLService $urlService)
     {

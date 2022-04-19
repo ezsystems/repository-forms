@@ -51,10 +51,6 @@ class PasswordConstraintCheckboxType extends AbstractType
 
     /**
      * Converts given $string to the snake case.
-     *
-     * @param string $string
-     *
-     * @return string
      */
     private function toSnakeCase(string $string): string
     {

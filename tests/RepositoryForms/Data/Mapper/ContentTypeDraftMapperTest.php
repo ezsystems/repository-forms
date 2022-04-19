@@ -9,10 +9,10 @@
 namespace EzSystems\RepositoryForms\Tests\Data\Mapper;
 
 use eZ\Publish\API\Repository\Values\Content\Location;
+use eZ\Publish\Core\FieldType\Value;
 use eZ\Publish\Core\Repository\Values\ContentType\ContentType;
 use eZ\Publish\Core\Repository\Values\ContentType\ContentTypeDraft;
 use eZ\Publish\Core\Repository\Values\ContentType\FieldDefinition;
-use eZ\Publish\Core\FieldType\Value;
 use EzSystems\RepositoryForms\Data\ContentTypeData;
 use EzSystems\RepositoryForms\Data\FieldDefinitionData;
 use EzSystems\RepositoryForms\Data\Mapper\ContentTypeDraftMapper;

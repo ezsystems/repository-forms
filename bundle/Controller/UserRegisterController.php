@@ -19,17 +19,12 @@ class UserRegisterController extends Controller
     /** @var \EzSystems\EzPlatformUserBundle\Controller\UserRegisterController */
     private $userRegisterController;
 
-    /**
-     * @param \EzSystems\EzPlatformUserBundle\Controller\UserRegisterController $userRegisterController
-     */
     public function __construct(BaseUserRegisterController $userRegisterController)
     {
         $this->userRegisterController = $userRegisterController;
     }
 
     /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     *
      * @return \EzSystems\EzPlatformUser\View\Register\FormView|\Symfony\Component\HttpFoundation\Response|null
      *
      * @throws \eZ\Publish\Core\Base\Exceptions\InvalidArgumentType

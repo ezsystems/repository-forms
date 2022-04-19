@@ -75,7 +75,6 @@ class PolicyFormProcessor implements EventSubscriberInterface
     /**
      * Returns policies for passed RoleDraft object, indexed by their IDs.
      *
-     * @param RoleDraft $roleDraft
      * @return array
      */
     private function getPoliciesById(RoleDraft $roleDraft)

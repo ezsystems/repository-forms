@@ -24,9 +24,6 @@ class Configured implements ViewProvider
      */
     protected $matcherFactory;
 
-    /**
-     * @param \eZ\Publish\Core\MVC\Symfony\Matcher\MatcherFactoryInterface $matcherFactory
-     */
     public function __construct(MatcherFactoryInterface $matcherFactory)
     {
         $this->matcherFactory = $matcherFactory;
@@ -43,10 +40,6 @@ class Configured implements ViewProvider
 
     /**
      * Builds a ContentCreateView object from $viewConfig.
-     *
-     * @param array $viewConfig
-     *
-     * @return \EzSystems\RepositoryForms\Content\View\ContentCreateView
      */
     protected function buildContentCreateView(array $viewConfig): ContentCreateView
     {
@@ -58,7 +51,7 @@ class Configured implements ViewProvider
         if (isset($viewConfig['controller'])) {
             $view->setControllerReference(new ControllerReference($viewConfig['controller']));
         }
-        if (isset($viewConfig['params']) && is_array($viewConfig['params'])) {
+        if (isset($viewConfig['params']) && \is_array($viewConfig['params'])) {
             $view->addParameters($viewConfig['params']);
         }
 

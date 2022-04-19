@@ -38,9 +38,6 @@ class ContentFormProcessor implements EventSubscriberInterface
     private $router;
 
     /**
-     * @param \eZ\Publish\API\Repository\ContentService $contentService
-     * @param \eZ\Publish\API\Repository\LocationService $locationService
-     * @param \Symfony\Component\Routing\RouterInterface $router
      * @param \eZ\Publish\API\Repository\URLAliasService $urlAliasService
      */
     public function __construct(
@@ -53,9 +50,6 @@ class ContentFormProcessor implements EventSubscriberInterface
         $this->router = $router;
     }
 
-    /**
-     * @return array
-     */
     public static function getSubscribedEvents(): array
     {
         return [
@@ -67,8 +61,6 @@ class ContentFormProcessor implements EventSubscriberInterface
     }
 
     /**
-     * @param \EzSystems\RepositoryForms\Event\FormActionEvent $event
-     *
      * @throws \eZ\Publish\API\Repository\Exceptions\BadStateException
      * @throws \eZ\Publish\API\Repository\Exceptions\ContentFieldValidationException
      * @throws \eZ\Publish\API\Repository\Exceptions\ContentValidationException
@@ -102,8 +94,6 @@ class ContentFormProcessor implements EventSubscriberInterface
     }
 
     /**
-     * @param \EzSystems\RepositoryForms\Event\FormActionEvent $event
-     *
      * @throws \eZ\Publish\API\Repository\Exceptions\BadStateException
      * @throws \eZ\Publish\API\Repository\Exceptions\ContentFieldValidationException
      * @throws \eZ\Publish\API\Repository\Exceptions\ContentValidationException
@@ -134,8 +124,6 @@ class ContentFormProcessor implements EventSubscriberInterface
     }
 
     /**
-     * @param \EzSystems\RepositoryForms\Event\FormActionEvent $event
-     *
      * @throws \eZ\Publish\API\Repository\Exceptions\BadStateException
      * @throws \eZ\Publish\API\Repository\Exceptions\UnauthorizedException
      */
@@ -161,7 +149,7 @@ class ContentFormProcessor implements EventSubscriberInterface
         $event->setPayload('content', $content);
 
         // if there is only one version you have to remove whole content instead of a version itself
-        if (1 === count($this->contentService->loadVersions($contentInfo))) {
+        if (1 === \count($this->contentService->loadVersions($contentInfo))) {
             $parentLocation = $this->locationService->loadParentLocationsForDraftContent($versionInfo)[0];
             $redirectionLocationId = $parentLocation->id;
         } else {
@@ -180,8 +168,6 @@ class ContentFormProcessor implements EventSubscriberInterface
     }
 
     /**
-     * @param \EzSystems\RepositoryForms\Event\FormActionEvent $event
-     *
      * @throws \eZ\Publish\API\Repository\Exceptions\NotFoundException
      * @throws \eZ\Publish\API\Repository\Exceptions\UnauthorizedException
      */
@@ -246,17 +232,12 @@ class ContentFormProcessor implements EventSubscriberInterface
     /**
      * @param \EzSystems\RepositoryForms\Data\Content\ContentUpdateData|\EzSystems\RepositoryForms\Data\Content\ContentCreateData $data
      *
-     * @return string
-     *
      * @throws \eZ\Publish\Core\Base\Exceptions\InvalidArgumentException
      */
     private function resolveMainLanguageCode($data): string
     {
         if (!$data instanceof ContentUpdateData && !$data instanceof ContentCreateData) {
-            throw new InvalidArgumentException(
-                '$data',
-                'expected type of ContentUpdateData or ContentCreateData'
-            );
+            throw new InvalidArgumentException('$data', 'expected type of ContentUpdateData or ContentCreateData');
         }
 
         return $data->isNew()
@@ -265,12 +246,6 @@ class ContentFormProcessor implements EventSubscriberInterface
     }
 
     /**
-     * @param \eZ\Publish\API\Repository\Values\Content\Content $content
-     * @param \eZ\Publish\API\Repository\Values\Content\Location|null $referrerLocation
-     * @param \EzSystems\RepositoryForms\Data\NewnessCheckable $data
-     *
-     * @return \eZ\Publish\API\Repository\Values\Content\Location|null
-     *
      * @throws \eZ\Publish\API\Repository\Exceptions\NotFoundException
      * @throws \eZ\Publish\API\Repository\Exceptions\UnauthorizedException
      */

@@ -23,9 +23,7 @@ class ConfigurableRegistrationContentTypeLoader extends ConfigurableSudoReposito
     private $configurableRegistrationContentTypeLoader;
 
     /**
-     * @param \eZ\Publish\API\Repository\Repository $repository
      * @param null $params
-     * @param \EzSystems\EzPlatformUser\ConfigResolver\ConfigurableRegistrationContentTypeLoader $configurableRegistrationContentTypeLoader
      */
     public function __construct(
         Repository $repository,

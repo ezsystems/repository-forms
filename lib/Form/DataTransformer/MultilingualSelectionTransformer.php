@@ -19,10 +19,6 @@ class MultilingualSelectionTransformer implements DataTransformerInterface
     /** @var \EzSystems\RepositoryForms\Data\FieldDefinitionData */
     private $data;
 
-    /**
-     * @param string $languageCode
-     * @param \EzSystems\RepositoryForms\Data\FieldDefinitionData $data
-     */
     public function __construct(string $languageCode, FieldDefinitionData $data)
     {
         $this->languageCode = $languageCode;

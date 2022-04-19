@@ -68,7 +68,7 @@ class FieldTypeChoiceType extends AbstractType
             $choices[$this->getFieldTypeLabel($fieldTypeIdentifier)] = $fieldTypeIdentifier;
         }
 
-        ksort($choices, SORT_NATURAL);
+        ksort($choices, \SORT_NATURAL);
 
         return $choices;
     }
@@ -81,6 +81,6 @@ class FieldTypeChoiceType extends AbstractType
      */
     private function getFieldTypeLabel($fieldTypeIdentifier)
     {
-        return $this->translator->trans(/** @Ignore */$fieldTypeIdentifier . '.name', [], 'fieldtypes');
+        return $this->translator->trans(/** @Ignore */ $fieldTypeIdentifier . '.name', [], 'fieldtypes');
     }
 }

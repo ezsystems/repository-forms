@@ -28,10 +28,6 @@ abstract class AbstractRelationFormMapper implements FieldDefinitionFormMapperIn
      */
     protected $locationService;
 
-    /**
-     * @param \eZ\Publish\API\Repository\ContentTypeService $contentTypeService
-     * @param \eZ\Publish\API\Repository\LocationService $locationService
-     */
     public function __construct(ContentTypeService $contentTypeService, LocationService $locationService)
     {
         $this->contentTypeService = $contentTypeService;
@@ -60,8 +56,6 @@ abstract class AbstractRelationFormMapper implements FieldDefinitionFormMapperIn
      * Loads location which is starting point for selecting destination content object.
      *
      * @param null $defaultLocationId
-     *
-     * @return \eZ\Publish\API\Repository\Values\Content\Location|null
      */
     protected function loadDefaultLocationForSelection($defaultLocationId = null): ?Location
     {

@@ -32,7 +32,6 @@ abstract class ConfigurableSudoRepositoryLoader
     private $params;
 
     /**
-     * @param \eZ\Publish\API\Repository\Repository $repository
      * @param array $params
      */
     public function __construct(Repository $repository, $params = [])
@@ -77,8 +76,6 @@ abstract class ConfigurableSudoRepositoryLoader
     }
 
     /**
-     * @param \Closure $callback
-     *
      * @return mixed
      *
      * @throws \Exception
@@ -92,8 +89,5 @@ abstract class ConfigurableSudoRepositoryLoader
         return $this->repository->sudo($callback);
     }
 
-    /**
-     * @param \Symfony\Component\OptionsResolver\OptionsResolver $optionsResolver
-     */
     abstract protected function configureOptions(OptionsResolver $optionsResolver);
 }

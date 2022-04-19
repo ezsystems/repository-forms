@@ -20,7 +20,7 @@ class AuthorValueTransformer implements DataTransformerInterface
 {
     public function transform($value)
     {
-        if (is_array($value)) {
+        if (\is_array($value)) {
             return $value;
         }
 
@@ -42,7 +42,7 @@ class AuthorValueTransformer implements DataTransformerInterface
 
     public function reverseTransform($value)
     {
-        if ($value === null || !is_array($value)) {
+        if ($value === null || !\is_array($value)) {
             return null;
         }
 

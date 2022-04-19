@@ -8,17 +8,17 @@
  */
 namespace EzSystems\RepositoryForms\Tests\Validator\Constraints;
 
+use eZ\Publish\API\Repository\RoleService;
 use eZ\Publish\API\Repository\Values\User\Role;
 use eZ\Publish\API\Repository\Values\User\RoleDraft;
 use eZ\Publish\Core\Base\Exceptions\NotFoundException;
-use eZ\Publish\API\Repository\RoleService;
 use EzSystems\RepositoryForms\Data\Role\RoleData;
 use EzSystems\RepositoryForms\Validator\Constraints\UniqueRoleIdentifier;
 use EzSystems\RepositoryForms\Validator\Constraints\UniqueRoleIdentifierValidator;
-use Symfony\Component\Validator\Context\ExecutionContextInterface;
-use Symfony\Component\Validator\Violation\ConstraintViolationBuilderInterface;
 use PHPUnit\Framework\TestCase;
 use stdClass;
+use Symfony\Component\Validator\Context\ExecutionContextInterface;
+use Symfony\Component\Validator\Violation\ConstraintViolationBuilderInterface;
 
 class UniqueRoleIdentifierValidatorTest extends TestCase
 {

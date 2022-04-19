@@ -18,9 +18,6 @@ class PopulateFieldDefinitionData implements EventSubscriberInterface
         return [FieldDefinitionMappingEvent::NAME => ['populateFieldDefinition', 50]];
     }
 
-    /**
-     * @param \EzSystems\RepositoryForms\Event\FieldDefinitionMappingEvent $event
-     */
     public function populateFieldDefinition(FieldDefinitionMappingEvent $event): void
     {
         $fieldDefinition = $event->getFieldDefinition();

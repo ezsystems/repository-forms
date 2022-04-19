@@ -24,7 +24,7 @@ use Twig_Loader_Filesystem;
 
 class LimitationValueRenderingExtensionTest extends FileSystemTwigIntegrationTestCase
 {
-    public function getExtensions(\Twig_Environment $twig = null)
+    public function getExtensions(Twig_Environment $twig = null)
     {
         $limitationBlockRenderer = new LimitationBlockRenderer(
             $this->createLimitationValueMapperRegistryMock(),

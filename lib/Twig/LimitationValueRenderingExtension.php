@@ -21,8 +21,6 @@ class LimitationValueRenderingExtension extends Twig_Extension
 
     /**
      * LimitationValueRenderingExtension constructor.
-     *
-     * @param LimitationBlockRendererInterface $limitationRenderer
      */
     public function __construct(LimitationBlockRendererInterface $limitationRenderer)
     {

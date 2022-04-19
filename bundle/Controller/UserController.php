@@ -17,6 +17,7 @@ use eZ\Publish\API\Repository\PermissionResolver;
 use eZ\Publish\API\Repository\UserService;
 use eZ\Publish\Core\Base\Exceptions\InvalidArgumentException;
 use eZ\Publish\Core\Base\Exceptions\InvalidArgumentType;
+use eZ\Publish\Core\Base\Exceptions\UnauthorizedException as CoreUnauthorizedException;
 use eZ\Publish\Core\MVC\Symfony\Locale\UserLanguagePreferenceProviderInterface;
 use EzSystems\RepositoryForms\Data\Mapper\UserCreateMapper;
 use EzSystems\RepositoryForms\Data\Mapper\UserUpdateMapper;
@@ -33,7 +34,6 @@ use Symfony\Component\OptionsResolver\Exception\MissingOptionsException;
 use Symfony\Component\OptionsResolver\Exception\NoSuchOptionException;
 use Symfony\Component\OptionsResolver\Exception\OptionDefinitionException;
 use Symfony\Component\OptionsResolver\Exception\UndefinedOptionsException;
-use eZ\Publish\Core\Base\Exceptions\UnauthorizedException as CoreUnauthorizedException;
 
 class UserController extends Controller
 {
@@ -82,7 +82,6 @@ class UserController extends Controller
      * @param string $contentTypeIdentifier ContentType id to create
      * @param string $language Language code to create the content in (eng-GB, ger-DE, ...))
      * @param int $parentLocationId Location the content should be a child of
-     * @param Request $request
      *
      * @return UserCreateView|Response
      *
@@ -144,7 +143,6 @@ class UserController extends Controller
      * @param int $contentId ContentType id to create
      * @param int $versionNo Version number the version should be created from. Defaults to the currently published one.
      * @param string $language Language code to create the version in (eng-GB, ger-DE, ...))
-     * @param Request $request
      *
      * @return UserUpdateView|Response
      *

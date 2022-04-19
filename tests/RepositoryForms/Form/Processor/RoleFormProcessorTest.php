@@ -15,8 +15,8 @@ use EzSystems\RepositoryForms\Event\FormActionEvent;
 use EzSystems\RepositoryForms\Event\RepositoryFormEvents;
 use EzSystems\RepositoryForms\Form\Processor\RoleFormProcessor;
 use PHPUnit\Framework\TestCase;
-use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Form\FormInterface;
+use Symfony\Component\Routing\RouterInterface;
 
 class RoleFormProcessorTest extends TestCase
 {

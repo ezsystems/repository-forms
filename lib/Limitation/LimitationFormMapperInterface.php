@@ -40,8 +40,6 @@ interface LimitationFormMapperInterface
     /**
      * This method will be called when FormEvents::SUBMIT is called.
      * It gives the opportunity to filter/manipulate limitation values.
-     *
-     * @param Limitation $limitation
      */
     public function filterLimitationValues(Limitation $limitation);
 }

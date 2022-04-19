@@ -28,10 +28,6 @@ class UserCreateFormProcessor implements EventSubscriberInterface
     /** @var UrlGeneratorInterface */
     private $urlGenerator;
 
-    /**
-     * @param UserService $userService
-     * @param UrlGeneratorInterface $urlGenerator
-     */
     public function __construct(
         UserService $userService,
         UrlGeneratorInterface $urlGenerator
@@ -69,10 +65,6 @@ class UserCreateFormProcessor implements EventSubscriberInterface
         $event->setResponse(new RedirectResponse($redirectUrl));
     }
 
-    /**
-     * @param UserCreateData $data
-     * @param string $languageCode
-     */
     private function setContentFields(UserCreateData $data, string $languageCode): void
     {
         foreach ($data->fieldsData as $fieldDefIdentifier => $fieldData) {

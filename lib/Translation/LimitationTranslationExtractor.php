@@ -5,8 +5,8 @@
  */
 namespace EzSystems\RepositoryForms\Translation;
 
-use JMS\TranslationBundle\Model\MessageCatalogue;
 use JMS\TranslationBundle\Model\Message;
+use JMS\TranslationBundle\Model\MessageCatalogue;
 use JMS\TranslationBundle\Translation\ExtractorInterface;
 
 /**
@@ -22,9 +22,6 @@ class LimitationTranslationExtractor implements ExtractorInterface
      */
     private $policyMap;
 
-    /**
-     * @param array $policyMap
-     */
     public function __construct(array $policyMap)
     {
         $this->policyMap = $policyMap;
@@ -50,11 +47,6 @@ class LimitationTranslationExtractor implements ExtractorInterface
         return $catalogue;
     }
 
-    /**
-     * @param string $limitationIdentifier
-     *
-     * @return string
-     */
     public static function identifierToLabel(string $limitationIdentifier): string
     {
         return self::MESSAGE_ID_PREFIX . strtolower($limitationIdentifier);
@@ -75,7 +67,7 @@ class LimitationTranslationExtractor implements ExtractorInterface
                 }
 
                 foreach (array_keys($policy) as $limitationType) {
-                    if (!in_array($limitationType, $limitationTypes)) {
+                    if (!\in_array($limitationType, $limitationTypes)) {
                         $limitationTypes[] = $limitationType;
                     }
                 }

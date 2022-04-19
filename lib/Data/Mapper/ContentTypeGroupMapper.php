@@ -18,7 +18,6 @@ class ContentTypeGroupMapper implements FormDataMapperInterface
      * Maps a ValueObject from eZ content repository to a data usable as underlying form data (e.g. create/update struct).
      *
      * @param ValueObject|\eZ\Publish\API\Repository\Values\ContentType\ContentTypeGroup $contentTypeGroup
-     * @param array $params
      *
      * @return ContentTypeGroupCreateData|ContentTypeGroupUpdateData
      */

@@ -43,10 +43,6 @@ class ContentEditController extends Controller
 
     /**
      * Displays and processes a content creation form. Showing the form does not create a draft in the repository.
-     *
-     * @param \EzSystems\RepositoryForms\Content\View\ContentCreateView $view
-     *
-     * @return \EzSystems\RepositoryForms\Content\View\ContentCreateView
      */
     public function createWithoutDraftAction(ContentCreateView $view): ContentCreateView
     {
@@ -54,10 +50,6 @@ class ContentEditController extends Controller
     }
 
     /**
-     * @param \EzSystems\RepositoryForms\Content\View\ContentCreateSuccessView $view
-     *
-     * @return \EzSystems\RepositoryForms\Content\View\ContentCreateSuccessView
-     *
      * @throws \eZ\Publish\API\Repository\Exceptions\BadStateException
      */
     public function createWithoutDraftSuccessAction(ContentCreateSuccessView $view): ContentCreateSuccessView
@@ -72,7 +64,6 @@ class ContentEditController extends Controller
      * @param int $fromVersionNo
      * @param string $fromLanguage
      * @param string $toLanguage
-     * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return \EzSystems\RepositoryForms\Content\View\ContentCreateDraftView|\Symfony\Component\HttpFoundation\Response
      *
@@ -125,10 +116,6 @@ class ContentEditController extends Controller
     }
 
     /**
-     * @param \EzSystems\RepositoryForms\Content\View\ContentEditView $view
-     *
-     * @return \EzSystems\RepositoryForms\Content\View\ContentEditView
-     *
      * @throws \eZ\Publish\API\Repository\Exceptions\BadStateException
      */
     public function editVersionDraftAction(ContentEditView $view): ContentEditView
@@ -137,10 +124,6 @@ class ContentEditController extends Controller
     }
 
     /**
-     * @param \EzSystems\RepositoryForms\Content\View\ContentEditSuccessView $view
-     *
-     * @return \EzSystems\RepositoryForms\Content\View\ContentEditSuccessView
-     *
      * @throws \eZ\Publish\API\Repository\Exceptions\BadStateException
      */
     public function editVersionDraftSuccessAction(ContentEditSuccessView $view): ContentEditSuccessView

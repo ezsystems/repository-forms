@@ -11,8 +11,8 @@ namespace EzSystems\RepositoryForms\Tests\Event;
 use EzSystems\RepositoryForms\Event\FormActionEvent;
 use PHPUnit\Framework\TestCase;
 use stdClass;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Form\FormInterface;
+use Symfony\Component\HttpFoundation\Response;
 
 class FormActionEventTest extends TestCase
 {

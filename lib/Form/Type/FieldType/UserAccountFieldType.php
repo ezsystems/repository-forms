@@ -50,7 +50,7 @@ class UserAccountFieldType extends AbstractType
                 'label' => /** @Desc("Email") */ 'content.field_type.ezuser.email',
             ]);
 
-        if (in_array($options['intent'], ['create', 'update'], true)) {
+        if (\in_array($options['intent'], ['create', 'update'], true)) {
             $builder->add('enabled', SwitcherType::class, [
                 'required' => false,
                 'label' => /** @Desc("Enabled") */ 'content.field_type.ezuser.enabled',

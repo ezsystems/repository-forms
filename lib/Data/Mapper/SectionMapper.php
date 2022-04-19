@@ -18,7 +18,6 @@ class SectionMapper implements FormDataMapperInterface
      * Maps a ValueObject from eZ content repository to a data usable as underlying form data (e.g. create/update struct).
      *
      * @param ValueObject|\eZ\Publish\API\Repository\Values\Content\Section $section
-     * @param array $params
      *
      * @return SectionCreateData|SectionUpdateData
      */

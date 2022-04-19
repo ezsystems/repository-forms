@@ -40,7 +40,7 @@ class SortingTranslationExtractor implements ExtractorInterface
             function ($value, $key) {
                 return is_scalar($value) && strtolower(substr($key, 0, 11)) === 'sort_field_';
             },
-            ARRAY_FILTER_USE_BOTH
+            \ARRAY_FILTER_USE_BOTH
         );
 
         foreach ($sortConstants as $sortId) {

@@ -22,7 +22,7 @@ class DateFieldType extends AbstractType
         'ez_content_draft_edit',
         'ezplatform.content.translate',
         'ibexa.content.translate_with_location',
-        'ez_user_update'
+        'ez_user_update',
     ];
 
     /** @var \Symfony\Component\HttpFoundation\RequestStack */

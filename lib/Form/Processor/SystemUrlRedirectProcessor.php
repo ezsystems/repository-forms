@@ -28,9 +28,6 @@ class SystemUrlRedirectProcessor implements EventSubscriberInterface
     private $locationService;
 
     /**
-     * @param \Symfony\Component\Routing\RouterInterface $router
-     * @param \eZ\Publish\API\Repository\URLAliasService $urlAliasService
-     * @param \eZ\Publish\API\Repository\LocationService $locationService
      * @param array $siteaccessGroups
      */
     public function __construct(
@@ -43,9 +40,6 @@ class SystemUrlRedirectProcessor implements EventSubscriberInterface
         $this->locationService = $locationService;
     }
 
-    /**
-     * @return array
-     */
     public static function getSubscribedEvents(): array
     {
         return [
@@ -55,8 +49,6 @@ class SystemUrlRedirectProcessor implements EventSubscriberInterface
     }
 
     /**
-     * @param \EzSystems\RepositoryForms\Event\FormActionEvent $event
-     *
      * @throws \eZ\Publish\API\Repository\Exceptions\NotFoundException
      * @throws \eZ\Publish\API\Repository\Exceptions\UnauthorizedException
      */
@@ -70,8 +62,6 @@ class SystemUrlRedirectProcessor implements EventSubscriberInterface
     }
 
     /**
-     * @param \EzSystems\RepositoryForms\Event\FormActionEvent $event
-     *
      * @throws \eZ\Publish\API\Repository\Exceptions\NotFoundException
      * @throws \eZ\Publish\API\Repository\Exceptions\UnauthorizedException
      */
@@ -81,8 +71,6 @@ class SystemUrlRedirectProcessor implements EventSubscriberInterface
     }
 
     /**
-     * @param \EzSystems\RepositoryForms\Event\FormActionEvent $event
-     *
      * @throws \eZ\Publish\API\Repository\Exceptions\NotFoundException
      * @throws \eZ\Publish\API\Repository\Exceptions\UnauthorizedException
      */
@@ -97,7 +85,7 @@ class SystemUrlRedirectProcessor implements EventSubscriberInterface
 
         $params = $this->router->match($response->getTargetUrl());
 
-        if (!in_array('locationId', $params)) {
+        if (!\in_array('locationId', $params)) {
             return;
         }
 

@@ -8,8 +8,8 @@
 namespace EzSystems\RepositoryForms\Data\Language;
 
 use eZ\Publish\API\Repository\Values\Content\LanguageCreateStruct;
-use EzSystems\RepositoryForms\Data\NewnessChecker;
 use EzSystems\RepositoryForms\Data\NewnessCheckable;
+use EzSystems\RepositoryForms\Data\NewnessChecker;
 
 /**
  * Language Update Data struct.
@@ -22,7 +22,8 @@ use EzSystems\RepositoryForms\Data\NewnessCheckable;
  */
 class LanguageUpdateData extends LanguageCreateStruct implements NewnessCheckable
 {
-    use LanguageDataTrait, NewnessChecker;
+    use LanguageDataTrait;
+    use NewnessChecker;
 
     /**
      * Returns the value of the property which can be considered as the value object identifier.

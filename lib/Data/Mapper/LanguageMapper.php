@@ -18,7 +18,6 @@ class LanguageMapper implements FormDataMapperInterface
      * Maps a ValueObject from eZ content repository to a data usable as underlying form data (e.g. create/update struct).
      *
      * @param ValueObject|\eZ\Publish\API\Repository\Values\Content\Language $language
-     * @param array $params
      *
      * @return LanguageCreateData|LanguageUpdateData
      */

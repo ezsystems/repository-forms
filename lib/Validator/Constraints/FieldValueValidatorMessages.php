@@ -7,8 +7,8 @@ declare(strict_types=1);
 
 namespace EzSystems\RepositoryForms\Validator\Constraints;
 
-use JMS\TranslationBundle\Translation\TranslationContainerInterface;
 use JMS\TranslationBundle\Model\Message;
+use JMS\TranslationBundle\Translation\TranslationContainerInterface;
 
 /**
  * This class holds translation messages which comes from kernel as ValidationError messages.
