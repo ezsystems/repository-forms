@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:jms="urn:jms:translation" version="1.2">
-  <file date="2017-10-16T18:26:20Z" source-language="en" target-language="en" datatype="plaintext" original="not.available">
+  <file source-language="en" target-language="en" datatype="plaintext" original="not.available">
     <header>
       <tool tool-id="JMSTranslationBundle" tool-name="JMSTranslationBundle" tool-version="1.1.0-DEV"/>
       <note>The source node in most cases contains the sample message as written by the developer. If it looks like a dot-delimitted string such as "form.label.firstname", then the developer has not provided a default message.</note>
@@ -20,6 +20,11 @@
         <source>Language</source>
         <target>Language</target>
         <note>key: policy.limitation.identifier.language</note>
+      </trans-unit>
+      <trans-unit id="b40e3e09e55ef852a5d9e1592e9c895715b1313c" resname="policy.limitation.identifier.memberof">
+        <source>Member Of</source>
+        <target>Member Of</target>
+        <note>key: policy.limitation.identifier.memberof</note>
       </trans-unit>
       <trans-unit id="ab9163a435d32610a7a1af8df07ab38eebc4c7c6" resname="policy.limitation.identifier.newsection">
         <source>New Section</source>
@@ -60,6 +65,11 @@
         <source>Owner of Parent</source>
         <target>Owner of Parent</target>
         <note>key: policy.limitation.identifier.parentowner</note>
+      </trans-unit>
+      <trans-unit id="9f2e53e094725bbc243ad777547724ab923a31d1" resname="policy.limitation.identifier.role">
+        <source>Role</source>
+        <target>Role</target>
+        <note>key: policy.limitation.identifier.role</note>
       </trans-unit>
       <trans-unit id="bb77b27363dad566197a200290f0f0b18baa4705" resname="policy.limitation.identifier.section">
         <source>Section</source>
